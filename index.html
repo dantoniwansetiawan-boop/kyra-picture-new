@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kyra Picture | Wedding & Prewedding Photography</title>
+  <meta name="description" content="Kyra Picture — Your Story, Beautifully Captured. Wedding, prewedding, and event photography in Bekasi.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f5f1e9;
+      color: #28251f;
+      font-family: Arial, sans-serif;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 7%;
+      border-bottom: 1px solid #ddd5c8;
+    }
+
+    .logo {
+      font-size: 19px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    .logo span {
+      font-weight: normal;
+      font-size: 12px;
+    }
+
+    nav a, .button {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    nav a {
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 90px 10%;
+      color: white;
+      background:
+        linear-gradient(90deg, rgba(20,18,15,.75), rgba(20,18,15,.2)),
+        url('https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1800&q=85') center/cover;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-bottom: 25px;
+    }
+
+    h1, h2 {
+      font-family: Georgia, serif;
+      font-weight: normal;
+    }
+
+    h1 {
+      font-size: clamp(48px, 8vw, 92px);
+      line-height: 1.08;
+    }
+
+    h1 em {
+      font-weight: normal;
+    }
+
+    .description {
+      max-width: 380px;
+      line-height: 1.8;
+      margin: 25px 0 30px;
+      color: #eee8df;
+    }
+
+    .button {
+      display: inline-block;
+      width: fit-content;
+      background: #f5f1e9;
+      color: #28251f;
+      padding: 16px 22px;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    section {
+      padding: 85px 8%;
+    }
+
+    .intro {
+      text-align: center;
+    }
+
+    h2 {
+      font-size: clamp(35px, 5vw, 56px);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .muted {
+      color: #777168;
+      line-height: 1.8;
+    }
+
+    .portfolio {
+      background: #eae3d8;
+    }
+
+    .section-heading {
+      margin-bottom: 35px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .gallery img {
+      display: block;
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+    }
+
+    .gallery p {
+      padding-top: 12px;
+      font-family: Georgia, serif;
+      font-size: 22px;
+    }
+
+    .services {
+      text-align: center;
+    }
+
+    .service-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 35px;
+    }
+
+    .service {
+      border: 1px solid #d8d0c3;
+      padding: 30px 15px;
+    }
+
+    .service h3 {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      font-weight: normal;
+      margin-bottom: 12px;
+    }
+
+    .contact {
+      background: #292720;
+      color: #f5f1e9;
+      text-align: center;
+    }
+
+    .contact .muted {
+      color: #d0c8ba;
+      margin-bottom: 25px;
+    }
+
+    .contact .button {
+      margin: 5px;
+    }
+
+    .socials {
+      margin-top: 25px;
+      line-height: 2.5;
+    }
+
+    .socials a {
+      color: #f5f1e9;
+      margin: 0 10px;
+      font-size: 13px;
+    }
+
+    footer {
+      background: #292720;
+      color: #bdb5a8;
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        padding: 20px 5%;
+      }
+
+      .logo {
+        font-size: 15px;
+        letter-spacing: 1px;
+      }
+
+      .logo span {
+        font-size: 10px;
+      }
+
+      .hero {
+        min-height: 75vh;
+        padding: 65px 7%;
+        background-position: 58% center;
+      }
+
+      section {
+        padding: 65px 6%;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery img {
+        height: 280px;
+      }
+
+      .service-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="logo">KYRA <span>PICTURE</span></div>
+    <a href="#contact">LET'S TALK ↗</a>
+  </nav>
+
+  <header class="hero">
+    <p class="eyebrow">WEDDING · PREWEDDING · MOMENTS</p>
+    <h1>Your Story,<br><em>Beautifully</em><br>Captured.</h1>
+    <p class="description">
+      Turning your most meaningful moments into timeless photographs.
+    </p>
+    <a class="button" href="#portfolio">EXPLORE OUR WORK ↗</a>
+  </header>
+
+  <section class="intro">
+    <p class="eyebrow">WELCOME TO KYRA PICTURE</p>
+    <h2>Every story deserves<br>a beautiful frame.</h2>
+    <p class="muted">
+      We capture genuine emotions and meaningful moments<br>
+      through timeless photography.
+    </p>
+  </section>
+
+  <section class="portfolio" id="portfolio">
+    <p class="eyebrow">SELECTED STORIES</p>
+    <h2 class="section-heading">Our Portfolio</h2>
+
+    <div class="gallery">
+      <div>
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Wedding photography">
+        <p>Wedding Stories</p>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=900&q=80" alt="Prewedding photography">
+        <p>Prewedding Moments</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <p class="eyebrow">WHAT WE DO</p>
+    <h2>Our Services</h2>
+    <p class="muted">Every moment, thoughtfully captured.</p>
+
+    <div class="service-list">
+      <div class="service">
+        <h3>Wedding</h3>
+        <p class="muted">Your special day, preserved forever.</p>
+      </div>
+      <div class="service">
+        <h3>Prewedding</h3>
+        <p class="muted">Your love story, beautifully told.</p>
+      </div>
+      <div class="service">
+        <h3>Events</h3>
+        <p class="muted">Meaningful moments worth remembering.</p>
+      </div>
+    </div>
+
+    <p class="muted" style="margin-top:30px">Pricing: Price on Request</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <p class="eyebrow">LET'S CREATE SOMETHING MEANINGFUL</p>
+    <h2>Let's tell your story.</h2>
+    <p class="muted">
+      Have a date in mind? We'd love to hear from you.<br>
+      Based in Bekasi, Indonesia.
+    </p>
+
+    <a class="button" href="https://wa.me/6289519847571" target="_blank" rel="noopener">
+      BOOK VIA WHATSAPP ↗
+    </a>
+
+    <div class="socials">
+      <a href="https://www.instagram.com/kyra.picture/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@kyra.picture" target="_blank" rel="noopener">TikTok</a>
+      <a href="mailto:picture.kyra@gmail.com">Email</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Kyra Picture. Your Story, Beautifully Captured.
+  </footer>
+</body>
+</html>
