@@ -4,179 +4,288 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="theme-color" content="#f5f0e7">
   <title>Testimonials | Kyra Picture</title>
   <meta name="description" content="Read what couples say about their experience with Kyra Picture photography.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    .testimonials-page {
+      --ivory:#f5f0e7;
+      --champagne:#d8c2a4;
+      --terracotta:#a87855;
+      --espresso:#302821;
+      --paper:#fffdf9;
+      --muted:#81776c;
+      margin:0;
+      background:var(--ivory);
+      color:var(--espresso);
+      font-family:"DM Sans",sans-serif;
+    }
+
+    .testimonials-page * { box-sizing:border-box; }
+
+    .testimonials-page .testimonials-hero {
+      max-width:850px;
+      margin:0 auto;
+      padding:85px 24px 55px;
+      text-align:center;
+    }
+
+    .testimonials-page .testimonials-hero h1 {
+      margin:0;
+      font-family:"Playfair Display",serif;
+      font-size:clamp(42px,6vw,64px);
+      font-weight:400;
+      line-height:1.2;
+    }
+
+    .testimonials-page .testimonials-description {
+      max-width:480px;
+      margin:20px auto 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.9;
+    }
+
+    .testimonials-page .testimonials-section {
+      width:100%;
+      max-width:1250px;
+      margin:0 auto;
+      padding:0 6% 100px;
+    }
+
+    .testimonials-page .testimonials-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      align-items:stretch;
+      gap:22px;
+    }
+
+    .testimonials-page .testimonial-card {
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+      min-height:350px;
+      padding:28px 25px;
+      border:1px solid #e5dbce;
+      background:var(--paper);
+    }
+
+    .testimonials-page .testimonial-person {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .testimonials-page .testimonial-photo {
+      display:flex;
+      flex:0 0 54px;
+      width:54px;
+      height:54px;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      border-radius:50%;
+      background:#e3d8c8;
+      color:var(--espresso);
+      font-family:"Playfair Display",serif;
+      font-size:17px;
+      object-fit:cover;
+    }
+
+    .testimonials-page .testimonial-person-info { min-width:0; }
+
+    .testimonials-page .testimonial-author-name {
+      margin:0 0 5px;
+      color:var(--espresso);
+      font-size:12px;
+      font-weight:600;
+      letter-spacing:.3px;
+      overflow-wrap:anywhere;
+    }
+
+    .testimonials-page .testimonial-stars {
+      color:#a87835;
+      font-size:13px;
+      letter-spacing:2px;
+    }
+
+    .testimonials-page .testimonial-number {
+      margin:0;
+      color:var(--terracotta);
+      font-size:9px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+
+    .testimonials-page .testimonial-quote-mark {
+      margin:15px 0 0;
+      color:var(--champagne);
+      font-family:"Playfair Display",Georgia,serif;
+      font-size:66px;
+      line-height:.9;
+    }
+
+    .testimonials-page .testimonial-quote {
+      margin:15px 0 30px;
+      color:#4b4036;
+      font-family:"Playfair Display",Georgia,serif;
+      font-size:19px;
+      font-style:italic;
+      line-height:1.65;
+      overflow-wrap:anywhere;
+      white-space:pre-line;
+    }
+
+    .testimonials-page .testimonial-author {
+      margin-top:auto;
+      padding-top:18px;
+      border-top:1px solid #e5dbce;
+    }
+
+    .testimonials-page .testimonial-author p {
+      margin:5px 0 0;
+      color:var(--muted);
+      font-size:10px;
+      letter-spacing:1px;
+      line-height:1.8;
+      text-transform:uppercase;
+      overflow-wrap:anywhere;
+    }
+
+    .testimonials-page .testimonial-message {
+      grid-column:1/-1;
+      padding:50px 20px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.9;
+      text-align:center;
+    }
+
+    .testimonials-page .pagination {
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-top:45px;
+    }
+
+    .testimonials-page .pagination button {
+      min-width:42px;
+      height:42px;
+      padding:0 13px;
+      border:1px solid #d8c2a4;
+      background:transparent;
+      color:var(--espresso);
+      font:inherit;
+      font-size:12px;
+      cursor:pointer;
+      transition:all .2s;
+    }
+
+    .testimonials-page .pagination button:hover:not(:disabled),
+    .testimonials-page .pagination button.active {
+      border-color:var(--espresso);
+      background:var(--espresso);
+      color:var(--paper);
+    }
+
+    .testimonials-page .pagination button:disabled {
+      opacity:.35;
+      cursor:not-allowed;
+    }
+
+    .testimonials-page .page-info {
+      margin-top:18px;
+      color:var(--muted);
+      font-size:11px;
+      text-align:center;
+      letter-spacing:.5px;
+    }
+
+    .testimonials-page .testimonials-cta {
+      padding:70px 24px;
+      background:#eee5d8;
+      text-align:center;
+    }
+
+    .testimonials-page .testimonials-cta h2 {
+      margin:0 0 25px;
+      font-family:"Playfair Display",serif;
+      font-size:clamp(30px,4vw,44px);
+      font-weight:400;
+    }
+
+    .testimonials-page .testimonials-cta .eyebrow { margin-bottom:15px; }
+
+    .testimonials-page .testimonials-cta .button {
+      display:inline-block;
+      padding:16px 23px;
+      border:1px solid var(--espresso);
+      background:var(--espresso);
+      color:var(--paper);
+      text-decoration:none;
+      font-size:10px;
+      letter-spacing:1.5px;
+    }
+
+    .testimonials-page .testimonials-cta .button:hover {
+      background:transparent;
+      color:var(--espresso);
+    }
+
+    .testimonials-page .site-footer {
+      padding:30px 7%;
+      background:var(--espresso);
+      color:var(--paper);
+      font-size:11px;
+      line-height:1.8;
+      text-align:center;
+    }
+
+    @media(max-width:850px) {
+      .testimonials-page .testimonials-grid {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:16px;
+      }
+      .testimonials-page .testimonial-card {
+        min-height:330px;
+        padding:25px 20px;
+      }
+    }
+
+    @media(max-width:520px) {
+      .testimonials-page .testimonials-hero {
+        padding:60px 20px 40px;
+      }
+      .testimonials-page .testimonials-section {
+        padding:0 20px 65px;
+      }
+      .testimonials-page .testimonials-grid {
+        grid-template-columns:1fr;
+        gap:16px;
+      }
+      .testimonials-page .testimonial-card {
+        min-height:280px;
+        padding:28px 25px;
+      }
+      .testimonials-page .testimonial-quote { font-size:20px; }
+      .testimonials-page .testimonials-cta { padding:55px 20px; }
+    }
+  </style>
 </head>
 
 <body class="testimonials-page">
 
-  <style>
-    .testimonials-page {
-      background: #f5f0e7;
-      color: #302821;
-    }
-
-    .testimonials-page .testimonials-hero {
-      max-width: 850px;
-      margin: 0 auto;
-      padding: 85px 24px 55px;
-      text-align: center;
-    }
-
-    .testimonials-page .testimonials-hero h1 {
-      margin: 0;
-      font-size: clamp(42px, 6vw, 64px);
-      line-height: 1.2;
-    }
-
-    .testimonials-page .testimonials-description {
-      max-width: 480px;
-      margin: 20px auto 0;
-      color: #81776c;
-      font-size: 13px;
-      line-height: 1.9;
-    }
-
-    .testimonials-page .testimonials-section {
-      width: 100%;
-      max-width: 1250px;
-      margin: 0 auto;
-      padding: 0 6% 100px;
-    }
-
-    .testimonials-page .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      align-items: stretch;
-      gap: 22px;
-    }
-
-    .testimonials-page .testimonial-card {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      min-height: 350px;
-      padding: 30px 25px;
-      border: 1px solid #e5dbce;
-      background: #fffdf9;
-    }
-
-    .testimonials-page .testimonial-number {
-      margin: 0;
-      color: #a87855;
-      font-size: 9px;
-      letter-spacing: 2px;
-    }
-
-    .testimonials-page .testimonial-quote-mark {
-      margin: 15px 0 0;
-      color: #d8c2a4;
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: 66px;
-      line-height: 0.9;
-    }
-
-    .testimonials-page .testimonial-quote {
-      margin: 15px 0 35px;
-      color: #4b4036;
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: 21px;
-      line-height: 1.65;
-      overflow-wrap: anywhere;
-    }
-
-    .testimonials-page .testimonial-author {
-      margin-top: auto;
-      padding-top: 20px;
-      border-top: 1px solid #e5dbce;
-    }
-
-    .testimonials-page .testimonial-author h2 {
-      margin: 0;
-      color: #302821;
-      font-family: "DM Sans", Arial, sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      overflow-wrap: anywhere;
-    }
-
-    .testimonials-page .testimonial-author p {
-      margin: 5px 0 0;
-      color: #81776c;
-      font-size: 10px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .testimonials-page .testimonials-cta {
-      padding: 70px 24px;
-      background: #eee5d8;
-      text-align: center;
-    }
-
-    .testimonials-page .testimonials-cta h2 {
-      margin: 0 0 25px;
-      font-size: clamp(30px, 4vw, 44px);
-    }
-
-    .testimonials-page .testimonials-cta .eyebrow {
-      margin-bottom: 15px;
-    }
-
-    @media (max-width: 850px) {
-      .testimonials-page .testimonials-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px;
-      }
-
-      .testimonials-page .testimonial-card {
-        min-height: 330px;
-        padding: 25px 20px;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .testimonials-page .testimonials-hero {
-        padding: 60px 20px 40px;
-      }
-
-      .testimonials-page .testimonials-section {
-        padding: 0 20px 65px;
-      }
-
-      .testimonials-page .testimonials-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      .testimonials-page .testimonial-card {
-        min-height: 300px;
-        padding: 28px 25px;
-      }
-
-      .testimonials-page .testimonial-quote {
-        font-size: 22px;
-      }
-
-      .testimonials-page .testimonials-cta {
-        padding: 55px 20px;
-      }
-    }
-  </style>
-
   <nav class="navbar">
-    <a class="logo" href="index.html">
-      KYRA <span>PICTURE</span>
-    </a>
-
+    <a class="logo" href="index.html">KYRA <span>PICTURE</span></a>
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="portfolio.html">Portfolio</a>
@@ -189,9 +298,7 @@
 
   <header class="testimonials-hero">
     <p class="eyebrow">KIND WORDS FROM OUR CLIENTS</p>
-
     <h1>Love, in Their Own Words.</h1>
-
     <p class="testimonials-description">
       Every story we capture becomes a memory to keep.
       Here's a glimpse of the love and trust behind our work.
@@ -199,89 +306,12 @@
   </header>
 
   <main class="testimonials-section">
-
-    <div class="testimonials-grid">
-
-      <article class="testimonial-card">
-        <p class="testimonial-number">01 — WEDDING</p>
-        <div class="testimonial-quote-mark">“</div>
-        <p class="testimonial-quote">
-          Thank you for capturing every little moment of our special day.
-          We absolutely love the photos!
-        </p>
-        <div class="testimonial-author">
-          <h2>Couple's Name</h2>
-          <p>Wedding Photography</p>
-        </div>
-      </article>
-
-      <article class="testimonial-card">
-        <p class="testimonial-number">02 — PREWEDDING</p>
-        <div class="testimonial-quote-mark">“</div>
-        <p class="testimonial-quote">
-          The whole experience felt natural and comfortable.
-          The photos are even more beautiful than we imagined.
-        </p>
-        <div class="testimonial-author">
-          <h2>Couple's Name</h2>
-          <p>Prewedding Photography</p>
-        </div>
-      </article>
-
-      <article class="testimonial-card">
-        <p class="testimonial-number">03 — ENGAGEMENT</p>
-        <div class="testimonial-quote-mark">“</div>
-        <p class="testimonial-quote">
-          Every photo tells a story. We're so happy to have
-          these memories to look back on forever.
-        </p>
-        <div class="testimonial-author">
-          <h2>Couple's Name</h2>
-          <p>Engagement Photography</p>
-        </div>
-      </article>
-
-      <article class="testimonial-card">
-        <p class="testimonial-number">04 — WEDDING</p>
-        <div class="testimonial-quote-mark">“</div>
-        <p class="testimonial-quote">
-          From the beginning to the end, the experience was
-          wonderful. We felt comfortable throughout the day.
-        </p>
-        <div class="testimonial-author">
-          <h2>Couple's Name</h2>
-          <p>Wedding Photography</p>
-        </div>
-      </article>
-
-      <article class="testimonial-card">
-        <p class="testimonial-number">05 — PREWEDDING</p>
-        <div class="testimonial-quote-mark">“</div>
-        <p class="testimonial-quote">
-          The pictures feel so genuine and full of emotion.
-          We will treasure them for years to come.
-        </p>
-        <div class="testimonial-author">
-          <h2>Couple's Name</h2>
-          <p>Prewedding Photography</p>
-        </div>
-      </article>
-
-      <article class="testimonial-card">
-        <p class="testimonial-number">06 — SPECIAL MOMENTS</p>
-        <div class="testimonial-quote-mark">“</div>
-        <p class="testimonial-quote">
-          Thank you for turning our precious moments into
-          beautiful photographs we can revisit anytime.
-        </p>
-        <div class="testimonial-author">
-          <h2>Couple's Name</h2>
-          <p>Photography Session</p>
-        </div>
-      </article>
-
+    <div class="testimonials-grid" id="testimonials-grid" aria-live="polite">
+      <p class="testimonial-message">Loading testimonials...</p>
     </div>
 
+    <div class="pagination" id="pagination" aria-label="Testimonial pages"></div>
+    <p class="page-info" id="page-info"></p>
   </main>
 
   <section class="testimonials-cta">
@@ -292,10 +322,283 @@
     </a>
   </section>
 
-  <footer>
+  <footer class="site-footer">
     © 2026 Kyra Picture. Your Story, Beautifully Captured.
   </footer>
 
+  <script>
+  (function () {
+    "use strict";
+
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQw6Uzj26ys6CvMZjGWeVMtzQJCg7k3RisPhPLE5Tcer9LU4SZg6eApVXkPqww2NKiFdCP2XGV9VCIR/pub?output=csv";
+    const PER_PAGE = 12;
+
+    const grid = document.getElementById("testimonials-grid");
+    const pagination = document.getElementById("pagination");
+    const pageInfo = document.getElementById("page-info");
+
+    let testimonials = [];
+    let currentPage = 1;
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let value = "";
+      let quoted = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        const next = text[i + 1];
+
+        if (ch === '"' && quoted && next === '"') {
+          value += '"';
+          i++;
+        } else if (ch === '"') {
+          quoted = !quoted;
+        } else if (ch === "," && !quoted) {
+          row.push(value);
+          value = "";
+        } else if ((ch === "\n" || ch === "\r") && !quoted) {
+          if (ch === "\r" && next === "\n") i++;
+          row.push(value);
+          if (row.some(cell => cell.trim() !== "")) rows.push(row);
+          row = [];
+          value = "";
+        } else {
+          value += ch;
+        }
+      }
+
+      row.push(value);
+      if (row.some(cell => cell.trim() !== "")) rows.push(row);
+      if (!rows.length) return [];
+
+      const headers = rows.shift().map(header =>
+        header.replace(/^\uFEFF/, "").trim().toLowerCase()
+      );
+
+      return rows.map(cells => {
+        const item = {};
+        headers.forEach((header, index) => {
+          item[header] = (cells[index] || "").trim();
+        });
+        return item;
+      });
+    }
+
+    function getField(item, names) {
+      for (const name of names) {
+        const key = name.toLowerCase();
+        if (item[key] !== undefined && item[key] !== "") {
+          return item[key];
+        }
+      }
+      return "";
+    }
+
+    function getPhotoURL(value) {
+      const input = String(value || "").trim();
+      if (!input) return "";
+
+      try {
+        const url = new URL(input);
+
+        if (
+          url.hostname === "drive.google.com" ||
+          url.hostname === "www.drive.google.com"
+        ) {
+          let id = url.searchParams.get("id");
+          const match = url.pathname.match(/\/file\/d\/([^/]+)/);
+
+          if (!id && match) id = match[1];
+
+          if (id) {
+            return "https://drive.google.com/uc?export=view&id=" +
+              encodeURIComponent(id);
+          }
+        }
+
+        return /^https?:$/.test(url.protocol) ? url.href : "";
+      } catch (_) {
+        return "";
+      }
+    }
+
+    function makeCard(item, index) {
+      const name = getField(item, ["nama pasangan", "nama", "pasangan"]) || "Couple";
+      const photo = getPhotoURL(getField(item, ["foto", "photo", "foto pasangan"]));
+      const service = getField(item, ["layanan", "service"]) || "Photography";
+      const date = getField(item, ["tanggal event", "tanggal acara", "tanggal", "event date"]);
+      const review = getField(item, ["testimoni", "testimonial", "review"]);
+      const rawRating = Number(getField(item, ["rating", "bintang"]));
+      const rating = Number.isFinite(rawRating)
+        ? Math.max(0, Math.min(5, Math.round(rawRating))) : 5;
+
+      const card = document.createElement("article");
+      card.className = "testimonial-card";
+
+      const person = document.createElement("div");
+      person.className = "testimonial-person";
+
+      const initials = name.split(/\s*&\s*|\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(part => part.charAt(0).toUpperCase())
+        .join("") || "KP";
+
+      const fallback = document.createElement("div");
+      fallback.className = "testimonial-photo";
+      fallback.textContent = initials;
+
+      const avatar = document.createElement("img");
+      avatar.className = "testimonial-photo";
+      avatar.alt = "Foto " + name;
+      avatar.loading = "lazy";
+
+      if (photo) {
+        avatar.onload = () => { fallback.style.display = "none"; };
+        avatar.onerror = () => { avatar.style.display = "none"; };
+        avatar.src = photo;
+      } else {
+        avatar.style.display = "none";
+      }
+
+      const info = document.createElement("div");
+      info.className = "testimonial-person-info";
+
+      const author = document.createElement("h2");
+      author.className = "testimonial-author-name";
+      author.textContent = name;
+
+      const stars = document.createElement("div");
+      stars.className = "testimonial-stars";
+      stars.setAttribute("aria-label", rating + " out of 5 stars");
+      stars.textContent = "★".repeat(rating) + "☆".repeat(5 - rating);
+
+      info.append(author, stars);
+      person.append(avatar, fallback, info);
+
+      const number = document.createElement("p");
+      number.className = "testimonial-number";
+      number.textContent = String(index + 1).padStart(2, "0") +
+        " — " + service;
+
+      const mark = document.createElement("div");
+      mark.className = "testimonial-quote-mark";
+      mark.setAttribute("aria-hidden", "true");
+      mark.textContent = "“";
+
+      const quote = document.createElement("p");
+      quote.className = "testimonial-quote";
+      quote.textContent = review || "Thank you for trusting Kyra Picture.";
+
+      const authorFooter = document.createElement("div");
+      authorFooter.className = "testimonial-author";
+
+      const meta = document.createElement("p");
+      meta.textContent = date ? service + " · " + date : service;
+
+      authorFooter.appendChild(meta);
+      card.append(person, number, mark, quote, authorFooter);
+
+      return card;
+    }
+
+    function renderPage() {
+      const totalPages = Math.max(1, Math.ceil(testimonials.length / PER_PAGE));
+      currentPage = Math.min(currentPage, totalPages);
+
+      const start = (currentPage - 1) * PER_PAGE;
+      const pageItems = testimonials.slice(start, start + PER_PAGE);
+
+      grid.innerHTML = "";
+
+      if (!pageItems.length) {
+        const message = document.createElement("p");
+        message.className = "testimonial-message";
+        message.textContent = "Belum ada testimoni yang dipublikasikan.";
+        grid.appendChild(message);
+      } else {
+        pageItems.forEach((item, index) => {
+          grid.appendChild(makeCard(item, start + index));
+        });
+      }
+
+      pagination.innerHTML = "";
+
+      function addButton(label, page, disabled, active) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = label;
+        button.disabled = disabled;
+
+        if (active) {
+          button.className = "active";
+          button.setAttribute("aria-current", "page");
+        }
+
+        button.addEventListener("click", () => {
+          currentPage = page;
+          renderPage();
+          document.querySelector(".testimonials-hero").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        });
+
+        pagination.appendChild(button);
+      }
+
+      if (testimonials.length > 0) {
+        addButton("←", currentPage - 1, currentPage === 1, false);
+
+        for (let page = 1; page <= totalPages; page++) {
+          addButton(String(page), page, false, page === currentPage);
+        }
+
+        addButton("→", currentPage + 1, currentPage === totalPages, false);
+      }
+
+      pageInfo.textContent = testimonials.length
+        ? "Showing " + (start + 1) + "–" +
+          Math.min(start + PER_PAGE, testimonials.length) +
+          " of " + testimonials.length + " testimonials"
+        : "";
+    }
+
+    fetch(CSV_URL, { cache: "no-store" })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Google Sheets CSV could not be loaded");
+        }
+        return response.text();
+      })
+      .then(csv => {
+        const rows = parseCSV(csv);
+
+        testimonials = rows.filter(item =>
+          getField(item, ["status", "status publikasi"])
+            .trim().toLowerCase() === "published"
+        );
+
+        currentPage = 1;
+        renderPage();
+      })
+      .catch(error => {
+        console.error("Testimonials could not be loaded:", error);
+        grid.innerHTML = "";
+
+        const message = document.createElement("p");
+        message.className = "testimonial-message";
+        message.textContent =
+          "Testimoni belum bisa dimuat. Periksa koneksi atau publikasi Google Sheets.";
+        grid.appendChild(message);
+
+        pagination.innerHTML = "";
+        pageInfo.textContent = "";
+      });
+  })();
+  </script>
+
 </body>
 </html>
-```
