@@ -4,15 +4,343 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get to know Kyra Picture, a photography studio capturing meaningful stories and timeless moments.">
   <title>About Us | Kyra Picture</title>
-  <meta name="description" content="Get to know Kyra Picture, capturing your most meaningful moments.">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
 
-  <nav class="navbar">
-    <a class="logo" href="index.html">KYRA <span>PICTURE</span></a>
-    <div class="nav-links">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .about-editorial {
+      --about-ivory: #f5f0e7;
+      --about-paper: #fffdf9;
+      --about-espresso: #302821;
+      --about-muted: #81776c;
+      --about-terra: #a87855;
+      --about-champagne: #d8c2a4;
+
+      background: var(--about-ivory);
+      color: var(--about-espresso);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .about-editorial *,
+    .about-editorial *::before,
+    .about-editorial *::after {
+      box-sizing: border-box;
+    }
+
+    .about-editorial .about-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      padding: 22px 7%;
+      background: var(--about-ivory);
+      border-bottom: 1px solid rgba(48, 40, 33, .08);
+    }
+
+    .about-editorial .about-logo {
+      color: var(--about-espresso);
+      font-family: "Playfair Display", serif;
+      font-size: 25px;
+      line-height: 1.2;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .about-editorial .about-logo span {
+      display: block;
+      margin-top: 4px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-align: center;
+    }
+
+    .about-editorial .about-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .about-editorial .about-links a {
+      color: var(--about-espresso);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .about-editorial .about-links a:hover,
+    .about-editorial .about-links a.active {
+      color: var(--about-terra);
+    }
+
+    .about-editorial .about-intro {
+      padding: 65px 24px 10px;
+      text-align: center;
+    }
+
+    .about-editorial .about-eyebrow {
+      margin: 0 0 14px;
+      color: var(--about-terra);
+      font-size: 10px;
+      letter-spacing: 3px;
+    }
+
+    .about-editorial .about-intro h1 {
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(42px, 5vw, 62px);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+
+    .about-editorial .about-intro h1 em {
+      color: var(--about-terra);
+      font-weight: 400;
+    }
+
+    .about-editorial .about-intro p:last-child {
+      margin: 16px auto 0;
+      color: var(--about-muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .about-editorial .about-story {
+      display: grid;
+      grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(35px, 7vw, 90px);
+      width: 100%;
+      max-width: 1030px;
+      margin: 0 auto;
+      padding: 55px 30px 90px;
+    }
+
+    .about-editorial .about-photo-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    .about-editorial .about-photo-wrap::before {
+      position: absolute;
+      top: 12px;
+      right: -12px;
+      bottom: -12px;
+      left: 12px;
+      border: 1px solid var(--about-champagne);
+      content: "";
+    }
+
+    .about-editorial .about-photo {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      background: #e6d9c8;
+    }
+
+    .about-editorial .about-photo-caption {
+      position: relative;
+      z-index: 2;
+      margin-top: 20px;
+      color: var(--about-muted);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .about-editorial .about-copy {
+      max-width: 540px;
+    }
+
+    .about-editorial .about-copy h2 {
+      margin: 0 0 22px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 3.4vw, 43px);
+      font-weight: 400;
+      line-height: 1.25;
+    }
+
+    .about-editorial .about-copy h2 em {
+      color: var(--about-terra);
+      font-weight: 400;
+    }
+
+    .about-editorial .about-copy p {
+      margin: 0 0 17px;
+      color: var(--about-muted);
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .about-editorial .about-signature {
+      display: inline-block;
+      margin-top: 9px;
+      padding-top: 13px;
+      border-top: 1px solid var(--about-champagne);
+      color: var(--about-espresso);
+      font-family: "Playfair Display", serif;
+      font-size: 19px;
+      font-style: italic;
+    }
+
+    .about-editorial .about-values {
+      padding: 65px 7%;
+      background: #eee5d8;
+      text-align: center;
+    }
+
+    .about-editorial .about-values h2 {
+      margin: 0 0 35px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 4vw, 42px);
+      font-weight: 400;
+    }
+
+    .about-editorial .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 35px;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .about-editorial .value-item {
+      padding-top: 20px;
+      border-top: 1px solid var(--about-champagne);
+    }
+
+    .about-editorial .value-number {
+      color: var(--about-terra);
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    .about-editorial .value-item h3 {
+      margin: 10px 0;
+      font-family: "Playfair Display", serif;
+      font-size: 23px;
+      font-weight: 400;
+    }
+
+    .about-editorial .value-item p {
+      margin: 0;
+      color: var(--about-muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .about-editorial .about-cta {
+      padding: 75px 24px;
+      background: var(--about-paper);
+      text-align: center;
+    }
+
+    .about-editorial .about-cta h2 {
+      margin: 10px 0 25px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 400;
+    }
+
+    .about-editorial .about-button {
+      display: inline-block;
+      padding: 15px 23px;
+      border: 1px solid var(--about-espresso);
+      background: var(--about-espresso);
+      color: var(--about-paper);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      transition: .25s ease;
+    }
+
+    .about-editorial .about-button:hover {
+      background: transparent;
+      color: var(--about-espresso);
+    }
+
+    .about-editorial .about-footer {
+      padding: 27px 7%;
+      background: var(--about-espresso);
+      color: var(--about-paper);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    @media (max-width: 700px) {
+      .about-editorial .about-nav {
+        flex-direction: column;
+        gap: 18px;
+        padding: 20px 5%;
+      }
+
+      .about-editorial .about-links {
+        justify-content: center;
+        gap: 13px 17px;
+      }
+
+      .about-editorial .about-links a {
+        font-size: 9px;
+      }
+
+      .about-editorial .about-intro {
+        padding-top: 50px;
+      }
+
+      .about-editorial .about-story {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 40px 8% 65px;
+      }
+
+      .about-editorial .about-photo-wrap {
+        max-width: 210px;
+      }
+
+      .about-editorial .about-copy {
+        max-width: 520px;
+        margin: 0 auto;
+      }
+
+      .about-editorial .about-copy h2 {
+        font-size: 34px;
+      }
+
+      .about-editorial .value-grid {
+        grid-template-columns: 1fr;
+        gap: 27px;
+      }
+
+      .about-editorial .about-values {
+        padding: 55px 8%;
+      }
+    }
+  </style>
+</head>
+
+<body class="about-editorial">
+
+  <nav class="about-nav">
+    <a class="about-logo" href="index.html">
+      KYRA PICTURE
+      <span>PHOTOGRAPHY</span>
+    </a>
+
+    <div class="about-links">
       <a href="index.html">Home</a>
       <a href="portfolio.html">Portfolio</a>
       <a href="pricelist.html">Pricelist</a>
@@ -21,52 +349,83 @@
     </div>
   </nav>
 
-  <header class="page-header">
-    <p class="eyebrow">GET TO KNOW US</p>
-    <h1>Every Story Matters.</h1>
-    <p class="muted">
-      More than photographs, we capture the feelings behind every moment.
-    </p>
+  <header class="about-intro">
+    <p class="about-eyebrow">A LITTLE ABOUT US</p>
+    <h1>More than just<br><em>a photograph.</em></h1>
+    <p>Every love story deserves to be remembered.</p>
   </header>
 
-  <main class="about-content">
+  <main>
+    <section class="about-story">
+      <div>
+        <div class="about-photo-wrap">
+          <img
+            class="about-photo"
+            src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=700&q=85"
+            alt="Photography and camera"
+            loading="lazy">
+        </div>
+        <p class="about-photo-caption">Behind the lens · Kyra Picture</p>
+      </div>
 
+      <div class="about-copy">
+        <p class="about-eyebrow">OUR PHILOSOPHY</p>
+        <h2>We capture the moments.<br><em>You keep the memories.</em></h2>
 
+        <p>
+          At Kyra Picture, we believe photography is more than creating
+          beautiful images. It is about preserving the feelings, little
+          gestures, and meaningful moments that make every story unique.
+        </p>
 
-    <div class="about-text">
-      <p class="eyebrow">OUR STORY</p>
-      <h2>Your Story, Beautifully Captured.</h2>
+        <p>
+          From the quiet moments before a wedding to the laughter shared
+          during a prewedding session, we aim to capture your story in a
+          way that feels natural, personal, and timeless.
+        </p>
 
-      <p>
-        At Kyra Picture, we believe every meaningful moment has a story
-        worth remembering. From the excitement of an engagement to the
-        emotion of a wedding day, we turn fleeting moments into lasting
-        memories.
-      </p>
+        <p>
+          Because years from now, we want your photographs to bring you
+          right back to how that moment felt.
+        </p>
 
-      <p>
-        Our approach focuses on genuine emotions, thoughtful details,
-        and timeless photographs that you'll be happy to revisit for years
-        to come.
-      </p>
+        <div class="about-signature">Your story, beautifully captured.</div>
+      </div>
+    </section>
 
-      <p>
-        Based in Bekasi, Indonesia, we're ready to be part of your
-        special moments.
-      </p>
+    <section class="about-values">
+      <p class="about-eyebrow">WHAT MATTERS TO US</p>
+      <h2>Our approach to your story.</h2>
 
-      <a class="button" href="portfolio.html">EXPLORE OUR WORK ↗</a>
-    </div>
+      <div class="value-grid">
+        <article class="value-item">
+          <span class="value-number">01</span>
+          <h3>Real Moments</h3>
+          <p>Natural expressions and genuine emotions, captured without losing the feeling of the moment.</p>
+        </article>
 
+        <article class="value-item">
+          <span class="value-number">02</span>
+          <h3>Thoughtful Details</h3>
+          <p>From the smallest gestures to the atmosphere around you, every detail has a place in your story.</p>
+        </article>
+
+        <article class="value-item">
+          <span class="value-number">03</span>
+          <h3>Timeless Memories</h3>
+          <p>Photographs made to feel just as meaningful today as they will be many years from now.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-cta">
+      <p class="about-eyebrow">LET'S CREATE SOMETHING MEANINGFUL</p>
+      <h2>We'd love to hear your story.</h2>
+      <a class="about-button" href="contact.html">GET IN TOUCH ↗</a>
+    </section>
   </main>
 
-  <section class="home-contact">
-    <p class="eyebrow">YOUR STORY STARTS HERE</p>
-    <h2>Let's create something meaningful.</h2>
-    <a class="button" href="contact.html">GET IN TOUCH ↗</a>
-  </section>
-
-  <footer>
+  <footer class="about-footer">
     © 2026 Kyra Picture. Your Story, Beautifully Captured.
   </footer>
 
