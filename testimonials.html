@@ -99,7 +99,9 @@
       object-fit:cover;
     }
 
-    .testimonials-page .testimonial-person-info { min-width:0; }
+    .testimonials-page .testimonial-person-info {
+      min-width:0;
+    }
 
     .testimonials-page .testimonial-author-name {
       margin:0 0 5px;
@@ -223,7 +225,9 @@
       font-weight:400;
     }
 
-    .testimonials-page .testimonials-cta .eyebrow { margin-bottom:15px; }
+    .testimonials-page .testimonials-cta .eyebrow {
+      margin-bottom:15px;
+    }
 
     .testimonials-page .testimonials-cta .button {
       display:inline-block;
@@ -255,6 +259,7 @@
         grid-template-columns:repeat(2,minmax(0,1fr));
         gap:16px;
       }
+
       .testimonials-page .testimonial-card {
         min-height:330px;
         padding:25px 20px;
@@ -265,19 +270,28 @@
       .testimonials-page .testimonials-hero {
         padding:60px 20px 40px;
       }
+
       .testimonials-page .testimonials-section {
         padding:0 20px 65px;
       }
+
       .testimonials-page .testimonials-grid {
         grid-template-columns:1fr;
         gap:16px;
       }
+
       .testimonials-page .testimonial-card {
         min-height:280px;
         padding:28px 25px;
       }
-      .testimonials-page .testimonial-quote { font-size:20px; }
-      .testimonials-page .testimonials-cta { padding:55px 20px; }
+
+      .testimonials-page .testimonial-quote {
+        font-size:20px;
+      }
+
+      .testimonials-page .testimonials-cta {
+        padding:55px 20px;
+      }
     }
   </style>
 </head>
@@ -317,7 +331,12 @@
   <section class="testimonials-cta">
     <p class="eyebrow">YOUR STORY COULD BE NEXT</p>
     <h2>Let's create something meaningful.</h2>
-    <a class="button" href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">
+    <a
+      class="button"
+      href="https://wa.me/6289519847571"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       LET'S TALK ↗
     </a>
   </section>
@@ -331,7 +350,9 @@
     "use strict";
 
     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQw6Uzj26ys6CvMZjGWeVMtzQJCg7k3RisPhPLE5Tcer9LU4SZg6eApVXkPqww2NKiFdCP2XGV9VCIR/pub?output=csv";
-    const PER_PAGE = 12;
+
+    // Maksimal 6 testimoni dalam satu halaman
+    const PER_PAGE = 6;
 
     const grid = document.getElementById("testimonials-grid");
     const pagination = document.getElementById("pagination");
@@ -361,7 +382,11 @@
         } else if ((ch === "\n" || ch === "\r") && !quoted) {
           if (ch === "\r" && next === "\n") i++;
           row.push(value);
-          if (row.some(cell => cell.trim() !== "")) rows.push(row);
+
+          if (row.some(cell => cell.trim() !== "")) {
+            rows.push(row);
+          }
+
           row = [];
           value = "";
         } else {
@@ -370,7 +395,11 @@
       }
 
       row.push(value);
-      if (row.some(cell => cell.trim() !== "")) rows.push(row);
+
+      if (row.some(cell => cell.trim() !== "")) {
+        rows.push(row);
+      }
+
       if (!rows.length) return [];
 
       const headers = rows.shift().map(header =>
@@ -379,9 +408,11 @@
 
       return rows.map(cells => {
         const item = {};
+
         headers.forEach((header, index) => {
           item[header] = (cells[index] || "").trim();
         });
+
         return item;
       });
     }
@@ -389,15 +420,18 @@
     function getField(item, names) {
       for (const name of names) {
         const key = name.toLowerCase();
+
         if (item[key] !== undefined && item[key] !== "") {
           return item[key];
         }
       }
+
       return "";
     }
 
     function getPhotoURL(value) {
       const input = String(value || "").trim();
+
       if (!input) return "";
 
       try {
@@ -410,7 +444,9 @@
           let id = url.searchParams.get("id");
           const match = url.pathname.match(/\/file\/d\/([^/]+)/);
 
-          if (!id && match) id = match[1];
+          if (!id && match) {
+            id = match[1];
+          }
 
           if (id) {
             return "https://drive.google.com/uc?export=view&id=" +
@@ -425,14 +461,33 @@
     }
 
     function makeCard(item, index) {
-      const name = getField(item, ["nama pasangan", "nama", "pasangan"]) || "Couple";
-      const photo = getPhotoURL(getField(item, ["foto", "photo", "foto pasangan"]));
-      const service = getField(item, ["layanan", "service"]) || "Photography";
-      const date = getField(item, ["tanggal event", "tanggal acara", "tanggal", "event date"]);
-      const review = getField(item, ["testimoni", "testimonial", "review"]);
-      const rawRating = Number(getField(item, ["rating", "bintang"]));
+      const name = getField(item, [
+        "nama pasangan", "nama", "pasangan"
+      ]) || "Couple";
+
+      const photo = getPhotoURL(getField(item, [
+        "foto", "photo", "foto pasangan"
+      ]));
+
+      const service = getField(item, [
+        "layanan", "service"
+      ]) || "Photography";
+
+      const date = getField(item, [
+        "tanggal event", "tanggal acara", "tanggal", "event date"
+      ]);
+
+      const review = getField(item, [
+        "testimoni", "testimonial", "review"
+      ]);
+
+      const rawRating = Number(getField(item, [
+        "rating", "bintang"
+      ]));
+
       const rating = Number.isFinite(rawRating)
-        ? Math.max(0, Math.min(5, Math.round(rawRating))) : 5;
+        ? Math.max(0, Math.min(5, Math.round(rawRating)))
+        : 5;
 
       const card = document.createElement("article");
       card.className = "testimonial-card";
@@ -440,7 +495,8 @@
       const person = document.createElement("div");
       person.className = "testimonial-person";
 
-      const initials = name.split(/\s*&\s*|\s+/)
+      const initials = name
+        .split(/\s*&\s*|\s+/)
         .filter(Boolean)
         .slice(0, 2)
         .map(part => part.charAt(0).toUpperCase())
@@ -456,8 +512,15 @@
       avatar.loading = "lazy";
 
       if (photo) {
-        avatar.onload = () => { fallback.style.display = "none"; };
-        avatar.onerror = () => { avatar.style.display = "none"; };
+        avatar.onload = () => {
+          fallback.style.display = "none";
+        };
+
+        avatar.onerror = () => {
+          avatar.style.display = "none";
+          fallback.style.display = "flex";
+        };
+
         avatar.src = photo;
       } else {
         avatar.style.display = "none";
@@ -472,16 +535,20 @@
 
       const stars = document.createElement("div");
       stars.className = "testimonial-stars";
-      stars.setAttribute("aria-label", rating + " out of 5 stars");
-      stars.textContent = "★".repeat(rating) + "☆".repeat(5 - rating);
+      stars.setAttribute(
+        "aria-label",
+        rating + " out of 5 stars"
+      );
+      stars.textContent =
+        "★".repeat(rating) + "☆".repeat(5 - rating);
 
       info.append(author, stars);
       person.append(avatar, fallback, info);
 
       const number = document.createElement("p");
       number.className = "testimonial-number";
-      number.textContent = String(index + 1).padStart(2, "0") +
-        " — " + service;
+      number.textContent =
+        String(index + 1).padStart(2, "0") + " — " + service;
 
       const mark = document.createElement("div");
       mark.className = "testimonial-quote-mark";
@@ -490,13 +557,16 @@
 
       const quote = document.createElement("p");
       quote.className = "testimonial-quote";
-      quote.textContent = review || "Thank you for trusting Kyra Picture.";
+      quote.textContent =
+        review || "Thank you for trusting Kyra Picture.";
 
       const authorFooter = document.createElement("div");
       authorFooter.className = "testimonial-author";
 
       const meta = document.createElement("p");
-      meta.textContent = date ? service + " · " + date : service;
+      meta.textContent = date
+        ? service + " · " + date
+        : service;
 
       authorFooter.appendChild(meta);
       card.append(person, number, mark, quote, authorFooter);
@@ -505,18 +575,27 @@
     }
 
     function renderPage() {
-      const totalPages = Math.max(1, Math.ceil(testimonials.length / PER_PAGE));
+      const totalPages = Math.max(
+        1,
+        Math.ceil(testimonials.length / PER_PAGE)
+      );
+
       currentPage = Math.min(currentPage, totalPages);
 
       const start = (currentPage - 1) * PER_PAGE;
-      const pageItems = testimonials.slice(start, start + PER_PAGE);
+      const pageItems = testimonials.slice(
+        start,
+        start + PER_PAGE
+      );
 
       grid.innerHTML = "";
 
       if (!pageItems.length) {
         const message = document.createElement("p");
         message.className = "testimonial-message";
-        message.textContent = "Belum ada testimoni yang dipublikasikan.";
+        message.textContent =
+          "Belum ada testimoni yang dipublikasikan.";
+
         grid.appendChild(message);
       } else {
         pageItems.forEach((item, index) => {
@@ -528,6 +607,7 @@
 
       function addButton(label, page, disabled, active) {
         const button = document.createElement("button");
+
         button.type = "button";
         button.textContent = label;
         button.disabled = disabled;
@@ -540,23 +620,40 @@
         button.addEventListener("click", () => {
           currentPage = page;
           renderPage();
-          document.querySelector(".testimonials-hero").scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
+
+          document.querySelector(".testimonials-hero")
+            .scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
         });
 
         pagination.appendChild(button);
       }
 
       if (testimonials.length > 0) {
-        addButton("←", currentPage - 1, currentPage === 1, false);
+        addButton(
+          "←",
+          currentPage - 1,
+          currentPage === 1,
+          false
+        );
 
         for (let page = 1; page <= totalPages; page++) {
-          addButton(String(page), page, false, page === currentPage);
+          addButton(
+            String(page),
+            page,
+            false,
+            page === currentPage
+          );
         }
 
-        addButton("→", currentPage + 1, currentPage === totalPages, false);
+        addButton(
+          "→",
+          currentPage + 1,
+          currentPage === totalPages,
+          false
+        );
       }
 
       pageInfo.textContent = testimonials.length
@@ -569,31 +666,39 @@
     fetch(CSV_URL, { cache: "no-store" })
       .then(response => {
         if (!response.ok) {
-          throw new Error("Google Sheets CSV could not be loaded");
+          throw new Error(
+            "Google Sheets CSV could not be loaded"
+          );
         }
+
         return response.text();
       })
       .then(csv => {
         const rows = parseCSV(csv);
 
         testimonials = rows.filter(item =>
-          getField(item, ["status", "status publikasi"])
-            .trim().toLowerCase() === "published"
+          getField(item, [
+            "status", "status publikasi"
+          ]).trim().toLowerCase() === "published"
         );
 
         currentPage = 1;
         renderPage();
       })
       .catch(error => {
-        console.error("Testimonials could not be loaded:", error);
+        console.error(
+          "Testimonials could not be loaded:",
+          error
+        );
+
         grid.innerHTML = "";
 
         const message = document.createElement("p");
         message.className = "testimonial-message";
         message.textContent =
           "Testimoni belum bisa dimuat. Periksa koneksi atau publikasi Google Sheets.";
-        grid.appendChild(message);
 
+        grid.appendChild(message);
         pagination.innerHTML = "";
         pageInfo.textContent = "";
       });
