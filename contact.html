@@ -1,18 +1,362 @@
-
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Contact | Kyra Picture</title>
   <meta name="description" content="Get in touch with Kyra Picture for wedding, prewedding, and engagement photography.">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
 
-  <nav class="navbar">
-    <a class="logo" href="index.html">KYRA <span>PICTURE</span></a>
-    <div class="nav-links">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body.contact-editorial {
+      margin: 0;
+      background: #f5f0e7;
+      color: #302821;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .contact-editorial *,
+    .contact-editorial *::before,
+    .contact-editorial *::after {
+      box-sizing: border-box;
+    }
+
+    .contact-editorial a {
+      text-decoration: none;
+    }
+
+    /* HEADER */
+    .contact-nav {
+      width: 100%;
+      min-height: 88px;
+      padding: 20px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      border-bottom: 1px solid #e5dbce;
+      background: #f5f0e7;
+    }
+
+    .contact-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      color: #302821;
+      flex-shrink: 0;
+    }
+
+    .contact-brand strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 23px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+    }
+
+    .contact-brand span {
+      color: #81776c;
+      font-size: 9px;
+      letter-spacing: 3px;
+    }
+
+    .contact-nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 27px;
+      flex-wrap: wrap;
+    }
+
+    .contact-nav-links a {
+      color: #655b50;
+      font-size: 12px;
+      transition: color 0.2s ease;
+    }
+
+    .contact-nav-links a:hover,
+    .contact-nav-links a.active {
+      color: #a87855;
+    }
+
+    /* PAGE INTRO */
+    .contact-hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 88px 24px 62px;
+      text-align: center;
+    }
+
+    .contact-eyebrow {
+      margin: 0 0 20px;
+      color: #a87855;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      line-height: 1.8;
+    }
+
+    .contact-hero h1 {
+      margin: 0;
+      color: #302821;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6vw, 66px);
+      font-weight: 400;
+      line-height: 1.16;
+      letter-spacing: -1.5px;
+    }
+
+    .contact-hero .contact-subtitle {
+      max-width: 470px;
+      margin: 22px auto 0;
+      color: #81776c;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    /* CONTACT CONTENT */
+    .contact-main {
+      width: min(100% - 48px, 1000px);
+      margin: 0 auto;
+      padding: 0 0 95px;
+    }
+
+    .contact-section-heading {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .contact-section-heading h2 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(27px, 4vw, 38px);
+      font-weight: 400;
+      line-height: 1.35;
+    }
+
+    .contact-section-heading > p:last-child {
+      margin: 12px auto 0;
+      max-width: 540px;
+      color: #81776c;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .contact-methods {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .contact-method {
+      min-width: 0;
+      min-height: 175px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 28px 30px;
+      border: 1px solid #e5dbce;
+      border-radius: 3px;
+      background: #fffdf9;
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .contact-method:hover {
+      transform: translateY(-3px);
+      border-color: #d8c2a4;
+      background: #ffffff;
+    }
+
+    .contact-method-label {
+      margin-bottom: 15px;
+      color: #a87855;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .contact-method h3 {
+      margin: 0;
+      color: #302821;
+      font-family: 'Playfair Display', serif;
+      font-size: 25px;
+      font-weight: 400;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-method p {
+      margin: 9px 0 0;
+      color: #81776c;
+      font-size: 12px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    /* CLOSING CTA */
+    .contact-cta {
+      padding: 66px 24px 70px;
+      background: #302821;
+      text-align: center;
+    }
+
+    .contact-cta .contact-eyebrow {
+      color: #d8c2a4;
+    }
+
+    .contact-cta h2 {
+      max-width: 650px;
+      margin: 0 auto 28px;
+      color: #f5f0e7;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(29px, 4.5vw, 45px);
+      font-weight: 400;
+      line-height: 1.35;
+    }
+
+    .contact-cta-button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 25px;
+      border: 1px solid #d8c2a4;
+      color: #f5f0e7;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .contact-cta-button:hover {
+      background: #d8c2a4;
+      color: #302821;
+    }
+
+    /* FOOTER */
+    .contact-footer {
+      padding: 23px 20px;
+      background: #302821;
+      border-top: 1px solid rgba(245, 240, 231, 0.15);
+      color: #c5b9aa;
+      text-align: center;
+      font-size: 10px;
+      line-height: 1.8;
+      letter-spacing: 0.4px;
+    }
+
+    /* TABLET & MOBILE */
+    @media (max-width: 760px) {
+      .contact-nav {
+        min-height: auto;
+        padding: 20px 6%;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .contact-nav-links {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 12px 22px;
+      }
+
+      .contact-hero {
+        padding: 66px 22px 48px;
+      }
+
+      .contact-main {
+        width: calc(100% - 36px);
+        padding-bottom: 65px;
+      }
+
+      .contact-methods {
+        gap: 12px;
+      }
+
+      .contact-method {
+        min-height: 160px;
+        padding: 22px 18px;
+      }
+
+      .contact-method h3 {
+        font-size: 21px;
+      }
+
+      .contact-cta {
+        padding: 54px 22px 58px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-brand strong {
+        font-size: 21px;
+      }
+
+      .contact-nav-links {
+        gap: 12px 18px;
+      }
+
+      .contact-nav-links a {
+        font-size: 11px;
+      }
+
+      .contact-hero {
+        padding-top: 55px;
+      }
+
+      .contact-hero h1 {
+        font-size: 40px;
+        letter-spacing: -0.8px;
+      }
+
+      .contact-hero .contact-subtitle {
+        font-size: 13px;
+      }
+
+      .contact-section-heading {
+        margin-bottom: 23px;
+      }
+
+      .contact-methods {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-method {
+        min-height: 145px;
+        padding: 23px 24px;
+      }
+
+      .contact-method h3 {
+        font-size: 24px;
+      }
+
+      .contact-method p {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body class="contact-editorial">
+
+  <nav class="contact-nav">
+    <a class="contact-brand" href="index.html">
+      <strong>KYRA PICTURE</strong>
+      <span>PHOTOGRAPHY</span>
+    </a>
+
+    <div class="contact-nav-links">
       <a href="index.html">Home</a>
       <a href="portfolio.html">Portfolio</a>
       <a href="pricelist.html">Pricelist</a>
@@ -21,47 +365,66 @@
     </div>
   </nav>
 
-  <header class="page-header">
-    <p class="eyebrow">LET'S CONNECT</p>
-    <h1>Let's Talk About Your Story.</h1>
-    <p class="muted">
-      Have a special moment coming up? We'd love to hear about it.
+  <header class="contact-hero">
+    <p class="contact-eyebrow">LET'S CONNECT</p>
+    <h1>Let's Talk About<br>Your Story.</h1>
+    <p class="contact-subtitle">
+      Every beautiful story begins with a conversation.
+      We'd love to hear about the moments that matter to you.
     </p>
   </header>
 
-  <main class="contact-content">
+  <main class="contact-main">
 
-    <div class="contact-intro">
-      <p class="eyebrow">GET IN TOUCH</p>
+    <div class="contact-section-heading">
+      <p class="contact-eyebrow">GET IN TOUCH</p>
       <h2>Let's make it memorable.</h2>
       <p>
-        Tell us about your wedding, prewedding, engagement, or special event.
-        Reach out through any of the channels below.
+        Tell us about your wedding, prewedding, engagement,
+        or special event. Choose the channel that works best for you.
       </p>
     </div>
 
     <div class="contact-methods">
 
-      <a class="contact-item" href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">
-        <span class="contact-label">WHATSAPP</span>
+      <a
+        class="contact-method"
+        href="https://wa.me/6289519847571"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="contact-method-label">01 — WHATSAPP</span>
         <h3>Chat with us ↗</h3>
         <p>Discuss your plans and photography package.</p>
       </a>
 
-      <a class="contact-item" href="https://www.instagram.com/kyra.picture/" target="_blank" rel="noopener noreferrer">
-        <span class="contact-label">INSTAGRAM</span>
+      <a
+        class="contact-method"
+        href="https://www.instagram.com/kyra.picture/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="contact-method-label">02 — INSTAGRAM</span>
         <h3>@kyra.picture ↗</h3>
         <p>Explore our work and latest updates.</p>
       </a>
 
-      <a class="contact-item" href="https://www.tiktok.com/@kyra.picture" target="_blank" rel="noopener noreferrer">
-        <span class="contact-label">TIKTOK</span>
+      <a
+        class="contact-method"
+        href="https://www.tiktok.com/@kyra.picture"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="contact-method-label">03 — TIKTOK</span>
         <h3>@kyra.picture ↗</h3>
-        <p>See our photography moments and stories.</p>
+        <p>Discover our photography moments and stories.</p>
       </a>
 
-      <a class="contact-item" href="mailto:picture.kyra@gmail.com">
-        <span class="contact-label">EMAIL</span>
+      <a
+        class="contact-method"
+        href="mailto:picture.kyra@gmail.com"
+      >
+        <span class="contact-method-label">04 — EMAIL</span>
         <h3>Send us an email ↗</h3>
         <p>picture.kyra@gmail.com</p>
       </a>
@@ -70,16 +433,23 @@
 
   </main>
 
-  <section class="home-contact">
-    <p class="eyebrow">KYRA PICTURE</p>
+  <section class="contact-cta">
+    <p class="contact-eyebrow">KYRA PICTURE</p>
     <h2>Your Story, Beautifully Captured.</h2>
-    <a class="button" href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">LET'S WORK TOGETHER ↗</a>
+    <a
+      class="contact-cta-button"
+      href="https://wa.me/6289519847571"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      LET'S WORK TOGETHER ↗
+    </a>
   </section>
 
-  <footer>
+  <footer class="contact-footer">
     © 2026 Kyra Picture. Your Story, Beautifully Captured.
   </footer>
 
 </body>
 </html>
-
+```
