@@ -4,343 +4,357 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Get to know Kyra Picture, a photography studio capturing meaningful stories and timeless moments.">
-  <title>About Us | Kyra Picture</title>
+
+  <title>About | Kyra Picture</title>
+  <meta name="description" content="Learn about Kyra Picture, a photography brand established in 2020 and based in Bekasi, Indonesia. Specializing in wedding, prewedding, and engagement photography.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 
   <style>
-    .about-editorial {
-      --about-ivory: #f5f0e7;
-      --about-paper: #fffdf9;
-      --about-espresso: #302821;
-      --about-muted: #81776c;
-      --about-terra: #a87855;
-      --about-champagne: #d8c2a4;
-
-      background: var(--about-ivory);
-      color: var(--about-espresso);
-      font-family: "DM Sans", sans-serif;
+    body.about-page {
+      margin: 0;
+      background: #f5f0e7;
+      color: #302821;
+      font-family: 'DM Sans', sans-serif;
     }
 
-    .about-editorial *,
-    .about-editorial *::before,
-    .about-editorial *::after {
+    .about-page *,
+    .about-page *::before,
+    .about-page *::after {
       box-sizing: border-box;
     }
 
-    .about-editorial .about-nav {
+    .about-page a {
+      text-decoration: none;
+    }
+
+    /* NAVIGATION */
+    .about-nav {
+      width: 100%;
+      min-height: 88px;
+      padding: 20px 7%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 25px;
-      padding: 22px 7%;
-      background: var(--about-ivory);
-      border-bottom: 1px solid rgba(48, 40, 33, .08);
+      gap: 28px;
+      border-bottom: 1px solid #e5dbce;
+      background: #f5f0e7;
     }
 
-    .about-editorial .about-logo {
-      color: var(--about-espresso);
-      font-family: "Playfair Display", serif;
-      font-size: 25px;
-      line-height: 1.2;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .about-editorial .about-logo span {
-      display: block;
-      margin-top: 4px;
-      font-family: "DM Sans", sans-serif;
-      font-size: 9px;
-      letter-spacing: 4px;
-      text-align: center;
-    }
-
-    .about-editorial .about-links {
+    .about-brand {
       display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
+      flex-direction: column;
+      gap: 4px;
+      color: #302821;
+      flex-shrink: 0;
     }
 
-    .about-editorial .about-links a {
-      color: var(--about-espresso);
-      font-size: 10px;
-      letter-spacing: 1px;
-      text-decoration: none;
-      text-transform: uppercase;
+    .about-brand strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 23px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
     }
 
-    .about-editorial .about-links a:hover,
-    .about-editorial .about-links a.active {
-      color: var(--about-terra);
-    }
-
-    .about-editorial .about-intro {
-      padding: 65px 24px 10px;
-      text-align: center;
-    }
-
-    .about-editorial .about-eyebrow {
-      margin: 0 0 14px;
-      color: var(--about-terra);
-      font-size: 10px;
+    .about-brand span {
+      color: #81776c;
+      font-size: 9px;
       letter-spacing: 3px;
     }
 
-    .about-editorial .about-intro h1 {
-      margin: 0;
-      font-family: "Playfair Display", serif;
-      font-size: clamp(42px, 5vw, 62px);
-      font-weight: 400;
-      line-height: 1.15;
+    .about-nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 27px;
+      flex-wrap: wrap;
     }
 
-    .about-editorial .about-intro h1 em {
-      color: var(--about-terra);
-      font-weight: 400;
+    .about-nav-links a {
+      color: #655b50;
+      font-size: 12px;
+      transition: color 0.2s ease;
     }
 
-    .about-editorial .about-intro p:last-child {
-      margin: 16px auto 0;
-      color: var(--about-muted);
-      font-size: 13px;
+    .about-nav-links a:hover,
+    .about-nav-links a.active {
+      color: #a87855;
+    }
+
+    /* PAGE INTRO */
+    .about-hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 100px 24px 72px;
+      text-align: center;
+    }
+
+    .about-eyebrow {
+      margin: 0 0 20px;
+      color: #a87855;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3px;
       line-height: 1.8;
     }
 
-    .about-editorial .about-story {
-      display: grid;
-      grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
-      align-items: center;
-      gap: clamp(35px, 7vw, 90px);
-      width: 100%;
-      max-width: 1030px;
-      margin: 0 auto;
-      padding: 55px 30px 90px;
+    .about-hero h1 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 6vw, 64px);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -1px;
     }
 
-    .about-editorial .about-photo-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 280px;
-      margin: 0 auto;
-    }
-
-    .about-editorial .about-photo-wrap::before {
-      position: absolute;
-      top: 12px;
-      right: -12px;
-      bottom: -12px;
-      left: 12px;
-      border: 1px solid var(--about-champagne);
-      content: "";
-    }
-
-    .about-editorial .about-photo {
-      position: relative;
-      z-index: 1;
-      display: block;
-      width: 100%;
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
-      background: #e6d9c8;
-    }
-
-    .about-editorial .about-photo-caption {
-      position: relative;
-      z-index: 2;
-      margin-top: 20px;
-      color: var(--about-muted);
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-align: center;
-      text-transform: uppercase;
-    }
-
-    .about-editorial .about-copy {
+    .about-hero p:last-child {
       max-width: 540px;
+      margin: 22px auto 0;
+      color: #81776c;
+      font-size: 14px;
+      line-height: 1.9;
     }
 
-    .about-editorial .about-copy h2 {
-      margin: 0 0 22px;
-      font-family: "Playfair Display", serif;
-      font-size: clamp(30px, 3.4vw, 43px);
+    /* ABOUT CONTENT */
+    .about-content {
+      width: min(100% - 48px, 1000px);
+      margin: 0 auto;
+      padding: 0 0 95px;
+    }
+
+    .about-card {
+      display: grid;
+      grid-template-columns: 0.8fr 1.5fr;
+      gap: 55px;
+      padding: 48px 0;
+      border-top: 1px solid #dfd3c4;
+    }
+
+    .about-card:last-child {
+      border-bottom: 1px solid #dfd3c4;
+    }
+
+    .about-card-label {
+      margin: 5px 0 0;
+      color: #a87855;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      line-height: 1.8;
+    }
+
+    .about-card h2 {
+      margin: 0 0 18px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 3vw, 34px);
       font-weight: 400;
-      line-height: 1.25;
+      line-height: 1.35;
     }
 
-    .about-editorial .about-copy h2 em {
-      color: var(--about-terra);
-      font-weight: 400;
-    }
-
-    .about-editorial .about-copy p {
-      margin: 0 0 17px;
-      color: var(--about-muted);
+    .about-card p {
+      margin: 0 0 15px;
+      color: #766b60;
       font-size: 13px;
       line-height: 2;
     }
 
-    .about-editorial .about-signature {
-      display: inline-block;
-      margin-top: 9px;
-      padding-top: 13px;
-      border-top: 1px solid var(--about-champagne);
-      color: var(--about-espresso);
-      font-family: "Playfair Display", serif;
-      font-size: 19px;
-      font-style: italic;
+    .about-card p:last-child {
+      margin-bottom: 0;
     }
 
-    .about-editorial .about-values {
-      padding: 65px 7%;
-      background: #eee5d8;
+    /* BRAND DETAILS */
+    .about-details {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 38px;
+    }
+
+    .about-detail {
+      padding: 24px 20px;
+      background: #fffdf9;
+      border: 1px solid #e5dbce;
+    }
+
+    .about-detail span {
+      display: block;
+      margin-bottom: 12px;
+      color: #a87855;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+    }
+
+    .about-detail h3 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    /* CONTACT CTA */
+    .about-cta {
+      padding: 55px 24px 60px;
+      background: #302821;
       text-align: center;
     }
 
-    .about-editorial .about-values h2 {
-      margin: 0 0 35px;
-      font-family: "Playfair Display", serif;
-      font-size: clamp(30px, 4vw, 42px);
+    .about-cta h2 {
+      margin: 0 0 14px;
+      color: #f5f0e7;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 40px);
       font-weight: 400;
+      line-height: 1.4;
     }
 
-    .about-editorial .value-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 35px;
-      max-width: 1000px;
-      margin: 0 auto;
-      text-align: left;
-    }
-
-    .about-editorial .value-item {
-      padding-top: 20px;
-      border-top: 1px solid var(--about-champagne);
-    }
-
-    .about-editorial .value-number {
-      color: var(--about-terra);
-      font-size: 10px;
-      letter-spacing: 2px;
-    }
-
-    .about-editorial .value-item h3 {
-      margin: 10px 0;
-      font-family: "Playfair Display", serif;
-      font-size: 23px;
-      font-weight: 400;
-    }
-
-    .about-editorial .value-item p {
-      margin: 0;
-      color: var(--about-muted);
-      font-size: 12px;
+    .about-cta p {
+      max-width: 480px;
+      margin: 0 auto 25px;
+      color: #c5b9aa;
+      font-size: 13px;
       line-height: 1.9;
     }
 
-    .about-editorial .about-cta {
-      padding: 75px 24px;
-      background: var(--about-paper);
-      text-align: center;
-    }
-
-    .about-editorial .about-cta h2 {
-      margin: 10px 0 25px;
-      font-family: "Playfair Display", serif;
-      font-size: clamp(30px, 4vw, 44px);
-      font-weight: 400;
-    }
-
-    .about-editorial .about-button {
-      display: inline-block;
-      padding: 15px 23px;
-      border: 1px solid var(--about-espresso);
-      background: var(--about-espresso);
-      color: var(--about-paper);
+    .about-cta-button {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 24px;
+      border: 1px solid #d8c2a4;
+      color: #f5f0e7;
       font-size: 10px;
+      font-weight: 600;
       letter-spacing: 1.5px;
-      text-decoration: none;
-      transition: .25s ease;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
-    .about-editorial .about-button:hover {
-      background: transparent;
-      color: var(--about-espresso);
+    .about-cta-button:hover {
+      background: #d8c2a4;
+      color: #302821;
     }
 
-    .about-editorial .about-footer {
-      padding: 27px 7%;
-      background: var(--about-espresso);
-      color: var(--about-paper);
-      font-size: 11px;
+    /* FOOTER */
+    .about-footer {
+      padding: 23px 20px;
+      background: #302821;
+      border-top: 1px solid rgba(245, 240, 231, 0.15);
+      color: #c5b9aa;
       text-align: center;
+      font-size: 10px;
+      line-height: 1.8;
+      letter-spacing: 0.4px;
     }
 
-    @media (max-width: 700px) {
-      .about-editorial .about-nav {
+    /* TABLET */
+    @media (max-width: 760px) {
+      .about-nav {
+        min-height: auto;
+        padding: 20px 6%;
+        align-items: flex-start;
         flex-direction: column;
         gap: 18px;
-        padding: 20px 5%;
       }
 
-      .about-editorial .about-links {
-        justify-content: center;
-        gap: 13px 17px;
+      .about-nav-links {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 12px 22px;
       }
 
-      .about-editorial .about-links a {
-        font-size: 9px;
+      .about-hero {
+        padding: 72px 22px 55px;
       }
 
-      .about-editorial .about-intro {
-        padding-top: 50px;
+      .about-content {
+        width: calc(100% - 40px);
+        padding-bottom: 65px;
       }
 
-      .about-editorial .about-story {
+      .about-card {
         grid-template-columns: 1fr;
-        gap: 40px;
-        padding: 40px 8% 65px;
+        gap: 15px;
+        padding: 32px 0;
       }
 
-      .about-editorial .about-photo-wrap {
-        max-width: 210px;
+      .about-card-label {
+        margin-top: 0;
       }
 
-      .about-editorial .about-copy {
-        max-width: 520px;
-        margin: 0 auto;
+      .about-details {
+        gap: 12px;
       }
 
-      .about-editorial .about-copy h2 {
-        font-size: 34px;
+      .about-detail {
+        padding: 20px 15px;
       }
 
-      .about-editorial .value-grid {
+      .about-detail h3 {
+        font-size: 19px;
+      }
+
+      .about-cta {
+        padding: 48px 22px 52px;
+      }
+    }
+
+    /* MOBILE */
+    @media (max-width: 480px) {
+      .about-brand strong {
+        font-size: 21px;
+      }
+
+      .about-nav-links {
+        gap: 12px 18px;
+      }
+
+      .about-nav-links a {
+        font-size: 11px;
+      }
+
+      .about-hero {
+        padding-top: 58px;
+      }
+
+      .about-hero h1 {
+        font-size: 40px;
+      }
+
+      .about-hero p:last-child {
+        font-size: 13px;
+      }
+
+      .about-content {
+        width: calc(100% - 36px);
+      }
+
+      .about-details {
         grid-template-columns: 1fr;
-        gap: 27px;
       }
 
-      .about-editorial .about-values {
-        padding: 55px 8%;
+      .about-detail {
+        padding: 22px;
       }
     }
   </style>
 </head>
 
-<body class="about-editorial">
+<body class="about-page">
 
+  <!-- NAVIGATION -->
   <nav class="about-nav">
-    <a class="about-logo" href="index.html">
-      KYRA PICTURE
+    <a class="about-brand" href="index.html">
+      <strong>KYRA PICTURE</strong>
       <span>PHOTOGRAPHY</span>
     </a>
 
-    <div class="about-links">
+    <div class="about-nav-links">
       <a href="index.html">Home</a>
       <a href="portfolio.html">Portfolio</a>
       <a href="pricelist.html">Pricelist</a>
@@ -349,85 +363,115 @@
     </div>
   </nav>
 
-  <header class="about-intro">
-    <p class="about-eyebrow">A LITTLE ABOUT US</p>
-    <h1>More than just<br><em>a photograph.</em></h1>
-    <p>Every love story deserves to be remembered.</p>
+  <!-- INTRO -->
+  <header class="about-hero">
+    <p class="about-eyebrow">ABOUT US</p>
+
+    <h1>Kyra Picture</h1>
+
   </header>
 
-  <main>
-    <section class="about-story">
+  <!-- MAIN CONTENT -->
+  <main class="about-content">
+
+    <section class="about-card">
+      <p class="about-card-label">01 — OUR STORY</p>
+
       <div>
-        <div class="about-photo-wrap">
-          <img
-            class="about-photo"
-            src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=700&q=85"
-            alt="Photography and camera"
-            loading="lazy">
+        <h2>Who We Are</h2>
+
+        <p>
+          Established in 2020, Kyra Picture is a photography
+          brand based in Bekasi, Indonesia, specializing in
+          wedding, prewedding, and engagement photography.
+        </p>
+
+        <p>
+          We focus on creating quality photographs with a
+          clean, timeless, and considered visual style,
+          capturing the important moments of every occasion.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-card">
+      <p class="about-card-label">02 — OUR APPROACH</p>
+
+      <div>
+        <h2>Our Approach to Photography</h2>
+
+        <p>
+          Every event has its own character. Our approach
+          combines attention to detail with an appreciation
+          for natural moments and meaningful interactions.
+        </p>
+
+        <p>
+          We aim to deliver photographs that reflect each
+          occasion clearly and can be enjoyed for years to come.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-card">
+      <p class="about-card-label">03 — OUR SERVICES</p>
+
+      <div>
+        <h2>Photography Services</h2>
+
+        <p>
+          Kyra Picture provides photography services for
+          wedding celebrations, prewedding sessions, and
+          engagement events.
+        </p>
+
+        <div class="about-details">
+
+          <div class="about-detail">
+            <span>01</span>
+            <h3>Wedding</h3>
+          </div>
+
+          <div class="about-detail">
+            <span>02</span>
+            <h3>Prewedding</h3>
+          </div>
+
+          <div class="about-detail">
+            <span>03</span>
+            <h3>Engagement</h3>
+          </div>
+
         </div>
-        <p class="about-photo-caption">Behind the lens · Kyra Picture</p>
-      </div>
-
-      <div class="about-copy">
-        <p class="about-eyebrow">OUR PHILOSOPHY</p>
-        <h2>We capture the moments.<br><em>You keep the memories.</em></h2>
-
-        <p>
-          At Kyra Picture, we believe photography is more than creating
-          beautiful images. It is about preserving the feelings, little
-          gestures, and meaningful moments that make every story unique.
-        </p>
-
-        <p>
-          From the quiet moments before a wedding to the laughter shared
-          during a prewedding session, we aim to capture your story in a
-          way that feels natural, personal, and timeless.
-        </p>
-
-        <p>
-          Because years from now, we want your photographs to bring you
-          right back to how that moment felt.
-        </p>
-
-        <div class="about-signature">Your story, beautifully captured.</div>
       </div>
     </section>
 
-    <section class="about-values">
-      <p class="about-eyebrow">WHAT MATTERS TO US</p>
-      <h2>Our approach to your story.</h2>
-
-      <div class="value-grid">
-        <article class="value-item">
-          <span class="value-number">01</span>
-          <h3>Real Moments</h3>
-          <p>Natural expressions and genuine emotions, captured without losing the feeling of the moment.</p>
-        </article>
-
-        <article class="value-item">
-          <span class="value-number">02</span>
-          <h3>Thoughtful Details</h3>
-          <p>From the smallest gestures to the atmosphere around you, every detail has a place in your story.</p>
-        </article>
-
-        <article class="value-item">
-          <span class="value-number">03</span>
-          <h3>Timeless Memories</h3>
-          <p>Photographs made to feel just as meaningful today as they will be many years from now.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="about-cta">
-      <p class="about-eyebrow">LET'S CREATE SOMETHING MEANINGFUL</p>
-      <h2>We'd love to hear your story.</h2>
-      <a class="about-button" href="contact.html">GET IN TOUCH ↗</a>
-    </section>
   </main>
 
+  <!-- CONTACT -->
+  <section class="about-cta">
+    <h2>Let's Talk About Your Plans.</h2>
+
+    <p>
+      Get in touch with Kyra Picture to discuss your event
+      and photography requirements.
+    </p>
+
+    <a
+      class="about-cta-button"
+      href="https://wa.me/6289519847571"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      CONTACT US ↗
+    </a>
+  </section>
+
+  <!-- FOOTER -->
   <footer class="about-footer">
     © 2026 Kyra Picture. Your Story, Beautifully Captured.
   </footer>
 
 </body>
 </html>
+```
