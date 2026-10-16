@@ -11,11 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* Homepage-only styling */
     .home-page {
       --home-ivory: #f5f0e7;
       --home-champagne: #d8c2a4;
@@ -28,9 +26,7 @@
       font-family: "DM Sans", sans-serif;
     }
 
-    .home-page *,
-    .home-page *::before,
-    .home-page *::after {
+    .home-page *, .home-page *::before, .home-page *::after {
       box-sizing: border-box;
     }
 
@@ -78,9 +74,7 @@
       transition: color .2s ease;
     }
 
-    .home-page .main-nav a:hover {
-      color: var(--home-terracotta);
-    }
+    .home-page .main-nav a:hover { color: var(--home-terracotta); }
 
     .home-page .hero-carousel {
       position: relative;
@@ -95,8 +89,7 @@
       color: var(--home-paper);
     }
 
-    .home-page .hero-slides,
-    .home-page .hero-overlay {
+    .home-page .hero-slides, .home-page .hero-overlay {
       position: absolute;
       inset: 0;
     }
@@ -121,12 +114,7 @@
     .home-page .hero-overlay {
       z-index: 1;
       pointer-events: none;
-      background: linear-gradient(
-        90deg,
-        rgba(32, 28, 23, .76) 0%,
-        rgba(32, 28, 23, .42) 52%,
-        rgba(32, 28, 23, .12) 100%
-      );
+      background: linear-gradient(90deg, rgba(32,28,23,.76), rgba(32,28,23,.42) 52%, rgba(32,28,23,.12));
     }
 
     .home-page .hero-content {
@@ -143,9 +131,7 @@
       line-height: 1.8;
     }
 
-    .home-page .hero-content .eyebrow {
-      color: var(--home-champagne);
-    }
+    .home-page .hero-content .eyebrow { color: var(--home-champagne); }
 
     .home-page .hero-content h1 {
       margin: 24px 0;
@@ -163,7 +149,7 @@
 
     .home-page .hero-content .description {
       max-width: 420px;
-      color: rgba(255, 253, 249, .86);
+      color: rgba(255,253,249,.86);
       font-size: 14px;
       line-height: 1.9;
       margin-bottom: 32px;
@@ -179,6 +165,7 @@
       font-size: 10px;
       letter-spacing: 1.5px;
       transition: all .25s ease;
+      cursor: pointer;
     }
 
     .home-page .button:hover {
@@ -202,7 +189,7 @@
       place-items: center;
       width: 42px;
       height: 42px;
-      border: 1px solid rgba(255, 253, 249, .65);
+      border: 1px solid rgba(255,253,249,.65);
       border-radius: 50%;
       background: transparent;
       color: var(--home-paper);
@@ -246,7 +233,7 @@
 
     .home-page .featured-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0,1fr));
       gap: 24px;
       text-align: left;
       margin-bottom: 42px;
@@ -261,15 +248,13 @@
     .home-page .featured-card img {
       display: block;
       width: 100%;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 4/5;
       object-fit: cover;
       background: #e3d8c8;
       transition: filter .5s ease;
     }
 
-    .home-page .featured-card:hover img {
-      filter: brightness(.92);
-    }
+    .home-page .featured-card:hover img { filter: brightness(.92); }
 
     .home-page .featured-card h3 {
       margin: 19px 0 7px;
@@ -285,100 +270,171 @@
       line-height: 1.7;
     }
 
-    .home-page .featured .button {
-      background: var(--home-espresso);
-      border-color: var(--home-espresso);
-      color: var(--home-paper);
-    }
-
-    .home-page .featured .button:hover {
-      background: transparent;
-      color: var(--home-espresso);
-    }
-
-    /* Testimonials section */
-    .home-page .testimonials {
-      padding: 100px 7%;
-      background: #eee5d8;
-      text-align: center;
-    }
-
-    .home-page .testimonials .section-heading {
-      margin-bottom: 48px;
-    }
-
-    .home-page .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-      max-width: 1200px;
-      margin: 0 auto 42px;
-      text-align: left;
-      align-items: stretch;
-    }
-
-    .home-page .testimonial-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-width: 0;
-      min-height: 320px;
-      padding: 32px 27px;
-      background: var(--home-paper);
-      border: 1px solid rgba(216, 194, 164, .55);
-    }
-
-    .home-page .testimonial-mark {
-      margin: 0 0 20px;
-      color: var(--home-terracotta);
-      font-family: "Playfair Display", serif;
-      font-size: 43px;
-      line-height: 1;
-    }
-
-    .home-page .testimonial-quote {
-      margin: 0 0 30px;
-      color: #5f554b;
-      font-family: "Playfair Display", serif;
-      font-size: 19px;
-      font-style: italic;
-      line-height: 1.75;
-    }
-
-    .home-page .testimonial-divider {
-      width: 38px;
-      height: 1px;
-      margin-bottom: 18px;
-      background: var(--home-champagne);
-    }
-
-    .home-page .testimonial-author {
-      margin: 0 0 7px;
-      color: var(--home-espresso);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.3px;
-      text-transform: uppercase;
-    }
-
-    .home-page .testimonial-type {
-      margin: 0;
-      color: var(--home-muted);
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      line-height: 1.8;
-      text-transform: uppercase;
-    }
-
+    .home-page .featured .button,
     .home-page .testimonials .button {
       background: var(--home-espresso);
       border-color: var(--home-espresso);
       color: var(--home-paper);
     }
 
+    .home-page .featured .button:hover,
     .home-page .testimonials .button:hover {
       background: transparent;
       color: var(--home-espresso);
+    }
+
+    /* Google Sheets testimonials carousel */
+    .home-page .testimonials {
+      padding: 100px 7%;
+      background: #eee5d8;
+      text-align: center;
+    }
+
+    .home-page .testimonials .section-heading { margin-bottom: 38px; }
+
+    .home-page .testimonial-carousel {
+      max-width: 1200px;
+      margin: 0 auto 28px;
+    }
+
+    .home-page .testimonial-viewport {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .home-page .testimonial-track {
+      display: flex;
+      align-items: stretch;
+      gap: 22px;
+      transition: transform .45s ease;
+      will-change: transform;
+    }
+
+    .home-page .testimonial-card {
+      display: flex;
+      flex: 0 0 calc((100% - 44px) / 3);
+      flex-direction: column;
+      min-width: 0;
+      min-height: 300px;
+      padding: 25px;
+      background: var(--home-paper);
+      border: 1px solid rgba(216,194,164,.55);
+      text-align: left;
+    }
+
+    .home-page .testimonial-person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 17px;
+    }
+
+    .home-page .testimonial-photo {
+      display: block;
+      flex: 0 0 54px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #e3d8c8;
+    }
+
+    .home-page .testimonial-person-info { min-width: 0; }
+
+    .home-page .testimonial-author {
+      margin: 0 0 5px;
+      color: var(--home-espresso);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      overflow-wrap: anywhere;
+    }
+
+    .home-page .testimonial-stars {
+      color: #a87835;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    .home-page .testimonial-mark {
+      margin: 0 0 5px;
+      color: var(--home-terracotta);
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .home-page .testimonial-quote {
+      flex: 1;
+      margin: 0 0 20px;
+      color: #5f554b;
+      font-family: "Playfair Display", serif;
+      font-size: 16px;
+      font-style: italic;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+      white-space: pre-line;
+    }
+
+    .home-page .testimonial-divider {
+      width: 38px;
+      height: 1px;
+      margin-bottom: 13px;
+      background: var(--home-champagne);
+    }
+
+    .home-page .testimonial-meta {
+      margin: 0;
+      color: var(--home-muted);
+      font-size: 10px;
+      line-height: 1.8;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+    }
+
+    .home-page .testimonial-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      margin: 0 auto 28px;
+    }
+
+    .home-page .testimonial-arrow {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--home-espresso);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--home-espresso);
+      font-size: 18px;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+
+    .home-page .testimonial-arrow:hover:not(:disabled) {
+      background: var(--home-espresso);
+      color: var(--home-paper);
+    }
+
+    .home-page .testimonial-arrow:disabled {
+      opacity: .3;
+      cursor: not-allowed;
+    }
+
+    .home-page .testimonial-status {
+      color: var(--home-muted);
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .home-page .testimonial-message {
+      margin: 25px auto;
+      color: var(--home-muted);
+      font-size: 13px;
+      line-height: 1.8;
     }
 
     .home-page .about-strip {
@@ -393,7 +449,7 @@
     .home-page .about-strip h2 {
       margin: 12px 0 20px;
       font-family: "Playfair Display", serif;
-      font-size: clamp(32px, 4vw, 46px);
+      font-size: clamp(32px,4vw,46px);
       font-weight: 400;
       line-height: 1.2;
     }
@@ -408,7 +464,7 @@
       border-left: 1px solid var(--home-champagne);
       padding-left: 30px;
       font-family: "Playfair Display", serif;
-      font-size: clamp(23px, 3vw, 34px);
+      font-size: clamp(23px,3vw,34px);
       font-style: italic;
       line-height: 1.5;
     }
@@ -446,9 +502,7 @@
       font-size: 11px;
     }
 
-    .home-page .footer-links a:hover {
-      color: var(--home-champagne);
-    }
+    .home-page .footer-links a:hover { color: var(--home-champagne); }
 
     @media (max-width: 800px) {
       .home-page .site-header {
@@ -468,16 +522,16 @@
       }
 
       .home-page .hero-content h1 {
-        font-size: clamp(44px, 10vw, 68px);
+        font-size: clamp(44px,10vw,68px);
       }
 
       .home-page .featured-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2,minmax(0,1fr));
         gap: 28px 18px;
       }
 
-      .home-page .testimonial-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .home-page .testimonial-card {
+        flex-basis: calc((100% - 22px) / 2);
       }
 
       .home-page .about-strip {
@@ -498,18 +552,13 @@
       }
 
       .home-page .hero-content h1 {
-        font-size: clamp(42px, 12vw, 58px);
+        font-size: clamp(42px,12vw,58px);
       }
 
       .home-page .hero-content .description { font-size: 13px; }
 
       .home-page .hero-overlay {
-        background: linear-gradient(
-          0deg,
-          rgba(32, 28, 23, .82) 0%,
-          rgba(32, 28, 23, .43) 75%,
-          rgba(32, 28, 23, .25) 100%
-        );
+        background: linear-gradient(0deg, rgba(32,28,23,.82), rgba(32,28,23,.43) 75%, rgba(32,28,23,.25));
       }
 
       .home-page .hero-controls {
@@ -524,30 +573,14 @@
       }
 
       .home-page .featured { padding: 70px 7%; }
-
-      .home-page .featured-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
-      .home-page .featured-card img { aspect-ratio: 5 / 4; }
-
-      .home-page .testimonials {
-        padding: 70px 7%;
-      }
-
-      .home-page .testimonial-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
+      .home-page .featured-grid { grid-template-columns: 1fr; gap: 32px; }
+      .home-page .featured-card img { aspect-ratio: 5/4; }
+      .home-page .testimonials { padding: 70px 7%; }
 
       .home-page .testimonial-card {
-        min-height: 280px;
-        padding: 29px 25px;
-      }
-
-      .home-page .testimonial-quote {
-        font-size: 18px;
+        flex-basis: 100%;
+        min-height: 260px;
+        padding: 24px;
       }
 
       .home-page .site-footer {
@@ -561,203 +594,438 @@
 
 <body class="home-page">
 
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      KYRA PICTURE
-      <span>PHOTOGRAPHY</span>
-    </a>
+<header class="site-header">
+  <a class="brand" href="index.html">
+    KYRA PICTURE
+    <span>PHOTOGRAPHY</span>
+  </a>
 
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html">HOME</a>
-      <a href="portfolio.html">PORTFOLIO</a>
-      <a href="pricelist.html">PRICELIST</a>
-      <a href="testimonials.html">TESTIMONIALS</a>
-      <a href="about.html">ABOUT</a>
-      <a href="contact.html">CONTACT</a>
-    </nav>
-  </header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">HOME</a>
+    <a href="portfolio.html">PORTFOLIO</a>
+    <a href="pricelist.html">PRICELIST</a>
+    <a href="testimonials.html">TESTIMONIALS</a>
+    <a href="about.html">ABOUT</a>
+    <a href="contact.html">CONTACT</a>
+  </nav>
+</header>
 
-  <main>
-    <section class="hero hero-carousel" aria-label="Featured photography">
-      <div class="hero-slides">
-        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=90')" role="img" aria-label="Wedding celebration"></div>
-        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=2200&q=90')" role="img" aria-label="Romantic prewedding photography"></div>
-        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=2200&q=90')" role="img" aria-label="Wedding moments"></div>
+<main>
+  <section class="hero hero-carousel" aria-label="Featured photography">
+    <div class="hero-slides">
+      <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=90')" role="img" aria-label="Wedding celebration"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=2200&q=90')" role="img" aria-label="Romantic prewedding photography"></div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=2200&q=90')" role="img" aria-label="Wedding moments"></div>
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <p class="eyebrow">WEDDING · PREWEDDING · ENGAGEMENT</p>
+      <h1>Your Story,<br><em>Beautifully</em><br>Captured.</h1>
+      <p class="description">Turning your most meaningful moments into timeless photographs.</p>
+      <a class="button" href="portfolio.html">EXPLORE OUR WORK ↗</a>
+    </div>
+
+    <div class="hero-controls">
+      <button class="hero-arrow hero-prev" type="button" aria-label="Previous photo">←</button>
+      <span class="hero-counter" aria-live="polite"><span id="hero-current">01</span> / 03</span>
+      <button class="hero-arrow hero-next" type="button" aria-label="Next photo">→</button>
+    </div>
+  </section>
+
+  <section class="featured" id="stories">
+    <div class="section-heading">
+      <p class="eyebrow">SELECTED STORIES</p>
+      <h2>A glimpse of our work.</h2>
+      <p>Honest moments, thoughtful details, and memories made to last.</p>
+    </div>
+
+    <div class="featured-grid">
+      <a class="featured-card" href="wedding.html">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85" alt="Wedding photography" loading="lazy">
+        <h3>Wedding Stories ↗</h3>
+        <p>For the beginning of forever.</p>
+      </a>
+
+      <a class="featured-card" href="prewedding.html">
+        <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1000&q=85" alt="Prewedding photography" loading="lazy">
+        <h3>Prewedding Moments ↗</h3>
+        <p>Your love story, captured before the big day.</p>
+      </a>
+
+      <a class="featured-card" href="engagement.html">
+        <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=85" alt="Engagement photography" loading="lazy">
+        <h3>Engagement Stories ↗</h3>
+        <p>A little promise, a beautiful beginning.</p>
+      </a>
+    </div>
+
+    <a class="button" href="portfolio.html">VIEW ALL PORTFOLIO ↗</a>
+  </section>
+
+  <section class="testimonials" id="testimonials">
+    <div class="section-heading">
+      <p class="eyebrow">KIND WORDS</p>
+      <h2>Love, in Their Own Words.</h2>
+      <p>A few words from the people who trusted us to capture their stories.</p>
+    </div>
+
+    <div class="testimonial-carousel">
+      <div class="testimonial-viewport" id="home-testimonial-viewport">
+        <div class="testimonial-track" id="home-testimonial-track">
+          <p class="testimonial-message">Loading testimonials...</p>
+        </div>
       </div>
+    </div>
 
-      <div class="hero-overlay"></div>
+    <div class="testimonial-controls">
+      <button class="testimonial-arrow" id="testimonial-prev" type="button" aria-label="Previous testimonials">←</button>
+      <span class="testimonial-status" id="testimonial-status" aria-live="polite">Loading</span>
+      <button class="testimonial-arrow" id="testimonial-next" type="button" aria-label="Next testimonials">→</button>
+    </div>
 
-      <div class="hero-content">
-        <p class="eyebrow">WEDDING · PREWEDDING · ENGAGEMENT</p>
-        <h1>Your Story,<br><em>Beautifully</em><br>Captured.</h1>
-        <p class="description">Turning your most meaningful moments into timeless photographs.</p>
-        <a class="button" href="portfolio.html">EXPLORE OUR WORK ↗</a>
-      </div>
+    <a class="button" href="testimonials.html">VIEW ALL TESTIMONIALS ↗</a>
+  </section>
 
-      <div class="hero-controls">
-        <button class="hero-arrow hero-prev" type="button" aria-label="Previous photo">←</button>
-        <span class="hero-counter" aria-live="polite"><span id="hero-current">01</span> / 03</span>
-        <button class="hero-arrow hero-next" type="button" aria-label="Next photo">→</button>
-      </div>
-    </section>
-
-    <section class="featured" id="stories">
-      <div class="section-heading">
-        <p class="eyebrow">SELECTED STORIES</p>
-        <h2>A glimpse of our work.</h2>
-        <p>Honest moments, thoughtful details, and memories made to last.</p>
-      </div>
-
-      <div class="featured-grid">
-        <a class="featured-card" href="wedding.html">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85" alt="Wedding photography" loading="lazy">
-          <h3>Wedding Stories ↗</h3>
-          <p>For the beginning of forever.</p>
-        </a>
-
-        <a class="featured-card" href="prewedding.html">
-          <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1000&q=85" alt="Prewedding photography" loading="lazy">
-          <h3>Prewedding Moments ↗</h3>
-          <p>Your love story, captured before the big day.</p>
-        </a>
-
-        <a class="featured-card" href="engagement.html">
-          <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=85" alt="Engagement photography" loading="lazy">
-          <h3>Engagement Stories ↗</h3>
-          <p>A little promise, a beautiful beginning.</p>
-        </a>
-      </div>
-
-      <a class="button" href="portfolio.html">VIEW ALL PORTFOLIO ↗</a>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-      <div class="section-heading">
-        <p class="eyebrow">KIND WORDS</p>
-        <h2>Love, in Their Own Words.</h2>
-        <p>A few words from the people who trusted us to capture their stories.</p>
-      </div>
-
-      <div class="testimonial-grid">
-        <article class="testimonial-card">
-          <div>
-            <p class="testimonial-mark" aria-hidden="true">“</p>
-            <blockquote class="testimonial-quote">
-              Your real client testimonial will go here. Share what the couple loved about their photography experience.
-            </blockquote>
-          </div>
-          <div>
-            <div class="testimonial-divider"></div>
-            <p class="testimonial-author">Couple's Name</p>
-            <p class="testimonial-type">Wedding Photography</p>
-          </div>
-        </article>
-
-        <article class="testimonial-card">
-          <div>
-            <p class="testimonial-mark" aria-hidden="true">“</p>
-            <blockquote class="testimonial-quote">
-              Add another genuine review here, highlighting the moments and memories captured during their session.
-            </blockquote>
-          </div>
-          <div>
-            <div class="testimonial-divider"></div>
-            <p class="testimonial-author">Couple's Name</p>
-            <p class="testimonial-type">Prewedding Photography</p>
-          </div>
-        </article>
-
-        <article class="testimonial-card">
-          <div>
-            <p class="testimonial-mark" aria-hidden="true">“</p>
-            <blockquote class="testimonial-quote">
-              This space is for another client's own words about their experience with Kyra Picture.
-            </blockquote>
-          </div>
-          <div>
-            <div class="testimonial-divider"></div>
-            <p class="testimonial-author">Couple's Name</p>
-            <p class="testimonial-type">Engagement Photography</p>
-          </div>
-        </article>
-      </div>
-
-      <a class="button" href="testimonials.html">VIEW ALL TESTIMONIALS ↗</a>
-    </section>
-
-    <section class="about-strip">
-      <div>
-        <p class="eyebrow">THE KYRA APPROACH</p>
-        <h2>Photographs that feel like you.</h2>
-        <p>We believe the most meaningful photographs come from real connections, little gestures, and the moments in between. Our approach is thoughtful, natural, and timeless.</p>
-        <a class="button" href="about.html">GET TO KNOW US ↗</a>
-      </div>
-
-      <div class="about-note">“Your story deserves to be remembered beautifully.”</div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
+  <section class="about-strip">
     <div>
-      <div class="footer-brand">Kyra Picture</div>
-      <div class="footer-copy">Your Story, Beautifully Captured.</div>
+      <p class="eyebrow">THE KYRA APPROACH</p>
+      <h2>Photographs that feel like you.</h2>
+      <p>We believe the most meaningful photographs come from real connections, little gestures, and the moments in between. Our approach is thoughtful, natural, and timeless.</p>
+      <a class="button" href="about.html">GET TO KNOW US ↗</a>
     </div>
+    <div class="about-note">“Your story deserves to be remembered beautifully.”</div>
+  </section>
+</main>
 
-    <div class="footer-links">
-      <a href="https://www.instagram.com/kyra.picture/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
-      <a href="https://www.tiktok.com/@kyra.picture" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
-      <a href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
-    </div>
-  </footer>
+<footer class="site-footer">
+  <div>
+    <div class="footer-brand">Kyra Picture</div>
+    <div class="footer-copy">Your Story, Beautifully Captured.</div>
+  </div>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/kyra.picture/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+    <a href="https://www.tiktok.com/@kyra.picture" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
+    <a href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+  </div>
+</footer>
 
-  <script>
-    (function () {
-      const carousel = document.querySelector(".hero-carousel");
-      if (!carousel) return;
+<script>
+(function () {
+  /* Hero carousel */
+  const carousel = document.querySelector(".hero-carousel");
 
-      const slides = carousel.querySelectorAll(".hero-slide");
-      const currentCounter = document.getElementById("hero-current");
-      const prevButton = carousel.querySelector(".hero-prev");
-      const nextButton = carousel.querySelector(".hero-next");
+  if (carousel) {
+    const slides = carousel.querySelectorAll(".hero-slide");
+    const counter = document.getElementById("hero-current");
+    const prev = carousel.querySelector(".hero-prev");
+    const next = carousel.querySelector(".hero-next");
+    let current = 0;
+    let touchStartX = 0;
 
-      if (!slides.length || !currentCounter || !prevButton || !nextButton) return;
+    function showSlide(index) {
+      slides[current].classList.remove("active");
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add("active");
+      counter.textContent = String(current + 1).padStart(2, "0");
+    }
 
-      let currentSlide = 0;
-      let touchStartX = 0;
+    prev.addEventListener("click", () => showSlide(current - 1));
+    next.addEventListener("click", () => showSlide(current + 1));
 
-      function showSlide(index) {
-        slides[currentSlide].classList.remove("active");
-        currentSlide = (index + slides.length) % slides.length;
-        slides[currentSlide].classList.add("active");
-        currentCounter.textContent = String(currentSlide + 1).padStart(2, "0");
+    carousel.addEventListener("touchstart", event => {
+      touchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
+
+    carousel.addEventListener("touchend", event => {
+      const difference = event.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(difference) > 50) {
+        showSlide(current + (difference < 0 ? 1 : -1));
+      }
+    }, { passive: true });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "ArrowLeft") showSlide(current - 1);
+      if (event.key === "ArrowRight") showSlide(current + 1);
+    });
+  }
+
+  /* Google Sheets data */
+  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQw6Uzj26ys6CvMZjGWeVMtzQJCg7k3RisPhPLE5Tcer9LU4SZg6eApVXkPqww2NKiFdCP2XGV9VCIR/pub?output=csv";
+
+  const track = document.getElementById("home-testimonial-track");
+  const viewport = document.getElementById("home-testimonial-viewport");
+  const prevButton = document.getElementById("testimonial-prev");
+  const nextButton = document.getElementById("testimonial-next");
+  const status = document.getElementById("testimonial-status");
+
+  let slideIndex = 0;
+  let testimonialCount = 0;
+
+  function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let value = "";
+    let quoted = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      const nextChar = text[i + 1];
+
+      if (char === '"' && quoted && nextChar === '"') {
+        value += '"';
+        i++;
+      } else if (char === '"') {
+        quoted = !quoted;
+      } else if (char === "," && !quoted) {
+        row.push(value);
+        value = "";
+      } else if ((char === "\n" || char === "\r") && !quoted) {
+        if (char === "\r" && nextChar === "\n") i++;
+        row.push(value);
+        if (row.some(cell => cell.trim() !== "")) rows.push(row);
+        row = [];
+        value = "";
+      } else {
+        value += char;
+      }
+    }
+
+    row.push(value);
+    if (row.some(cell => cell.trim() !== "")) rows.push(row);
+
+    if (!rows.length) return [];
+
+    const headers = rows.shift().map(header =>
+      header.replace(/^\uFEFF/, "").trim().toLowerCase()
+    );
+
+    return rows.map(cells => {
+      const item = {};
+      headers.forEach((header, index) => {
+        item[header] = (cells[index] || "").trim();
+      });
+      return item;
+    });
+  }
+
+  function getField(item, names) {
+    for (const name of names) {
+      if (item[name] !== undefined && item[name] !== "") {
+        return item[name];
+      }
+    }
+    return "";
+  }
+
+  function isYes(value) {
+    return ["ya", "yes", "true", "1", "iya"].includes(
+      String(value).trim().toLowerCase()
+    );
+  }
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  function makeCard(item) {
+    const name = getField(item, ["nama pasangan", "nama", "pasangan"]) || "Couple";
+    const photo = getField(item, ["foto", "photo", "foto pasangan"]);
+    const service = getField(item, ["layanan", "service"]) || "Photography";
+    const date = getField(item, ["tanggal event", "tanggal acara", "tanggal", "event date"]);
+    const review = getField(item, ["testimoni", "testimonial", "review"]);
+    const ratingValue = Number(getField(item, ["rating", "bintang"])) || 5;
+    const rating = Math.max(0, Math.min(5, Math.round(ratingValue)));
+
+    const article = document.createElement("article");
+    article.className = "testimonial-card";
+
+    const person = document.createElement("div");
+    person.className = "testimonial-person";
+
+    const avatar = document.createElement("img");
+    avatar.className = "testimonial-photo";
+    avatar.alt = "Foto " + name;
+    avatar.loading = "lazy";
+
+    const initials = name.split(/\s*&\s*|\s+/)
+      .filter(Boolean).slice(0, 2)
+      .map(part => part.charAt(0).toUpperCase()).join("");
+
+    const fallback = document.createElement("div");
+    fallback.className = "testimonial-photo";
+    fallback.style.display = "none";
+    fallback.style.flexShrink = "0";
+    fallback.style.alignItems = "center";
+    fallback.style.justifyContent = "center";
+    fallback.style.fontFamily = '"Playfair Display", serif';
+    fallback.style.fontSize = "17px";
+    fallback.style.color = "#302821";
+    fallback.textContent = initials || "KP";
+
+    avatar.onerror = function () {
+      avatar.style.display = "none";
+      fallback.style.display = "flex";
+    };
+
+    if (photo && /^https?:\/\//i.test(photo)) {
+      avatar.src = photo;
+    } else {
+      avatar.style.display = "none";
+      fallback.style.display = "flex";
+    }
+
+    const info = document.createElement("div");
+    info.className = "testimonial-person-info";
+
+    const author = document.createElement("p");
+    author.className = "testimonial-author";
+    author.textContent = name;
+
+    const stars = document.createElement("div");
+    stars.className = "testimonial-stars";
+    stars.setAttribute("aria-label", rating + " out of 5 stars");
+    stars.textContent = "★".repeat(rating) + "☆".repeat(5 - rating);
+
+    info.append(author, stars);
+    person.append(avatar, fallback, info);
+
+    const mark = document.createElement("p");
+    mark.className = "testimonial-mark";
+    mark.setAttribute("aria-hidden", "true");
+    mark.textContent = "“";
+
+    const quote = document.createElement("blockquote");
+    quote.className = "testimonial-quote";
+    quote.textContent = review;
+
+    const bottom = document.createElement("div");
+    const divider = document.createElement("div");
+    divider.className = "testimonial-divider";
+
+    const meta = document.createElement("p");
+    meta.className = "testimonial-meta";
+    meta.textContent = date ? service + " · " + date : service;
+
+    bottom.append(divider, meta);
+    article.append(person, mark, quote, bottom);
+
+    return article;
+  }
+
+  function updateCarousel() {
+    if (!track || !viewport) return;
+
+    const cards = track.querySelectorAll(".testimonial-card");
+    if (!cards.length) return;
+
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+    const cardWidth = cards[0].getBoundingClientRect().width;
+    const visibleWidth = viewport.getBoundingClientRect().width;
+    const maxOffset = Math.max(0, track.scrollWidth - visibleWidth);
+    const currentOffset = Math.min(
+      slideIndex * (cardWidth + gap),
+      maxOffset
+    );
+
+    track.style.transform = "translateX(-" + currentOffset + "px)";
+
+    prevButton.disabled = slideIndex <= 0;
+    nextButton.disabled = currentOffset >= maxOffset - 1;
+
+    const visibleCards = window.innerWidth <= 520 ? 1 :
+      window.innerWidth <= 800 ? 2 : 3;
+
+    const first = testimonialCount ? slideIndex + 1 : 0;
+    const last = Math.min(slideIndex + visibleCards, testimonialCount);
+
+    status.textContent = testimonialCount
+      ? first + "–" + last + " of " + testimonialCount
+      : "0 testimonials";
+  }
+
+  prevButton.addEventListener("click", function () {
+    slideIndex = Math.max(0, slideIndex - 1);
+    updateCarousel();
+  });
+
+  nextButton.addEventListener("click", function () {
+    const visibleCards = window.innerWidth <= 520 ? 1 :
+      window.innerWidth <= 800 ? 2 : 3;
+    slideIndex = Math.min(
+      Math.max(0, testimonialCount - visibleCards),
+      slideIndex + 1
+    );
+    updateCarousel();
+  });
+
+  window.addEventListener("resize", updateCarousel);
+
+  fetch(CSV_URL)
+    .then(response => {
+      if (!response.ok) throw new Error("CSV could not be loaded");
+      return response.text();
+    })
+    .then(csv => {
+      const rows = parseCSV(csv);
+
+      const published = rows.filter(item => {
+        const state = getField(item, ["status", "status publikasi"]);
+        return state.toLowerCase() === "published";
+      });
+
+      const homeItems = published.filter(item =>
+        isYes(getField(item, [
+          "tampil di home",
+          "tampil di homepage",
+          "home",
+          "show on home"
+        ]))
+      );
+
+      track.innerHTML = "";
+      testimonialCount = homeItems.length;
+      slideIndex = 0;
+
+      if (!homeItems.length) {
+        track.innerHTML = "";
+        const message = document.createElement("p");
+        message.className = "testimonial-message";
+        message.textContent = published.length
+          ? "Belum ada testimoni yang dipilih untuk halaman Home."
+          : "Testimoni akan ditampilkan di sini segera.";
+        track.appendChild(message);
+        status.textContent = "No testimonials";
+        prevButton.disabled = true;
+        nextButton.disabled = true;
+        return;
       }
 
-      prevButton.addEventListener("click", function () {
-        showSlide(currentSlide - 1);
-      });
+      homeItems.forEach(item => track.appendChild(makeCard(item)));
+      requestAnimationFrame(updateCarousel);
+    })
+    .catch(error => {
+      console.error("Testimonials could not be loaded:", error);
+      track.innerHTML = "";
 
-      nextButton.addEventListener("click", function () {
-        showSlide(currentSlide + 1);
-      });
+      const message = document.createElement("p");
+      message.className = "testimonial-message";
+      message.textContent = "Testimoni belum bisa dimuat. Silakan coba lagi nanti.";
+      track.appendChild(message);
 
-      carousel.addEventListener("touchstart", function (event) {
-        touchStartX = event.changedTouches[0].screenX;
-      }, { passive: true });
-
-      carousel.addEventListener("touchend", function (event) {
-        const difference = event.changedTouches[0].screenX - touchStartX;
-        if (Math.abs(difference) > 50) {
-          showSlide(currentSlide + (difference < 0 ? 1 : -1));
-        }
-      }, { passive: true });
-
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "ArrowLeft") showSlide(currentSlide - 1);
-        if (event.key === "ArrowRight") showSlide(currentSlide + 1);
-      });
-    })();
-  </script>
+      status.textContent = "Unavailable";
+      prevButton.disabled = true;
+      nextButton.disabled = true;
+    });
+})();
+</script>
 
 </body>
 </html>
