@@ -15,29 +15,28 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    :root {
-      --ivory: #f5f0e7;
-      --champagne: #d8c2a4;
-      --terracotta: #a87855;
-      --espresso: #302821;
-      --paper: #fffdf9;
-      --muted: #81776c;
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      background: var(--ivory);
-      color: var(--espresso);
+    /* Homepage-only styling */
+    .home-page {
+      --home-ivory: #f5f0e7;
+      --home-champagne: #d8c2a4;
+      --home-terracotta: #a87855;
+      --home-espresso: #302821;
+      --home-paper: #fffdf9;
+      --home-muted: #81776c;
+      background: var(--home-ivory);
+      color: var(--home-espresso);
       font-family: "DM Sans", sans-serif;
     }
 
-    a { color: inherit; }
+    .home-page *,
+    .home-page *::before,
+    .home-page *::after {
+      box-sizing: border-box;
+    }
 
-    .site-header {
+    .home-page a { color: inherit; }
+
+    .home-page .site-header {
       position: relative;
       z-index: 10;
       display: flex;
@@ -45,10 +44,10 @@
       align-items: center;
       gap: 24px;
       padding: 22px 7%;
-      background: var(--ivory);
+      background: var(--home-ivory);
     }
 
-    .brand {
+    .home-page .brand {
       text-decoration: none;
       font-family: "Playfair Display", serif;
       font-size: 27px;
@@ -56,7 +55,7 @@
       white-space: nowrap;
     }
 
-    .brand span {
+    .home-page .brand span {
       display: block;
       margin-top: 2px;
       font-family: "DM Sans", sans-serif;
@@ -65,23 +64,25 @@
       text-align: center;
     }
 
-    .main-nav {
+    .home-page .main-nav {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
       gap: 27px;
     }
 
-    .main-nav a {
+    .home-page .main-nav a {
       text-decoration: none;
       font-size: 11px;
       letter-spacing: 1px;
       transition: color .2s ease;
     }
 
-    .main-nav a:hover { color: var(--terracotta); }
+    .home-page .main-nav a:hover {
+      color: var(--home-terracotta);
+    }
 
-    .hero-carousel {
+    .home-page .hero-carousel {
       position: relative;
       min-height: 680px;
       height: 85vh;
@@ -90,18 +91,19 @@
       display: flex;
       align-items: center;
       padding: 80px 9%;
-      background: var(--espresso);
-      color: var(--paper);
+      background: var(--home-espresso);
+      color: var(--home-paper);
     }
 
-    .hero-slides, .hero-overlay {
+    .home-page .hero-slides,
+    .home-page .hero-overlay {
       position: absolute;
       inset: 0;
     }
 
-    .hero-slides { z-index: 0; }
+    .home-page .hero-slides { z-index: 0; }
 
-    .hero-slide {
+    .home-page .hero-slide {
       position: absolute;
       inset: 0;
       background-size: cover;
@@ -111,53 +113,55 @@
       transition: opacity .8s ease, transform 5s ease;
     }
 
-    .hero-slide.active {
+    .home-page .hero-slide.active {
       opacity: 1;
       transform: scale(1);
     }
 
-    .hero-overlay {
+    .home-page .hero-overlay {
       z-index: 1;
+      pointer-events: none;
       background: linear-gradient(
         90deg,
         rgba(32, 28, 23, .76) 0%,
         rgba(32, 28, 23, .42) 52%,
         rgba(32, 28, 23, .12) 100%
       );
-      pointer-events: none;
     }
 
-    .hero-content {
+    .home-page .hero-content {
       position: relative;
       z-index: 2;
       width: 100%;
       max-width: 760px;
     }
 
-    .eyebrow {
-      color: var(--terracotta);
+    .home-page .eyebrow {
+      color: var(--home-terracotta);
       font-size: 10px;
       letter-spacing: 3px;
       line-height: 1.8;
     }
 
-    .hero-content .eyebrow { color: var(--champagne); }
+    .home-page .hero-content .eyebrow {
+      color: var(--home-champagne);
+    }
 
-    .hero-content h1 {
+    .home-page .hero-content h1 {
       margin: 24px 0;
-      color: var(--paper);
+      color: var(--home-paper);
       font-family: "Playfair Display", serif;
       font-size: clamp(48px, 7vw, 88px);
       font-weight: 400;
       line-height: 1.06;
     }
 
-    .hero-content h1 em {
-      color: var(--champagne);
+    .home-page .hero-content h1 em {
+      color: var(--home-champagne);
       font-weight: 400;
     }
 
-    .hero-content .description {
+    .home-page .hero-content .description {
       max-width: 420px;
       color: rgba(255, 253, 249, .86);
       font-size: 14px;
@@ -165,24 +169,24 @@
       margin-bottom: 32px;
     }
 
-    .button {
+    .home-page .button {
       display: inline-block;
       padding: 16px 23px;
-      background: var(--champagne);
-      border: 1px solid var(--champagne);
-      color: var(--espresso);
+      background: var(--home-champagne);
+      border: 1px solid var(--home-champagne);
+      color: var(--home-espresso);
       text-decoration: none;
       font-size: 10px;
       letter-spacing: 1.5px;
       transition: all .25s ease;
     }
 
-    .button:hover {
+    .home-page .button:hover {
       background: transparent;
-      color: var(--paper);
+      color: var(--home-paper);
     }
 
-    .hero-controls {
+    .home-page .hero-controls {
       position: absolute;
       z-index: 3;
       right: 9%;
@@ -190,10 +194,10 @@
       display: flex;
       align-items: center;
       gap: 18px;
-      color: var(--paper);
+      color: var(--home-paper);
     }
 
-    .hero-arrow {
+    .home-page .hero-arrow {
       display: grid;
       place-items: center;
       width: 42px;
@@ -201,46 +205,46 @@
       border: 1px solid rgba(255, 253, 249, .65);
       border-radius: 50%;
       background: transparent;
-      color: var(--paper);
+      color: var(--home-paper);
       font-size: 18px;
       cursor: pointer;
       transition: all .25s ease;
     }
 
-    .hero-arrow:hover {
-      background: var(--champagne);
-      color: var(--espresso);
+    .home-page .hero-arrow:hover {
+      background: var(--home-champagne);
+      color: var(--home-espresso);
     }
 
-    .hero-counter {
+    .home-page .hero-counter {
       font-size: 11px;
       letter-spacing: 2px;
     }
 
-    .featured {
+    .home-page .featured {
       padding: 100px 7%;
       text-align: center;
     }
 
-    .section-heading {
+    .home-page .section-heading {
       max-width: 600px;
       margin: 0 auto 48px;
     }
 
-    .section-heading h2 {
+    .home-page .section-heading h2 {
       margin: 12px 0;
       font-family: "Playfair Display", serif;
       font-size: clamp(34px, 4vw, 49px);
       font-weight: 400;
     }
 
-    .section-heading p:not(.eyebrow) {
-      color: var(--muted);
+    .home-page .section-heading p:not(.eyebrow) {
+      color: var(--home-muted);
       font-size: 13px;
       line-height: 1.8;
     }
 
-    .featured-grid {
+    .home-page .featured-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 24px;
@@ -248,51 +252,51 @@
       margin-bottom: 42px;
     }
 
-    .featured-card {
+    .home-page .featured-card {
       display: block;
-      color: var(--espresso);
+      color: var(--home-espresso);
       text-decoration: none;
     }
 
-    .featured-card img {
+    .home-page .featured-card img {
       display: block;
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
       background: #e3d8c8;
-      transition: transform .5s ease, filter .5s ease;
+      transition: filter .5s ease;
     }
 
-    .featured-card:hover img {
+    .home-page .featured-card:hover img {
       filter: brightness(.92);
     }
 
-    .featured-card h3 {
+    .home-page .featured-card h3 {
       margin: 19px 0 7px;
       font-family: "Playfair Display", serif;
       font-size: 24px;
       font-weight: 400;
     }
 
-    .featured-card p {
+    .home-page .featured-card p {
       margin: 0;
-      color: var(--muted);
+      color: var(--home-muted);
       font-size: 12px;
       line-height: 1.7;
     }
 
-    .featured .button {
-      background: var(--espresso);
-      border-color: var(--espresso);
-      color: var(--paper);
+    .home-page .featured .button {
+      background: var(--home-espresso);
+      border-color: var(--home-espresso);
+      color: var(--home-paper);
     }
 
-    .featured .button:hover {
+    .home-page .featured .button:hover {
       background: transparent;
-      color: var(--espresso);
+      color: var(--home-espresso);
     }
 
-    .about-strip {
+    .home-page .about-strip {
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
@@ -301,7 +305,7 @@
       background: #eee5d8;
     }
 
-    .about-strip h2 {
+    .home-page .about-strip h2 {
       margin: 12px 0 20px;
       font-family: "Playfair Display", serif;
       font-size: clamp(32px, 4vw, 46px);
@@ -309,14 +313,14 @@
       line-height: 1.2;
     }
 
-    .about-strip p:not(.eyebrow) {
+    .home-page .about-strip p:not(.eyebrow) {
       color: #6e655b;
       font-size: 13px;
       line-height: 1.9;
     }
 
-    .about-note {
-      border-left: 1px solid var(--champagne);
+    .home-page .about-note {
+      border-left: 1px solid var(--home-champagne);
       padding-left: 30px;
       font-family: "Playfair Display", serif;
       font-size: clamp(23px, 3vw, 34px);
@@ -324,68 +328,70 @@
       line-height: 1.5;
     }
 
-    .site-footer {
+    .home-page .site-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 25px;
       padding: 35px 7%;
-      background: var(--espresso);
-      color: var(--paper);
+      background: var(--home-espresso);
+      color: var(--home-paper);
     }
 
-    .footer-brand {
+    .home-page .footer-brand {
       font-family: "Playfair Display", serif;
       font-size: 23px;
     }
 
-    .footer-copy {
+    .home-page .footer-copy {
       margin-top: 7px;
       color: #c7b9a7;
       font-size: 10px;
     }
 
-    .footer-links {
+    .home-page .footer-links {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
     }
 
-    .footer-links a {
-      color: var(--paper);
+    .home-page .footer-links a {
+      color: var(--home-paper);
       text-decoration: none;
       font-size: 11px;
     }
 
-    .footer-links a:hover { color: var(--champagne); }
+    .home-page .footer-links a:hover {
+      color: var(--home-champagne);
+    }
 
     @media (max-width: 800px) {
-      .site-header {
+      .home-page .site-header {
         flex-direction: column;
         padding: 20px 5%;
       }
 
-      .main-nav {
+      .home-page .main-nav {
         justify-content: center;
         gap: 15px 20px;
       }
 
-      .hero-carousel {
+      .home-page .hero-carousel {
         min-height: 620px;
         height: 82vh;
         padding: 65px 7%;
       }
 
-      .hero-content h1 {
+      .home-page .hero-content h1 {
         font-size: clamp(44px, 10vw, 68px);
       }
 
-      .featured-grid {
+      .home-page .featured-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 28px 18px;
       }
 
-      .about-strip {
+      .home-page .about-strip {
         grid-template-columns: 1fr;
         gap: 30px;
         padding: 65px 7%;
@@ -393,22 +399,22 @@
     }
 
     @media (max-width: 520px) {
-      .main-nav { gap: 14px; }
-      .main-nav a { font-size: 10px; }
+      .home-page .main-nav { gap: 14px; }
+      .home-page .main-nav a { font-size: 10px; }
 
-      .hero-carousel {
+      .home-page .hero-carousel {
         min-height: 600px;
-        height: 82svh;
+        height: 82vh;
         padding: 55px 7%;
       }
 
-      .hero-content h1 {
+      .home-page .hero-content h1 {
         font-size: clamp(42px, 12vw, 58px);
       }
 
-      .hero-content .description { font-size: 13px; }
+      .home-page .hero-content .description { font-size: 13px; }
 
-      .hero-overlay {
+      .home-page .hero-overlay {
         background: linear-gradient(
           0deg,
           rgba(32, 28, 23, .82) 0%,
@@ -417,48 +423,42 @@
         );
       }
 
-      .hero-controls {
+      .home-page .hero-controls {
         right: 7%;
         bottom: 22px;
         gap: 12px;
       }
 
-      .hero-arrow {
+      .home-page .hero-arrow {
         width: 38px;
         height: 38px;
       }
 
-      .featured { padding: 70px 7%; }
+      .home-page .featured { padding: 70px 7%; }
 
-      .featured-grid {
+      .home-page .featured-grid {
         grid-template-columns: 1fr;
         gap: 32px;
       }
 
-      .featured-card img { aspect-ratio: 5 / 4; }
+      .home-page .featured-card img { aspect-ratio: 5 / 4; }
 
-      .site-footer {
+      .home-page .site-footer {
         flex-direction: column;
         align-items: flex-start;
         padding: 32px 7%;
       }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-      }
-    }
   </style>
 </head>
 
-<body>
+<body class="home-page">
 
   <header class="site-header">
     <a class="brand" href="index.html">
       KYRA PICTURE
-      
+      <span>PHOTOGRAPHY</span>
+    </a>
 
     <nav class="main-nav" aria-label="Main navigation">
       <a href="index.html">HOME</a>
@@ -470,25 +470,11 @@
   </header>
 
   <main>
-
     <section class="hero hero-carousel" aria-label="Featured photography">
       <div class="hero-slides">
-
-        <div class="hero-slide active"
-          style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=90')"
-          role="img" aria-label="Wedding celebration">
-        </div>
-
-        <div class="hero-slide"
-          style="background-image: url('https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=2200&q=90')"
-          role="img" aria-label="Romantic prewedding photography">
-        </div>
-
-        <div class="hero-slide"
-          style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=2200&q=90')"
-          role="img" aria-label="Wedding moments">
-        </div>
-
+        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2200&q=90')" role="img" aria-label="Wedding celebration"></div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=2200&q=90')" role="img" aria-label="Romantic prewedding photography"></div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=2200&q=90')" role="img" aria-label="Wedding moments"></div>
       </div>
 
       <div class="hero-overlay"></div>
@@ -496,17 +482,13 @@
       <div class="hero-content">
         <p class="eyebrow">WEDDING · PREWEDDING · ENGAGEMENT</p>
         <h1>Your Story,<br><em>Beautifully</em><br>Captured.</h1>
-        <p class="description">
-          Turning your most meaningful moments into timeless photographs.
-        </p>
+        <p class="description">Turning your most meaningful moments into timeless photographs.</p>
         <a class="button" href="portfolio.html">EXPLORE OUR WORK ↗</a>
       </div>
 
       <div class="hero-controls">
         <button class="hero-arrow hero-prev" type="button" aria-label="Previous photo">←</button>
-        <span class="hero-counter" aria-live="polite">
-          <span id="hero-current">01</span> / 03
-        </span>
+        <span class="hero-counter" aria-live="polite"><span id="hero-current">01</span> / 03</span>
         <button class="hero-arrow hero-next" type="button" aria-label="Next photo">→</button>
       </div>
     </section>
@@ -519,34 +501,23 @@
       </div>
 
       <div class="featured-grid">
-
         <a class="featured-card" href="wedding.html">
-          <img
-            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
-            alt="Wedding photography"
-            loading="lazy">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85" alt="Wedding photography" loading="lazy">
           <h3>Wedding Stories ↗</h3>
           <p>For the beginning of forever.</p>
         </a>
 
         <a class="featured-card" href="prewedding.html">
-          <img
-            src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1000&q=85"
-            alt="Prewedding photography"
-            loading="lazy">
+          <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1000&q=85" alt="Prewedding photography" loading="lazy">
           <h3>Prewedding Moments ↗</h3>
           <p>Your love story, captured before the big day.</p>
         </a>
 
         <a class="featured-card" href="engagement.html">
-          <img
-            src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=85"
-            alt="Engagement photography"
-            loading="lazy">
+          <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=85" alt="Engagement photography" loading="lazy">
           <h3>Engagement Stories ↗</h3>
           <p>A little promise, a beautiful beginning.</p>
         </a>
-
       </div>
 
       <a class="button" href="portfolio.html">VIEW ALL PORTFOLIO ↗</a>
@@ -556,19 +527,12 @@
       <div>
         <p class="eyebrow">THE KYRA APPROACH</p>
         <h2>Photographs that feel like you.</h2>
-        <p>
-          We believe the most meaningful photographs come from real
-          connections, little gestures, and the moments in between.
-          Our approach is thoughtful, natural, and timeless.
-        </p>
+        <p>We believe the most meaningful photographs come from real connections, little gestures, and the moments in between. Our approach is thoughtful, natural, and timeless.</p>
         <a class="button" href="about.html">GET TO KNOW US ↗</a>
       </div>
 
-      <div class="about-note">
-        “Your story deserves to be remembered beautifully.”
-      </div>
+      <div class="about-note">“Your story deserves to be remembered beautifully.”</div>
     </section>
-
   </main>
 
   <footer class="site-footer">
@@ -601,9 +565,7 @@
 
       function showSlide(index) {
         slides[currentSlide].classList.remove("active");
-
         currentSlide = (index + slides.length) % slides.length;
-
         slides[currentSlide].classList.add("active");
         currentCounter.textContent = String(currentSlide + 1).padStart(2, "0");
       }
@@ -621,9 +583,7 @@
       }, { passive: true });
 
       carousel.addEventListener("touchend", function (event) {
-        const touchEndX = event.changedTouches[0].screenX;
-        const difference = touchEndX - touchStartX;
-
+        const difference = event.changedTouches[0].screenX - touchStartX;
         if (Math.abs(difference) > 50) {
           showSlide(currentSlide + (difference < 0 ? 1 : -1));
         }
