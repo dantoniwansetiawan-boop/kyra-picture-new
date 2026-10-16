@@ -1,1 +1,301 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Testimonials | Kyra Picture</title>
+  <meta name="description" content="Read what couples say about their experience with Kyra Picture photography.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="testimonials-page">
+
+  <style>
+    .testimonials-page {
+      background: #f5f0e7;
+      color: #302821;
+    }
+
+    .testimonials-page .testimonials-hero {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 85px 24px 55px;
+      text-align: center;
+    }
+
+    .testimonials-page .testimonials-hero h1 {
+      margin: 0;
+      font-size: clamp(42px, 6vw, 64px);
+      line-height: 1.2;
+    }
+
+    .testimonials-page .testimonials-description {
+      max-width: 480px;
+      margin: 20px auto 0;
+      color: #81776c;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .testimonials-page .testimonials-section {
+      width: 100%;
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 0 6% 100px;
+    }
+
+    .testimonials-page .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      gap: 22px;
+    }
+
+    .testimonials-page .testimonial-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 350px;
+      padding: 30px 25px;
+      border: 1px solid #e5dbce;
+      background: #fffdf9;
+    }
+
+    .testimonials-page .testimonial-number {
+      margin: 0;
+      color: #a87855;
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+
+    .testimonials-page .testimonial-quote-mark {
+      margin: 15px 0 0;
+      color: #d8c2a4;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 66px;
+      line-height: 0.9;
+    }
+
+    .testimonials-page .testimonial-quote {
+      margin: 15px 0 35px;
+      color: #4b4036;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 21px;
+      line-height: 1.65;
+      overflow-wrap: anywhere;
+    }
+
+    .testimonials-page .testimonial-author {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid #e5dbce;
+    }
+
+    .testimonials-page .testimonial-author h2 {
+      margin: 0;
+      color: #302821;
+      font-family: "DM Sans", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      overflow-wrap: anywhere;
+    }
+
+    .testimonials-page .testimonial-author p {
+      margin: 5px 0 0;
+      color: #81776c;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .testimonials-page .testimonials-cta {
+      padding: 70px 24px;
+      background: #eee5d8;
+      text-align: center;
+    }
+
+    .testimonials-page .testimonials-cta h2 {
+      margin: 0 0 25px;
+      font-size: clamp(30px, 4vw, 44px);
+    }
+
+    .testimonials-page .testimonials-cta .eyebrow {
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 850px) {
+      .testimonials-page .testimonials-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .testimonials-page .testimonial-card {
+        min-height: 330px;
+        padding: 25px 20px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .testimonials-page .testimonials-hero {
+        padding: 60px 20px 40px;
+      }
+
+      .testimonials-page .testimonials-section {
+        padding: 0 20px 65px;
+      }
+
+      .testimonials-page .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .testimonials-page .testimonial-card {
+        min-height: 300px;
+        padding: 28px 25px;
+      }
+
+      .testimonials-page .testimonial-quote {
+        font-size: 22px;
+      }
+
+      .testimonials-page .testimonials-cta {
+        padding: 55px 20px;
+      }
+    }
+  </style>
+
+  <nav class="navbar">
+    <a class="logo" href="index.html">
+      KYRA <span>PICTURE</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="pricelist.html">Pricelist</a>
+      <a href="testimonials.html" class="active">Testimonials</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <header class="testimonials-hero">
+    <p class="eyebrow">KIND WORDS FROM OUR CLIENTS</p>
+
+    <h1>Love, in Their Own Words.</h1>
+
+    <p class="testimonials-description">
+      Every story we capture becomes a memory to keep.
+      Here's a glimpse of the love and trust behind our work.
+    </p>
+  </header>
+
+  <main class="testimonials-section">
+
+    <div class="testimonials-grid">
+
+      <article class="testimonial-card">
+        <p class="testimonial-number">01 — WEDDING</p>
+        <div class="testimonial-quote-mark">“</div>
+        <p class="testimonial-quote">
+          Thank you for capturing every little moment of our special day.
+          We absolutely love the photos!
+        </p>
+        <div class="testimonial-author">
+          <h2>Couple's Name</h2>
+          <p>Wedding Photography</p>
+        </div>
+      </article>
+
+      <article class="testimonial-card">
+        <p class="testimonial-number">02 — PREWEDDING</p>
+        <div class="testimonial-quote-mark">“</div>
+        <p class="testimonial-quote">
+          The whole experience felt natural and comfortable.
+          The photos are even more beautiful than we imagined.
+        </p>
+        <div class="testimonial-author">
+          <h2>Couple's Name</h2>
+          <p>Prewedding Photography</p>
+        </div>
+      </article>
+
+      <article class="testimonial-card">
+        <p class="testimonial-number">03 — ENGAGEMENT</p>
+        <div class="testimonial-quote-mark">“</div>
+        <p class="testimonial-quote">
+          Every photo tells a story. We're so happy to have
+          these memories to look back on forever.
+        </p>
+        <div class="testimonial-author">
+          <h2>Couple's Name</h2>
+          <p>Engagement Photography</p>
+        </div>
+      </article>
+
+      <article class="testimonial-card">
+        <p class="testimonial-number">04 — WEDDING</p>
+        <div class="testimonial-quote-mark">“</div>
+        <p class="testimonial-quote">
+          From the beginning to the end, the experience was
+          wonderful. We felt comfortable throughout the day.
+        </p>
+        <div class="testimonial-author">
+          <h2>Couple's Name</h2>
+          <p>Wedding Photography</p>
+        </div>
+      </article>
+
+      <article class="testimonial-card">
+        <p class="testimonial-number">05 — PREWEDDING</p>
+        <div class="testimonial-quote-mark">“</div>
+        <p class="testimonial-quote">
+          The pictures feel so genuine and full of emotion.
+          We will treasure them for years to come.
+        </p>
+        <div class="testimonial-author">
+          <h2>Couple's Name</h2>
+          <p>Prewedding Photography</p>
+        </div>
+      </article>
+
+      <article class="testimonial-card">
+        <p class="testimonial-number">06 — SPECIAL MOMENTS</p>
+        <div class="testimonial-quote-mark">“</div>
+        <p class="testimonial-quote">
+          Thank you for turning our precious moments into
+          beautiful photographs we can revisit anytime.
+        </p>
+        <div class="testimonial-author">
+          <h2>Couple's Name</h2>
+          <p>Photography Session</p>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+
+  <section class="testimonials-cta">
+    <p class="eyebrow">YOUR STORY COULD BE NEXT</p>
+    <h2>Let's create something meaningful.</h2>
+    <a class="button" href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">
+      LET'S TALK ↗
+    </a>
+  </section>
+
+  <footer>
+    © 2026 Kyra Picture. Your Story, Beautifully Captured.
+  </footer>
+
+</body>
+</html>
+```
