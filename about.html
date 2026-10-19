@@ -1,93 +1,99 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>About | Kyra Picture</title>
-  <meta name="description" content="Get to know Kyra Picture, a photography brand established in 2020 and based in Bekasi, Indonesia.">
+  <title>About Us — Kyra Picture</title>
+
+  <meta
+    name="description"
+    content="Kenali Kyra Picture, layanan fotografi wedding, prewedding, dan engagement."
+  >
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
 
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* PAGE BASE */
+    /* =================================
+       ABOUT PAGE — FULL WIDTH FIX
+    ================================= */
+
     html {
       width: 100%;
       min-height: 100%;
       margin: 0;
+      padding: 0;
     }
 
     body.about-page {
+      display: block;
       width: 100%;
+      max-width: none;
       min-height: 100vh;
       margin: 0;
       padding: 0;
+      overflow-x: clip;
       background: #f5f0e7;
       color: #302821;
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: clip;
-    }
-
-    .about-page *,
-    .about-page *::before,
-    .about-page *::after {
-      box-sizing: border-box;
-    }
-
-    .about-page a {
-      text-decoration: none;
+      font-family: "DM Sans", Arial, sans-serif;
     }
 
     /* NAVIGATION */
+
     .about-nav {
-      width: 100%;
-      min-height: 88px;
-      padding: 20px 7%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 28px;
-      border-bottom: 1px solid #e5dbce;
+      gap: 30px;
+      width: 100%;
+      margin: 0;
+      padding: 22px 7%;
       background: #f5f0e7;
+      border-bottom: 1px solid rgba(48, 40, 33, 0.06);
     }
 
     .about-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      color: #302821;
       flex-shrink: 0;
-    }
-
-    .about-brand strong {
-      font-family: 'Playfair Display', serif;
-      font-size: 23px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
+      color: #302821;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 25px;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      text-decoration: none;
     }
 
     .about-brand span {
-      color: #81776c;
+      display: block;
+      margin-top: 3px;
+      font-family: "DM Sans", Arial, sans-serif;
       font-size: 9px;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
+      text-align: center;
     }
 
     .about-nav-links {
       display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 25px;
       flex-wrap: wrap;
+      align-items: center;
+      gap: 27px;
     }
 
     .about-nav-links a {
-      color: #655b50;
-      font-size: 12px;
+      padding: 5px 0;
+      color: #302821;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      text-transform: uppercase;
       transition: color 0.2s ease;
     }
 
@@ -96,246 +102,203 @@
       color: #a87855;
     }
 
-    /* PAGE INTRO */
+    /* HERO */
+
     .about-hero {
       width: 100%;
-      padding: 105px 24px 65px;
+      margin: 0;
+      padding: 95px 24px 85px;
+      background: #f5f0e7;
       text-align: center;
     }
 
     .about-eyebrow {
-      margin: 0 0 20px;
+      margin: 0 0 16px;
       color: #a87855;
       font-size: 10px;
-      font-weight: 600;
       letter-spacing: 3px;
+      line-height: 1.8;
+      text-transform: uppercase;
     }
 
     .about-hero h1 {
-      margin: 0;
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(44px, 6vw, 68px);
+      max-width: 950px;
+      margin: 0 auto 22px;
+      color: #302821;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(44px, 6vw, 72px);
       font-weight: 400;
-      line-height: 1.2;
-      letter-spacing: -1px;
+      line-height: 1.15;
     }
 
-    .about-tagline {
-      margin: 20px 0 0;
-      color: #81776c;
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .about-divider {
-      width: 44px;
-      height: 1px;
-      margin: 32px auto 0;
-      background: #a87855;
-    }
-
-    /* OUR STORY */
-    .about-story {
-      width: min(700px, calc(100% - 48px));
+    .about-hero p {
+      max-width: 600px;
       margin: 0 auto;
-      padding: 45px 0 65px;
-      border-top: 1px solid #dfd3c4;
-    }
-
-    .about-section-label {
-      margin: 0 0 20px;
-      color: #a87855;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 2px;
-    }
-
-    .about-story h2 {
-      max-width: 550px;
-      margin: 0 0 22px;
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(30px, 4vw, 42px);
-      font-weight: 400;
-      line-height: 1.3;
-    }
-
-    .about-story p:last-child {
-      margin: 0;
-      color: #766b60;
-      font-size: 14px;
-      line-height: 2;
-    }
-
-    /* AT A GLANCE */
-    .about-glance {
-      width: min(700px, calc(100% - 48px));
-      margin: 0 auto;
-      padding: 35px 0 55px;
-      border-top: 1px solid #dfd3c4;
-      border-bottom: 1px solid #dfd3c4;
-    }
-
-    .about-glance-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 30px;
-      margin-top: 28px;
-    }
-
-    .about-glance-item h3 {
-      margin: 0 0 8px;
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 400;
-      line-height: 1.3;
-    }
-
-    .about-glance-item p {
-      margin: 0;
       color: #81776c;
-      font-size: 12px;
-    }
-
-    /* CONTACT CTA */
-    .about-cta {
-      width: 100%;
-      padding: 65px 24px 70px;
-      background: #302821;
-      text-align: center;
-    }
-
-    .about-cta h2 {
-      margin: 0 0 15px;
-      color: #f5f0e7;
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(29px, 4vw, 42px);
-      font-weight: 400;
-      line-height: 1.35;
-    }
-
-    .about-cta p {
-      max-width: 420px;
-      margin: 0 auto 28px;
-      color: #c5b9aa;
       font-size: 13px;
       line-height: 1.9;
     }
 
-    .about-cta-button {
-      min-height: 46px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 25px;
-      border: 1px solid #d8c2a4;
-      color: #f5f0e7;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      transition: background 0.2s ease, color 0.2s ease;
+    /* STORY */
+
+    .about-story {
+      width: min(700px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 20px 0 85px;
     }
 
-    .about-cta-button:hover {
-      background: #d8c2a4;
+    .about-story h2 {
+      margin: 0 0 24px;
+      color: #302821;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(30px, 4vw, 40px);
+      font-weight: 400;
+      line-height: 1.25;
+    }
+
+    .about-story p {
+      margin: 0 0 18px;
+      color: #81776c;
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    /* GLANCE */
+
+    .about-glance {
+      width: 100%;
+      margin: 0;
+      padding: 70px 24px;
+      background: #eee5d8;
+    }
+
+    .about-glance-inner {
+      width: min(700px, 100%);
+      margin: 0 auto;
+    }
+
+    .about-glance h2 {
+      margin: 0 0 28px;
+      color: #302821;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(30px, 4vw, 40px);
+      font-weight: 400;
+      line-height: 1.25;
+    }
+
+    .about-glance p {
+      margin: 0 0 18px;
+      color: #81776c;
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    /* CTA */
+
+    .about-cta {
+      width: 100%;
+      margin: 0;
+      padding: 85px 24px;
+      background: #f5f0e7;
+      text-align: center;
+    }
+
+    .about-cta h2 {
+      margin: 12px 0 28px;
+      color: #302821;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .about-button {
+      display: inline-block;
+      padding: 15px 23px;
+      border: 1px solid #302821;
+      background: #302821;
+      color: #fffdf9;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .about-button:hover {
+      background: transparent;
       color: #302821;
     }
 
     /* FOOTER */
+
     .about-footer {
       width: 100%;
-      padding: 23px 20px;
+      margin: 0;
+      padding: 30px 7%;
       background: #302821;
-      border-top: 1px solid rgba(245, 240, 231, 0.15);
-      color: #c5b9aa;
-      text-align: center;
-      font-size: 10px;
+      color: #fffdf9;
+      font-size: 11px;
       line-height: 1.8;
-      letter-spacing: 0.4px;
+      text-align: center;
     }
 
-    /* TABLET */
-    @media (max-width: 760px) {
+    .about-footer p {
+      margin: 0;
+      color: #fffdf9;
+    }
+
+    /* TABLET & MOBILE */
+
+    @media (max-width: 800px) {
       .about-nav {
-        min-height: auto;
-        padding: 20px 6%;
-        align-items: flex-start;
         flex-direction: column;
         gap: 18px;
+        padding: 22px 5%;
       }
 
       .about-nav-links {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 12px 22px;
+        justify-content: center;
+        gap: 14px 20px;
       }
 
       .about-hero {
-        padding: 78px 22px 52px;
-      }
-
-      .about-story,
-      .about-glance {
-        width: calc(100% - 40px);
+        padding: 70px 24px;
       }
 
       .about-story {
-        padding: 35px 0 48px;
-      }
-
-      .about-glance {
-        padding: 30px 0 42px;
-      }
-
-      .about-cta {
-        padding: 52px 22px 58px;
+        padding-bottom: 65px;
       }
     }
 
-    /* MOBILE */
-    @media (max-width: 480px) {
-      .about-brand strong {
-        font-size: 21px;
-      }
-
+    @media (max-width: 520px) {
       .about-nav-links {
-        gap: 12px 18px;
+        gap: 12px 15px;
       }
 
       .about-nav-links a {
-        font-size: 11px;
+        font-size: 10px;
       }
 
       .about-hero {
-        padding: 65px 20px 45px;
+        padding: 55px 20px 50px;
       }
 
-      .about-hero h1 {
-        font-size: 42px;
+      .about-story {
+        width: calc(100% - 40px);
+        padding-top: 10px;
+        padding-bottom: 55px;
       }
 
-      .about-tagline {
-        font-size: 13px;
-      }
-
-      .about-story,
       .about-glance {
-        width: calc(100% - 36px);
+        padding: 55px 20px;
       }
 
-      .about-story h2 {
-        font-size: 32px;
+      .about-cta {
+        padding: 60px 20px;
       }
 
-      .about-story p:last-child {
-        font-size: 13px;
-      }
-
-      .about-glance-item h3 {
-        font-size: 25px;
-      }
-
-      .about-glance-item p {
-        font-size: 11px;
+      .about-footer {
+        padding: 25px 20px;
       }
     }
   </style>
@@ -346,7 +309,7 @@
   <!-- NAVIGATION -->
   <nav class="about-nav">
     <a class="about-brand" href="index.html">
-      <strong>KYRA PICTURE</strong>
+      KYRA PICTURE
       <span>PHOTOGRAPHY</span>
     </a>
 
@@ -354,79 +317,87 @@
       <a href="index.html">Home</a>
       <a href="portfolio.html">Portfolio</a>
       <a href="pricelist.html">Pricelist</a>
-      <a href="testimonials.html">Testimonials</a>
       <a href="about.html" class="active">About</a>
-      <a href="contact.html">Contact</a>
     </div>
   </nav>
 
-  <!-- INTRO -->
+  <!-- HERO -->
   <header class="about-hero">
-    <p class="about-eyebrow">A LITTLE ABOUT US</p>
+    <p class="about-eyebrow">OUR STORY</p>
 
-    <h1>Kyra Picture</h1>
+    <h1>Every Story Deserves to Be Remembered</h1>
 
-    <p class="about-tagline">
-      Your Story, Beautifully Captured.
+    <p>
+      Kami percaya setiap momen memiliki cerita yang berharga.
+      Melalui fotografi, kami membantu mengabadikan momen tersebut
+      agar bisa dikenang sepanjang waktu.
     </p>
-
-    <div class="about-divider"></div>
   </header>
 
-  <!-- OUR STORY -->
+  <!-- ABOUT STORY -->
   <main>
     <section class="about-story">
-      <p class="about-section-label">OUR STORY</p>
-
-      <h2>Capturing moments that matter.</h2>
+      <h2>More Than Just a Photograph</h2>
 
       <p>
-        Established in 2020, Kyra Picture is a photography
-        brand based in Bekasi, Indonesia. We believe every
-        meaningful moment deserves to be remembered through
-        photographs that feel timeless and personal.
+        Bagi kami, fotografi bukan sekadar mengambil gambar.
+        Fotografi adalah tentang menangkap perasaan, menyimpan kenangan,
+        dan menceritakan kisah yang akan selalu berarti.
+      </p>
+
+      <p>
+        Di Kyra Picture, kami berusaha menciptakan pengalaman fotografi
+        yang nyaman dan personal. Setiap pasangan memiliki cerita yang
+        berbeda, dan kami ingin membantu mengabadikan cerita itu dengan
+        cara yang autentik dan bermakna.
+      </p>
+
+      <p>
+        Mulai dari wedding, prewedding, hingga engagement, setiap momen
+        kami dokumentasikan dengan perhatian terhadap detail dan emosi
+        yang membuatnya istimewa.
       </p>
     </section>
 
-    <!-- AT A GLANCE -->
+    <!-- OUR APPROACH -->
     <section class="about-glance">
-      <p class="about-section-label">AT A GLANCE</p>
+      <div class="about-glance-inner">
+        <p class="about-eyebrow">THE KYRA APPROACH</p>
 
-      <div class="about-glance-grid">
-        <div class="about-glance-item">
-          <h3>2020</h3>
-          <p>Established</p>
-        </div>
+        <h2>Natural, Timeless, and Personal</h2>
 
-        <div class="about-glance-item">
-          <h3>Bekasi</h3>
-          <p>Indonesia</p>
-        </div>
+        <p>
+          Kami menyukai foto yang terasa natural, tidak dibuat-buat,
+          dan tetap indah ketika dilihat bertahun-tahun kemudian.
+        </p>
+
+        <p>
+          Bagi kami, detail kecil, ekspresi spontan, dan momen sederhana
+          sering kali menjadi bagian paling berharga dari sebuah cerita.
+        </p>
       </div>
     </section>
   </main>
 
   <!-- CONTACT CTA -->
   <section class="about-cta">
-    <h2>Let's talk about your plans.</h2>
+    <p class="about-eyebrow">LET'S CREATE SOMETHING MEANINGFUL</p>
 
-    <p>
-      We'd love to hear about your special day.
-    </p>
+    <h2>Let's Tell Your Story</h2>
 
     <a
-      class="about-cta-button"
+      class="about-button"
       href="https://wa.me/6289519847571"
       target="_blank"
       rel="noopener noreferrer"
     >
-      CONTACT US ↗
+      GET IN TOUCH
     </a>
   </section>
 
   <!-- FOOTER -->
   <footer class="about-footer">
-    © 2026 Kyra Picture. Your Story, Beautifully Captured.
+    <p>© 2026 Kyra Picture. All Rights Reserved.</p>
   </footer>
 
 </body>
