@@ -1,1 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Engagement &amp; Traditional Ceremony | Kyra Picture</title>
+  <meta name="description" content="Engagement and Traditional Ceremony photography packages by Kyra Picture.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* PAGE HEADER */
+    .wedding-header {
+      padding: 75px 24px 55px;
+      text-align: center;
+    }
+
+    .wedding-header h1 {
+      max-width: 850px;
+      margin: 10px auto 16px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .wedding-header .muted {
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* PACKAGE GRID */
+    .wedding-packages {
+      width: min(1050px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 10px 0 85px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    /* PACKAGE CARD */
+    .wedding-package {
+      display: flex;
+      flex-direction: column;
+      padding: 30px 25px;
+      background: #fffdf9;
+      border: 1px solid #e5dbce;
+      border-radius: 2px;
+    }
+
+    .wedding-package.luxury {
+      border-color: #a87855;
+    }
+
+    .package-label {
+      margin: 0 0 18px;
+      color: #a87855;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .package-name {
+      margin: 0 0 12px;
+      color: #302821;
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-weight: 400;
+    }
+
+    .package-price {
+      margin: 0 0 22px;
+      color: #a87855;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .package-divider {
+      width: 100%;
+      height: 1px;
+      margin-bottom: 22px;
+      background: #e5dbce;
+      border: 0;
+    }
+
+    .package-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 0 0 30px;
+      padding: 0;
+      list-style: none;
+      flex: 1;
+    }
+
+    .package-benefits li {
+      position: relative;
+      padding-left: 20px;
+      color: #655b50;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .package-benefits li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #a87855;
+      font-weight: 600;
+    }
+
+    /* BOOK BUTTON */
+    .package-book {
+      display: flex;
+      width: 100%;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 16px;
+      background: #302821;
+      border: 1px solid #302821;
+      color: #f5f0e7;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .package-book:hover {
+      background: #a87855;
+      border-color: #a87855;
+      color: #fffdf9;
+    }
+
+    /* PACKAGE NOTE */
+    .package-note {
+      max-width: 650px;
+      margin: -35px auto 75px;
+      padding: 0 20px;
+      color: #81776c;
+      font-size: 12px;
+      line-height: 1.9;
+      text-align: center;
+    }
+
+    /* CONTACT SECTION */
+    .wedding-contact {
+      padding: 55px 24px 60px;
+      background: #eee5d9;
+      text-align: center;
+    }
+
+    .wedding-contact h2 {
+      margin: 10px 0 14px;
+      color: #302821;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(27px, 4vw, 38px);
+      font-weight: 400;
+    }
+
+    .wedding-contact .muted {
+      max-width: 500px;
+      margin: 0 auto 25px;
+      line-height: 1.9;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .wedding-packages {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .wedding-header {
+        padding: 55px 20px 40px;
+      }
+
+      .wedding-packages {
+        width: calc(100% - 36px);
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding-bottom: 65px;
+      }
+
+      .wedding-package {
+        padding: 27px 23px;
+      }
+
+      .package-name {
+        font-size: 28px;
+      }
+
+      .package-price {
+        font-size: 21px;
+      }
+
+      .package-note {
+        margin-top: -20px;
+        margin-bottom: 55px;
+      }
+
+      .wedding-contact {
+        padding: 45px 20px 50px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <a class="logo" href="index.html">KYRA <span>PICTURE</span></a>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="pricelist.html" class="active">Pricelist</a>
+      <a href="testimonials.html">Testimonials</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="wedding-header">
+    <p class="eyebrow">INVESTMENT</p>
+
+    <h1>Engagement &amp; Traditional Ceremony</h1>
+
+    <p class="muted">
+      Capture the meaningful moments before your big day,
+      from engagement to traditional ceremonies.
+    </p>
+  </header>
+
+  <!-- ENGAGEMENT PACKAGES -->
+  <main class="wedding-packages">
+
+    <!-- ESSENTIAL PACKAGE -->
+    <article class="wedding-package">
+      <p class="package-label">PACKAGE 01</p>
+
+      <h2 class="package-name">Essential</h2>
+
+      <p class="package-price">Rp 1.500.000</p>
+
+      <hr class="package-divider">
+
+      <ul class="package-benefits">
+        <li>1 Photographer</li>
+        <li>50 Edited Photos</li>
+        <li>Max 4 Hours</li>
+        <li>All Files via Google Drive</li>
+      </ul>
+
+      <a
+        class="package-book"
+        href="https://wa.me/6289519847571?text=Halo%20Kyra%20Picture%2C%20saya%20tertarik%20untuk%20booking%20paket%20Engagement%20%26%20Traditional%20Ceremony%20Essential%20seharga%20Rp%201.500.000.%20Boleh%20minta%20informasi%20lebih%20lanjut%3F"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        BOOK ESSENTIAL ↗
+      </a>
+    </article>
+
+    <!-- PROMISE PACKAGE -->
+    <article class="wedding-package luxury">
+      <p class="package-label">PACKAGE 02</p>
+
+      <h2 class="package-name">Promise</h2>
+
+      <p class="package-price">Rp 2.500.000</p>
+
+      <hr class="package-divider">
+
+      <ul class="package-benefits">
+        <li>1 Photographer</li>
+        <li>1 Videographer</li>
+        <li>100 Edited Photos</li>
+        <li>1' Video Cinematic</li>
+        <li>Max 4 Hours</li>
+        <li>All Files in Flashdisk</li>
+      </ul>
+
+      <a
+        class="package-book"
+        href="https://wa.me/6289519847571?text=Halo%20Kyra%20Picture%2C%20saya%20tertarik%20untuk%20booking%20paket%20Engagement%20%26%20Traditional%20Ceremony%20Promise%20seharga%20Rp%202.500.000.%20Boleh%20minta%20informasi%20lebih%20lanjut%3F"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        BOOK PROMISE ↗
+      </a>
+    </article>
+
+  </main>
+
+  <!-- PACKAGE NOTE -->
+  <p class="package-note">
+    For package availability, event details, and booking information,
+    please contact us through WhatsApp.
+  </p>
+
+  <!-- CONTACT SECTION -->
+  <section class="wedding-contact">
+    <p class="eyebrow">LET'S TALK</p>
+
+    <h2>Have something special in mind?</h2>
+
+    <p class="muted">
+      Need help choosing a package or have a special request?
+      Get in touch with us.
+    </p>
+
+    <a class="button" href="contact.html">
+      CONTACT US ↗
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Kyra Picture. Your Story, Beautifully Captured.
+  </footer>
+
+</body>
+</html>
