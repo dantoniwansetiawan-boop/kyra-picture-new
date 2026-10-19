@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -12,6 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
   <style>
     :root {
       --cream: #f8f5ef;
@@ -21,6 +24,7 @@
       --terracotta: #b8755b;
       --muted: #82766e;
       --line: #e8dfd5;
+      --soft-bg: #eee6dc;
     }
 
     * {
@@ -29,11 +33,23 @@
       box-sizing: border-box;
     }
 
+    html {
+      width: 100%;
+      min-height: 100%;
+      scroll-behavior: smooth;
+    }
+
     body {
+      width: 100%;
+      max-width: none;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
       background: var(--cream);
       color: var(--espresso);
-      font-family: 'DM Sans', sans-serif;
+      font-family: "DM Sans", sans-serif;
       line-height: 1.7;
+      overflow-x: clip;
     }
 
     a {
@@ -41,7 +57,10 @@
       text-decoration: none;
     }
 
+    /* NAVIGATION */
+
     .navbar {
+      width: 100%;
       min-height: 78px;
       padding: 20px 7%;
       display: flex;
@@ -49,6 +68,7 @@
       align-items: center;
       gap: 24px;
       border-bottom: 1px solid var(--line);
+      background: var(--cream);
     }
 
     .logo {
@@ -84,7 +104,10 @@
       color: var(--terracotta);
     }
 
+    /* PAGE HEADER */
+
     .page-header {
+      width: 100%;
       max-width: 780px;
       margin: auto;
       padding: 78px 20px 48px;
@@ -103,13 +126,13 @@
     h1,
     h2,
     h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: "Playfair Display", serif;
       font-weight: 500;
       line-height: 1.3;
     }
 
     h1 {
-      font-size: clamp(38px, 5vw, 54px);
+      font-size: clamp(34px, 5vw, 54px);
       margin-bottom: 18px;
     }
 
@@ -117,6 +140,8 @@
       color: var(--muted);
       font-size: 14px;
     }
+
+    /* CONTACT CARDS */
 
     .contact-section {
       width: min(1000px, 88%);
@@ -140,6 +165,7 @@
     }
 
     .contact-card {
+      min-width: 0;
       background: var(--white);
       border: 1px solid var(--line);
       padding: 27px;
@@ -148,10 +174,43 @@
       align-items: flex-start;
     }
 
+    /* SOCIAL ICON */
+
+    .social-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--cream);
+      color: var(--terracotta);
+      font-size: 21px;
+    }
+
+    .social-icon.whatsapp {
+      color: #25a85a;
+    }
+
+    .social-icon.instagram {
+      color: #c13584;
+    }
+
+    .social-icon.tiktok {
+      color: #111111;
+    }
+
+    .social-icon.email {
+      color: var(--terracotta);
+    }
+
     .contact-label {
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       color: var(--terracotta);
       text-transform: uppercase;
       margin-bottom: 8px;
@@ -162,7 +221,7 @@
       margin-bottom: 7px;
     }
 
-    .contact-card p {
+    .contact-card p.description {
       color: var(--muted);
       font-size: 13px;
       margin-bottom: 18px;
@@ -174,9 +233,9 @@
       color: var(--espresso);
       border-bottom: 1px solid var(--terracotta);
       padding-bottom: 3px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.7px;
+      letter-spacing: 0.5px;
       overflow-wrap: anywhere;
     }
 
@@ -184,8 +243,15 @@
       color: var(--terracotta);
     }
 
+    .contact-link i {
+      margin-left: 3px;
+    }
+
+    /* WEDDING CONTENT CREATOR */
+
     .wcc-section {
-      background: #eee6dc;
+      width: 100%;
+      background: var(--soft-bg);
       padding: 58px 6% 65px;
       margin-bottom: 75px;
     }
@@ -213,9 +279,14 @@
     }
 
     .wcc-card {
+      min-width: 0;
       background: var(--white);
       border: 1px solid var(--line);
       padding: 28px;
+    }
+
+    .wcc-card .social-icon {
+      margin-bottom: 18px;
     }
 
     .wcc-card h3 {
@@ -223,16 +294,17 @@
       margin-bottom: 8px;
     }
 
-    .wcc-card p {
+    .wcc-card p.description {
       color: var(--muted);
       font-size: 13px;
       margin-bottom: 20px;
     }
 
     .wcc-card .contact-link {
-      display: inline-block;
-      margin: 0 18px 8px 0;
+      margin: 0 10px 8px 0;
     }
+
+    /* CUSTOM REQUEST */
 
     .custom-request {
       text-align: center;
@@ -244,7 +316,7 @@
       margin-bottom: 12px;
     }
 
-    .custom-request p {
+    .custom-request p.description {
       max-width: 590px;
       margin: 0 auto 23px;
     }
@@ -264,13 +336,18 @@
       background: var(--terracotta);
     }
 
+    /* FOOTER */
+
     footer {
+      width: 100%;
       border-top: 1px solid var(--line);
       text-align: center;
       padding: 25px 20px;
       color: var(--muted);
       font-size: 11px;
     }
+
+    /* TABLET */
 
     @media (max-width: 900px) {
       .navbar {
@@ -284,27 +361,130 @@
       }
     }
 
+    /* MOBILE: KEEP 2 COLUMNS */
+
     @media (max-width: 600px) {
+      .navbar {
+        padding: 20px 5%;
+      }
+
+      .nav-links {
+        gap: 12px 15px;
+      }
+
+      .nav-links a {
+        font-size: 10px;
+      }
+
       .page-header {
-        padding-top: 58px;
+        padding: 55px 20px 38px;
       }
 
       .contact-section {
-        width: 90%;
+        width: 92%;
+        margin-bottom: 55px;
+      }
+
+      .section-heading {
+        margin-bottom: 22px;
       }
 
       .contact-grid,
       .wcc-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
       }
 
       .contact-card,
       .wcc-card {
-        padding: 24px;
+        padding: 15px 12px;
+      }
+
+      .social-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 17px;
+        margin-bottom: 13px;
+      }
+
+      .contact-label {
+        font-size: 8px;
+        letter-spacing: 1px;
+        line-height: 1.6;
+      }
+
+      .contact-card h3,
+      .wcc-card h3 {
+        font-size: 19px;
+        line-height: 1.3;
+      }
+
+      .contact-card p.description,
+      .wcc-card p.description {
+        font-size: 11px;
+        line-height: 1.7;
+        margin-bottom: 14px;
+      }
+
+      .contact-link {
+        font-size: 9px;
+        letter-spacing: 0;
+        line-height: 1.7;
       }
 
       .wcc-section {
-        padding: 45px 5%;
+        padding: 42px 4% 48px;
+        margin-bottom: 55px;
+      }
+
+      .wcc-intro {
+        margin-bottom: 24px;
+      }
+
+      .wcc-card .contact-link {
+        margin-right: 0;
+      }
+
+      .custom-request {
+        padding: 0 20px 58px;
+      }
+
+      .custom-request p.description {
+        font-size: 13px;
+      }
+
+      .button {
+        padding: 13px 18px;
+        font-size: 9px;
+      }
+    }
+
+    /* VERY SMALL PHONES */
+
+    @media (max-width: 360px) {
+      .contact-grid,
+      .wcc-grid {
+        gap: 8px;
+      }
+
+      .contact-card,
+      .wcc-card {
+        padding: 12px 9px;
+      }
+
+      .contact-card h3,
+      .wcc-card h3 {
+        font-size: 17px;
+      }
+
+      .contact-link {
+        font-size: 8px;
+      }
+
+      .social-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
       }
     }
   </style>
@@ -339,8 +519,9 @@
     </p>
   </header>
 
-  <!-- MAIN CONTACT -->
   <main>
+
+    <!-- MAIN CONTACT -->
     <section class="contact-section">
 
       <div class="section-heading">
@@ -355,71 +536,96 @@
 
         <!-- WHATSAPP -->
         <article class="contact-card">
+          <div class="social-icon whatsapp" aria-label="WhatsApp">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          </div>
+
           <p class="contact-label">BOOKING & INQUIRIES</p>
           <h3>WhatsApp</h3>
-          <p>
+
+          <p class="description">
             Discuss your event date, package options, and any special
             requests directly with our team.
           </p>
+
           <a
             class="contact-link"
             href="https://wa.me/6289519847571"
             target="_blank"
             rel="noopener noreferrer"
           >
-            CHAT WITH US ↗
+            CHAT WITH US <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
         </article>
 
         <!-- INSTAGRAM KYRA PICTURE -->
         <article class="contact-card">
+          <div class="social-icon instagram" aria-label="Instagram">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+          </div>
+
           <p class="contact-label">PHOTOGRAPHY PORTFOLIO</p>
           <h3>Instagram</h3>
-          <p>
+
+          <p class="description">
             Explore our wedding and prewedding work, recent stories,
             and photography highlights.
           </p>
+
           <a
             class="contact-link"
             href="https://www.instagram.com/kyra.picture/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            @KYRA.PICTURE ↗
+            @KYRA.PICTURE <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
         </article>
 
         <!-- TIKTOK KYRA PICTURE -->
         <article class="contact-card">
+          <div class="social-icon tiktok" aria-label="TikTok">
+            <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+          </div>
+
           <p class="contact-label">BEHIND THE SCENES</p>
           <h3>TikTok</h3>
-          <p>
+
+          <p class="description">
             Discover behind-the-scenes moments, creative processes,
             and highlights from our photography sessions.
           </p>
+
           <a
             class="contact-link"
             href="https://www.tiktok.com/@kyra.picture"
             target="_blank"
             rel="noopener noreferrer"
           >
-            @KYRA.PICTURE ↗
+            @KYRA.PICTURE <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
         </article>
 
         <!-- EMAIL -->
         <article class="contact-card">
+          <div class="social-icon email" aria-label="Email">
+            <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+          </div>
+
           <p class="contact-label">BUSINESS & COLLABORATIONS</p>
           <h3>Email</h3>
-          <p>
+
+          <p class="description">
             For business inquiries, brand collaborations, and other
             professional matters.
           </p>
+
           <a
             class="contact-link"
             href="mailto:picture.kyra@gmail.com"
           >
-            PICTURE.KYRA@GMAIL.COM ↗
+            PICTURE.KYRA@GMAIL.COM
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
         </article>
 
@@ -446,9 +652,14 @@
 
           <!-- WCC INSTAGRAM -->
           <article class="wcc-card">
+            <div class="social-icon instagram" aria-label="Instagram">
+              <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </div>
+
             <p class="contact-label">INSTAGRAM</p>
             <h3>Kyra Lens</h3>
-            <p>
+
+            <p class="description">
               Discover wedding stories, Instagram Stories, and
               candid behind-the-scenes moments.
             </p>
@@ -459,15 +670,20 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              @KYRAALENS ↗
+              @KYRAALENS <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
           </article>
 
           <!-- WCC TIKTOK -->
           <article class="wcc-card">
+            <div class="social-icon tiktok" aria-label="TikTok">
+              <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+            </div>
+
             <p class="contact-label">TIKTOK</p>
             <h3>Kyra Lens</h3>
-            <p>
+
+            <p class="description">
               Watch wedding highlights, trending videos,
               and spontaneous moments from the celebration.
             </p>
@@ -478,7 +694,7 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              @KYRAALENS ↗
+              @KYRAALENS <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
           </article>
 
@@ -492,7 +708,7 @@
 
       <h2>Have Something Special in Mind?</h2>
 
-      <p class="muted">
+      <p class="muted description">
         Every celebration is different. Tell us about your ideas,
         preferred coverage, or any service you need that isn't listed
         in our packages. Let's explore the possibilities together.
@@ -507,6 +723,7 @@
         DISCUSS YOUR PLANS ↗
       </a>
     </section>
+
   </main>
 
   <!-- FOOTER -->
@@ -516,3 +733,4 @@
 
 </body>
 </html>
+```
