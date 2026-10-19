@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -27,7 +28,8 @@
       text-align: center;
     }
 
-    .gallery-intro h1 {
+    .gallery-intro h1,
+    .gallery-contact h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
     }
@@ -69,37 +71,7 @@
       outline-offset: 3px;
     }
 
-    /* VARIED PHOTO COMPOSITIONS */
-    .photo-item:nth-child(1) {
-      grid-column: span 5;
-      grid-row: span 17;
-    }
-
-    .photo-item:nth-child(2) {
-      grid-column: span 4;
-      grid-row: span 11;
-    }
-
-    .photo-item:nth-child(3) {
-      grid-column: span 3;
-      grid-row: span 14;
-    }
-
-    .photo-item:nth-child(4) {
-      grid-column: span 4;
-      grid-row: span 12;
-    }
-
-    .photo-item:nth-child(5) {
-      grid-column: span 4;
-      grid-row: span 15;
-    }
-
-    .photo-item:nth-child(6) {
-      grid-column: span 4;
-      grid-row: span 11;
-    }
-
+    /* DESKTOP PHOTO COMPOSITIONS */
     .photo-item:nth-child(7n + 1) {
       grid-column: span 5;
       grid-row: span 16;
@@ -224,11 +196,6 @@
     .gallery-contact {
       padding: 65px 20px;
       text-align: center;
-    }
-
-    .gallery-contact h2 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
     }
 
     .gallery-back {
@@ -408,59 +375,85 @@
   <main class="gallery-page">
     <div class="photo-grid" id="photoGrid">
 
-      <button class="photo-item" type="button"
-        aria-label="View wedding celebration photo">
-        <img
-          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding celebration"
-          loading="eager">
+      <button class="photo-item" type="button" aria-label="View wedding photo 1">
+        <img src="images/wedding1.jpg" alt="Wedding photography 1" loading="eager">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View wedding moments photo">
-        <img
-          src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding moments"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View wedding photo 2">
+        <img src="images/wedding2.jpg" alt="Wedding photography 2" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View wedding ceremony photo">
-        <img
-          src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding ceremony"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View wedding photo 3">
+        <img src="images/wedding3.jpg" alt="Wedding photography 3" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View bride and groom photo">
-        <img
-          src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1000&q=85"
-          alt="Bride and groom"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View wedding photo 4">
+        <img src="images/wedding4.jpg" alt="Wedding photography 4" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View wedding reception photo">
-        <img
-          src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding reception"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View wedding photo 5">
+        <img src="images/wedding5.jpg" alt="Wedding photography 5" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View wedding portrait photo">
-        <img
-          src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding portrait"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View wedding photo 6">
+        <img src="images/wedding6.jpg" alt="Wedding photography 6" loading="lazy">
       </button>
 
-      <!--
-        TAMBAH FOTO:
-        Salin satu blok <button class="photo-item">...</button>
-        lalu ganti URL gambar dan teks alt-nya.
-      -->
+      <button class="photo-item" type="button" aria-label="View wedding photo 7">
+        <img src="images/wedding7.jpg" alt="Wedding photography 7" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 8">
+        <img src="images/wedding8.jpg" alt="Wedding photography 8" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 9">
+        <img src="images/wedding9.jpg" alt="Wedding photography 9" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 10">
+        <img src="images/wedding10.jpg" alt="Wedding photography 10" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 11">
+        <img src="images/wedding11.jpg" alt="Wedding photography 11" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 12">
+        <img src="images/wedding12.jpg" alt="Wedding photography 12" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 13">
+        <img src="images/wedding13.jpg" alt="Wedding photography 13" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 14">
+        <img src="images/wedding14.jpg" alt="Wedding photography 14" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 15">
+        <img src="images/wedding15.jpg" alt="Wedding photography 15" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 16">
+        <img src="images/wedding16.jpg" alt="Wedding photography 16" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 17">
+        <img src="images/wedding17.jpg" alt="Wedding photography 17" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 18">
+        <img src="images/wedding18.jpg" alt="Wedding photography 18" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 19">
+        <img src="images/wedding19.jpg" alt="Wedding photography 19" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View wedding photo 20">
+        <img src="images/wedding20.jpg" alt="Wedding photography 20" loading="lazy">
+      </button>
 
     </div>
   </main>
@@ -494,7 +487,7 @@
       type="button"
       aria-label="Next photo">&#8250;</button>
 
-    <div class="lightbox-counter" id="lightboxCounter">1 / 6</div>
+    <div class="lightbox-counter" id="lightboxCounter">1 / 20</div>
   </div>
 
   <!-- BOOKING SECTION -->
@@ -646,8 +639,10 @@
         const deltaX = touch.screenX - touchStartX;
         const deltaY = touch.screenY - touchStartY;
 
-        if (Math.abs(deltaX) > 55 &&
-            Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (
+          Math.abs(deltaX) > 55 &&
+          Math.abs(deltaX) > Math.abs(deltaY)
+        ) {
           showPhoto(
             deltaX < 0 ? currentIndex + 1 : currentIndex - 1
           );
