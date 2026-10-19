@@ -4,34 +4,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f0e7">
 
-  <title>About Us — Kyra Picture</title>
-
-  <meta
-    name="description"
-    content="Kenali Kyra Picture, layanan fotografi wedding, prewedding, dan engagement."
-  >
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  >
+  <title>About Us | Kyra Picture</title>
+  <meta name="description" content="Kenali Kyra Picture, wedding dan prewedding photography yang mengabadikan cerita dengan gaya natural, timeless, dan personal.">
 
   <link rel="stylesheet" href="style.css">
 
-  <style>
-    /* =================================
-       ABOUT PAGE — FULL WIDTH FIX
-    ================================= */
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
     html {
       width: 100%;
       min-height: 100%;
       margin: 0;
       padding: 0;
+      scroll-behavior: smooth;
     }
 
     body.about-page {
@@ -45,53 +37,52 @@
       background: #f5f0e7;
       color: #302821;
       font-family: "DM Sans", Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
     }
 
-    /* NAVIGATION */
+    .about-page *,
+    .about-page *::before,
+    .about-page *::after {
+      box-sizing: border-box;
+    }
 
     .about-nav {
+      position: relative;
+      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 30px;
+      gap: 24px;
       width: 100%;
-      margin: 0;
       padding: 22px 7%;
       background: #f5f0e7;
-      border-bottom: 1px solid rgba(48, 40, 33, 0.06);
+      border-bottom: 1px solid rgba(48, 40, 33, 0.12);
     }
 
-    .about-brand {
+    .about-nav-brand {
       flex-shrink: 0;
       color: #302821;
       font-family: "Playfair Display", Georgia, serif;
-      font-size: 25px;
+      font-size: 22px;
+      font-weight: 600;
       letter-spacing: 1px;
-      line-height: 1.2;
       text-decoration: none;
-    }
-
-    .about-brand span {
-      display: block;
-      margin-top: 3px;
-      font-family: "DM Sans", Arial, sans-serif;
-      font-size: 9px;
-      letter-spacing: 4px;
-      text-align: center;
     }
 
     .about-nav-links {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      gap: 27px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
     .about-nav-links a {
-      padding: 5px 0;
-      color: #302821;
+      color: #554b40;
       font-size: 11px;
-      letter-spacing: 1px;
+      font-weight: 600;
+      letter-spacing: 1.1px;
       text-decoration: none;
       text-transform: uppercase;
       transition: color 0.2s ease;
@@ -99,206 +90,232 @@
 
     .about-nav-links a:hover,
     .about-nav-links a.active {
-      color: #a87855;
+      color: #a17b50;
     }
 
-    /* HERO */
-
     .about-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      margin: 0;
-      padding: 95px 24px 85px;
-      background: #f5f0e7;
+      min-height: 410px;
+      padding: 85px 7%;
       text-align: center;
+      background: #eae1d3;
     }
 
     .about-eyebrow {
-      margin: 0 0 16px;
-      color: #a87855;
+      margin: 0 0 18px;
+      color: #9b7954;
       font-size: 10px;
-      letter-spacing: 3px;
-      line-height: 1.8;
+      font-weight: 700;
+      letter-spacing: 4px;
       text-transform: uppercase;
     }
 
     .about-hero h1 {
-      max-width: 950px;
-      margin: 0 auto 22px;
+      max-width: 800px;
+      margin: 0;
       color: #302821;
       font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(44px, 6vw, 72px);
+      font-size: clamp(38px, 6vw, 68px);
       font-weight: 400;
       line-height: 1.15;
     }
 
-    .about-hero p {
+    .about-hero p:last-child {
       max-width: 600px;
-      margin: 0 auto;
-      color: #81776c;
-      font-size: 13px;
+      margin: 24px auto 0;
+      color: #6d6256;
+      font-size: 14px;
       line-height: 1.9;
     }
 
-    /* STORY */
-
     .about-story {
-      width: min(700px, calc(100% - 48px));
-      margin: 0 auto;
-      padding: 20px 0 85px;
+      width: 100%;
+      padding: 95px 7%;
+      background: #f5f0e7;
     }
 
-    .about-story h2 {
-      margin: 0 0 24px;
+    .about-story-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .about-story h2,
+    .about-glance h2 {
+      margin: 0 0 25px;
       color: #302821;
       font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(30px, 4vw, 40px);
+      font-size: clamp(30px, 4vw, 45px);
       font-weight: 400;
       line-height: 1.25;
     }
 
     .about-story p {
-      margin: 0 0 18px;
-      color: #81776c;
-      font-size: 13px;
+      margin: 0 0 20px;
+      color: #6d6256;
+      font-size: 14px;
       line-height: 2;
     }
-
-    /* GLANCE */
 
     .about-glance {
       width: 100%;
-      margin: 0;
-      padding: 70px 24px;
-      background: #eee5d8;
-    }
-
-    .about-glance-inner {
-      width: min(700px, 100%);
-      margin: 0 auto;
-    }
-
-    .about-glance h2 {
-      margin: 0 0 28px;
-      color: #302821;
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(30px, 4vw, 40px);
-      font-weight: 400;
-      line-height: 1.25;
-    }
-
-    .about-glance p {
-      margin: 0 0 18px;
-      color: #81776c;
-      font-size: 13px;
-      line-height: 2;
-    }
-
-    /* CTA */
-
-    .about-cta {
-      width: 100%;
-      margin: 0;
-      padding: 85px 24px;
-      background: #f5f0e7;
+      padding: 85px 7%;
+      background: #eae1d3;
       text-align: center;
     }
 
+    .about-glance-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .about-glance p:not(.about-eyebrow) {
+      max-width: 680px;
+      margin: 0 auto 20px;
+      color: #6d6256;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .about-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 85px 7%;
+      background: #302821;
+      color: #f5f0e7;
+      text-align: center;
+    }
+
+    .about-cta .about-eyebrow {
+      color: #c6a77e;
+    }
+
     .about-cta h2 {
-      margin: 12px 0 28px;
-      color: #302821;
+      margin: 0;
+      color: #f5f0e7;
       font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(32px, 4vw, 48px);
+      font-size: clamp(34px, 5vw, 54px);
       font-weight: 400;
       line-height: 1.2;
     }
 
+    .about-cta p:not(.about-eyebrow) {
+      max-width: 500px;
+      margin: 20px auto 30px;
+      color: #d3c8ba;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
     .about-button {
-      display: inline-block;
-      padding: 15px 23px;
-      border: 1px solid #302821;
-      background: #302821;
-      color: #fffdf9;
-      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 14px 26px;
+      border: 1px solid #c6a77e;
+      background: #c6a77e;
+      color: #302821;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 1.5px;
       text-decoration: none;
-      transition: background 0.25s ease, color 0.25s ease;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
     .about-button:hover {
       background: transparent;
-      color: #302821;
+      color: #f5f0e7;
     }
 
-    /* FOOTER */
+    .about-button i {
+      font-size: 17px;
+    }
 
     .about-footer {
       width: 100%;
-      margin: 0;
-      padding: 30px 7%;
-      background: #302821;
-      color: #fffdf9;
-      font-size: 11px;
-      line-height: 1.8;
+      padding: 25px 7%;
+      background: #241e19;
+      color: #bdb1a3;
       text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.5px;
     }
 
-    .about-footer p {
-      margin: 0;
-      color: #fffdf9;
-    }
-
-    /* TABLET & MOBILE */
-
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
       .about-nav {
+        align-items: flex-start;
         flex-direction: column;
-        gap: 18px;
-        padding: 22px 5%;
+        gap: 16px;
+        padding: 20px 5%;
       }
 
       .about-nav-links {
-        justify-content: center;
-        gap: 14px 20px;
-      }
-
-      .about-hero {
-        padding: 70px 24px;
-      }
-
-      .about-story {
-        padding-bottom: 65px;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .about-nav-links {
-        gap: 12px 15px;
+        justify-content: flex-start;
+        gap: 12px 18px;
+        width: 100%;
       }
 
       .about-nav-links a {
         font-size: 10px;
       }
 
-      .about-hero {
-        padding: 55px 20px 50px;
-      }
-
-      .about-story {
-        width: calc(100% - 40px);
-        padding-top: 10px;
-        padding-bottom: 55px;
-      }
-
-      .about-glance {
-        padding: 55px 20px;
-      }
-
+      .about-hero,
+      .about-story,
+      .about-glance,
       .about-cta {
-        padding: 60px 20px;
+        padding-right: 6%;
+        padding-left: 6%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-nav {
+        padding: 18px 5%;
       }
 
-      .about-footer {
-        padding: 25px 20px;
+      .about-nav-brand {
+        font-size: 21px;
+      }
+
+      .about-nav-links {
+        gap: 10px 14px;
+      }
+
+      .about-nav-links a {
+        font-size: 9px;
+        letter-spacing: 0.6px;
+      }
+
+      .about-hero {
+        min-height: 360px;
+        padding-top: 70px;
+        padding-bottom: 70px;
+      }
+
+      .about-eyebrow {
+        font-size: 9px;
+        letter-spacing: 3px;
+      }
+
+      .about-hero p:last-child,
+      .about-story p,
+      .about-glance p:not(.about-eyebrow),
+      .about-cta p:not(.about-eyebrow) {
+        font-size: 13px;
+      }
+
+      .about-story,
+      .about-glance,
+      .about-cta {
+        padding-top: 65px;
+        padding-bottom: 65px;
       }
     }
   </style>
@@ -306,57 +323,62 @@
 
 <body class="about-page">
 
-  <!-- NAVIGATION -->
-  <nav class="about-nav">
-    <a class="about-brand" href="index.html">
-      KYRA PICTURE
-      <span>PHOTOGRAPHY</span>
-    </a>
+  <!-- HEADER / NAVIGATION -->
+  <header class="about-nav">
+    <a class="about-nav-brand" href="index.html">KYRA PICTURE</a>
 
-    <div class="about-nav-links">
+    <nav class="about-nav-links" aria-label="Main navigation">
       <a href="index.html">Home</a>
       <a href="portfolio.html">Portfolio</a>
       <a href="pricelist.html">Pricelist</a>
-      <a href="about.html" class="active">About</a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <header class="about-hero">
-    <p class="about-eyebrow">OUR STORY</p>
-
-    <h1>Every Story Deserves to Be Remembered</h1>
-
-    <p>
-      Kami percaya setiap momen memiliki cerita yang berharga.
-      Melalui fotografi, kami membantu mengabadikan momen tersebut
-      agar bisa dikenang sepanjang waktu.
-    </p>
+      <a href="testimonials.html">Testimonials</a>
+      <a href="about.html" class="active" aria-current="page">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </header>
 
-  <!-- ABOUT STORY -->
   <main>
+    <!-- HERO -->
+    <section class="about-hero">
+      <p class="about-eyebrow">OUR STORY</p>
+
+      <h1>Every Story Deserves to Be Remembered</h1>
+
+      <p>
+        Kami percaya setiap cerita memiliki keindahannya sendiri.
+        Melalui fotografi, kami mengabadikan momen, emosi, dan kenangan
+        yang akan selalu berarti sepanjang waktu.
+      </p>
+    </section>
+
+    <!-- OUR STORY -->
     <section class="about-story">
-      <h2>More Than Just a Photograph</h2>
+      <div class="about-story-inner">
+        <p class="about-eyebrow">WHO WE ARE</p>
 
-      <p>
-        Bagi kami, fotografi bukan sekadar mengambil gambar.
-        Fotografi adalah tentang menangkap perasaan, menyimpan kenangan,
-        dan menceritakan kisah yang akan selalu berarti.
-      </p>
+        <h2>More Than Just a Photograph</h2>
 
-      <p>
-        Di Kyra Picture, kami berusaha menciptakan pengalaman fotografi
-        yang nyaman dan personal. Setiap pasangan memiliki cerita yang
-        berbeda, dan kami ingin membantu mengabadikan cerita itu dengan
-        cara yang autentik dan bermakna.
-      </p>
+        <p>
+          Bagi kami, fotografi bukan sekadar tentang mengambil gambar.
+          Lebih dari itu, fotografi adalah tentang menangkap perasaan,
+          menyimpan cerita, dan mengabadikan momen yang tidak akan
+          pernah terulang dengan cara yang sama.
+        </p>
 
-      <p>
-        Mulai dari wedding, prewedding, hingga engagement, setiap momen
-        kami dokumentasikan dengan perhatian terhadap detail dan emosi
-        yang membuatnya istimewa.
-      </p>
+        <p>
+          Kyra Picture hadir untuk menemani perjalanan berharga dalam
+          hidupmu, mulai dari kisah cinta, prewedding, hingga hari
+          pernikahan yang menjadi salah satu bab paling berarti dalam
+          sebuah perjalanan.
+        </p>
+
+        <p>
+          Kami ingin setiap foto terasa jujur dan personal. Bukan hanya
+          gambar yang terlihat indah hari ini, tetapi juga kenangan
+          yang tetap memiliki arti ketika dilihat kembali bertahun-tahun
+          kemudian.
+        </p>
+      </div>
     </section>
 
     <!-- OUR APPROACH -->
@@ -367,37 +389,47 @@
         <h2>Natural, Timeless, and Personal</h2>
 
         <p>
-          Kami menyukai foto yang terasa natural, tidak dibuat-buat,
-          dan tetap indah ketika dilihat bertahun-tahun kemudian.
+          Kami menyukai momen yang mengalir secara alami, ekspresi yang
+          tulus, dan detail kecil yang sering kali justru menyimpan
+          cerita paling besar.
         </p>
 
         <p>
-          Bagi kami, detail kecil, ekspresi spontan, dan momen sederhana
-          sering kali menjadi bagian paling berharga dari sebuah cerita.
+          Dengan pendekatan yang santai dan personal, kami ingin
+          membantumu merasa nyaman menjadi diri sendiri di depan kamera.
+          Karena bagi kami, foto terbaik adalah foto yang bukan hanya
+          terlihat indah, tetapi juga terasa seperti dirimu.
         </p>
       </div>
     </section>
+
+    <!-- CALL TO ACTION -->
+    <section class="about-cta">
+      <p class="about-eyebrow">LET'S CREATE SOMETHING MEANINGFUL</p>
+
+      <h2>Let's Tell Your Story</h2>
+
+      <p>
+        Punya cerita yang ingin diabadikan? Kami akan senang menjadi
+        bagian dari perjalanan dan momen berhargamu.
+      </p>
+
+      <a
+        class="about-button"
+        href="https://wa.me/6289519847571"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Hubungi Kyra Picture melalui WhatsApp"
+      >
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        GET IN TOUCH
+      </a>
+    </section>
   </main>
-
-  <!-- CONTACT CTA -->
-  <section class="about-cta">
-    <p class="about-eyebrow">LET'S CREATE SOMETHING MEANINGFUL</p>
-
-    <h2>Let's Tell Your Story</h2>
-
-    <a
-      class="about-button"
-      href="https://wa.me/6289519847571"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      GET IN TOUCH
-    </a>
-  </section>
 
   <!-- FOOTER -->
   <footer class="about-footer">
-    <p>© 2026 Kyra Picture. All Rights Reserved.</p>
+    © 2026 Kyra Picture. All Rights Reserved.
   </footer>
 
 </body>
