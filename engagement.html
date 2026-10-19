@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,65 +8,50 @@
   <title>Engagement Gallery | Kyra Picture</title>
   <meta name="description" content="Engagement photography portfolio by Kyra Picture.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* EDITORIAL MASONRY GALLERY */
+    /* GALLERY PAGE */
     .gallery-page {
-      max-width: 1400px;
+      width: min(92%, 1500px);
       margin: 0 auto;
-      padding: 20px 5% 100px;
+      padding: 20px 0 100px;
     }
 
+    .gallery-intro {
+      max-width: 650px;
+      margin: 0 auto 50px;
+      text-align: center;
+    }
+
+    .gallery-intro h1,
+    .gallery-contact h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+    }
+
+    /* EDITORIAL MASONRY GRID */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      grid-auto-rows: 55px;
-      gap: 16px;
+      grid-auto-rows: 24px;
+      gap: 14px;
+      grid-auto-flow: dense;
     }
 
     .photo-item {
       position: relative;
-      display: block;
-      width: 100%;
-      height: 100%;
-      padding: 0;
+      min-width: 0;
       overflow: hidden;
+      background: #e9e0d5;
+      cursor: zoom-in;
       border: 0;
-      background: #eee7df;
-      cursor: pointer;
-      grid-column: span 4;
-      grid-row: span 5;
-    }
-
-    .photo-item:nth-child(6n + 1) {
-      grid-column: span 5;
-      grid-row: span 7;
-    }
-
-    .photo-item:nth-child(6n + 2) {
-      grid-column: span 4;
-      grid-row: span 5;
-    }
-
-    .photo-item:nth-child(6n + 3) {
-      grid-column: span 3;
-      grid-row: span 6;
-    }
-
-    .photo-item:nth-child(6n + 4) {
-      grid-column: span 3;
-      grid-row: span 5;
-    }
-
-    .photo-item:nth-child(6n + 5) {
-      grid-column: span 4;
-      grid-row: span 7;
-    }
-
-    .photo-item:nth-child(6n) {
-      grid-column: span 5;
-      grid-row: span 6;
+      padding: 0;
+      text-align: left;
     }
 
     .photo-item img {
@@ -73,7 +59,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.7s ease;
+      transition: transform 0.6s cubic-bezier(.2,.7,.2,1);
     }
 
     .photo-item:hover img {
@@ -81,8 +67,44 @@
     }
 
     .photo-item:focus-visible {
-      outline: 3px solid #a8795d;
-      outline-offset: 4px;
+      outline: 2px solid #a87855;
+      outline-offset: 3px;
+    }
+
+    /* DESKTOP PHOTO COMPOSITIONS */
+    .photo-item:nth-child(7n + 1) {
+      grid-column: span 5;
+      grid-row: span 16;
+    }
+
+    .photo-item:nth-child(7n + 2) {
+      grid-column: span 4;
+      grid-row: span 11;
+    }
+
+    .photo-item:nth-child(7n + 3) {
+      grid-column: span 3;
+      grid-row: span 14;
+    }
+
+    .photo-item:nth-child(7n + 4) {
+      grid-column: span 3;
+      grid-row: span 12;
+    }
+
+    .photo-item:nth-child(7n + 5) {
+      grid-column: span 5;
+      grid-row: span 14;
+    }
+
+    .photo-item:nth-child(7n + 6) {
+      grid-column: span 4;
+      grid-row: span 10;
+    }
+
+    .photo-item:nth-child(7n) {
+      grid-column: span 4;
+      grid-row: span 13;
     }
 
     /* LIGHTBOX */
@@ -93,8 +115,8 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 55px 70px;
-      background: rgba(24, 20, 18, 0.96);
+      padding: 65px 75px;
+      background: rgba(20, 17, 15, 0.96);
     }
 
     .lightbox.is-open {
@@ -104,7 +126,7 @@
     .lightbox-image {
       display: block;
       max-width: 100%;
-      max-height: calc(100vh - 110px);
+      max-height: calc(100vh - 130px);
       width: auto;
       height: auto;
       object-fit: contain;
@@ -112,58 +134,56 @@
     }
 
     .lightbox-close,
-    .lightbox-prev,
-    .lightbox-next {
+    .lightbox-arrow {
       position: absolute;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 0;
-      border-radius: 50%;
       color: #fff;
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       cursor: pointer;
       transition: background 0.2s ease;
     }
 
     .lightbox-close:hover,
-    .lightbox-prev:hover,
-    .lightbox-next:hover {
-      background: rgba(255, 255, 255, 0.25);
+    .lightbox-arrow:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .lightbox-close {
-      top: 20px;
-      right: 24px;
+      top: 22px;
+      right: 25px;
       width: 44px;
       height: 44px;
-      font-size: 28px;
+      border-radius: 50%;
+      font-size: 27px;
+      line-height: 1;
     }
 
-    .lightbox-prev,
-    .lightbox-next {
+    .lightbox-arrow {
       top: 50%;
-      width: 46px;
-      height: 46px;
-      font-size: 28px;
+      width: 48px;
+      height: 58px;
+      border-radius: 3px;
+      font-size: 29px;
       transform: translateY(-50%);
     }
 
     .lightbox-prev {
-      left: 18px;
+      left: 20px;
     }
 
     .lightbox-next {
-      right: 18px;
+      right: 20px;
     }
 
     .lightbox-counter {
       position: absolute;
-      bottom: 20px;
+      bottom: 23px;
       left: 50%;
-      color: #fff;
-      font-family: sans-serif;
-      font-size: 13px;
+      color: #e7dfd5;
+      font-size: 12px;
       letter-spacing: 2px;
       transform: translateX(-50%);
     }
@@ -172,79 +192,110 @@
       overflow: hidden;
     }
 
+    /* BOOKING SECTION */
+    .gallery-contact {
+      padding: 65px 20px;
+      text-align: center;
+    }
+
+    .gallery-back {
+      margin-top: 24px;
+    }
+
+    /* TABLET */
     @media (max-width: 900px) {
+      .gallery-page {
+        width: 94%;
+        padding-bottom: 70px;
+      }
+
       .photo-grid {
         grid-template-columns: repeat(6, minmax(0, 1fr));
-        grid-auto-rows: 45px;
-        gap: 12px;
+        grid-auto-rows: 22px;
+        gap: 10px;
       }
 
-      .photo-item:nth-child(6n + 1) {
-        grid-column: span 3;
-        grid-row: span 6;
+      .photo-item:nth-child(n) {
+        grid-column: span 2;
+        grid-row: span 12;
       }
 
-      .photo-item:nth-child(6n + 2) {
-        grid-column: span 3;
-        grid-row: span 5;
+      .photo-item:nth-child(5n + 1) {
+        grid-column: span 4;
+        grid-row: span 15;
       }
 
-      .photo-item:nth-child(6n + 3) {
-        grid-column: span 3;
-        grid-row: span 5;
+      .photo-item:nth-child(5n + 2) {
+        grid-column: span 2;
+        grid-row: span 10;
       }
 
-      .photo-item:nth-child(6n + 4) {
+      .photo-item:nth-child(5n + 3) {
         grid-column: span 3;
-        grid-row: span 6;
+        grid-row: span 12;
       }
 
-      .photo-item:nth-child(6n + 5) {
+      .photo-item:nth-child(5n + 4) {
         grid-column: span 3;
-        grid-row: span 5;
+        grid-row: span 10;
       }
 
-      .photo-item:nth-child(6n) {
+      .photo-item:nth-child(5n) {
         grid-column: span 3;
-        grid-row: span 6;
+        grid-row: span 13;
       }
     }
 
-    @media (max-width: 600px) {
+    /* MOBILE */
+    @media (max-width: 560px) {
       .gallery-page {
-        padding: 10px 5% 65px;
+        width: calc(100% - 28px);
+        padding-top: 10px;
+        padding-bottom: 55px;
+      }
+
+      .gallery-intro {
+        margin-bottom: 30px;
       }
 
       .photo-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-auto-rows: 90px;
-        gap: 10px;
+        grid-auto-rows: 18px;
+        gap: 8px;
       }
 
-      .photo-item,
       .photo-item:nth-child(n) {
         grid-column: span 1;
-        grid-row: span 3;
+        grid-row: span 12;
       }
 
-      .photo-item:nth-child(4n + 1) {
-        grid-row: span 4;
+      .photo-item:nth-child(5n + 1) {
+        grid-column: span 2;
+        grid-row: span 15;
       }
 
-      .photo-item:nth-child(4n + 2) {
-        grid-row: span 3;
+      .photo-item:nth-child(5n + 2) {
+        grid-column: span 1;
+        grid-row: span 11;
       }
 
-      .photo-item:nth-child(4n + 3) {
-        grid-row: span 3;
+      .photo-item:nth-child(5n + 3) {
+        grid-column: span 1;
+        grid-row: span 14;
       }
 
-      .photo-item:nth-child(4n) {
-        grid-row: span 4;
+      .photo-item:nth-child(5n + 4) {
+        grid-column: span 2;
+        grid-row: span 12;
+      }
+
+      .photo-item:nth-child(5n) {
+        grid-column: span 1;
+        grid-row: span 13;
       }
 
       .lightbox {
-        padding: 50px 12px;
+        padding: 60px 12px;
       }
 
       .lightbox-image {
@@ -255,22 +306,34 @@
       .lightbox-close {
         top: 12px;
         right: 12px;
+        width: 40px;
+        height: 40px;
+      }
+
+      .lightbox-arrow {
+        top: auto;
+        bottom: 12px;
+        width: 43px;
+        height: 43px;
+        border-radius: 50%;
+        transform: none;
       }
 
       .lightbox-prev {
-        left: 8px;
+        left: calc(50% - 58px);
       }
 
       .lightbox-next {
-        right: 8px;
+        right: calc(50% - 58px);
       }
 
-      .lightbox-prev,
-      .lightbox-next {
-        width: 38px;
-        height: 38px;
-        font-size: 24px;
-        background: rgba(0, 0, 0, 0.4);
+      .lightbox-counter {
+        bottom: 27px;
+        font-size: 11px;
+      }
+
+      .gallery-contact {
+        padding: 48px 20px;
       }
     }
 
@@ -284,6 +347,7 @@
 
 <body>
 
+  <!-- NAVIGATION -->
   <nav class="navbar">
     <a class="logo" href="index.html">KYRA <span>PICTURE</span></a>
 
@@ -297,194 +361,292 @@
     </div>
   </nav>
 
-  <header class="page-header">
+  <!-- PAGE HEADER -->
+  <header class="page-header gallery-intro">
     <p class="eyebrow">PORTFOLIO / ENGAGEMENT</p>
     <h1>Engagement Stories</h1>
     <p class="muted">
-      Celebrating the beginning of a beautiful new chapter.
+      A collection of heartfelt moments celebrating the beginning
+      of your forever.
     </p>
   </header>
 
+  <!-- PHOTO GALLERY -->
   <main class="gallery-page">
-    <div class="photo-grid">
+    <div class="photo-grid" id="photoGrid">
 
-      <button class="photo-item" type="button"
-        aria-label="Perbesar foto lamaran 1">
-        <img
-          src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85"
-          alt="Momen pasangan merayakan cinta"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View engagement photo 12">
+        <img src="images/engagement/engagement12.jpg" alt="Engagement photography 12" loading="eager">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="Perbesar foto lamaran 2">
-        <img
-          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
-          alt="Pasangan dalam momen romantis"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View engagement photo 4">
+        <img src="images/engagement/engagement4.jpg" alt="Engagement photography 4" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="Perbesar foto lamaran 3">
-        <img
-          src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85"
-          alt="Perayaan kisah cinta pasangan"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View engagement photo 17">
+        <img src="images/engagement/engagement17.jpg" alt="Engagement photography 17" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="Perbesar foto lamaran 4">
-        <img
-          src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1000&q=85"
-          alt="Potret pasangan"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View engagement photo 2">
+        <img src="images/engagement/engagement2.jpg" alt="Engagement photography 2" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="Perbesar foto lamaran 5">
-        <img
-          src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85"
-          alt="Momen perayaan bersama"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View engagement photo 15">
+        <img src="images/engagement/engagement15.jpg" alt="Engagement photography 15" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="Perbesar foto lamaran 6">
-        <img
-          src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85"
-          alt="Potret pasangan dalam suasana romantis"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View engagement photo 8">
+        <img src="images/engagement/engagement8.jpg" alt="Engagement photography 8" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 1">
+        <img src="images/engagement/engagement1.jpg" alt="Engagement photography 1" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 19">
+        <img src="images/engagement/engagement19.jpg" alt="Engagement photography 19" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 6">
+        <img src="images/engagement/engagement6.jpg" alt="Engagement photography 6" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 14">
+        <img src="images/engagement/engagement14.jpg" alt="Engagement photography 14" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 3">
+        <img src="images/engagement/engagement3.jpg" alt="Engagement photography 3" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 10">
+        <img src="images/engagement/engagement10.jpg" alt="Engagement photography 10" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 18">
+        <img src="images/engagement/engagement18.jpg" alt="Engagement photography 18" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 7">
+        <img src="images/engagement/engagement7.jpg" alt="Engagement photography 7" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 16">
+        <img src="images/engagement/engagement16.jpg" alt="Engagement photography 16" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 5">
+        <img src="images/engagement/engagement5.jpg" alt="Engagement photography 5" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 13">
+        <img src="images/engagement/engagement13.jpg" alt="Engagement photography 13" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 9">
+        <img src="images/engagement/engagement9.jpg" alt="Engagement photography 9" loading="lazy">
+      </button>
+
+      <button class="photo-item" type="button" aria-label="View engagement photo 11">
+        <img src="images/engagement/engagement11.jpg" alt="Engagement photography 11" loading="lazy">
       </button>
 
     </div>
   </main>
 
-  <section class="home-contact">
-    <p class="eyebrow">A NEW CHAPTER BEGINS</p>
-    <h2>Let's celebrate your story.</h2>
-    <a class="button" href="contact.html">GET IN TOUCH ↗</a>
+  <!-- LIGHTBOX -->
+  <div
+    class="lightbox"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Expanded portfolio photo"
+    aria-hidden="true">
 
-    <p style="margin-top:20px">
-      <a class="text-link" href="portfolio.html">← BACK TO PORTFOLIO</a>
+    <button
+      class="lightbox-close"
+      id="lightboxClose"
+      type="button"
+      aria-label="Close photo">&times;</button>
+
+    <button
+      class="lightbox-arrow lightbox-prev"
+      id="lightboxPrev"
+      type="button"
+      aria-label="Previous photo">&#8249;</button>
+
+    <img class="lightbox-image" id="lightboxImage" src="" alt="">
+
+    <button
+      class="lightbox-arrow lightbox-next"
+      id="lightboxNext"
+      type="button"
+      aria-label="Next photo">&#8250;</button>
+
+    <div class="lightbox-counter" id="lightboxCounter">1 / 19</div>
+  </div>
+
+  <!-- BOOKING SECTION -->
+  <section class="home-contact gallery-contact">
+    <p class="eyebrow">YOUR STORY MATTERS</p>
+    <h2>Let's capture your special moment.</h2>
+
+    <a class="button"
+       href="https://wa.me/6289519847571"
+       target="_blank"
+       rel="noopener noreferrer">
+      BOOK VIA WHATSAPP ↗
+    </a>
+
+    <p class="gallery-back">
+      <a class="text-link" href="portfolio.html">
+        ← BACK TO PORTFOLIO
+      </a>
     </p>
   </section>
 
+  <!-- FOOTER -->
   <footer>
     © 2026 Kyra Picture. Your Story, Beautifully Captured.
   </footer>
 
-  <!-- PHOTO LIGHTBOX -->
-  <div class="lightbox" id="lightbox"
-    role="dialog" aria-modal="true" aria-label="Galeri foto"
-    aria-hidden="true">
-
-    <button class="lightbox-close" id="lightboxClose"
-      type="button" aria-label="Tutup galeri">&times;</button>
-
-    <button class="lightbox-prev" id="lightboxPrev"
-      type="button" aria-label="Foto sebelumnya">&#8249;</button>
-
-    <img class="lightbox-image" id="lightboxImage" src="" alt="">
-
-    <button class="lightbox-next" id="lightboxNext"
-      type="button" aria-label="Foto berikutnya">&#8250;</button>
-
-    <div class="lightbox-counter" id="lightboxCounter">1 / 6</div>
-  </div>
-
+  <!-- LIGHTBOX SCRIPT -->
   <script>
-    const photoButtons = Array.from(
-      document.querySelectorAll(".photo-item")
-    );
+    (() => {
+      const grid = document.getElementById('photoGrid');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImage = document.getElementById('lightboxImage');
+      const counter = document.getElementById('lightboxCounter');
+      const closeButton = document.getElementById('lightboxClose');
+      const prevButton = document.getElementById('lightboxPrev');
+      const nextButton = document.getElementById('lightboxNext');
 
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImage = document.getElementById("lightboxImage");
-    const lightboxCounter = document.getElementById("lightboxCounter");
-    const closeButton = document.getElementById("lightboxClose");
-    const prevButton = document.getElementById("lightboxPrev");
-    const nextButton = document.getElementById("lightboxNext");
+      let photos = [];
+      let currentIndex = 0;
+      let previousFocus = null;
 
-    let currentIndex = 0;
-    let touchStartX = 0;
-
-    function showPhoto(index) {
-      currentIndex =
-        (index + photoButtons.length) % photoButtons.length;
-
-      const image = photoButtons[currentIndex].querySelector("img");
-
-      lightboxImage.src = image.src;
-      lightboxImage.alt = image.alt;
-      lightboxCounter.textContent =
-        `${currentIndex + 1} / ${photoButtons.length}`;
-    }
-
-    function openLightbox(index) {
-      showPhoto(index);
-      lightbox.classList.add("is-open");
-      lightbox.setAttribute("aria-hidden", "false");
-      document.body.classList.add("lightbox-active");
-      closeButton.focus();
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove("is-open");
-      lightbox.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("lightbox-active");
-
-      lightboxImage.src = "";
-
-      if (photoButtons[currentIndex]) {
-        photoButtons[currentIndex].focus();
+      function collectPhotos() {
+        photos = Array.from(
+          grid.querySelectorAll('.photo-item img')
+        );
       }
-    }
 
-    function showNext() {
-      showPhoto(currentIndex + 1);
-    }
+      function showPhoto(index) {
+        if (!photos.length) return;
 
-    function showPrev() {
-      showPhoto(currentIndex - 1);
-    }
+        currentIndex = (index + photos.length) % photos.length;
 
-    photoButtons.forEach((button, index) => {
-      button.addEventListener("click", () => openLightbox(index));
-    });
+        const photo = photos[currentIndex];
 
-    closeButton.addEventListener("click", closeLightbox);
-    nextButton.addEventListener("click", showNext);
-    prevButton.addEventListener("click", showPrev);
+        lightboxImage.src = photo.currentSrc || photo.src;
+        lightboxImage.alt = photo.alt || 'Engagement photograph';
 
-    lightbox.addEventListener("click", (event) => {
-      if (event.target === lightbox) {
-        closeLightbox();
+        counter.textContent =
+          (currentIndex + 1) + ' / ' + photos.length;
       }
-    });
 
-    document.addEventListener("keydown", (event) => {
-      if (!lightbox.classList.contains("is-open")) return;
+      function openLightbox(index) {
+        collectPhotos();
 
-      if (event.key === "Escape") closeLightbox();
-      if (event.key === "ArrowRight") showNext();
-      if (event.key === "ArrowLeft") showPrev();
-    });
+        previousFocus = document.activeElement;
 
-    lightbox.addEventListener("touchstart", (event) => {
-      touchStartX = event.changedTouches[0].screenX;
-    }, { passive: true });
+        showPhoto(index);
 
-    lightbox.addEventListener("touchend", (event) => {
-      const touchEndX = event.changedTouches[0].screenX;
-      const difference = touchEndX - touchStartX;
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('lightbox-active');
 
-      if (Math.abs(difference) < 50) return;
-
-      if (difference < 0) {
-        showNext();
-      } else {
-        showPrev();
+        closeButton.focus();
       }
-    }, { passive: true });
+
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('lightbox-active');
+
+        lightboxImage.src = '';
+
+        if (previousFocus) {
+          previousFocus.focus();
+        }
+      }
+
+      grid.addEventListener('click', (event) => {
+        const button = event.target.closest('.photo-item');
+
+        if (!button) return;
+
+        const index = Array.from(
+          grid.querySelectorAll('.photo-item')
+        ).indexOf(button);
+
+        if (index !== -1) {
+          openLightbox(index);
+        }
+      });
+
+      closeButton.addEventListener('click', closeLightbox);
+
+      prevButton.addEventListener('click', () => {
+        showPhoto(currentIndex - 1);
+      });
+
+      nextButton.addEventListener('click', () => {
+        showPhoto(currentIndex + 1);
+      });
+
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (!lightbox.classList.contains('is-open')) return;
+
+        if (event.key === 'Escape') {
+          closeLightbox();
+        }
+
+        if (event.key === 'ArrowLeft') {
+          showPhoto(currentIndex - 1);
+        }
+
+        if (event.key === 'ArrowRight') {
+          showPhoto(currentIndex + 1);
+        }
+      });
+
+      /* SWIPE SUPPORT FOR MOBILE */
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      lightbox.addEventListener('touchstart', (event) => {
+        const touch = event.changedTouches[0];
+
+        touchStartX = touch.screenX;
+        touchStartY = touch.screenY;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', (event) => {
+        if (!lightbox.classList.contains('is-open')) return;
+
+        const touch = event.changedTouches[0];
+        const deltaX = touch.screenX - touchStartX;
+        const deltaY = touch.screenY - touchStartY;
+
+        if (
+          Math.abs(deltaX) > 55 &&
+          Math.abs(deltaX) > Math.abs(deltaY)
+        ) {
+          showPhoto(
+            deltaX < 0 ? currentIndex + 1 : currentIndex - 1
+          );
+        }
+      }, { passive: true });
+
+      collectPhotos();
+    })();
   </script>
 
 </body>
