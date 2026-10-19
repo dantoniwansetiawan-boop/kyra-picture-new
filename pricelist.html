@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,6 +8,154 @@
   <meta name="description" content="Explore wedding, intimate wedding, prewedding, engagement, candid wedding, and wedding content creator packages by Kyra Picture.">
 
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* PRICELIST GRID - THIS PAGE ONLY */
+    main.price-grid {
+      width: min(1100px, calc(100% - 40px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    main.price-grid .price-card {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    main.price-grid .price-card h2 {
+      overflow-wrap: anywhere;
+    }
+
+    main.price-grid .price-card > p:not(.eyebrow) {
+      line-height: 1.8;
+    }
+
+    main.price-grid .price-card ul {
+      flex: 1;
+      padding-left: 20px;
+      line-height: 1.8;
+    }
+
+    main.price-grid .price-card li {
+      margin-bottom: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    main.price-grid .price-card .button {
+      align-self: stretch;
+      margin-top: auto;
+      text-align: center;
+    }
+
+    /* TABLET */
+    @media (max-width: 800px) {
+      main.price-grid {
+        width: calc(100% - 32px);
+        gap: 16px;
+      }
+
+      main.price-grid .price-card {
+        padding: 22px;
+      }
+    }
+
+    /* MOBILE - KEEP 2 COLUMNS */
+    @media (max-width: 560px) {
+      main.price-grid {
+        width: calc(100% - 20px);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      main.price-grid .price-card {
+        padding: 15px 11px;
+      }
+
+      main.price-grid .price-card .eyebrow {
+        font-size: 8px;
+        letter-spacing: 1px;
+        line-height: 1.6;
+      }
+
+      main.price-grid .price-card h2 {
+        font-size: 19px;
+        line-height: 1.35;
+        margin-top: 8px;
+        margin-bottom: 10px;
+      }
+
+      main.price-grid .price-card > p:not(.eyebrow) {
+        font-size: 11px;
+        line-height: 1.65;
+      }
+
+      main.price-grid .price-card ul {
+        padding-left: 15px;
+        margin-top: 8px;
+        margin-bottom: 18px;
+        font-size: 10px;
+        line-height: 1.6;
+      }
+
+      main.price-grid .price-card li {
+        margin-bottom: 7px;
+      }
+
+      main.price-grid .price-card .button {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 11px 4px;
+        font-size: 8px;
+        letter-spacing: 0.5px;
+        text-align: center;
+      }
+
+      .page-header {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .home-contact {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+    }
+
+    /* VERY SMALL PHONES */
+    @media (max-width: 360px) {
+      main.price-grid {
+        width: calc(100% - 12px);
+        gap: 7px;
+      }
+
+      main.price-grid .price-card {
+        padding: 12px 8px;
+      }
+
+      main.price-grid .price-card h2 {
+        font-size: 16px;
+      }
+
+      main.price-grid .price-card > p:not(.eyebrow) {
+        font-size: 10px;
+      }
+
+      main.price-grid .price-card ul {
+        padding-left: 13px;
+        font-size: 9px;
+      }
+
+      main.price-grid .price-card .button {
+        font-size: 7px;
+      }
+    }
+  </style>
 </head>
 
 <body>
