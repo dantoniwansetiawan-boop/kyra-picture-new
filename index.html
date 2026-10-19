@@ -180,7 +180,6 @@
       color:var(--paper);
     }
 
-    /* HERO ARROWS: DI SAMPING FOTO */
     .home-page .hero-controls {
       position:absolute;
       z-index:4;
@@ -321,6 +320,7 @@
     .home-page .testimonial-viewport {
       overflow:hidden;
       width:100%;
+      transition:height .25s ease;
     }
 
     .home-page .testimonial-track {
@@ -385,14 +385,17 @@
       line-height:1;
     }
 
+    /* Font testimoni dibuat sederhana dan mudah dibaca */
     .home-page .testimonial-quote {
-      flex:1;
+      flex:0 0 auto;
       margin:0 0 20px;
       color:#5f554b;
-      font-family:"Playfair Display",serif;
-      font-size:16px;
-      font-style:italic;
-      line-height:1.7;
+      font-family:"DM Sans",Arial,sans-serif;
+      font-size:15px;
+      font-weight:400;
+      font-style:normal;
+      line-height:1.8;
+      letter-spacing:0;
       overflow-wrap:anywhere;
       white-space:pre-line;
     }
@@ -553,9 +556,7 @@
         font-size:clamp(44px,10vw,68px);
       }
 
-      .home-page .hero-controls {
-        padding:0 18px;
-      }
+      .home-page .hero-controls { padding:0 18px; }
 
       .home-page .hero-arrow {
         width:43px;
@@ -631,14 +632,18 @@
 
       .home-page .testimonials { padding:70px 7%; }
 
-      /* Satu card di HP, ukuran tetap nyaman dibaca */
+      /* Tinggi kartu HP mengikuti isi testimoni */
       .home-page .testimonial-card {
         flex-basis:100%;
-        min-height:260px;
+        min-height:0;
+        height:auto;
         padding:24px;
       }
 
-      .home-page .testimonial-quote { font-size:16px; }
+      .home-page .testimonial-quote {
+        font-size:15px;
+        flex:0 0 auto;
+      }
 
       .home-page .site-footer {
         flex-direction:column;
@@ -649,7 +654,8 @@
 
     @media(prefers-reduced-motion:reduce) {
       .home-page .hero-slide,
-      .home-page .testimonial-track {
+      .home-page .testimonial-track,
+      .home-page .testimonial-viewport {
         transition:none;
       }
     }
@@ -1071,8 +1077,17 @@
     slideIndex = Math.max(0, Math.min(slideIndex, maxIndex));
 
     const offset = slideIndex * (cardWidth + gap);
-
     track.style.transform = "translateX(-" + offset + "px)";
+
+    /*
+     * Di HP, tinggi viewport mengikuti kartu yang sedang aktif.
+     * Desktop dan tablet tetap menggunakan tinggi normal.
+     */
+    if (window.innerWidth <= 520) {
+      viewport.style.height = cards[slideIndex].offsetHeight + "px";
+    } else {
+      viewport.style.height = "";
+    }
 
     prevButton.disabled = slideIndex <= 0;
     nextButton.disabled = slideIndex >= maxIndex;
@@ -1121,11 +1136,6 @@
         ]).trim().toLowerCase() === "published"
       );
 
-      /*
-       * Tidak ada batas .slice(0, 3).
-       * Semua testimoni Published yang dipilih untuk Home
-       * akan dimasukkan ke carousel.
-       */
       const homeItems = published.filter(item =>
         isYes(getField(item, [
           "tampil di home",
