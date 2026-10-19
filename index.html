@@ -25,159 +25,7 @@
       color:var(--espresso);
       font-family:"DM Sans",sans-serif;
     }
-
-    .home-page * { box-sizing:border-box; }
-    .home-page a { color:inherit; }
-
-    .home-page .site-header {
-      position:relative;
-      z-index:10;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:24px;
-      padding:22px 7%;
-      background:var(--ivory);
-    }
-
-    .home-page .brand {
-      text-decoration:none;
-      font-family:"Playfair Display",serif;
-      font-size:27px;
-      letter-spacing:1px;
-      white-space:nowrap;
-    }
-
-    .home-page .brand span {
-      display:block;
-      margin-top:2px;
-      font-family:"DM Sans",sans-serif;
-      font-size:9px;
-      letter-spacing:4px;
-      text-align:center;
-    }
-
-    .home-page .main-nav {
-      display:flex;
-      align-items:center;
-      flex-wrap:wrap;
-      gap:27px;
-    }
-
-    .home-page .main-nav a {
-      text-decoration:none;
-      font-size:11px;
-      letter-spacing:1px;
-      transition:color .2s;
-    }
-
-    .home-page .main-nav a:hover { color:var(--terracotta); }
-
-    /* HERO CAROUSEL */
-    .home-page .hero-carousel {
-      position:relative;
-      min-height:680px;
-      height:85vh;
-      max-height:900px;
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      padding:80px 9%;
-      background:var(--espresso);
-      color:var(--paper);
-    }
-
-    .home-page .hero-slides,
-    .home-page .hero-overlay {
-      position:absolute;
-      inset:0;
-    }
-
-    .home-page .hero-slides { z-index:0; }
-
-    .home-page .hero-slide {
-      position:absolute;
-      inset:0;
-      background-size:cover;
-      background-position:center;
-      opacity:0;
-      transform:scale(1.04);
-      transition:opacity .8s,transform 5s;
-    }
-
-    .home-page .hero-slide.active {
-      opacity:1;
-      transform:scale(1);
-    }
-
-    .home-page .hero-overlay {
-      z-index:1;
-      pointer-events:none;
-      background:linear-gradient(
-        90deg,
-        rgba(32,28,23,.76),
-        rgba(32,28,23,.42) 52%,
-        rgba(32,28,23,.12)
-      );
-    }
-
-    .home-page .hero-content {
-      position:relative;
-      z-index:2;
-      width:100%;
-      max-width:760px;
-    }
-
-    .home-page .eyebrow {
-      color:var(--terracotta);
-      font-size:10px;
-      letter-spacing:3px;
-      line-height:1.8;
-    }
-
-    .home-page .hero-content .eyebrow { color:var(--champagne); }
-
-    .home-page .hero-content h1 {
-      margin:24px 0;
-      color:var(--paper);
-      font-family:"Playfair Display",serif;
-      font-size:clamp(48px,7vw,88px);
-      font-weight:400;
-      line-height:1.06;
-    }
-
-    .home-page .hero-content h1 em {
-      color:var(--champagne);
-      font-weight:400;
-    }
-
-    .home-page .hero-content .description {
-      max-width:420px;
-      color:rgba(255,253,249,.86);
-      font-size:14px;
-      line-height:1.9;
-      margin-bottom:32px;
-    }
-
-    .home-page .button {
-      display:inline-block;
-      padding:16px 23px;
-      background:var(--champagne);
-      border:1px solid var(--champagne);
-      color:var(--espresso);
-      text-decoration:none;
-      font-size:10px;
-      letter-spacing:1.5px;
-      transition:all .25s;
-      cursor:pointer;
-    }
-
-    .home-page .button:hover {
-      background:transparent;
-      color:var(--paper);
-    }
-
-    /* Hero arrows sit at the sides of the photo */
+     /* Hero arrows sit at the sides of the photo */
     .home-page .hero-controls {
       position:absolute;
       z-index:3;
@@ -222,619 +70,199 @@
       text-align:center;
     }
 
-    /* SECTION HEADINGS */
-    .home-page .section-heading {
-      max-width:600px;
-      margin:0 auto 48px;
+    .home-page * { box-sizing:border-box; }
+    .home-page a { color:inherit; }
+    .home-page .site-header {
+      position:relative;z-index:10;display:flex;justify-content:space-between;
+      align-items:center;gap:24px;padding:22px 7%;background:var(--ivory);
     }
-
-    .home-page .section-heading h2 {
-      margin:12px 0;
-      font-family:"Playfair Display",serif;
-      font-size:clamp(34px,4vw,49px);
-      font-weight:400;
+    .home-page .brand {
+      text-decoration:none;font-family:"Playfair Display",serif;
+      font-size:27px;letter-spacing:1px;white-space:nowrap;
     }
-
-    .home-page .section-heading p:not(.eyebrow) {
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.8;
+    .home-page .brand span {
+      display:block;margin-top:2px;font-family:"DM Sans",sans-serif;
+      font-size:9px;letter-spacing:4px;text-align:center;
     }
-
-    /* FEATURED PORTFOLIO */
-    .home-page .featured {
-      padding:100px 7%;
-      text-align:center;
+    .home-page .main-nav { display:flex;align-items:center;flex-wrap:wrap;gap:27px; }
+    .home-page .main-nav a {
+      text-decoration:none;font-size:11px;letter-spacing:1px;transition:color .2s;
     }
-
-    .home-page .featured .section-heading { margin-bottom:38px; }
-
-    .home-page .featured-carousel {
-      display:grid;
-      grid-template-columns:42px minmax(0,1fr) 42px;
-      align-items:center;
-      gap:12px;
-      margin-bottom:38px;
+    .home-page .main-nav a:hover { color:var(--terracotta); }
+    .home-page .hero-carousel {
+      position:relative;min-height:680px;height:85vh;max-height:900px;
+      overflow:hidden;display:flex;align-items:center;padding:80px 9%;
+      background:var(--espresso);color:var(--paper);
     }
-
-    .home-page .featured-grid {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:24px;
-      text-align:left;
-      min-width:0;
+    .home-page .hero-slides,.home-page .hero-overlay { position:absolute;inset:0; }
+    .home-page .hero-slides { z-index:0; }
+    .home-page .hero-slide {
+      position:absolute;inset:0;background-size:cover;background-position:center;
+      opacity:0;transform:scale(1.04);transition:opacity .8s,transform 5s;
     }
-
-    .home-page .featured-card {
-      display:block;
-      min-width:0;
-      color:var(--espresso);
-      text-decoration:none;
+    .home-page .hero-slide.active { opacity:1;transform:scale(1); }
+    .home-page .hero-overlay {
+      z-index:1;pointer-events:none;
+      background:linear-gradient(90deg,rgba(32,28,23,.76),rgba(32,28,23,.42) 52%,rgba(32,28,23,.12));
     }
-
-    .home-page .featured-card img {
-      display:block;
-      width:100%;
-      aspect-ratio:4/5;
-      object-fit:cover;
-      background:#e3d8c8;
-      transition:filter .5s;
+    .home-page .hero-content { position:relative;z-index:2;width:100%;max-width:760px; }
+    .home-page .eyebrow { color:var(--terracotta);font-size:10px;letter-spacing:3px;line-height:1.8; }
+    .home-page .hero-content .eyebrow { color:var(--champagne); }
+    .home-page .hero-content h1 {
+      margin:24px 0;color:var(--paper);font-family:"Playfair Display",serif;
+      font-size:clamp(48px,7vw,88px);font-weight:400;line-height:1.06;
     }
-
-    .home-page .featured-card:hover img { filter:brightness(.92); }
-
-    .home-page .featured-card h3 {
-      margin:16px 0 7px;
-      font-family:"Playfair Display",serif;
-      font-size:clamp(13px,1.8vw,24px);
-      font-weight:400;
-      line-height:1.35;
+    .home-page .hero-content h1 em { color:var(--champagne);font-weight:400; }
+    .home-page .hero-content .description {
+      max-width:420px;color:rgba(255,253,249,.86);font-size:14px;
+      line-height:1.9;margin-bottom:32px;
     }
-
-    .home-page .featured-card p {
-      margin:0;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.7;
-    }
-
-    .home-page .side-arrow {
-      display:grid;
-      place-items:center;
-      width:40px;
-      height:40px;
-      padding:0;
-      border:1px solid var(--espresso);
-      border-radius:50%;
-      background:transparent;
-      color:var(--espresso);
-      font-size:19px;
+    .home-page .button {
+      display:inline-block;padding:16px 23px;background:var(--champagne);
+      border:1px solid var(--champagne);color:var(--espresso);
+      text-decoration:none;font-size:10px;letter-spacing:1.5px;transition:all .25s;
       cursor:pointer;
-      transition:background .2s,color .2s;
     }
-
-    .home-page .side-arrow:hover {
-      background:var(--espresso);
-      color:var(--paper);
+    .home-page .button:hover { background:transparent;color:var(--paper); }
+    .home-page .hero-controls {
+      position:absolute;z-index:3;right:9%;bottom:38px;display:flex;
+      align-items:center;gap:18px;color:var(--paper);
     }
-
-    .home-page .featured .button,
-    .home-page .testimonials .button {
-      background:var(--espresso);
-      border-color:var(--espresso);
-      color:var(--paper);
+    .home-page .hero-arrow {
+      display:grid;place-items:center;width:42px;height:42px;border:1px solid rgba(255,253,249,.65);
+      border-radius:50%;background:transparent;color:var(--paper);font-size:18px;cursor:pointer;
     }
-
-    .home-page .featured .button:hover,
-    .home-page .testimonials .button:hover {
-      background:transparent;
-      color:var(--espresso);
+    .home-page .hero-arrow:hover { background:var(--champagne);color:var(--espresso); }
+    .home-page .hero-counter { font-size:11px;letter-spacing:2px; }
+    .home-page .featured { padding:100px 7%;text-align:center; }
+    .home-page .section-heading { max-width:600px;margin:0 auto 48px; }
+    .home-page .section-heading h2 {
+      margin:12px 0;font-family:"Playfair Display",serif;
+      font-size:clamp(34px,4vw,49px);font-weight:400;
     }
-
-    /* TESTIMONIALS */
-    .home-page .testimonials {
-      padding:100px 7%;
-      background:#eee5d8;
-      text-align:center;
+    .home-page .section-heading p:not(.eyebrow) {
+      color:var(--muted);font-size:13px;line-height:1.8;
     }
-
+    .home-page .featured-grid {
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:24px;text-align:left;margin-bottom:42px;
+    }
+    .home-page .featured-card { display:block;color:var(--espresso);text-decoration:none; }
+    .home-page .featured-card img {
+      display:block;width:100%;aspect-ratio:4/5;object-fit:cover;
+      background:#e3d8c8;transition:filter .5s;
+    }
+    .home-page .featured-card:hover img { filter:brightness(.92); }
+    .home-page .featured-card h3 {
+      margin:19px 0 7px;font-family:"Playfair Display",serif;font-size:24px;font-weight:400;
+    }
+    .home-page .featured-card p { margin:0;color:var(--muted);font-size:12px;line-height:1.7; }
+    .home-page .featured .button,.home-page .testimonials .button {
+      background:var(--espresso);border-color:var(--espresso);color:var(--paper);
+    }
+    .home-page .featured .button:hover,.home-page .testimonials .button:hover {
+      background:transparent;color:var(--espresso);
+    }
+    .home-page .testimonials { padding:100px 7%;background:#eee5d8;text-align:center; }
     .home-page .testimonials .section-heading { margin-bottom:38px; }
-
-    .home-page .testimonial-carousel {
-      display:grid;
-      grid-template-columns:40px minmax(0,1fr) 40px;
-      align-items:center;
-      gap:12px;
-      max-width:1200px;
-      margin:0 auto 18px;
-    }
-
-    .home-page .testimonial-viewport {
-      overflow:hidden;
-      width:100%;
-      min-width:0;
-    }
-
+    .home-page .testimonial-carousel { max-width:1200px;margin:0 auto 28px; }
+    .home-page .testimonial-viewport { overflow:hidden;width:100%; }
     .home-page .testimonial-track {
-      display:flex;
-      align-items:stretch;
-      gap:15px;
-      transition:transform .45s ease;
-      will-change:transform;
+      display:flex;align-items:stretch;gap:22px;
+      transition:transform .45s ease;will-change:transform;
     }
-
     .home-page .testimonial-card {
-      display:flex;
-      flex:0 0 calc((100% - 30px)/3);
-      flex-direction:column;
-      min-width:0;
-      min-height:300px;
-      padding:22px;
-      background:var(--paper);
-      border:1px solid rgba(216,194,164,.55);
-      text-align:left;
+      display:flex;flex:0 0 calc((100% - 44px)/3);flex-direction:column;
+      min-width:0;min-height:300px;padding:25px;background:var(--paper);
+      border:1px solid rgba(216,194,164,.55);text-align:left;
     }
-
-    .home-page .testimonial-person {
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-bottom:14px;
-      min-width:0;
-    }
-
+    .home-page .testimonial-person { display:flex;align-items:center;gap:12px;margin-bottom:17px; }
     .home-page .testimonial-photo {
-      display:block;
-      flex:0 0 50px;
-      width:50px;
-      height:50px;
-      border-radius:50%;
-      object-fit:cover;
-      background:#e3d8c8;
+      display:block;flex:0 0 54px;width:54px;height:54px;border-radius:50%;
+      object-fit:cover;background:#e3d8c8;
     }
-
     .home-page .testimonial-person-info { min-width:0; }
-
     .home-page .testimonial-author {
-      margin:0 0 5px;
-      color:var(--espresso);
-      font-size:12px;
-      font-weight:600;
-      letter-spacing:.3px;
-      overflow-wrap:anywhere;
+      margin:0 0 5px;color:var(--espresso);font-size:12px;font-weight:600;
+      letter-spacing:.5px;overflow-wrap:anywhere;
     }
-
-    .home-page .testimonial-stars {
-      color:#a87835;
-      font-size:12px;
-      letter-spacing:1px;
-      overflow-wrap:anywhere;
-    }
-
+    .home-page .testimonial-stars { color:#a87835;font-size:13px;letter-spacing:2px; }
     .home-page .testimonial-mark {
-      margin:0 0 5px;
-      color:var(--terracotta);
-      font-family:"Playfair Display",serif;
-      font-size:28px;
-      line-height:1;
+      margin:0 0 5px;color:var(--terracotta);
+      font-family:"Playfair Display",serif;font-size:30px;line-height:1;
     }
-
     .home-page .testimonial-quote {
-      flex:1;
-      margin:0 0 18px;
-      color:#5f554b;
-      font-family:"Playfair Display",serif;
-      font-size:15px;
-      font-style:italic;
-      line-height:1.65;
-      overflow-wrap:anywhere;
-      white-space:pre-line;
+      flex:1;margin:0 0 20px;color:#5f554b;font-family:"Playfair Display",serif;
+      font-size:16px;font-style:italic;line-height:1.7;overflow-wrap:anywhere;white-space:pre-line;
     }
-
-    .home-page .testimonial-divider {
-      width:32px;
-      height:1px;
-      margin-bottom:11px;
-      background:var(--champagne);
-    }
-
+    .home-page .testimonial-divider { width:38px;height:1px;margin-bottom:13px;background:var(--champagne); }
     .home-page .testimonial-meta {
-      margin:0;
-      color:var(--muted);
-      font-size:9px;
-      line-height:1.7;
-      letter-spacing:.4px;
-      text-transform:uppercase;
-      overflow-wrap:anywhere;
+      margin:0;color:var(--muted);font-size:10px;line-height:1.8;
+      letter-spacing:.6px;text-transform:uppercase;
     }
-
-    .home-page .testimonial-status {
-      display:block;
-      margin:0 auto 26px;
-      color:var(--muted);
-      font-size:11px;
-      letter-spacing:1px;
+    .home-page .testimonial-controls {
+      display:flex;justify-content:center;align-items:center;gap:18px;margin:0 auto 28px;
     }
-
-    .home-page .side-arrow:disabled {
-      opacity:.3;
-      cursor:not-allowed;
+    .home-page .testimonial-arrow {
+      display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--espresso);
+      border-radius:50%;background:transparent;color:var(--espresso);font-size:18px;cursor:pointer;
     }
-
-    .home-page .side-arrow:disabled:hover {
-      background:transparent;
-      color:var(--espresso);
-    }
-
+    .home-page .testimonial-arrow:hover:not(:disabled) { background:var(--espresso);color:var(--paper); }
+    .home-page .testimonial-arrow:disabled { opacity:.3;cursor:not-allowed; }
+    .home-page .testimonial-status { color:var(--muted);font-size:11px;letter-spacing:1px; }
     .home-page .testimonial-message {
-      width:100%;
-      margin:25px auto;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.8;
-      text-align:center;
+      width:100%;margin:25px auto;color:var(--muted);font-size:13px;line-height:1.8;text-align:center;
     }
-
-    /* ABOUT STRIP */
     .home-page .about-strip {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      align-items:center;
-      gap:60px;
-      padding:80px 10%;
-      background:var(--ivory);
+      display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;
+      padding:80px 10%;background:var(--ivory);
     }
-
     .home-page .about-strip h2 {
-      margin:12px 0 20px;
-      font-family:"Playfair Display",serif;
-      font-size:clamp(32px,4vw,46px);
-      font-weight:400;
-      line-height:1.2;
+      margin:12px 0 20px;font-family:"Playfair Display",serif;
+      font-size:clamp(32px,4vw,46px);font-weight:400;line-height:1.2;
     }
-
-    .home-page .about-strip p:not(.eyebrow) {
-      color:#6e655b;
-      font-size:13px;
-      line-height:1.9;
-    }
-
+    .home-page .about-strip p:not(.eyebrow) { color:#6e655b;font-size:13px;line-height:1.9; }
     .home-page .about-note {
-      border-left:1px solid var(--champagne);
-      padding-left:30px;
-      font-family:"Playfair Display",serif;
-      font-size:clamp(23px,3vw,34px);
-      font-style:italic;
-      line-height:1.5;
+      border-left:1px solid var(--champagne);padding-left:30px;
+      font-family:"Playfair Display",serif;font-size:clamp(23px,3vw,34px);
+      font-style:italic;line-height:1.5;
     }
-
-    /* FOOTER */
     .home-page .site-footer {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:25px;
-      padding:35px 7%;
-      background:var(--espresso);
-      color:var(--paper);
+      display:flex;justify-content:space-between;align-items:center;gap:25px;
+      padding:35px 7%;background:var(--espresso);color:var(--paper);
     }
-
-    .home-page .footer-brand {
-      font-family:"Playfair Display",serif;
-      font-size:23px;
-    }
-
-    .home-page .footer-copy {
-      margin-top:7px;
-      color:#c7b9a7;
-      font-size:10px;
-    }
-
-    .home-page .footer-links {
-      display:flex;
-      flex-wrap:wrap;
-      gap:20px;
-    }
-
-    .home-page .footer-links a {
-      color:var(--paper);
-      text-decoration:none;
-      font-size:11px;
-    }
-
+    .home-page .footer-brand { font-family:"Playfair Display",serif;font-size:23px; }
+    .home-page .footer-copy { margin-top:7px;color:#c7b9a7;font-size:10px; }
+    .home-page .footer-links { display:flex;flex-wrap:wrap;gap:20px; }
+    .home-page .footer-links a { color:var(--paper);text-decoration:none;font-size:11px; }
     .home-page .footer-links a:hover { color:var(--champagne); }
 
-    /* TABLET */
     @media(max-width:800px) {
-      .home-page .site-header {
-        flex-direction:column;
-        padding:20px 5%;
-      }
-
-      .home-page .main-nav {
-        justify-content:center;
-        gap:15px 20px;
-      }
-
-      .home-page .hero-carousel {
-        min-height:620px;
-        height:82vh;
-        padding:65px 8%;
-      }
-
-      .home-page .hero-content h1 {
-        font-size:clamp(44px,10vw,68px);
-      }
-
-      .home-page .featured { padding:75px 4%; }
-
-      .home-page .featured-carousel {
-        grid-template-columns:32px minmax(0,1fr) 32px;
-        gap:7px;
-      }
-
-      .home-page .featured-grid { gap:12px; }
-
-      .home-page .featured-card img { aspect-ratio:4/5; }
-
-      .home-page .side-arrow {
-        width:32px;
-        height:32px;
-        font-size:16px;
-      }
-
-      .home-page .testimonials { padding:75px 4%; }
-
-      .home-page .testimonial-carousel {
-        grid-template-columns:32px minmax(0,1fr) 32px;
-        gap:7px;
-      }
-
-      .home-page .testimonial-track { gap:10px; }
-
-      .home-page .testimonial-card {
-        flex-basis:calc((100% - 20px)/3);
-        min-height:270px;
-        padding:13px;
-      }
-
-      .home-page .testimonial-photo {
-        flex-basis:36px;
-        width:36px;
-        height:36px;
-      }
-
-      .home-page .testimonial-person { gap:7px; }
-
-      .home-page .testimonial-author {
-        font-size:10px;
-        line-height:1.4;
-      }
-
-      .home-page .testimonial-stars {
-        font-size:10px;
-        letter-spacing:0;
-      }
-
-      .home-page .testimonial-quote {
-        font-size:13px;
-        line-height:1.55;
-      }
-
-      .home-page .testimonial-meta {
-        font-size:8px;
-        letter-spacing:0;
-      }
-
-      .home-page .about-strip {
-        grid-template-columns:1fr;
-        gap:30px;
-        padding:65px 7%;
-      }
+      .home-page .site-header { flex-direction:column;padding:20px 5%; }
+      .home-page .main-nav { justify-content:center;gap:15px 20px; }
+      .home-page .hero-carousel { min-height:620px;height:82vh;padding:65px 7%; }
+      .home-page .hero-content h1 { font-size:clamp(44px,10vw,68px); }
+      .home-page .featured-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 18px; }
+      .home-page .testimonial-card { flex-basis:calc((100% - 22px)/2); }
+      .home-page .about-strip { grid-template-columns:1fr;gap:30px;padding:65px 7%; }
     }
-
-    /* MOBILE: keep all 3 portfolio and testimonial cards visible */
     @media(max-width:520px) {
-      .home-page .brand { font-size:25px; }
-
-      .home-page .main-nav { gap:12px 14px; }
-
-      .home-page .main-nav a {
-        font-size:9px;
-        letter-spacing:.6px;
-      }
-
-      .home-page .hero-carousel {
-        min-height:580px;
-        height:82vh;
-        padding:55px 12%;
-      }
-
-      .home-page .hero-content h1 {
-        font-size:clamp(40px,11vw,56px);
-      }
-
-      .home-page .hero-content .description {
-        max-width:300px;
-        font-size:13px;
-      }
-
+      .home-page .main-nav { gap:14px; }
+      .home-page .main-nav a { font-size:10px; }
+      .home-page .hero-carousel { min-height:600px;height:82vh;padding:55px 7%; }
+      .home-page .hero-content h1 { font-size:clamp(42px,12vw,58px); }
+      .home-page .hero-content .description { font-size:13px; }
       .home-page .hero-overlay {
-        background:linear-gradient(
-          0deg,
-          rgba(32,28,23,.82),
-          rgba(32,28,23,.48) 75%,
-          rgba(32,28,23,.30)
-        );
+        background:linear-gradient(0deg,rgba(32,28,23,.82),rgba(32,28,23,.43) 75%,rgba(32,28,23,.25));
       }
-
-      .home-page .hero-prev { left:3%; }
-      .home-page .hero-next { right:3%; }
-
-      .home-page .hero-arrow {
-        width:32px;
-        height:32px;
-        font-size:17px;
-      }
-
-      .home-page .hero-counter { bottom:19px; }
-
-      .home-page .featured {
-        padding:58px 3%;
-      }
-
-      .home-page .featured .section-heading {
-        margin-bottom:28px;
-      }
-
-      .home-page .featured .section-heading h2,
-      .home-page .testimonials .section-heading h2 {
-        font-size:31px;
-      }
-
-      .home-page .featured .section-heading p:not(.eyebrow),
-      .home-page .testimonials .section-heading p:not(.eyebrow) {
-        font-size:12px;
-      }
-
-      .home-page .featured-carousel {
-        grid-template-columns:25px minmax(0,1fr) 25px;
-        gap:5px;
-        margin-bottom:28px;
-      }
-
-      .home-page .featured-grid {
-        grid-template-columns:repeat(3,minmax(0,1fr));
-        gap:7px;
-      }
-
-      .home-page .featured-card img { aspect-ratio:3/4; }
-
-      .home-page .featured-card h3 {
-        margin:9px 0 5px;
-        font-size:12px;
-        line-height:1.35;
-        overflow-wrap:anywhere;
-      }
-
-      .home-page .featured-card p {
-        font-size:10px;
-        line-height:1.5;
-        overflow-wrap:anywhere;
-      }
-
-      .home-page .side-arrow {
-        width:25px;
-        height:25px;
-        font-size:14px;
-      }
-
-      .home-page .featured .button,
-      .home-page .testimonials .button {
-        padding:13px 14px;
-        font-size:9px;
-        letter-spacing:1px;
-      }
-
-      .home-page .testimonials {
-        padding:58px 3%;
-      }
-
-      .home-page .testimonials .section-heading {
-        margin-bottom:26px;
-      }
-
-      .home-page .testimonial-carousel {
-        grid-template-columns:25px minmax(0,1fr) 25px;
-        gap:5px;
-        margin-bottom:14px;
-      }
-
-      .home-page .testimonial-track { gap:6px; }
-
-      .home-page .testimonial-card {
-        flex-basis:calc((100% - 12px)/3);
-        min-height:250px;
-        padding:9px 7px;
-      }
-
-      .home-page .testimonial-person {
-        align-items:flex-start;
-        flex-direction:column;
-        gap:5px;
-        margin-bottom:9px;
-      }
-
-      .home-page .testimonial-photo {
-        flex-basis:32px;
-        width:32px;
-        height:32px;
-      }
-
-      .home-page .testimonial-author {
-        font-size:9px;
-        line-height:1.35;
-        letter-spacing:0;
-      }
-
-      .home-page .testimonial-stars {
-        font-size:9px;
-        line-height:1.3;
-      }
-
-      .home-page .testimonial-mark {
-        margin-bottom:4px;
-        font-size:23px;
-      }
-
-      .home-page .testimonial-quote {
-        margin-bottom:12px;
-        font-size:11px;
-        line-height:1.5;
-        overflow-wrap:anywhere;
-      }
-
-      .home-page .testimonial-divider {
-        width:24px;
-        margin-bottom:8px;
-      }
-
-      .home-page .testimonial-meta {
-        font-size:7px;
-        line-height:1.5;
-        letter-spacing:0;
-      }
-
-      .home-page .testimonial-status {
-        margin-bottom:23px;
-        font-size:10px;
-      }
-
-      .home-page .about-strip {
-        gap:22px;
-        padding:55px 7%;
-      }
-
-      .home-page .about-note {
-        padding-left:20px;
-        font-size:24px;
-      }
-
-      .home-page .site-footer {
-        flex-direction:column;
-        align-items:flex-start;
-        padding:32px 7%;
-      }
-
-      .home-page .footer-links { gap:16px; }
-    }
-
-    @media(prefers-reduced-motion:reduce) {
-      .home-page .hero-slide,
-      .home-page .testimonial-track,
-      .home-page .featured-card img {
-        transition:none;
-      }
+      .home-page .hero-controls { right:7%;bottom:22px;gap:12px; }
+      .home-page .hero-arrow { width:38px;height:38px; }
+      .home-page .featured { padding:70px 7%; }
+      .home-page .featured-grid { grid-template-columns:1fr;gap:32px; }
+      .home-page .featured-card img { aspect-ratio:5/4; }
+      .home-page .testimonials { padding:70px 7%; }
+      .home-page .testimonial-card { flex-basis:100%;min-height:260px;padding:24px; }
+      .home-page .site-footer { flex-direction:column;align-items:flex-start;padding:32px 7%; }
     }
   </style>
 </head>
@@ -842,7 +270,6 @@
 <body class="home-page">
 <header class="site-header">
   <a class="brand" href="index.html">KYRA PICTURE<span>PHOTOGRAPHY</span></a>
-
   <nav class="main-nav" aria-label="Main navigation">
     <a href="index.html">HOME</a>
     <a href="portfolio.html">PORTFOLIO</a>
@@ -854,105 +281,70 @@
 </header>
 
 <main>
-  <!-- HERO -->
   <section class="hero hero-carousel" aria-label="Featured photography">
     <div class="hero-slides">
-      <div class="hero-slide active"
-        style="background-image:url('https://drive.google.com/thumbnail?id=1IpTXNqsMybPVXCOX_2v0v3xDvhUnXWS6&sz=w2000')"
-        role="img" aria-label="Wedding celebration"></div>
-
-      <div class="hero-slide"
-        style="background-image:url('https://drive.google.com/thumbnail?id=1zLYM_qt_8ziKHEJg0JJ7Bj4TW2fFp--x&sz=w2000')"
-        role="img" aria-label="Romantic prewedding photography"></div>
-
-      <div class="hero-slide"
-        style="background-image:url('https://drive.google.com/thumbnail?id=1qKN01Z7Xd9qgJqyzjS7ywPFNfSnHq7Zf&sz=w2000')"
-        role="img" aria-label="Wedding moments"></div>
+      <div class="hero-slide active" style="background-image:url('https://drive.google.com/thumbnail?id=1IpTXNqsMybPVXCOX_2v0v3xDvhUnXWS6&sz=w2000')" role="img" aria-label="Wedding celebration"></div>
+      <div class="hero-slide" style="background-image:url('https://drive.google.com/thumbnail?id=1zLYM_qt_8ziKHEJg0JJ7Bj4TW2fFp--x&sz=w2000')" role="img" aria-label="Romantic prewedding photography"></div>
+      <div class="hero-slide" style="background-image:url('https://drive.google.com/thumbnail?id=1qKN01Z7Xd9qgJqyzjS7ywPFNfSnHq7Zf&sz=w2000')" role="img" aria-label="Wedding moments"></div>
     </div>
-
     <div class="hero-overlay"></div>
-
     <div class="hero-content">
       <p class="eyebrow">WEDDING · PREWEDDING · ENGAGEMENT</p>
       <h1>Your Story,<br><em>Beautifully</em><br>Captured.</h1>
       <p class="description">Turning your most meaningful moments into timeless photographs.</p>
       <a class="button" href="portfolio.html">EXPLORE OUR WORK ↗</a>
     </div>
-
     <div class="hero-controls">
       <button class="hero-arrow hero-prev" type="button" aria-label="Previous photo">←</button>
-
-      <span class="hero-counter" aria-live="polite">
-        <span id="hero-current">01</span> / 03
-      </span>
-
+      <span class="hero-counter" aria-live="polite"><span id="hero-current">01</span> / 03</span>
       <button class="hero-arrow hero-next" type="button" aria-label="Next photo">→</button>
     </div>
   </section>
 
-  <!-- FEATURED PORTFOLIO -->
   <section class="featured" id="stories">
     <div class="section-heading">
       <p class="eyebrow">SELECTED STORIES</p>
       <h2>A glimpse of our work.</h2>
       <p>Honest moments, thoughtful details, and memories made to last.</p>
     </div>
-
-    <div class="featured-carousel">
-      <button class="side-arrow" id="featured-prev" type="button" aria-label="Rotate portfolio cards left">←</button>
-
-      <div class="featured-grid" id="featured-grid">
-        <a class="featured-card" href="wedding.html">
-          <img src="https://drive.google.com/thumbnail?id=1ZDJcCGEuBTk4UvSrfM1mRFTiU4O_mo9o&sz=w2000" alt="Wedding photography" loading="lazy">
-          <h3>Wedding Stories ↗</h3>
-          <p>For the beginning of forever.</p>
-        </a>
-
-        <a class="featured-card" href="prewedding.html">
-          <img src="https://drive.google.com/thumbnail?id=1R8NsuQbnyZCH7vBsK9OVpiIqxDAMPW9T&sz=w2000" alt="Prewedding photography" loading="lazy">
-          <h3>Prewedding Moments ↗</h3>
-          <p>Your love story, captured before the big day.</p>
-        </a>
-
-        <a class="featured-card" href="engagement.html">
-          <img src="https://drive.google.com/thumbnail?id=1W1S_gusPEBevHo1gwXxR-5V9WSdBoVoR&sz=w2000" alt="Engagement photography" loading="lazy">
-          <h3>Engagement Stories ↗</h3>
-          <p>A little promise, a beautiful beginning.</p>
-        </a>
-      </div>
-
-      <button class="side-arrow" id="featured-next" type="button" aria-label="Rotate portfolio cards right">→</button>
+    <div class="featured-grid">
+      <a class="featured-card" href="wedding.html">
+        <img src="https://drive.google.com/thumbnail?id=1ZDJcCGEuBTk4UvSrfM1mRFTiU4O_mo9o&sz=w2000" alt="Wedding photography" loading="lazy">
+        <h3>Wedding Stories ↗</h3><p>For the beginning of forever.</p>
+      </a>
+      <a class="featured-card" href="prewedding.html">
+        <img src="https://drive.google.com/thumbnail?id=1R8NsuQbnyZCH7vBsK9OVpiIqxDAMPW9T&sz=w2000" alt="Prewedding photography" loading="lazy">
+        <h3>Prewedding Moments ↗</h3><p>Your love story, captured before the big day.</p>
+      </a>
+      <a class="featured-card" href="engagement.html">
+        <img src="https://drive.google.com/thumbnail?id=1W1S_gusPEBevHo1gwXxR-5V9WSdBoVoR&sz=w2000" alt="Engagement photography" loading="lazy">
+        <h3>Engagement Stories ↗</h3><p>A little promise, a beautiful beginning.</p>
+      </a>
     </div>
-
     <a class="button" href="portfolio.html">VIEW ALL PORTFOLIO ↗</a>
   </section>
 
-  <!-- TESTIMONIALS -->
   <section class="testimonials" id="testimonials">
     <div class="section-heading">
       <p class="eyebrow">KIND WORDS</p>
       <h2>Love, in Their Own Words.</h2>
       <p>A few words from the people who trusted us to capture their stories.</p>
     </div>
-
     <div class="testimonial-carousel">
-      <button class="side-arrow" id="testimonial-prev" type="button" aria-label="Previous testimonials">←</button>
-
       <div class="testimonial-viewport" id="home-testimonial-viewport">
         <div class="testimonial-track" id="home-testimonial-track">
           <p class="testimonial-message">Loading testimonials...</p>
         </div>
       </div>
-
-      <button class="side-arrow" id="testimonial-next" type="button" aria-label="Next testimonials">→</button>
     </div>
-
-    <span class="testimonial-status" id="testimonial-status" aria-live="polite">Loading</span>
-
+    <div class="testimonial-controls">
+      <button class="testimonial-arrow" id="testimonial-prev" type="button" aria-label="Previous testimonials">←</button>
+      <span class="testimonial-status" id="testimonial-status" aria-live="polite">Loading</span>
+      <button class="testimonial-arrow" id="testimonial-next" type="button" aria-label="Next testimonials">→</button>
+    </div>
     <a class="button" href="testimonials.html">VIEW ALL TESTIMONIALS ↗</a>
   </section>
 
-  <!-- ABOUT -->
   <section class="about-strip">
     <div>
       <p class="eyebrow">THE KYRA APPROACH</p>
@@ -960,7 +352,6 @@
       <p>We believe the most meaningful photographs come from real connections, little gestures, and the moments in between. Our approach is thoughtful, natural, and timeless.</p>
       <a class="button" href="about.html">GET TO KNOW US ↗</a>
     </div>
-
     <div class="about-note">“Your story deserves to be remembered beautifully.”</div>
   </section>
 </main>
@@ -970,7 +361,6 @@
     <div class="footer-brand">Kyra Picture</div>
     <div class="footer-copy">Your Story, Beautifully Captured.</div>
   </div>
-
   <div class="footer-links">
     <a href="https://www.instagram.com/kyra.picture/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
     <a href="https://www.tiktok.com/@kyra.picture" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
@@ -982,107 +372,37 @@
 (function () {
   "use strict";
 
-  /* HERO CAROUSEL: auto-slide every 5 seconds */
+  /* HERO CAROUSEL */
   const carousel = document.querySelector(".hero-carousel");
-
   if (carousel) {
     const slides = [...carousel.querySelectorAll(".hero-slide")];
     const counter = document.getElementById("hero-current");
     const prev = carousel.querySelector(".hero-prev");
     const next = carousel.querySelector(".hero-next");
-
     let current = 0;
     let touchStartX = 0;
-    let autoSlideTimer;
-    let touchMoved = false;
 
     function showSlide(index) {
-      if (!slides.length) return;
-
       slides[current].classList.remove("active");
       current = (index + slides.length) % slides.length;
       slides[current].classList.add("active");
-
-      if (counter) {
-        counter.textContent = String(current + 1).padStart(2, "0");
-      }
+      counter.textContent = String(current + 1).padStart(2, "0");
     }
 
-    function startAutoSlide() {
-      clearInterval(autoSlideTimer);
-      autoSlideTimer = setInterval(() => {
-        showSlide(current + 1);
-      }, 5000);
-    }
+    prev.addEventListener("click", () => showSlide(current - 1));
+    next.addEventListener("click", () => showSlide(current + 1));
 
-    function restartAutoSlide() {
-      startAutoSlide();
-    }
+    carousel.addEventListener("touchstart", e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive:true});
 
-    prev.addEventListener("click", () => {
-      showSlide(current - 1);
-      restartAutoSlide();
-    });
-
-    next.addEventListener("click", () => {
-      showSlide(current + 1);
-      restartAutoSlide();
-    });
-
-    carousel.addEventListener("touchstart", event => {
-      touchStartX = event.changedTouches[0].screenX;
-      touchMoved = false;
-    }, { passive:true });
-
-    carousel.addEventListener("touchend", event => {
-      const diff = event.changedTouches[0].screenX - touchStartX;
-
-      if (Math.abs(diff) > 50) {
-        showSlide(current + (diff < 0 ? 1 : -1));
-        touchMoved = true;
-        restartAutoSlide();
-      }
-    }, { passive:true });
-
-    carousel.addEventListener("mouseenter", () => {
-      clearInterval(autoSlideTimer);
-    });
-
-    carousel.addEventListener("mouseleave", startAutoSlide);
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        clearInterval(autoSlideTimer);
-      } else {
-        startAutoSlide();
-      }
-    });
-
-    startAutoSlide();
+    carousel.addEventListener("touchend", e => {
+      const diff = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) > 50) showSlide(current + (diff < 0 ? 1 : -1));
+    }, {passive:true});
   }
 
-  /* FEATURED PORTFOLIO: rotate the 3 existing cards */
-  const featuredGrid = document.getElementById("featured-grid");
-  const featuredPrev = document.getElementById("featured-prev");
-  const featuredNext = document.getElementById("featured-next");
-
-  if (featuredGrid && featuredPrev && featuredNext) {
-    featuredNext.addEventListener("click", () => {
-      const cards = featuredGrid.querySelectorAll(".featured-card");
-      if (cards.length > 1) {
-        featuredGrid.appendChild(cards[0]);
-      }
-    });
-
-    featuredPrev.addEventListener("click", () => {
-      const cards = featuredGrid.querySelectorAll(".featured-card");
-      if (cards.length > 1) {
-        featuredGrid.insertBefore(cards[cards.length - 1], cards[0]);
-      }
-    });
-  }
-
-  /* GOOGLE SHEETS TESTIMONIALS */
+  /* GOOGLE SHEETS */
   const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQw6Uzj26ys6CvMZjGWeVMtzQJCg7k3RisPhPLE5Tcer9LU4SZg6eApVXkPqww2NKiFdCP2XGV9VCIR/pub?output=csv";
 
   const track = document.getElementById("home-testimonial-track");
@@ -1115,11 +435,7 @@
       } else if ((ch === "\n" || ch === "\r") && !quoted) {
         if (ch === "\r" && next === "\n") i++;
         row.push(value);
-
-        if (row.some(v => v.trim() !== "")) {
-          rows.push(row);
-        }
-
+        if (row.some(v => v.trim() !== "")) rows.push(row);
         row = [];
         value = "";
       } else {
@@ -1128,11 +444,7 @@
     }
 
     row.push(value);
-
-    if (row.some(v => v.trim() !== "")) {
-      rows.push(row);
-    }
-
+    if (row.some(v => v.trim() !== "")) rows.push(row);
     if (!rows.length) return [];
 
     const headers = rows.shift().map(h =>
@@ -1141,9 +453,7 @@
 
     return rows.map(cells => {
       const item = {};
-      headers.forEach((h, i) => {
-        item[h] = (cells[i] || "").trim();
-      });
+      headers.forEach((h, i) => item[h] = (cells[i] || "").trim());
       return item;
     });
   }
@@ -1151,9 +461,7 @@
   function getField(item, names) {
     for (const name of names) {
       const key = name.toLowerCase();
-      if (item[key] !== undefined && item[key] !== "") {
-        return item[key];
-      }
+      if (item[key] !== undefined && item[key] !== "") return item[key];
     }
     return "";
   }
@@ -1165,8 +473,9 @@
   }
 
   /*
-   * Accepts a Google Drive share link and converts it
-   * to a display URL. The file must be accessible by link.
+   * Google Drive photo support:
+   * Accepts a Drive share link and converts it to a display URL.
+   * The Drive file must be accessible to anyone with the link.
    */
   function getPhotoURL(value) {
     const input = String(value || "").trim();
@@ -1174,22 +483,16 @@
 
     try {
       const url = new URL(input);
-
-      if (
-        url.hostname === "drive.google.com" ||
-        url.hostname === "www.drive.google.com"
-      ) {
+      if (url.hostname === "drive.google.com" ||
+          url.hostname === "www.drive.google.com") {
         let id = url.searchParams.get("id");
         const match = url.pathname.match(/\/file\/d\/([^/]+)/);
-
         if (!id && match) id = match[1];
-
         if (id) {
           return "https://drive.google.com/uc?export=view&id=" +
             encodeURIComponent(id);
         }
       }
-
       return /^https?:$/.test(url.protocol) ? url.href : "";
     } catch (_) {
       return "";
@@ -1197,31 +500,14 @@
   }
 
   function makeCard(item) {
-    const name = getField(item, [
-      "nama pasangan", "nama", "pasangan"
-    ]) || "Couple";
-
-    const photo = getPhotoURL(getField(item, [
-      "foto", "photo", "foto pasangan"
-    ]));
-
-    const service = getField(item, [
-      "layanan", "service"
-    ]) || "Photography";
-
-    const date = getField(item, [
-      "tanggal event", "tanggal acara", "tanggal", "event date"
-    ]);
-
-    const review = getField(item, [
-      "testimoni", "testimonial", "review"
-    ]);
-
+    const name = getField(item, ["nama pasangan", "nama", "pasangan"]) || "Couple";
+    const photo = getPhotoURL(getField(item, ["foto", "photo", "foto pasangan"]));
+    const service = getField(item, ["layanan", "service"]) || "Photography";
+    const date = getField(item, ["tanggal event", "tanggal acara", "tanggal", "event date"]);
+    const review = getField(item, ["testimoni", "testimonial", "review"]);
     const rawRating = Number(getField(item, ["rating", "bintang"]));
-
     const rating = Number.isFinite(rawRating)
-      ? Math.max(0, Math.min(5, Math.round(rawRating)))
-      : 5;
+      ? Math.max(0, Math.min(5, Math.round(rawRating))) : 5;
 
     const article = document.createElement("article");
     article.className = "testimonial-card";
@@ -1230,10 +516,8 @@
     person.className = "testimonial-person";
 
     const initials = name.split(/\s*&\s*|\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map(part => part.charAt(0).toUpperCase())
-      .join("") || "KP";
+      .filter(Boolean).slice(0, 2)
+      .map(part => part.charAt(0).toUpperCase()).join("") || "KP";
 
     const fallback = document.createElement("div");
     fallback.className = "testimonial-photo";
@@ -1242,7 +526,7 @@
     fallback.style.alignItems = "center";
     fallback.style.justifyContent = "center";
     fallback.style.fontFamily = '"Playfair Display",serif';
-    fallback.style.fontSize = "15px";
+    fallback.style.fontSize = "17px";
     fallback.style.color = "#302821";
     fallback.textContent = initials;
 
@@ -1252,14 +536,8 @@
     avatar.loading = "lazy";
 
     if (photo) {
-      avatar.onload = () => {
-        fallback.style.display = "none";
-      };
-
-      avatar.onerror = () => {
-        avatar.style.display = "none";
-      };
-
+      avatar.onload = () => { fallback.style.display = "none"; };
+      avatar.onerror = () => { avatar.style.display = "none"; };
       avatar.src = photo;
     } else {
       avatar.style.display = "none";
@@ -1290,7 +568,6 @@
     quote.textContent = review || "Thank you for trusting Kyra Picture.";
 
     const bottom = document.createElement("div");
-
     const divider = document.createElement("div");
     divider.className = "testimonial-divider";
 
@@ -1300,29 +577,25 @@
 
     bottom.append(divider, meta);
     article.append(person, mark, quote, bottom);
-
     return article;
   }
 
-  /*
-   * Always show 3 testimonial cards on desktop, tablet, and mobile.
-   */
   function visibleCards() {
+    if (window.innerWidth <= 520) return 1;
+    if (window.innerWidth <= 800) return 2;
     return 3;
   }
 
   function updateCarousel() {
-    if (!track || !viewport || !status) return;
+    if (!track || !viewport) return;
 
     const cards = track.querySelectorAll(".testimonial-card");
-
     if (!cards.length) return;
 
     const gap = parseFloat(getComputedStyle(track).gap) || 0;
     const cardWidth = cards[0].getBoundingClientRect().width;
     const maxIndex = Math.max(0, testimonialCount - visibleCards());
-
-    slideIndex = Math.max(0, Math.min(slideIndex, maxIndex));
+    slideIndex = Math.min(slideIndex, maxIndex);
 
     const offset = slideIndex * (cardWidth + gap);
     track.style.transform = "translateX(-" + offset + "px)";
@@ -1332,7 +605,6 @@
 
     const first = testimonialCount ? slideIndex + 1 : 0;
     const last = Math.min(slideIndex + visibleCards(), testimonialCount);
-
     status.textContent = testimonialCount
       ? first + "–" + last + " of " + testimonialCount
       : "0 testimonials";
@@ -1348,34 +620,23 @@
       Math.max(0, testimonialCount - visibleCards()),
       slideIndex + 1
     );
-
     updateCarousel();
   });
 
   window.addEventListener("resize", updateCarousel);
 
-  fetch(CSV_URL, { cache:"no-store" })
+  fetch(CSV_URL, {cache:"no-store"})
     .then(response => {
-      if (!response.ok) {
-        throw new Error("Google Sheets CSV could not be loaded");
-      }
-
+      if (!response.ok) throw new Error("Google Sheets CSV could not be loaded");
       return response.text();
     })
     .then(csv => {
       const rows = parseCSV(csv);
 
       const published = rows.filter(item =>
-        getField(item, [
-          "status", "status publikasi"
-        ]).trim().toLowerCase() === "published"
+        getField(item, ["status", "status publikasi"]).trim().toLowerCase() === "published"
       );
 
-      /*
-       * Keep every published testimonial selected for Home.
-       * The carousel shows 3 cards at a time and can slide
-       * to the next testimonials if more than 3 are available.
-       */
       const homeItems = published.filter(item =>
         isYes(getField(item, [
           "tampil di home",
@@ -1384,7 +645,7 @@
           "home",
           "show on home"
         ]))
-      );
+      ).slice(0, 3);
 
       track.innerHTML = "";
       testimonialCount = homeItems.length;
@@ -1393,11 +654,9 @@
       if (!homeItems.length) {
         const message = document.createElement("p");
         message.className = "testimonial-message";
-
         message.textContent = published.length
           ? "Belum ada testimoni yang dipilih untuk halaman Home."
           : "Testimoni akan ditampilkan di sini segera.";
-
         track.appendChild(message);
         status.textContent = "No testimonials";
         prevButton.disabled = true;
@@ -1405,22 +664,18 @@
         return;
       }
 
-      homeItems.forEach(item => {
-        track.appendChild(makeCard(item));
-      });
-
+      homeItems.forEach(item => track.appendChild(makeCard(item)));
       requestAnimationFrame(updateCarousel);
     })
     .catch(error => {
       console.error("Testimonials could not be loaded:", error);
-
       track.innerHTML = "";
 
       const message = document.createElement("p");
       message.className = "testimonial-message";
       message.textContent = "Testimoni belum bisa dimuat. Silakan coba lagi nanti.";
-
       track.appendChild(message);
+
       status.textContent = "Unavailable";
       prevButton.disabled = true;
       nextButton.disabled = true;
