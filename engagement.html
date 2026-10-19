@@ -1,21 +1,297 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Engagement Gallery | Kyra Picture</title>
   <meta name="description" content="Engagement photography portfolio by Kyra Picture.">
+
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* EDITORIAL MASONRY GALLERY */
+    .gallery-page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px 5% 100px;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: 55px;
+      gap: 16px;
+    }
+
+    .photo-item {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      background: #eee7df;
+      cursor: pointer;
+      grid-column: span 4;
+      grid-row: span 5;
+    }
+
+    .photo-item:nth-child(6n + 1) {
+      grid-column: span 5;
+      grid-row: span 7;
+    }
+
+    .photo-item:nth-child(6n + 2) {
+      grid-column: span 4;
+      grid-row: span 5;
+    }
+
+    .photo-item:nth-child(6n + 3) {
+      grid-column: span 3;
+      grid-row: span 6;
+    }
+
+    .photo-item:nth-child(6n + 4) {
+      grid-column: span 3;
+      grid-row: span 5;
+    }
+
+    .photo-item:nth-child(6n + 5) {
+      grid-column: span 4;
+      grid-row: span 7;
+    }
+
+    .photo-item:nth-child(6n) {
+      grid-column: span 5;
+      grid-row: span 6;
+    }
+
+    .photo-item img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+
+    .photo-item:hover img {
+      transform: scale(1.045);
+    }
+
+    .photo-item:focus-visible {
+      outline: 3px solid #a8795d;
+      outline-offset: 4px;
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 55px 70px;
+      background: rgba(24, 20, 18, 0.96);
+    }
+
+    .lightbox.is-open {
+      display: flex;
+    }
+
+    .lightbox-image {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - 110px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      user-select: none;
+    }
+
+    .lightbox-close,
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-prev:hover,
+    .lightbox-next:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .lightbox-close {
+      top: 20px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      font-size: 28px;
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+      top: 50%;
+      width: 46px;
+      height: 46px;
+      font-size: 28px;
+      transform: translateY(-50%);
+    }
+
+    .lightbox-prev {
+      left: 18px;
+    }
+
+    .lightbox-next {
+      right: 18px;
+    }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      transform: translateX(-50%);
+    }
+
+    body.lightbox-active {
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .photo-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-auto-rows: 45px;
+        gap: 12px;
+      }
+
+      .photo-item:nth-child(6n + 1) {
+        grid-column: span 3;
+        grid-row: span 6;
+      }
+
+      .photo-item:nth-child(6n + 2) {
+        grid-column: span 3;
+        grid-row: span 5;
+      }
+
+      .photo-item:nth-child(6n + 3) {
+        grid-column: span 3;
+        grid-row: span 5;
+      }
+
+      .photo-item:nth-child(6n + 4) {
+        grid-column: span 3;
+        grid-row: span 6;
+      }
+
+      .photo-item:nth-child(6n + 5) {
+        grid-column: span 3;
+        grid-row: span 5;
+      }
+
+      .photo-item:nth-child(6n) {
+        grid-column: span 3;
+        grid-row: span 6;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery-page {
+        padding: 10px 5% 65px;
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: 90px;
+        gap: 10px;
+      }
+
+      .photo-item,
+      .photo-item:nth-child(n) {
+        grid-column: span 1;
+        grid-row: span 3;
+      }
+
+      .photo-item:nth-child(4n + 1) {
+        grid-row: span 4;
+      }
+
+      .photo-item:nth-child(4n + 2) {
+        grid-row: span 3;
+      }
+
+      .photo-item:nth-child(4n + 3) {
+        grid-row: span 3;
+      }
+
+      .photo-item:nth-child(4n) {
+        grid-row: span 4;
+      }
+
+      .lightbox {
+        padding: 50px 12px;
+      }
+
+      .lightbox-image {
+        max-width: 100%;
+        max-height: calc(100vh - 120px);
+      }
+
+      .lightbox-close {
+        top: 12px;
+        right: 12px;
+      }
+
+      .lightbox-prev {
+        left: 8px;
+      }
+
+      .lightbox-next {
+        right: 8px;
+      }
+
+      .lightbox-prev,
+      .lightbox-next {
+        width: 38px;
+        height: 38px;
+        font-size: 24px;
+        background: rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .photo-item img {
+        transition: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
   <nav class="navbar">
     <a class="logo" href="index.html">KYRA <span>PICTURE</span></a>
+
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="portfolio.html" class="active">Portfolio</a>
       <a href="pricelist.html">Pricelist</a>
+      <a href="testimonials.html">Testimonials</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </div>
@@ -32,17 +308,53 @@
   <main class="gallery-page">
     <div class="photo-grid">
 
-      <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85" alt="Engagement couple">
+      <button class="photo-item" type="button"
+        aria-label="Perbesar foto lamaran 1">
+        <img
+          src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85"
+          alt="Momen pasangan merayakan cinta"
+          loading="lazy">
+      </button>
 
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85" alt="Couple celebrating love">
+      <button class="photo-item" type="button"
+        aria-label="Perbesar foto lamaran 2">
+        <img
+          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
+          alt="Pasangan dalam momen romantis"
+          loading="lazy">
+      </button>
 
-      <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85" alt="Engagement celebration">
+      <button class="photo-item" type="button"
+        aria-label="Perbesar foto lamaran 3">
+        <img
+          src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85"
+          alt="Perayaan kisah cinta pasangan"
+          loading="lazy">
+      </button>
 
-      <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1000&q=85" alt="Romantic portrait">
+      <button class="photo-item" type="button"
+        aria-label="Perbesar foto lamaran 4">
+        <img
+          src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1000&q=85"
+          alt="Potret pasangan"
+          loading="lazy">
+      </button>
 
-      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85" alt="Celebration together">
+      <button class="photo-item" type="button"
+        aria-label="Perbesar foto lamaran 5">
+        <img
+          src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85"
+          alt="Momen perayaan bersama"
+          loading="lazy">
+      </button>
 
-      <img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85" alt="Couple portrait">
+      <button class="photo-item" type="button"
+        aria-label="Perbesar foto lamaran 6">
+        <img
+          src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85"
+          alt="Potret pasangan dalam suasana romantis"
+          loading="lazy">
+      </button>
 
     </div>
   </main>
@@ -51,6 +363,7 @@
     <p class="eyebrow">A NEW CHAPTER BEGINS</p>
     <h2>Let's celebrate your story.</h2>
     <a class="button" href="contact.html">GET IN TOUCH ↗</a>
+
     <p style="margin-top:20px">
       <a class="text-link" href="portfolio.html">← BACK TO PORTFOLIO</a>
     </p>
@@ -60,6 +373,119 @@
     © 2026 Kyra Picture. Your Story, Beautifully Captured.
   </footer>
 
+  <!-- PHOTO LIGHTBOX -->
+  <div class="lightbox" id="lightbox"
+    role="dialog" aria-modal="true" aria-label="Galeri foto"
+    aria-hidden="true">
+
+    <button class="lightbox-close" id="lightboxClose"
+      type="button" aria-label="Tutup galeri">&times;</button>
+
+    <button class="lightbox-prev" id="lightboxPrev"
+      type="button" aria-label="Foto sebelumnya">&#8249;</button>
+
+    <img class="lightbox-image" id="lightboxImage" src="" alt="">
+
+    <button class="lightbox-next" id="lightboxNext"
+      type="button" aria-label="Foto berikutnya">&#8250;</button>
+
+    <div class="lightbox-counter" id="lightboxCounter">1 / 6</div>
+  </div>
+
+  <script>
+    const photoButtons = Array.from(
+      document.querySelectorAll(".photo-item")
+    );
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const lightboxCounter = document.getElementById("lightboxCounter");
+    const closeButton = document.getElementById("lightboxClose");
+    const prevButton = document.getElementById("lightboxPrev");
+    const nextButton = document.getElementById("lightboxNext");
+
+    let currentIndex = 0;
+    let touchStartX = 0;
+
+    function showPhoto(index) {
+      currentIndex =
+        (index + photoButtons.length) % photoButtons.length;
+
+      const image = photoButtons[currentIndex].querySelector("img");
+
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCounter.textContent =
+        `${currentIndex + 1} / ${photoButtons.length}`;
+    }
+
+    function openLightbox(index) {
+      showPhoto(index);
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.classList.add("lightbox-active");
+      closeButton.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("lightbox-active");
+
+      lightboxImage.src = "";
+
+      if (photoButtons[currentIndex]) {
+        photoButtons[currentIndex].focus();
+      }
+    }
+
+    function showNext() {
+      showPhoto(currentIndex + 1);
+    }
+
+    function showPrev() {
+      showPhoto(currentIndex - 1);
+    }
+
+    photoButtons.forEach((button, index) => {
+      button.addEventListener("click", () => openLightbox(index));
+    });
+
+    closeButton.addEventListener("click", closeLightbox);
+    nextButton.addEventListener("click", showNext);
+    prevButton.addEventListener("click", showPrev);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox.classList.contains("is-open")) return;
+
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowRight") showNext();
+      if (event.key === "ArrowLeft") showPrev();
+    });
+
+    lightbox.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightbox.addEventListener("touchend", (event) => {
+      const touchEndX = event.changedTouches[0].screenX;
+      const difference = touchEndX - touchStartX;
+
+      if (Math.abs(difference) < 50) return;
+
+      if (difference < 0) {
+        showNext();
+      } else {
+        showPrev();
+      }
+    }, { passive: true });
+  </script>
+
 </body>
 </html>
-
