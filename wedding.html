@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -14,7 +15,6 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* GALLERY PAGE */
     .gallery-page {
       width: min(92%, 1500px);
       margin: 0 auto;
@@ -27,12 +27,12 @@
       text-align: center;
     }
 
-    .gallery-intro h1 {
+    .gallery-intro h1,
+    .gallery-contact h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
     }
 
-    /* EDITORIAL MASONRY GRID */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -67,37 +67,6 @@
     .photo-item:focus-visible {
       outline: 2px solid #a87855;
       outline-offset: 3px;
-    }
-
-    /* VARIED PHOTO COMPOSITIONS */
-    .photo-item:nth-child(1) {
-      grid-column: span 5;
-      grid-row: span 17;
-    }
-
-    .photo-item:nth-child(2) {
-      grid-column: span 4;
-      grid-row: span 11;
-    }
-
-    .photo-item:nth-child(3) {
-      grid-column: span 3;
-      grid-row: span 14;
-    }
-
-    .photo-item:nth-child(4) {
-      grid-column: span 4;
-      grid-row: span 12;
-    }
-
-    .photo-item:nth-child(5) {
-      grid-column: span 4;
-      grid-row: span 15;
-    }
-
-    .photo-item:nth-child(6) {
-      grid-column: span 4;
-      grid-row: span 11;
     }
 
     .photo-item:nth-child(7n + 1) {
@@ -135,7 +104,58 @@
       grid-row: span 13;
     }
 
-    /* LIGHTBOX */
+    .gallery-status {
+      grid-column: 1 / -1;
+      padding: 45px 15px;
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .gallery-status button {
+      margin-top: 15px;
+      padding: 10px 18px;
+      border: 1px solid #aaa;
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .gallery-pagination {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 35px;
+    }
+
+    .gallery-pagination button {
+      min-width: 40px;
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 1px solid #d6cec5;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .gallery-pagination button[aria-current="page"] {
+      background: #292522;
+      border-color: #292522;
+      color: white;
+    }
+
+    .gallery-pagination button:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    .gallery-pagination:empty {
+      display: none;
+    }
+
     .lightbox {
       position: fixed;
       inset: 0;
@@ -144,7 +164,7 @@
       align-items: center;
       justify-content: center;
       padding: 65px 75px;
-      background: rgba(20, 17, 15, 0.96);
+      background: rgba(20, 17, 15, .96);
     }
 
     .lightbox.is-open {
@@ -168,15 +188,15 @@
       align-items: center;
       justify-content: center;
       color: #fff;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.2);
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: background .2s ease;
     }
 
     .lightbox-close:hover,
     .lightbox-arrow:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,.2);
     }
 
     .lightbox-close {
@@ -198,13 +218,8 @@
       transform: translateY(-50%);
     }
 
-    .lightbox-prev {
-      left: 20px;
-    }
-
-    .lightbox-next {
-      right: 20px;
-    }
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
 
     .lightbox-counter {
       position: absolute;
@@ -220,22 +235,15 @@
       overflow: hidden;
     }
 
-    /* BOOKING SECTION */
     .gallery-contact {
       padding: 65px 20px;
       text-align: center;
-    }
-
-    .gallery-contact h2 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
     }
 
     .gallery-back {
       margin-top: 24px;
     }
 
-    /* TABLET */
     @media (max-width: 900px) {
       .gallery-page {
         width: 94%;
@@ -279,7 +287,6 @@
       }
     }
 
-    /* MOBILE */
     @media (max-width: 560px) {
       .gallery-page {
         width: calc(100% - 28px);
@@ -380,7 +387,6 @@
 
 <body>
 
-  <!-- NAVIGATION -->
   <nav class="navbar">
     <a class="logo" href="index.html">KYRA <span>PICTURE</span></a>
 
@@ -394,7 +400,6 @@
     </div>
   </nav>
 
-  <!-- PAGE HEADER -->
   <header class="page-header gallery-intro">
     <p class="eyebrow">PORTFOLIO / WEDDING</p>
     <h1>Wedding Stories</h1>
@@ -404,68 +409,20 @@
     </p>
   </header>
 
-  <!-- PHOTO GALLERY -->
   <main class="gallery-page">
     <div class="photo-grid" id="photoGrid">
-
-      <button class="photo-item" type="button"
-        aria-label="View wedding celebration photo">
-        <img
-          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding celebration"
-          loading="eager">
-      </button>
-
-      <button class="photo-item" type="button"
-        aria-label="View wedding moments photo">
-        <img
-          src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding moments"
-          loading="lazy">
-      </button>
-
-      <button class="photo-item" type="button"
-        aria-label="View wedding ceremony photo">
-        <img
-          src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding ceremony"
-          loading="lazy">
-      </button>
-
-      <button class="photo-item" type="button"
-        aria-label="View bride and groom photo">
-        <img
-          src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1000&q=85"
-          alt="Bride and groom"
-          loading="lazy">
-      </button>
-
-      <button class="photo-item" type="button"
-        aria-label="View wedding reception photo">
-        <img
-          src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding reception"
-          loading="lazy">
-      </button>
-
-      <button class="photo-item" type="button"
-        aria-label="View wedding portrait photo">
-        <img
-          src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding portrait"
-          loading="lazy">
-      </button>
-
-      <!--
-        TAMBAH FOTO:
-        Salin satu blok <button class="photo-item">...</button>
-        lalu ganti URL gambar dan teks alt-nya.
-      -->
-
+      <div class="gallery-status" id="galleryStatus">
+        Memuat foto galeri...
+      </div>
     </div>
+
+    <nav
+      class="gallery-pagination"
+      id="galleryPagination"
+      aria-label="Halaman galeri">
+    </nav>
   </main>
 
-  <!-- LIGHTBOX -->
   <div
     class="lightbox"
     id="lightbox"
@@ -474,30 +431,20 @@
     aria-label="Expanded portfolio photo"
     aria-hidden="true">
 
-    <button
-      class="lightbox-close"
-      id="lightboxClose"
-      type="button"
-      aria-label="Close photo">&times;</button>
+    <button class="lightbox-close" id="lightboxClose"
+      type="button" aria-label="Close photo">&times;</button>
 
-    <button
-      class="lightbox-arrow lightbox-prev"
-      id="lightboxPrev"
-      type="button"
-      aria-label="Previous photo">&#8249;</button>
+    <button class="lightbox-arrow lightbox-prev" id="lightboxPrev"
+      type="button" aria-label="Previous photo">&#8249;</button>
 
     <img class="lightbox-image" id="lightboxImage" src="" alt="">
 
-    <button
-      class="lightbox-arrow lightbox-next"
-      id="lightboxNext"
-      type="button"
-      aria-label="Next photo">&#8250;</button>
+    <button class="lightbox-arrow lightbox-next" id="lightboxNext"
+      type="button" aria-label="Next photo">&#8250;</button>
 
-    <div class="lightbox-counter" id="lightboxCounter">1 / 6</div>
+    <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
   </div>
 
-  <!-- BOOKING SECTION -->
   <section class="home-contact gallery-contact">
     <p class="eyebrow">YOUR STORY MATTERS</p>
     <h2>Let's capture your day.</h2>
@@ -516,15 +463,25 @@
     </p>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     © 2026 Kyra Picture. Your Story, Beautifully Captured.
   </footer>
 
-  <!-- LIGHTBOX SCRIPT -->
   <script>
     (() => {
+      'use strict';
+
+      // API Google Apps Script milik Kyra Picture
+      const API_URL =
+        'https://script.google.com/macros/s/AKfycbyeBMmb_k739eG4SoMtfuk4FtIXQT20DldcGMV5QbqANkVjfGqb6NWsvwCqWAPW0Cg/exec';
+
+      // Jumlah foto yang ditampilkan per halaman
+      const PAGE_SIZE = 24;
+
       const grid = document.getElementById('photoGrid');
+      const status = document.getElementById('galleryStatus');
+      const pagination = document.getElementById('galleryPagination');
+
       const lightbox = document.getElementById('lightbox');
       const lightboxImage = document.getElementById('lightboxImage');
       const counter = document.getElementById('lightboxCounter');
@@ -532,36 +489,218 @@
       const prevButton = document.getElementById('lightboxPrev');
       const nextButton = document.getElementById('lightboxNext');
 
-      let photos = [];
+      let allPhotos = [];
+      let currentPage = 1;
       let currentIndex = 0;
       let previousFocus = null;
+      let loading = false;
 
-      function collectPhotos() {
-        photos = Array.from(
-          grid.querySelectorAll('.photo-item img')
-        );
+      function showStatus(message, retry = false) {
+        status.hidden = false;
+        status.replaceChildren();
+
+        const text = document.createElement('p');
+        text.textContent = message;
+        status.appendChild(text);
+
+        if (retry) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = 'Coba lagi';
+          button.addEventListener('click', loadGallery);
+          status.appendChild(button);
+        }
       }
 
-      function showPhoto(index) {
-        if (!photos.length) return;
+      function getPagePhotos() {
+        const start = (currentPage - 1) * PAGE_SIZE;
+        return allPhotos.slice(start, start + PAGE_SIZE);
+      }
 
-        currentIndex = (index + photos.length) % photos.length;
+      function renderGallery() {
+        grid.replaceChildren();
+        status.hidden = true;
 
-        const photo = photos[currentIndex];
+        const photos = getPagePhotos();
 
-        lightboxImage.src = photo.currentSrc || photo.src;
-        lightboxImage.alt = photo.alt || 'Wedding photograph';
+        if (!photos.length) {
+          showStatus('Belum ada foto di folder Google Drive.');
+          pagination.replaceChildren();
+          return;
+        }
 
-        counter.textContent =
-          (currentIndex + 1) + ' / ' + photos.length;
+        photos.forEach((photo, index) => {
+          const button = document.createElement('button');
+          button.className = 'photo-item';
+          button.type = 'button';
+          button.setAttribute(
+            'aria-label',
+            'Lihat foto ' + (photo.name || 'Wedding')
+          );
+
+          const img = document.createElement('img');
+          img.src = photo.imageUrl;
+          img.alt = photo.name || 'Wedding photography by Kyra Picture';
+          img.loading = index < 3 ? 'eager' : 'lazy';
+          img.decoding = 'async';
+
+          img.addEventListener('error', () => {
+            button.hidden = true;
+          }, { once: true });
+
+          button.appendChild(img);
+
+          button.addEventListener('click', () => {
+            openLightbox(index);
+          });
+
+          grid.appendChild(button);
+        });
+
+        renderPagination();
+      }
+
+      function renderPagination() {
+        pagination.replaceChildren();
+
+        const totalPages = Math.ceil(allPhotos.length / PAGE_SIZE);
+
+        if (totalPages <= 1) return;
+
+        const previous = document.createElement('button');
+        previous.type = 'button';
+        previous.textContent = '←';
+        previous.setAttribute('aria-label', 'Halaman sebelumnya');
+        previous.disabled = currentPage === 1;
+
+        previous.addEventListener('click', () => {
+          if (currentPage > 1) {
+            currentPage--;
+            renderGallery();
+            scrollToGallery();
+          }
+        });
+
+        pagination.appendChild(previous);
+
+        for (let page = 1; page <= totalPages; page++) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = String(page);
+
+          if (page === currentPage) {
+            button.setAttribute('aria-current', 'page');
+          }
+
+          button.setAttribute('aria-label', 'Halaman ' + page);
+
+          button.addEventListener('click', () => {
+            currentPage = page;
+            renderGallery();
+            scrollToGallery();
+          });
+
+          pagination.appendChild(button);
+        }
+
+        const next = document.createElement('button');
+        next.type = 'button';
+        next.textContent = '→';
+        next.setAttribute('aria-label', 'Halaman berikutnya');
+        next.disabled = currentPage === totalPages;
+
+        next.addEventListener('click', () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            renderGallery();
+            scrollToGallery();
+          }
+        });
+
+        pagination.appendChild(next);
+      }
+
+      function scrollToGallery() {
+        grid.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+
+      async function loadGallery() {
+        if (loading) return;
+
+        loading = true;
+        showStatus('Memuat foto galeri...');
+
+        try {
+          const response = await fetch(API_URL, {
+            method: 'GET',
+            redirect: 'follow'
+          });
+
+          if (!response.ok) {
+            throw new Error('HTTP ' + response.status);
+          }
+
+          const data = await response.json();
+
+          if (!data || data.success !== true ||
+              !Array.isArray(data.photos)) {
+            throw new Error('Format data API tidak sesuai.');
+          }
+
+          allPhotos = data.photos.filter(photo =>
+            photo &&
+            typeof photo.imageUrl === 'string' &&
+            photo.imageUrl.startsWith('https://')
+          );
+
+          // Urutan nama file supaya konsisten
+          allPhotos.sort((a, b) =>
+            (a.name || '').localeCompare(
+              b.name || '',
+              'id',
+              { numeric: true, sensitivity: 'base' }
+            )
+          );
+
+          currentPage = 1;
+
+          if (allPhotos.length === 0) {
+            grid.replaceChildren();
+            showStatus(
+              'Belum ada foto yang ditemukan. Periksa isi folder Drive dan izin akses fotonya.'
+            );
+            pagination.replaceChildren();
+            return;
+          }
+
+          renderGallery();
+
+        } catch (error) {
+          console.error('Gallery API error:', error);
+          grid.replaceChildren();
+          showStatus(
+            'Foto belum bisa dimuat. Periksa akses API Google Apps Script dan izin foto Google Drive.',
+            true
+          );
+          pagination.replaceChildren();
+
+        } finally {
+          loading = false;
+        }
       }
 
       function openLightbox(index) {
-        collectPhotos();
+        const pagePhotos = getPagePhotos();
 
+        if (!pagePhotos.length) return;
+
+        currentIndex = index;
         previousFocus = document.activeElement;
 
-        showPhoto(index);
+        showPhoto();
 
         lightbox.classList.add('is-open');
         lightbox.setAttribute('aria-hidden', 'false');
@@ -570,91 +709,90 @@
         closeButton.focus();
       }
 
+      function showPhoto() {
+        const photos = getPagePhotos();
+
+        if (!photos.length) return;
+
+        currentIndex =
+          (currentIndex + photos.length) % photos.length;
+
+        const photo = photos[currentIndex];
+
+        lightboxImage.src = photo.imageUrl;
+        lightboxImage.alt = photo.name || 'Wedding photograph';
+
+        counter.textContent =
+          ((currentPage - 1) * PAGE_SIZE + currentIndex + 1) +
+          ' / ' + allPhotos.length;
+      }
+
       function closeLightbox() {
         lightbox.classList.remove('is-open');
         lightbox.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('lightbox-active');
+        lightboxImage.removeAttribute('src');
 
-        lightboxImage.src = '';
-
-        if (previousFocus) {
+        if (previousFocus && previousFocus.focus) {
           previousFocus.focus();
         }
       }
 
-      grid.addEventListener('click', (event) => {
-        const button = event.target.closest('.photo-item');
-
-        if (!button) return;
-
-        const index = Array.from(
-          grid.querySelectorAll('.photo-item')
-        ).indexOf(button);
-
-        if (index !== -1) {
-          openLightbox(index);
-        }
-      });
-
       closeButton.addEventListener('click', closeLightbox);
 
       prevButton.addEventListener('click', () => {
-        showPhoto(currentIndex - 1);
+        currentIndex--;
+        showPhoto();
       });
 
       nextButton.addEventListener('click', () => {
-        showPhoto(currentIndex + 1);
+        currentIndex++;
+        showPhoto();
       });
 
-      lightbox.addEventListener('click', (event) => {
+      lightbox.addEventListener('click', event => {
         if (event.target === lightbox) {
           closeLightbox();
         }
       });
 
-      document.addEventListener('keydown', (event) => {
+      document.addEventListener('keydown', event => {
         if (!lightbox.classList.contains('is-open')) return;
 
-        if (event.key === 'Escape') {
-          closeLightbox();
-        }
-
+        if (event.key === 'Escape') closeLightbox();
         if (event.key === 'ArrowLeft') {
-          showPhoto(currentIndex - 1);
+          currentIndex--;
+          showPhoto();
         }
-
         if (event.key === 'ArrowRight') {
-          showPhoto(currentIndex + 1);
+          currentIndex++;
+          showPhoto();
         }
       });
 
-      /* SWIPE SUPPORT FOR MOBILE */
       let touchStartX = 0;
       let touchStartY = 0;
 
-      lightbox.addEventListener('touchstart', (event) => {
+      lightbox.addEventListener('touchstart', event => {
         const touch = event.changedTouches[0];
-
         touchStartX = touch.screenX;
         touchStartY = touch.screenY;
       }, { passive: true });
 
-      lightbox.addEventListener('touchend', (event) => {
+      lightbox.addEventListener('touchend', event => {
         if (!lightbox.classList.contains('is-open')) return;
 
         const touch = event.changedTouches[0];
-        const deltaX = touch.screenX - touchStartX;
-        const deltaY = touch.screenY - touchStartY;
+        const dx = touch.screenX - touchStartX;
+        const dy = touch.screenY - touchStartY;
 
-        if (Math.abs(deltaX) > 55 &&
-            Math.abs(deltaX) > Math.abs(deltaY)) {
-          showPhoto(
-            deltaX < 0 ? currentIndex + 1 : currentIndex - 1
-          );
+        if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) {
+          currentIndex += dx < 0 ? 1 : -1;
+          showPhoto();
         }
       }, { passive: true });
 
-      collectPhotos();
+      loadGallery();
     })();
   </script>
 
