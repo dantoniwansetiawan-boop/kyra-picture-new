@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -27,12 +28,13 @@
       text-align: center;
     }
 
-    .gallery-intro h1 {
+    .gallery-intro h1,
+    .gallery-contact h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
     }
 
-    /* EDITORIAL MASONRY */
+    /* EDITORIAL MASONRY GRID */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -69,7 +71,7 @@
       outline-offset: 3px;
     }
 
-    /* DESKTOP PHOTO COMPOSITION */
+    /* DESKTOP PHOTO COMPOSITIONS */
     .photo-item:nth-child(7n + 1) {
       grid-column: span 5;
       grid-row: span 16;
@@ -190,15 +192,10 @@
       overflow: hidden;
     }
 
-    /* CONTACT */
+    /* BOOKING SECTION */
     .gallery-contact {
       padding: 65px 20px;
       text-align: center;
-    }
-
-    .gallery-contact h2 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
     }
 
     .gallery-back {
@@ -367,11 +364,9 @@
   <!-- PAGE HEADER -->
   <header class="page-header gallery-intro">
     <p class="eyebrow">PORTFOLIO / PREWEDDING</p>
-    <h1>Prewedding Moments</h1>
-
+    <h1>Prewedding Stories</h1>
     <p class="muted">
-      Two souls, one story, and a lifetime of memories
-      waiting to unfold.
+      A collection of beautiful moments celebrating your love story.
     </p>
   </header>
 
@@ -379,165 +374,112 @@
   <main class="gallery-page">
     <div class="photo-grid" id="photoGrid">
 
-      <button class="photo-item" type="button"
-        aria-label="View prewedding couple photo">
-        <img
-          src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1000&q=85"
-          alt="Prewedding couple"
-          loading="eager">
+      <button class="photo-item" type="button" aria-label="View prewedding photo 17">
+        <img src="images/prewedding/prewedding17.jpg" alt="Prewedding photography 17" loading="eager">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View romantic couple portrait">
-        <img
-          src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=85"
-          alt="Romantic couple portrait"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View prewedding photo 4">
+        <img src="images/prewedding/prewedding4.jpg" alt="Prewedding photography 4" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View couple photography">
-        <img
-          src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1000&q=85"
-          alt="Couple photography"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View prewedding photo 23">
+        <img src="images/prewedding/prewedding23.jpg" alt="Prewedding photography 23" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View romantic photography">
-        <img
-          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=85"
-          alt="Romantic photography"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View prewedding photo 9">
+        <img src="images/prewedding/prewedding9.jpg" alt="Prewedding photography 9" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View couple celebration">
-        <img
-          src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85"
-          alt="Couple celebration"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View prewedding photo 1">
+        <img src="images/prewedding/prewedding1.jpg" alt="Prewedding photography 1" loading="lazy">
       </button>
 
-      <button class="photo-item" type="button"
-        aria-label="View wedding couple portrait">
-        <img
-          src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1000&q=85"
-          alt="Wedding couple portrait"
-          loading="lazy">
+      <button class="photo-item" type="button" aria-label="View prewedding photo 20">
+        <img src="images/prewedding/prewedding20.jpg" alt="Prewedding photography 20" loading="lazy">
       </button>
 
-     
-<!-- PHOTO GALLERY -->
-<main class="gallery-page">
-  <div class="photo-grid" id="photoGrid">
+      <button class="photo-item" type="button" aria-label="View prewedding photo 12">
+        <img src="images/prewedding/prewedding12.jpg" alt="Prewedding photography 12" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 17">
-      <img src="images/prewedding/prewedding17.jpg" alt="Prewedding photography 17" loading="eager">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 26">
+        <img src="images/prewedding/prewedding26.jpg" alt="Prewedding photography 26" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 4">
-      <img src="images/prewedding/prewedding4.jpg" alt="Prewedding photography 4" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 7">
+        <img src="images/prewedding/prewedding7.jpg" alt="Prewedding photography 7" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 23">
-      <img src="images/prewedding/prewedding23.jpg" alt="Prewedding photography 23" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 15">
+        <img src="images/prewedding/prewedding15.jpg" alt="Prewedding photography 15" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 9">
-      <img src="images/prewedding/prewedding9.jpg" alt="Prewedding photography 9" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 3">
+        <img src="images/prewedding/prewedding3.jpg" alt="Prewedding photography 3" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 1">
-      <img src="images/prewedding/prewedding1.jpg" alt="Prewedding photography 1" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 22">
+        <img src="images/prewedding/prewedding22.jpg" alt="Prewedding photography 22" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 20">
-      <img src="images/prewedding/prewedding20.jpg" alt="Prewedding photography 20" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 10">
+        <img src="images/prewedding/prewedding10.jpg" alt="Prewedding photography 10" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 12">
-      <img src="images/prewedding/prewedding12.jpg" alt="Prewedding photography 12" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 18">
+        <img src="images/prewedding/prewedding18.jpg" alt="Prewedding photography 18" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 26">
-      <img src="images/prewedding/prewedding26.jpg" alt="Prewedding photography 26" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 5">
+        <img src="images/prewedding/prewedding5.jpg" alt="Prewedding photography 5" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 7">
-      <img src="images/prewedding/prewedding7.jpg" alt="Prewedding photography 7" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 24">
+        <img src="images/prewedding/prewedding24.jpg" alt="Prewedding photography 24" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 15">
-      <img src="images/prewedding/prewedding15.jpg" alt="Prewedding photography 15" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 13">
+        <img src="images/prewedding/prewedding13.jpg" alt="Prewedding photography 13" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 3">
-      <img src="images/prewedding/prewedding3.jpg" alt="Prewedding photography 3" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 2">
+        <img src="images/prewedding/prewedding2.jpg" alt="Prewedding photography 2" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 22">
-      <img src="images/prewedding/prewedding22.jpg" alt="Prewedding photography 22" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 21">
+        <img src="images/prewedding/prewedding21.jpg" alt="Prewedding photography 21" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 10">
-      <img src="images/prewedding/prewedding10.jpg" alt="Prewedding photography 10" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 8">
+        <img src="images/prewedding/prewedding8.jpg" alt="Prewedding photography 8" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 18">
-      <img src="images/prewedding/prewedding18.jpg" alt="Prewedding photography 18" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 16">
+        <img src="images/prewedding/prewedding16.jpg" alt="Prewedding photography 16" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 5">
-      <img src="images/prewedding/prewedding5.jpg" alt="Prewedding photography 5" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 6">
+        <img src="images/prewedding/prewedding6.jpg" alt="Prewedding photography 6" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 24">
-      <img src="images/prewedding/prewedding24.jpg" alt="Prewedding photography 24" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 25">
+        <img src="images/prewedding/prewedding25.jpg" alt="Prewedding photography 25" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 13">
-      <img src="images/prewedding/prewedding13.jpg" alt="Prewedding photography 13" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 11">
+        <img src="images/prewedding/prewedding11.jpg" alt="Prewedding photography 11" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 2">
-      <img src="images/prewedding/prewedding2.jpg" alt="Prewedding photography 2" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 19">
+        <img src="images/prewedding/prewedding19.jpg" alt="Prewedding photography 19" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 21">
-      <img src="images/prewedding/prewedding21.jpg" alt="Prewedding photography 21" loading="lazy">
-    </button>
+      <button class="photo-item" type="button" aria-label="View prewedding photo 14">
+        <img src="images/prewedding/prewedding14.jpg" alt="Prewedding photography 14" loading="lazy">
+      </button>
 
-    <button class="photo-item" type="button" aria-label="View prewedding photo 8">
-      <img src="images/prewedding/prewedding8.jpg" alt="Prewedding photography 8" loading="lazy">
-    </button>
-
-    <button class="photo-item" type="button" aria-label="View prewedding photo 16">
-      <img src="images/prewedding/prewedding16.jpg" alt="Prewedding photography 16" loading="lazy">
-    </button>
-
-    <button class="photo-item" type="button" aria-label="View prewedding photo 6">
-      <img src="images/prewedding/prewedding6.jpg" alt="Prewedding photography 6" loading="lazy">
-    </button>
-
-    <button class="photo-item" type="button" aria-label="View prewedding photo 25">
-      <img src="images/prewedding/prewedding25.jpg" alt="Prewedding photography 25" loading="lazy">
-    </button>
-
-    <button class="photo-item" type="button" aria-label="View prewedding photo 11">
-      <img src="images/prewedding/prewedding11.jpg" alt="Prewedding photography 11" loading="lazy">
-    </button>
-
-    <button class="photo-item" type="button" aria-label="View prewedding photo 19">
-      <img src="images/prewedding/prewedding19.jpg" alt="Prewedding photography 19" loading="lazy">
-    </button>
-
-    <button class="photo-item" type="button" aria-label="View prewedding photo 14">
-      <img src="images/prewedding/prewedding14.jpg" alt="Prewedding photography 14" loading="lazy">
-    </button>
-
-  </div>
-</main>
+    </div>
+  </main>
 
   <!-- LIGHTBOX -->
   <div
@@ -545,7 +487,7 @@
     id="lightbox"
     role="dialog"
     aria-modal="true"
-    aria-label="Expanded prewedding photo"
+    aria-label="Expanded portfolio photo"
     aria-hidden="true">
 
     <button
@@ -568,19 +510,19 @@
       type="button"
       aria-label="Next photo">&#8250;</button>
 
-    <div class="lightbox-counter" id="lightboxCounter">1 / 6</div>
+    <div class="lightbox-counter" id="lightboxCounter">1 / 26</div>
   </div>
 
-  <!-- CONTACT -->
+  <!-- BOOKING SECTION -->
   <section class="home-contact gallery-contact">
-    <p class="eyebrow">YOUR LOVE STORY</p>
-    <h2>Let's make it timeless.</h2>
+    <p class="eyebrow">YOUR STORY MATTERS</p>
+    <h2>Let's capture your love story.</h2>
 
     <a class="button"
        href="https://wa.me/6289519847571"
        target="_blank"
        rel="noopener noreferrer">
-      GET IN TOUCH ↗
+      BOOK VIA WHATSAPP ↗
     </a>
 
     <p class="gallery-back">
@@ -634,6 +576,7 @@
         collectPhotos();
 
         previousFocus = document.activeElement;
+
         showPhoto(index);
 
         lightbox.classList.add('is-open');
@@ -719,8 +662,10 @@
         const deltaX = touch.screenX - touchStartX;
         const deltaY = touch.screenY - touchStartY;
 
-        if (Math.abs(deltaX) > 55 &&
-            Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (
+          Math.abs(deltaX) > 55 &&
+          Math.abs(deltaX) > Math.abs(deltaY)
+        ) {
           showPhoto(
             deltaX < 0 ? currentIndex + 1 : currentIndex - 1
           );
@@ -733,4 +678,3 @@
 
 </body>
 </html>
-```
