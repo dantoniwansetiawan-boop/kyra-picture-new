@@ -15,11 +15,22 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    body.about-page {
+    /* PAGE BASE */
+    html {
+      width: 100%;
+      min-height: 100%;
       margin: 0;
+    }
+
+    body.about-page {
+      width: 100%;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
       background: #f5f0e7;
       color: #302821;
       font-family: 'DM Sans', sans-serif;
+      overflow-x: clip;
     }
 
     .about-page *,
@@ -87,6 +98,7 @@
 
     /* PAGE INTRO */
     .about-hero {
+      width: 100%;
       padding: 105px 24px 65px;
       text-align: center;
     }
@@ -124,7 +136,7 @@
 
     /* OUR STORY */
     .about-story {
-      width: min(100% - 48px, 700px);
+      width: min(700px, calc(100% - 48px));
       margin: 0 auto;
       padding: 45px 0 65px;
       border-top: 1px solid #dfd3c4;
@@ -156,7 +168,7 @@
 
     /* AT A GLANCE */
     .about-glance {
-      width: min(100% - 48px, 700px);
+      width: min(700px, calc(100% - 48px));
       margin: 0 auto;
       padding: 35px 0 55px;
       border-top: 1px solid #dfd3c4;
@@ -186,6 +198,7 @@
 
     /* CONTACT CTA */
     .about-cta {
+      width: 100%;
       padding: 65px 24px 70px;
       background: #302821;
       text-align: center;
@@ -229,6 +242,7 @@
 
     /* FOOTER */
     .about-footer {
+      width: 100%;
       padding: 23px 20px;
       background: #302821;
       border-top: 1px solid rgba(245, 240, 231, 0.15);
