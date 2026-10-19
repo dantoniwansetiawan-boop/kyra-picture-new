@@ -27,7 +27,9 @@
       font-family:"DM Sans",sans-serif;
     }
 
-    .testimonials-page * { box-sizing:border-box; }
+    .testimonials-page * {
+      box-sizing:border-box;
+    }
 
     .testimonials-page .testimonials-hero {
       max-width:850px;
@@ -59,6 +61,7 @@
       padding:0 6% 100px;
     }
 
+    /* DESKTOP: 3 kolom x 3 baris */
     .testimonials-page .testimonials-grid {
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
@@ -170,6 +173,7 @@
       text-align:center;
     }
 
+    /* PAGINATION DESKTOP */
     .testimonials-page .pagination {
       display:flex;
       flex-wrap:wrap;
@@ -179,7 +183,8 @@
       margin-top:45px;
     }
 
-    .testimonials-page .pagination button {
+    .testimonials-page .pagination button,
+    .testimonials-page .carousel-controls button {
       min-width:42px;
       height:42px;
       padding:0 13px;
@@ -193,13 +198,15 @@
     }
 
     .testimonials-page .pagination button:hover:not(:disabled),
-    .testimonials-page .pagination button.active {
+    .testimonials-page .pagination button.active,
+    .testimonials-page .carousel-controls button:hover:not(:disabled) {
       border-color:var(--espresso);
       background:var(--espresso);
       color:var(--paper);
     }
 
-    .testimonials-page .pagination button:disabled {
+    .testimonials-page .pagination button:disabled,
+    .testimonials-page .carousel-controls button:disabled {
       opacity:.35;
       cursor:not-allowed;
     }
@@ -210,6 +217,11 @@
       font-size:11px;
       text-align:center;
       letter-spacing:.5px;
+    }
+
+    /* Carousel HP disembunyikan di desktop */
+    .testimonials-page .carousel-controls {
+      display:none;
     }
 
     .testimonials-page .testimonials-cta {
@@ -266,31 +278,130 @@
       }
     }
 
+    /* HP: 2 kartu terlihat, geser horizontal */
     @media(max-width:520px) {
       .testimonials-page .testimonials-hero {
         padding:60px 20px 40px;
       }
 
       .testimonials-page .testimonials-section {
-        padding:0 20px 65px;
+        padding:0 16px 65px;
       }
 
       .testimonials-page .testimonials-grid {
-        grid-template-columns:1fr;
-        gap:16px;
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        grid-auto-flow:column;
+        grid-auto-columns:calc((100% - 12px) / 2);
+        gap:12px;
+
+        overflow-x:auto;
+        overflow-y:hidden;
+        padding:2px 1px 12px;
+
+        scroll-snap-type:x mandatory;
+        scroll-behavior:smooth;
+        overscroll-behavior-x:contain;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:thin;
+        scrollbar-color:var(--champagne) transparent;
       }
 
       .testimonials-page .testimonial-card {
-        min-height:280px;
-        padding:28px 25px;
+        width:100%;
+        min-width:0;
+        min-height:300px;
+        padding:20px 14px;
+        scroll-snap-align:start;
+        scroll-snap-stop:normal;
+      }
+
+      .testimonials-page .testimonial-person {
+        align-items:flex-start;
+        gap:8px;
+        margin-bottom:14px;
+      }
+
+      .testimonials-page .testimonial-photo {
+        flex-basis:40px;
+        width:40px;
+        height:40px;
+        font-size:14px;
+      }
+
+      .testimonials-page .testimonial-author-name {
+        font-size:11px;
+        line-height:1.5;
+      }
+
+      .testimonials-page .testimonial-stars {
+        font-size:11px;
+        letter-spacing:1px;
+      }
+
+      .testimonials-page .testimonial-number {
+        font-size:8px;
+        letter-spacing:1px;
+        line-height:1.6;
+      }
+
+      .testimonials-page .testimonial-quote-mark {
+        margin-top:14px;
+        font-size:48px;
       }
 
       .testimonials-page .testimonial-quote {
-        font-size:20px;
+        margin:12px 0 24px;
+        font-size:16px;
+        line-height:1.55;
+      }
+
+      .testimonials-page .testimonial-author {
+        padding-top:12px;
+      }
+
+      .testimonials-page .testimonial-author p {
+        font-size:9px;
+        letter-spacing:.5px;
+      }
+
+      .testimonials-page .pagination {
+        display:none;
+      }
+
+      .testimonials-page .carousel-controls {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:18px;
+        margin-top:20px;
+      }
+
+      .testimonials-page .carousel-controls button {
+        min-width:40px;
+        height:40px;
+        padding:0;
+        font-size:18px;
+      }
+
+      .testimonials-page .page-info {
+        margin-top:14px;
+        font-size:11px;
       }
 
       .testimonials-page .testimonials-cta {
         padding:55px 20px;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .testimonials-page .testimonials-grid {
+        scroll-behavior:auto;
+      }
+
+      .testimonials-page .pagination button,
+      .testimonials-page .carousel-controls button {
+        transition:none;
       }
     }
   </style>
@@ -320,11 +431,25 @@
   </header>
 
   <main class="testimonials-section">
-    <div class="testimonials-grid" id="testimonials-grid" aria-live="polite">
+    <div
+      class="testimonials-grid"
+      id="testimonials-grid"
+      aria-live="polite"
+    >
       <p class="testimonial-message">Loading testimonials...</p>
     </div>
 
-    <div class="pagination" id="pagination" aria-label="Testimonial pages"></div>
+    <div
+      class="pagination"
+      id="pagination"
+      aria-label="Testimonial pages"
+    ></div>
+
+    <div class="carousel-controls" id="carousel-controls">
+      <button type="button" id="carousel-prev" aria-label="Previous testimonials">←</button>
+      <button type="button" id="carousel-next" aria-label="Next testimonials">→</button>
+    </div>
+
     <p class="page-info" id="page-info"></p>
   </main>
 
@@ -351,15 +476,21 @@
 
     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQw6Uzj26ys6CvMZjGWeVMtzQJCg7k3RisPhPLE5Tcer9LU4SZg6eApVXkPqww2NKiFdCP2XGV9VCIR/pub?output=csv";
 
-    // Maksimal 6 testimoni dalam satu halaman
-    const PER_PAGE = 6;
+    // Desktop menampilkan 9 testimonial per halaman.
+    // HP menampilkan semua testimonial dalam carousel 2 kartu.
+    const DESKTOP_PER_PAGE = 9;
+    const MOBILE_QUERY = window.matchMedia("(max-width: 520px)");
 
     const grid = document.getElementById("testimonials-grid");
     const pagination = document.getElementById("pagination");
     const pageInfo = document.getElementById("page-info");
+    const prevButton = document.getElementById("carousel-prev");
+    const nextButton = document.getElementById("carousel-next");
 
     let testimonials = [];
     let currentPage = 1;
+    let mobileMode = MOBILE_QUERY.matches;
+    let resizeTimer;
 
     function parseCSV(text) {
       const rows = [];
@@ -444,9 +575,7 @@
           let id = url.searchParams.get("id");
           const match = url.pathname.match(/\/file\/d\/([^/]+)/);
 
-          if (!id && match) {
-            id = match[1];
-          }
+          if (!id && match) id = match[1];
 
           if (id) {
             return "https://drive.google.com/uc?export=view&id=" +
@@ -535,12 +664,8 @@
 
       const stars = document.createElement("div");
       stars.className = "testimonial-stars";
-      stars.setAttribute(
-        "aria-label",
-        rating + " out of 5 stars"
-      );
-      stars.textContent =
-        "★".repeat(rating) + "☆".repeat(5 - rating);
+      stars.setAttribute("aria-label", rating + " out of 5 stars");
+      stars.textContent = "★".repeat(rating) + "☆".repeat(5 - rating);
 
       info.append(author, stars);
       person.append(avatar, fallback, info);
@@ -557,16 +682,13 @@
 
       const quote = document.createElement("p");
       quote.className = "testimonial-quote";
-      quote.textContent =
-        review || "Thank you for trusting Kyra Picture.";
+      quote.textContent = review || "Thank you for trusting Kyra Picture.";
 
       const authorFooter = document.createElement("div");
       authorFooter.className = "testimonial-author";
 
       const meta = document.createElement("p");
-      meta.textContent = date
-        ? service + " · " + date
-        : service;
+      meta.textContent = date ? service + " · " + date : service;
 
       authorFooter.appendChild(meta);
       card.append(person, number, mark, quote, authorFooter);
@@ -574,28 +696,54 @@
       return card;
     }
 
-    function renderPage() {
+    function addPageButton(label, page, disabled, active) {
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.textContent = label;
+      button.disabled = disabled;
+
+      if (active) {
+        button.className = "active";
+        button.setAttribute("aria-current", "page");
+      }
+
+      button.addEventListener("click", () => {
+        currentPage = page;
+        renderDesktopPage();
+
+        document.querySelector(".testimonials-hero")
+          .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+      });
+
+      pagination.appendChild(button);
+    }
+
+    function renderDesktopPage() {
       const totalPages = Math.max(
         1,
-        Math.ceil(testimonials.length / PER_PAGE)
+        Math.ceil(testimonials.length / DESKTOP_PER_PAGE)
       );
 
       currentPage = Math.min(currentPage, totalPages);
 
-      const start = (currentPage - 1) * PER_PAGE;
+      const start = (currentPage - 1) * DESKTOP_PER_PAGE;
       const pageItems = testimonials.slice(
         start,
-        start + PER_PAGE
+        start + DESKTOP_PER_PAGE
       );
 
+      grid.scrollLeft = 0;
       grid.innerHTML = "";
+      grid.classList.remove("mobile-carousel");
 
       if (!pageItems.length) {
         const message = document.createElement("p");
         message.className = "testimonial-message";
-        message.textContent =
-          "Belum ada testimoni yang dipublikasikan.";
-
+        message.textContent = "Belum ada testimoni yang dipublikasikan.";
         grid.appendChild(message);
       } else {
         pageItems.forEach((item, index) => {
@@ -605,42 +753,11 @@
 
       pagination.innerHTML = "";
 
-      function addButton(label, page, disabled, active) {
-        const button = document.createElement("button");
-
-        button.type = "button";
-        button.textContent = label;
-        button.disabled = disabled;
-
-        if (active) {
-          button.className = "active";
-          button.setAttribute("aria-current", "page");
-        }
-
-        button.addEventListener("click", () => {
-          currentPage = page;
-          renderPage();
-
-          document.querySelector(".testimonials-hero")
-            .scrollIntoView({
-              behavior: "smooth",
-              block: "start"
-            });
-        });
-
-        pagination.appendChild(button);
-      }
-
       if (testimonials.length > 0) {
-        addButton(
-          "←",
-          currentPage - 1,
-          currentPage === 1,
-          false
-        );
+        addPageButton("←", currentPage - 1, currentPage === 1, false);
 
         for (let page = 1; page <= totalPages; page++) {
-          addButton(
+          addPageButton(
             String(page),
             page,
             false,
@@ -648,7 +765,7 @@
           );
         }
 
-        addButton(
+        addPageButton(
           "→",
           currentPage + 1,
           currentPage === totalPages,
@@ -658,17 +775,134 @@
 
       pageInfo.textContent = testimonials.length
         ? "Showing " + (start + 1) + "–" +
-          Math.min(start + PER_PAGE, testimonials.length) +
+          Math.min(start + DESKTOP_PER_PAGE, testimonials.length) +
           " of " + testimonials.length + " testimonials"
         : "";
+
+      pagination.style.display = "";
+      document.getElementById("carousel-controls").style.display = "none";
+    }
+
+    function renderMobileCarousel() {
+      grid.innerHTML = "";
+      grid.classList.add("mobile-carousel");
+
+      if (!testimonials.length) {
+        const message = document.createElement("p");
+        message.className = "testimonial-message";
+        message.textContent = "Belum ada testimoni yang dipublikasikan.";
+        grid.appendChild(message);
+
+        prevButton.disabled = true;
+        nextButton.disabled = true;
+        pageInfo.textContent = "";
+        return;
+      }
+
+      testimonials.forEach((item, index) => {
+        grid.appendChild(makeCard(item, index));
+      });
+
+      pagination.innerHTML = "";
+      pagination.style.display = "none";
+
+      document.getElementById("carousel-controls").style.display = "flex";
+
+      updateCarouselInfo();
+    }
+
+    function getCardStep() {
+      const firstCard = grid.querySelector(".testimonial-card");
+
+      if (!firstCard) return grid.clientWidth;
+
+      const styles = window.getComputedStyle(grid);
+      const gap = parseFloat(styles.columnGap) || 0;
+
+      return firstCard.getBoundingClientRect().width + gap;
+    }
+
+    function updateCarouselInfo() {
+      const cards = grid.querySelectorAll(".testimonial-card");
+      const total = cards.length;
+
+      if (!total) {
+        pageInfo.textContent = "";
+        prevButton.disabled = true;
+        nextButton.disabled = true;
+        return;
+      }
+
+      const step = getCardStep();
+      const firstVisible = Math.min(
+        total,
+        Math.max(1, Math.round(grid.scrollLeft / step) + 1)
+      );
+
+      const visibleCount = window.matchMedia("(max-width: 520px)").matches
+        ? 2
+        : 1;
+
+      const lastVisible = Math.min(total, firstVisible + visibleCount - 1);
+
+      pageInfo.textContent =
+        "Showing " + firstVisible + "–" + lastVisible +
+        " of " + total + " testimonials";
+
+      prevButton.disabled = grid.scrollLeft <= 2;
+
+      nextButton.disabled =
+        grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 2;
+    }
+
+    function scrollCarousel(direction) {
+      grid.scrollBy({
+        left: getCardStep() * 2 * direction,
+        behavior: "smooth"
+      });
+    }
+
+    prevButton.addEventListener("click", () => scrollCarousel(-1));
+    nextButton.addEventListener("click", () => scrollCarousel(1));
+
+    grid.addEventListener("scroll", () => {
+      if (mobileMode) updateCarouselInfo();
+    }, { passive: true });
+
+    function render() {
+      if (mobileMode) {
+        renderMobileCarousel();
+      } else {
+        renderDesktopPage();
+      }
+    }
+
+    function handleViewportChange() {
+      const newMobileMode = MOBILE_QUERY.matches;
+
+      if (newMobileMode !== mobileMode) {
+        mobileMode = newMobileMode;
+        render();
+      } else if (mobileMode) {
+        updateCarouselInfo();
+      }
+    }
+
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleViewportChange, 120);
+    });
+
+    if (MOBILE_QUERY.addEventListener) {
+      MOBILE_QUERY.addEventListener("change", handleViewportChange);
+    } else if (MOBILE_QUERY.addListener) {
+      MOBILE_QUERY.addListener(handleViewportChange);
     }
 
     fetch(CSV_URL, { cache: "no-store" })
       .then(response => {
         if (!response.ok) {
-          throw new Error(
-            "Google Sheets CSV could not be loaded"
-          );
+          throw new Error("Google Sheets CSV could not be loaded");
         }
 
         return response.text();
@@ -677,19 +911,16 @@
         const rows = parseCSV(csv);
 
         testimonials = rows.filter(item =>
-          getField(item, [
-            "status", "status publikasi"
-          ]).trim().toLowerCase() === "published"
+          getField(item, ["status", "status publikasi"])
+            .trim()
+            .toLowerCase() === "published"
         );
 
         currentPage = 1;
-        renderPage();
+        render();
       })
       .catch(error => {
-        console.error(
-          "Testimonials could not be loaded:",
-          error
-        );
+        console.error("Testimonials could not be loaded:", error);
 
         grid.innerHTML = "";
 
@@ -701,6 +932,8 @@
         grid.appendChild(message);
         pagination.innerHTML = "";
         pageInfo.textContent = "";
+        prevButton.disabled = true;
+        nextButton.disabled = true;
       });
   })();
   </script>
