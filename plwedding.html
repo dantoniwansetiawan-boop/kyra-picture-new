@@ -37,7 +37,7 @@
       background: var(--cream);
       color: var(--espresso);
       font-family: 'DM Sans', sans-serif;
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
     a {
@@ -47,7 +47,7 @@
 
     .navbar {
       min-height: 78px;
-      padding: 20px 7%;
+      padding: 18px 7%;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -90,18 +90,18 @@
 
     .page-header {
       text-align: center;
-      padding: 78px 20px 44px;
+      padding: 70px 20px 40px;
       max-width: 800px;
       margin: auto;
     }
 
     .eyebrow {
       color: var(--terracotta);
-      font-size: 11px;
-      letter-spacing: 3px;
+      font-size: 10px;
+      letter-spacing: 2.5px;
       font-weight: 700;
       text-transform: uppercase;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     h1,
@@ -113,29 +113,29 @@
     }
 
     .page-header h1 {
-      font-size: clamp(36px, 5vw, 52px);
-      margin-bottom: 16px;
+      font-size: clamp(34px, 5vw, 52px);
+      margin-bottom: 14px;
     }
 
     .muted {
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .package-section {
       width: min(1100px, 88%);
-      margin: 0 auto 85px;
+      margin: 0 auto 70px;
       scroll-margin-top: 30px;
     }
 
     .section-heading {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 26px;
     }
 
     .section-heading h2 {
-      font-size: clamp(29px, 4vw, 38px);
-      margin-bottom: 12px;
+      font-size: clamp(27px, 4vw, 38px);
+      margin-bottom: 10px;
     }
 
     .section-heading p {
@@ -143,60 +143,63 @@
       margin: auto;
     }
 
+    /* DESKTOP: 2 PACKAGES = 2 COLUMNS */
     .package-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 26px;
+      gap: 24px;
       align-items: stretch;
     }
 
     .package-card {
       display: flex;
       flex-direction: column;
+      min-width: 0;
       background: var(--white);
       border: 1px solid var(--line);
-      padding: 34px;
+      padding: 30px;
     }
 
     .package-label {
       color: var(--terracotta);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .package-card h3 {
-      font-size: 29px;
-      margin-bottom: 10px;
+      font-size: 27px;
+      margin-bottom: 8px;
     }
 
     .package-price {
       color: var(--terracotta);
-      font-size: 23px;
+      font-size: 22px;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 17px;
     }
 
     .package-divider {
       border: none;
       border-top: 1px solid var(--line);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .package-features {
       list-style: none;
-      margin-bottom: 28px;
+      margin-bottom: 22px;
       flex: 1;
     }
 
     .package-features li {
       position: relative;
-      padding: 8px 0 8px 23px;
-      font-size: 13px;
+      padding: 7px 0 7px 20px;
+      font-size: 12px;
       color: var(--brown);
       border-bottom: 1px solid #f0eae3;
+      line-height: 1.55;
     }
 
     .package-features li:last-child {
@@ -207,7 +210,7 @@
       content: "✓";
       position: absolute;
       left: 0;
-      top: 8px;
+      top: 7px;
       color: var(--terracotta);
       font-weight: 700;
     }
@@ -216,12 +219,12 @@
       display: inline-block;
       width: 100%;
       text-align: center;
-      padding: 14px 20px;
+      padding: 12px 10px;
       background: var(--espresso);
       color: var(--white);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       transition: background 0.2s ease;
     }
 
@@ -231,99 +234,240 @@
 
     .section-separator {
       width: min(1100px, 88%);
-      margin: 0 auto 75px;
+      margin: 0 auto 65px;
       border: none;
       border-top: 1px solid var(--line);
     }
 
     .intimate-section {
-      margin-bottom: 90px;
+      margin-bottom: 75px;
     }
 
     .coverage-note {
       display: inline-block;
-      margin-top: 8px;
-      padding: 6px 13px;
+      margin-top: 10px;
+      padding: 5px 11px;
       background: #eee6dc;
       color: var(--brown);
-      font-size: 11px;
-      letter-spacing: 0.5px;
+      font-size: 10px;
+      letter-spacing: 0.4px;
     }
 
     .contact-section {
       text-align: center;
-      padding: 58px 20px 75px;
+      padding: 55px 20px 65px;
       background: #eee6dc;
     }
 
     .contact-section h2 {
-      font-size: clamp(27px, 4vw, 35px);
+      font-size: clamp(26px, 4vw, 35px);
       margin-bottom: 12px;
     }
 
     .contact-section p {
       max-width: 570px;
-      margin: 0 auto 23px;
+      margin: 0 auto 22px;
     }
 
     .contact-section .button {
       width: auto;
       min-width: 180px;
+      padding: 13px 20px;
     }
 
     footer {
       border-top: 1px solid var(--line);
       text-align: center;
-      padding: 25px 20px;
+      padding: 22px 15px;
       color: var(--muted);
       font-size: 11px;
     }
 
+    /* TABLET: KEEP TWO PACKAGE COLUMNS */
     @media (max-width: 900px) {
       .navbar {
         flex-direction: column;
-        gap: 18px;
+        gap: 16px;
+        padding: 18px 5%;
       }
 
       .nav-links {
         justify-content: center;
-        gap: 14px 20px;
-      }
-
-      .package-card {
-        padding: 27px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .page-header {
-        padding-top: 58px;
+        gap: 12px 17px;
       }
 
       .package-section,
       .section-separator {
-        width: 90%;
+        width: 92%;
       }
 
       .package-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
       }
 
       .package-card {
-        padding: 25px;
+        padding: 22px 18px;
+      }
+    }
+
+    /* MOBILE: STILL TWO COLUMNS */
+    @media (max-width: 600px) {
+      .navbar {
+        padding: 16px 4%;
+        gap: 14px;
       }
 
-      .package-card h3 {
-        font-size: 27px;
+      .logo {
+        font-size: 19px;
       }
 
-      .package-price {
-        font-size: 22px;
+      .nav-links {
+        gap: 9px 13px;
+      }
+
+      .nav-links a {
+        font-size: 9px;
+        letter-spacing: 0.6px;
+      }
+
+      .page-header {
+        padding: 42px 16px 30px;
+      }
+
+      .page-header h1 {
+        font-size: 34px;
+      }
+
+      .page-header .muted {
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      .package-section,
+      .section-separator {
+        width: 94%;
+      }
+
+      .package-section {
+        margin-bottom: 48px;
       }
 
       .section-heading {
-        margin-bottom: 25px;
+        margin-bottom: 20px;
+      }
+
+      .section-heading h2 {
+        font-size: 26px;
+      }
+
+      .section-heading p {
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      .package-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .package-card {
+        padding: 15px 11px;
+      }
+
+      .package-label {
+        font-size: 8px;
+        letter-spacing: 0.7px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+      }
+
+      .package-card h3 {
+        font-size: 22px;
+      }
+
+      .package-price {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-bottom: 12px;
+        overflow-wrap: anywhere;
+      }
+
+      .package-divider {
+        margin-bottom: 10px;
+      }
+
+      .package-features {
+        margin-bottom: 15px;
+      }
+
+      .package-features li {
+        font-size: 10px;
+        line-height: 1.5;
+        padding: 6px 0 6px 14px;
+        overflow-wrap: anywhere;
+      }
+
+      .package-features li::before {
+        top: 6px;
+        font-size: 10px;
+      }
+
+      .button {
+        font-size: 8px;
+        letter-spacing: 0.4px;
+        padding: 11px 4px;
+        overflow-wrap: anywhere;
+      }
+
+      .coverage-note {
+        font-size: 9px;
+        padding: 5px 8px;
+      }
+
+      .section-separator {
+        margin-bottom: 45px;
+      }
+
+      .contact-section {
+        padding: 42px 18px 48px;
+      }
+
+      .contact-section p {
+        font-size: 12px;
+        line-height: 1.7;
+      }
+    }
+
+    /* VERY NARROW PHONES: KEEP TWO COLUMNS, COMPACT CONTENT */
+    @media (max-width: 360px) {
+      .package-grid {
+        gap: 7px;
+      }
+
+      .package-card {
+        padding: 12px 8px;
+      }
+
+      .package-card h3 {
+        font-size: 19px;
+      }
+
+      .package-price {
+        font-size: 14px;
+      }
+
+      .package-features li {
+        font-size: 9px;
+        padding-left: 12px;
+      }
+
+      .button {
+        font-size: 7px;
+      }
+
+      .nav-links {
+        gap: 8px 10px;
       }
     }
   </style>
@@ -355,8 +499,9 @@
     </p>
   </header>
 
-  <!-- SECTION 01: REGULAR WEDDING -->
   <main>
+
+    <!-- SECTION 01: REGULAR WEDDING -->
     <section class="package-section" id="wedding">
 
       <div class="section-heading">
@@ -370,7 +515,6 @@
 
       <div class="package-grid">
 
-        <!-- SIGNATURE -->
         <article class="package-card">
           <p class="package-label">Wedding Collection</p>
           <h3>Signature</h3>
@@ -397,7 +541,6 @@
           </a>
         </article>
 
-        <!-- LUXURY -->
         <article class="package-card">
           <p class="package-label">Premium Wedding Collection</p>
           <h3>Luxury</h3>
@@ -447,7 +590,6 @@
 
       <div class="package-grid">
 
-        <!-- SIMPLE -->
         <article class="package-card">
           <p class="package-label">Intimate Wedding Collection</p>
           <h3>Simple</h3>
@@ -472,7 +614,6 @@
           </a>
         </article>
 
-        <!-- PRIME -->
         <article class="package-card">
           <p class="package-label">Intimate Wedding Collection</p>
           <h3>Prime</h3>
@@ -501,6 +642,7 @@
 
       </div>
     </section>
+
   </main>
 
   <!-- CONTACT CTA -->
