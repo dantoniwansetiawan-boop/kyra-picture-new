@@ -53,6 +53,153 @@
       text-align: center;
     }
 
+    /* CLIENT INFORMATION SECTION */
+    .client-info {
+      width: min(1000px, calc(100% - 40px));
+      margin: 70px auto 0;
+    }
+
+    .client-info-header {
+      max-width: 650px;
+      margin: 0 auto 30px;
+      text-align: center;
+    }
+
+    .client-info-header h2 {
+      margin: 10px 0 12px;
+    }
+
+    .client-info-header p:not(.eyebrow) {
+      line-height: 1.8;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .info-card {
+      min-width: 0;
+      padding: 28px;
+      border: 1px solid rgba(95, 70, 52, 0.15);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.45);
+      box-sizing: border-box;
+    }
+
+    .info-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .info-icon {
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: #eee5da;
+      color: #79563e;
+    }
+
+    .info-icon svg {
+      width: 23px;
+      height: 23px;
+      stroke: currentColor;
+    }
+
+    .info-card-header h3 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.4;
+    }
+
+    .info-card-header p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      line-height: 1.6;
+      opacity: 0.75;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      padding: 18px 0;
+      border-top: 1px solid rgba(95, 70, 52, 0.12);
+    }
+
+    .info-item:first-of-type {
+      border-top: none;
+    }
+
+    .info-item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .info-item-content h4 {
+      margin: 0 0 5px;
+      font-size: 15px;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .info-item-content p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.75;
+      opacity: 0.78;
+    }
+
+    .info-value {
+      flex: 0 0 auto;
+      padding-top: 1px;
+      color: #79563e;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 22px;
+      font-weight: 600;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .info-value small {
+      display: block;
+      margin-top: 2px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 400;
+      text-align: right;
+      opacity: 0.8;
+    }
+
+    .info-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 14px 15px;
+      border-radius: 10px;
+      background: rgba(121, 86, 62, 0.07);
+      font-size: 12px;
+      line-height: 1.75;
+      opacity: 0.85;
+    }
+
+    .info-note svg {
+      width: 17px;
+      height: 17px;
+      flex: 0 0 17px;
+      margin-top: 2px;
+      stroke: currentColor;
+    }
+
     /* TABLET */
     @media (max-width: 800px) {
       main.price-grid {
@@ -63,9 +210,25 @@
       main.price-grid .price-card {
         padding: 22px;
       }
+
+      .client-info {
+        width: calc(100% - 32px);
+      }
+
+      .info-grid {
+        gap: 16px;
+      }
+
+      .info-card {
+        padding: 22px;
+      }
+
+      .info-value {
+        font-size: 20px;
+      }
     }
 
-    /* MOBILE - KEEP 2 COLUMNS */
+    /* MOBILE - KEEP PRICELIST 2 COLUMNS */
     @media (max-width: 560px) {
       main.price-grid {
         width: calc(100% - 20px);
@@ -125,6 +288,87 @@
         padding-left: 18px;
         padding-right: 18px;
       }
+
+      /* CLIENT INFORMATION - MOBILE */
+      .client-info {
+        width: calc(100% - 24px);
+        margin-top: 48px;
+      }
+
+      .client-info-header {
+        margin-bottom: 22px;
+      }
+
+      .client-info-header h2 {
+        font-size: 27px;
+        line-height: 1.35;
+      }
+
+      .client-info-header p:not(.eyebrow) {
+        font-size: 13px;
+        line-height: 1.75;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .info-card {
+        padding: 21px 18px;
+        border-radius: 14px;
+      }
+
+      .info-card-header {
+        gap: 11px;
+        margin-bottom: 17px;
+      }
+
+      .info-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+      }
+
+      .info-icon svg {
+        width: 21px;
+        height: 21px;
+      }
+
+      .info-card-header h3 {
+        font-size: 19px;
+      }
+
+      .info-card-header p {
+        font-size: 12px;
+      }
+
+      .info-item {
+        gap: 10px;
+        padding: 16px 0;
+      }
+
+      .info-item-content h4 {
+        font-size: 14px;
+      }
+
+      .info-item-content p {
+        font-size: 12px;
+      }
+
+      .info-value {
+        font-size: 21px;
+      }
+
+      .info-value small {
+        font-size: 10px;
+      }
+
+      .info-note {
+        margin-top: 15px;
+        padding: 12px;
+        font-size: 11px;
+      }
     }
 
     /* VERY SMALL PHONES */
@@ -153,6 +397,18 @@
 
       main.price-grid .price-card .button {
         font-size: 7px;
+      }
+
+      .client-info {
+        width: calc(100% - 20px);
+      }
+
+      .info-card {
+        padding: 17px 13px;
+      }
+
+      .info-value {
+        font-size: 19px;
       }
     }
   </style>
@@ -235,7 +491,7 @@
       </a>
     </article>
 
-    <!-- 03 WEDDING BUNDLING - NEW CARD -->
+    <!-- 03 WEDDING BUNDLING -->
     <article class="price-card">
       <p class="eyebrow">03 / EXCLUSIVE OFFER</p>
 
@@ -352,7 +608,229 @@
 
   </main>
 
-  <!-- CONTACT CTA -->
+  <!-- PAYMENT & PRODUCTION INFORMATION -->
+  <section class="client-info">
+
+    <header class="client-info-header">
+      <p class="eyebrow">GOOD TO KNOW</p>
+
+      <h2>Booking &amp; Production</h2>
+
+      <p class="muted">
+        A little information about securing your date and the estimated
+        timeline for your final deliverables.
+      </p>
+    </header>
+
+    <div class="info-grid">
+
+      <!-- PAYMENT & BOOKING -->
+      <article class="info-card">
+
+        <div class="info-card-header">
+          <div class="info-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="5" width="18" height="16" rx="2"/>
+              <path d="M16 3v4M8 3v4M3 10h18"/>
+              <path d="m9 15 2 2 4-4"/>
+            </svg>
+          </div>
+
+          <div>
+            <h3>Payment &amp; Booking</h3>
+            <p>Secure your date with a simple booking process.</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <path d="M3 10h18M7 15h3"/>
+            </svg>
+          </div>
+
+          <div class="info-item-content">
+            <h4>Down Payment (DP)</h4>
+            <p>
+              A 30% down payment is required to confirm your booking
+              and secure your event date.
+            </p>
+          </div>
+
+          <div class="info-value">30%</div>
+        </div>
+
+        <div class="info-note">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 11v5M12 7h.01"/>
+          </svg>
+
+          <span>
+            Your booking is confirmed once the down payment has been received.
+            Details of the remaining payment will be communicated during booking.
+          </span>
+        </div>
+
+      </article>
+
+      <!-- PRODUCTION TIMELINE -->
+      <article class="info-card">
+
+        <div class="info-card-header">
+          <div class="info-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v5l3 2"/>
+            </svg>
+          </div>
+
+          <div>
+            <h3>Production Timeline</h3>
+            <p>Estimated completion for your deliverables.</p>
+          </div>
+        </div>
+
+        <!-- PHOTO EDITING -->
+        <div class="info-item">
+          <div class="info-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <path d="m21 15-5-5L5 21"/>
+            </svg>
+          </div>
+
+          <div class="info-item-content">
+            <h4>Photo Editing</h4>
+            <p>Carefully edited photos, ready to relive your memories.</p>
+          </div>
+
+          <div class="info-value">
+            7
+            <small>days</small>
+          </div>
+        </div>
+
+        <!-- VIDEO EDITING -->
+        <div class="info-item">
+          <div class="info-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="5" width="13" height="14" rx="2"/>
+              <path d="m16 10 5-3v10l-5-3z"/>
+            </svg>
+          </div>
+
+          <div class="info-item-content">
+            <h4>Video Editing</h4>
+            <p>For your cinematic highlights and video deliverables.</p>
+          </div>
+
+          <div class="info-value">
+            21
+            <small>days</small>
+          </div>
+        </div>
+
+        <!-- PRINT & ALBUM -->
+        <div class="info-item">
+          <div class="info-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 9V3h12v6"/>
+              <rect x="6" y="14" width="12" height="7" rx="1"/>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+              <path d="M17 12h.01"/>
+            </svg>
+          </div>
+
+          <div class="info-item-content">
+            <h4>Print &amp; Album Production</h4>
+            <p>For packages that include printed photos or albums.</p>
+          </div>
+
+          <div class="info-value">
+            30
+            <small>days</small>
+          </div>
+        </div>
+
+        <div class="info-note">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 11v5M12 7h.01"/>
+          </svg>
+
+          <span>
+            All timelines are estimates and may vary if unexpected
+            circumstances arise during production.
+          </span>
+        </div>
+
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CONTACT CTA - ORIGINAL BUTTON RETAINED -->
   <section class="home-contact">
     <p class="eyebrow">LET'S TALK</p>
 
