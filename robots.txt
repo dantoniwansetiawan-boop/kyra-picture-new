@@ -1,0 +1,5 @@
+
+User-agent: *
+Allow: /
+
+Sitemap: https://kyra-picture-new.pages.dev/sitemap.xml
