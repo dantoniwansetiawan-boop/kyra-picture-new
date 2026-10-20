@@ -8,41 +8,103 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-:root{--bg:#f5f1eb;--paper:#fffdf9;--ink:#30291f;--muted:#887e72;--line:#e8ded2;--brown:#75583e;--dark:#493627;--green:#367455;--red:#a5483d}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px Arial,sans-serif}
-h1,h2,h3,p{margin-top:0}h1{font-size:24px}h2{font-size:18px}h3{font-size:15px}
-button,input,select,textarea{font:inherit}button{background:var(--brown);color:white;border:0;border-radius:8px;padding:10px 13px;cursor:pointer;font-weight:600}
-button.secondary{background:white;color:var(--dark);border:1px solid var(--line)}button.danger{background:#f8e8e5;color:var(--red)}button.small{padding:6px 9px;font-size:12px}
-input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);outline:none}textarea{resize:vertical;min-height:65px}
-label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}.muted{color:var(--muted)}.smalltext{font-size:12px}.hidden{display:none!important}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.between{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.grid{display:grid;gap:12px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:17px;margin-bottom:13px}.stat{font-size:24px;font-weight:700;margin:8px 0}.statlabel{font-size:12px;color:var(--muted)}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:215px;background:var(--dark);color:white;padding:22px 14px;overflow:auto}.brand{font-size:19px;font-weight:700;letter-spacing:1px}.subbrand{font-size:10px;color:#d5c5b5;margin:6px 0 24px}
-.nav{display:block;width:100%;text-align:left;background:transparent;color:#eee2d6;margin:3px 0}.nav.active,.nav:hover{background:#73583f}
-main{margin-left:215px;padding:24px;max-width:1700px}.panel{display:none}.panel.active{display:block}
-.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.full{grid-column:1/-1}
-table{width:100%;border-collapse:collapse;min-width:640px}th,td{padding:11px 9px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}th{font-size:11px;color:var(--muted);text-transform:uppercase}td{font-size:13px}.tablewrap{overflow:auto}
-.badge{display:inline-block;border-radius:20px;padding:5px 9px;font-size:11px;font-weight:700;background:#f5ecd9;color:#89672a}.badge.green{background:#e1f0e5;color:#276743}.badge.red{background:#f8e8e5;color:#a5483d}
-.actions{display:flex;gap:5px;flex-wrap:wrap}.line{display:flex;justify-content:space-between;gap:12px;padding:7px 0}.total{font-size:17px;font-weight:700;border-top:1px solid var(--line);padding-top:12px;margin-top:8px}
-.itemrow{display:grid;grid-template-columns:minmax(150px,2fr) 65px minmax(120px,1fr) auto;gap:8px;align-items:start;margin:10px 0;padding:12px;background:#faf6f0;border-radius:9px}
-.itemrow .subtotal{font-size:11px;color:var(--muted);padding-top:6px}
+:root{
+ --bg:#f5f1eb;--paper:#fffdf9;--ink:#30291f;--muted:#887e72;
+ --line:#e8ded2;--brown:#75583e;--dark:#493627;
+ --green:#367455;--red:#a5483d;--gold:#c6a16b
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px Inter,Arial,sans-serif}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:24px;letter-spacing:-.5px}
+h2{font-size:18px;letter-spacing:-.3px}
+h3{font-size:14px}
+button,input,select,textarea{font:inherit}
+button{background:var(--brown);color:white;border:0;border-radius:9px;padding:10px 13px;cursor:pointer;font-weight:600;transition:.2s}
+button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+button:disabled{opacity:.55;cursor:wait;transform:none}
+button.secondary{background:white;color:var(--dark);border:1px solid var(--line)}
+button.danger{background:#f8e8e5;color:var(--red)}
+button.small{padding:6px 9px;font-size:12px}
+input,select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--ink);outline:none;min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px #c6a16b20}
+textarea{resize:vertical;min-height:55px}
+label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.muted{color:var(--muted)}.smalltext{font-size:12px}.hidden{display:none!important}
+.row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.between{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.grid{display:grid;gap:10px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:12px;box-shadow:0 3px 12px #49362705}
+.stat{font-size:23px;font-weight:750;margin:7px 0 0;letter-spacing:-.7px;overflow-wrap:anywhere}
+.statlabel{font-size:11px;color:var(--muted);font-weight:600}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:215px;background:var(--dark);color:white;padding:23px 14px;overflow:auto}
+.brand{font-size:19px;font-weight:800;letter-spacing:1px}
+.subbrand{font-size:10px;color:#d5c5b5;margin:6px 0 25px;letter-spacing:1.5px}
+.nav{display:block;width:100%;text-align:left;background:transparent;color:#eee2d6;margin:4px 0;padding:11px 12px;border-radius:9px}
+.nav.active,.nav:hover{background:#73583f}
+main{margin-left:215px;padding:23px;max-width:1700px}
+.panel{display:none}.panel.active{display:block}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;min-width:590px}
+th,td{padding:10px 9px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+td{font-size:12px}.tablewrap{overflow:auto}
+.badge{display:inline-block;border-radius:20px;padding:5px 9px;font-size:10px;font-weight:700;background:#f5ecd9;color:#89672a;white-space:nowrap}
+.badge.green{background:#e1f0e5;color:#276743}
+.badge.red{background:#f8e8e5;color:#a5483d}
+.badge.blue{background:#e8eef8;color:#425c89}
+.actions{display:flex;gap:5px;flex-wrap:wrap}
+.line{display:flex;justify-content:space-between;gap:12px;padding:7px 0}
+.total{font-size:16px;font-weight:750;border-top:1px solid var(--line);padding-top:11px;margin-top:7px}
+.itemrow{display:grid;grid-template-columns:minmax(150px,2fr) 60px minmax(110px,1fr) auto;gap:8px;align-items:start;margin:8px 0;padding:10px;background:#faf6f0;border:1px solid #f0e6da;border-radius:10px}
+.itemrow .subtotal{font-size:11px;color:var(--muted);padding-top:5px}
 .modalbg{position:fixed;inset:0;background:#20170f88;z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:15px;overflow:auto}
-.modal{width:min(900px,100%);background:var(--paper);border-radius:13px;padding:20px;margin:auto}.wide{width:min(1100px,100%)}
-.modalhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
-.notice{background:#f4ebdf;padding:12px;border-radius:8px;font-size:12px;line-height:1.6}
-.empty{padding:25px;text-align:center;color:var(--muted)}.hr{border:0;border-top:1px solid var(--line);margin:18px 0}
-.loginwrap{min-height:100vh;display:grid;place-items:center;padding:20px}.login{width:min(390px,100%);padding:28px;background:var(--paper);border:1px solid var(--line);border-radius:14px}
-.toast{position:fixed;bottom:18px;right:18px;z-index:300;background:var(--dark);color:white;padding:13px 17px;border-radius:9px;max-width:90vw}.toast.error{background:#963f35}
-.mobile{display:none}
-.invoice-paper{background:white;color:#171717;padding:32px;font-family:Arial,sans-serif;max-width:800px;margin:auto}.invhead{display:flex;justify-content:space-between;gap:20px;border-bottom:2px solid #222;padding-bottom:18px}.invmuted{font-size:12px;color:#666}.invsection{margin-top:23px}.invoice-paper table{min-width:0}.invoice-paper th,.invoice-paper td{border-bottom:1px solid #ddd;color:#222}.invtotal{width:min(320px,100%);margin-left:auto}.invfoot{border-top:1px solid #ddd;margin-top:25px;padding-top:14px;font-size:12px}
-@media(max-width:950px){.sidebar{width:180px}main{margin-left:180px;padding:16px}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:650px){.sidebar{display:none}main{margin:0;padding:13px 11px 80px}.g2,.g3,.g4,.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.itemrow{grid-template-columns:minmax(0,1fr) 65px}.itemrow .pricefield{grid-column:1}.itemrow .removefield{grid-column:2;grid-row:2}.card{padding:13px}.mobile{display:flex;position:fixed;bottom:0;left:0;right:0;overflow:auto;background:var(--dark);padding:6px;z-index:50;gap:4px}.mobile button{white-space:nowrap;padding:9px;font-size:11px}.invoice-paper{padding:15px}.invhead{flex-direction:column}.modal{padding:14px}}
+.modal{width:min(850px,100%);background:var(--paper);border-radius:15px;padding:19px;margin:auto}
+.wide{width:min(1050px,100%)}
+.modalhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.notice{background:#f4ebdf;padding:11px 12px;border-radius:10px;font-size:12px;line-height:1.6}
+.empty{padding:24px;text-align:center;color:var(--muted);font-size:13px}
+.hr{border:0;border-top:1px solid var(--line);margin:14px 0}
+.loginwrap{min-height:100vh;display:grid;place-items:center;padding:20px}
+.login{width:min(390px,100%);padding:28px;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 35px #49362710}
+.toast{position:fixed;bottom:18px;right:18px;z-index:300;background:var(--dark);color:white;padding:13px 17px;border-radius:10px;max-width:90vw}
+.toast.error{background:#963f35}.mobile{display:none}
+.cost-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:12px;align-items:start}
+.cost-side{position:sticky;top:15px}
+.section-label{font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--brown);text-transform:uppercase;margin-bottom:8px}
+.subcard{background:#fcf9f4;border:1px solid var(--line);border-radius:11px;padding:11px;margin:7px 0}
+.costrow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(100px,.7fr) 35px;gap:8px;align-items:end}
+.costrow .remove{padding:8px;font-size:12px}
+.costcrew{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(100px,.7fr) minmax(0,1fr) 35px;gap:8px;align-items:end}
+.costcrew .remove{padding:8px;font-size:12px}
+.invoice-paper{background:white;color:#171717;padding:30px;font-family:Arial,sans-serif;max-width:800px;margin:auto}
+.invhead{display:flex;justify-content:space-between;gap:20px;border-bottom:2px solid #222;padding-bottom:17px}
+.invmuted{font-size:12px;color:#666}.invsection{margin-top:22px}
+.invoice-paper table{min-width:0}.invoice-paper th,.invoice-paper td{border-bottom:1px solid #ddd;color:#222}
+.invtotal{width:min(320px,100%);margin-left:auto}
+.invfoot{border-top:1px solid #ddd;margin-top:24px;padding-top:14px;font-size:12px}
+@media(max-width:1050px){.cost-layout{grid-template-columns:1fr}.cost-side{position:static}.sidebar{width:185px}main{margin-left:185px;padding:16px}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+ .sidebar{display:none}main{margin:0;padding:13px 11px 75px}
+ .g2,.g3,.g4,.formgrid{grid-template-columns:1fr}.full{grid-column:auto}
+ .itemrow{grid-template-columns:minmax(0,1fr) 60px}
+ .itemrow .pricefield{grid-column:1}.itemrow .removefield{grid-column:2;grid-row:2}
+ .costrow{grid-template-columns:minmax(0,1fr) 100px 32px}
+ .costcrew{grid-template-columns:minmax(0,1fr) 100px 32px}
+ .costcrew .notesfield{grid-column:1/3}.card{padding:12px}
+ .mobile{display:flex;position:fixed;bottom:0;left:0;right:0;overflow:auto;background:var(--dark);padding:6px;z-index:50;gap:4px}
+ .mobile button{white-space:nowrap;padding:9px;font-size:11px}
+ .invoice-paper{padding:14px}.invhead{flex-direction:column}.modal{padding:13px}
+}
 </style>
 </head>
 <body>
 <div id="loginView" class="loginwrap">
  <form id="loginForm" class="login">
+  <div class="section-label">Photography management</div>
   <h1>KYRA PICTURE</h1><p class="muted">Admin Dashboard</p><hr class="hr">
   <label>Email login admin</label><input id="loginEmail" type="email" required autocomplete="username" style="margin-bottom:12px">
   <label>Password</label><input id="loginPassword" type="password" required autocomplete="current-password" style="margin-bottom:16px">
@@ -52,83 +114,90 @@ table{width:100%;border-collapse:collapse;min-width:640px}th,td{padding:11px 9px
 
 <div id="app" class="hidden">
  <aside class="sidebar">
-  <div class="brand">KYRA PICTURE</div><div class="subbrand">ADMINISTRATION</div>
-  <button class="nav active" data-page="dashboard">Dashboard</button>
-  <button class="nav" data-page="bookings">Klien & Transaksi</button>
-  <button class="nav" data-page="invoices">Invoice</button>
-  <button class="nav" data-page="payments">Pembayaran</button>
-  <button class="nav" data-page="costs">Crew & Pengeluaran</button>
-  <button class="nav" data-page="finance">Keuangan</button><hr class="hr">
-  <button class="nav" id="logout">Logout</button>
+  <div class="brand">KYRA PICTURE</div><div class="subbrand">STUDIO MANAGEMENT</div>
+  <button class="nav active" data-page="dashboard">◈ &nbsp; Dashboard</button>
+  <button class="nav" data-page="bookings">▤ &nbsp; Klien & Transaksi</button>
+  <button class="nav" data-page="invoices">▧ &nbsp; Invoice</button>
+  <button class="nav" data-page="costs">✳ &nbsp; Crew & Pengeluaran</button>
+  <button class="nav" data-page="finance">↗ &nbsp; Keuangan</button><hr class="hr">
+  <button class="nav" id="logout">Keluar akun</button>
  </aside>
  <main>
-  <header class="between" style="margin-bottom:20px">
+  <header class="between" style="margin-bottom:16px">
    <div><div class="smalltext muted">KYRA PICTURE / ADMIN</div><h1 id="pageTitle" style="margin:5px 0">Dashboard</h1></div>
-   <button onclick="openBooking()">+ Transaksi Baru</button>
+   <button onclick="openBooking()">＋ Transaksi Baru</button>
   </header>
 
   <section id="page-dashboard" class="panel active">
    <div class="grid g4">
     <div class="card"><div class="statlabel">Total Booking</div><div class="stat" id="sBookings">0</div></div>
-    <div class="card"><div class="statlabel">Pending</div><div class="stat" id="sPending">0</div></div>
-    <div class="card"><div class="statlabel">Pembayaran Masuk</div><div class="stat" id="sRevenue">Rp0</div></div>
-    <div class="card"><div class="statlabel">Sisa Tagihan</div><div class="stat" id="sOutstanding">Rp0</div></div>
+    <div class="card"><div class="statlabel">Perlu Konfirmasi</div><div class="stat" id="sPending">0</div></div>
+    <div class="card"><div class="statlabel">Nilai Transaksi</div><div class="stat" id="sRevenue">Rp0</div></div>
+    <div class="card"><div class="statlabel">Total Pengeluaran</div><div class="stat" id="sExpenses">Rp0</div></div>
    </div>
-   <div class="card"><div class="between"><h2>Transaksi Terbaru</h2><button class="secondary" onclick="go('bookings')">Lihat Semua</button></div><div id="recentBookings" class="tablewrap"></div></div>
-   <div class="grid g2"><div class="card"><h2>Ringkasan Keuangan</h2><div id="dashFinance"></div></div><div class="card"><h2>Pembayaran Terbaru</h2><div id="dashPayments"></div></div></div>
+   <div class="card"><div class="between"><div><h2>Transaksi Terbaru</h2><p class="smalltext muted">Ringkasan booking klien.</p></div><button class="secondary" onclick="go('bookings')">Lihat semua →</button></div><div id="recentBookings" class="tablewrap"></div></div>
+   <div class="grid g2"><div class="card"><h2>Ringkasan Operasional</h2><div id="dashFinance"></div></div><div class="card"><h2>Pengeluaran Terbaru</h2><div id="dashExpenses"></div></div></div>
   </section>
 
   <section id="page-bookings" class="panel">
-   <div class="card"><div class="between"><div><h2>Klien & Transaksi</h2><p class="smalltext muted">Kelola data klien dan invoice.</p></div><button onclick="openBooking()">+ Transaksi</button></div>
-    <div class="grid g2" style="margin:14px 0"><input id="bookingSearch" placeholder="Cari klien / invoice..." oninput="renderBookings()"><select id="bookingFilter" onchange="renderBookings()"><option value="">Semua status</option><option value="pending">Pending</option><option value="completed">Lunas</option><option value="cancelled">Cancelled</option></select></div>
+   <div class="card"><div class="between"><div><h2>Klien & Transaksi</h2><p class="smalltext muted">Kelola data klien, paket, dan status booking.</p></div><button onclick="openBooking()">＋ Transaksi</button></div>
+    <div class="grid g2" style="margin:12px 0"><input id="bookingSearch" placeholder="Cari klien / invoice..." oninput="renderBookings()"><select id="bookingFilter" onchange="renderBookings()"><option value="">Semua status</option><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="completed">Selesai</option><option value="cancelled">Cancelled</option></select></div>
     <div id="bookingsTable" class="tablewrap"></div>
    </div>
   </section>
 
-  <section id="page-invoices" class="panel"><div class="card"><h2>Invoice</h2><input id="invoiceSearch" placeholder="Cari invoice atau klien..." oninput="renderInvoices()" style="margin:10px 0 15px"><div id="invoicesTable" class="tablewrap"></div></div></section>
-
-  <section id="page-payments" class="panel"><div class="card">
-   <div class="between"><div><h2>Pembayaran</h2><p class="smalltext muted">Riwayat, edit, dan hapus pembayaran.</p></div><button onclick="openPayment()">+ Pembayaran</button></div>
-   <div class="grid g3" style="margin:15px 0"><select id="paymentFilterBooking" onchange="renderPayments()"><option value="">Semua invoice</option></select><select id="paymentFilterType" onchange="renderPayments()"><option value="">Semua jenis</option><option value="dp">DP</option><option value="installment">Cicilan</option><option value="final">Pelunasan</option></select><input id="paymentSearch" placeholder="Cari klien..." oninput="renderPayments()"></div>
-   <div id="paymentsTable" class="tablewrap"></div>
-  </div></section>
+  <section id="page-invoices" class="panel"><div class="card"><h2>Invoice</h2><p class="smalltext muted">Preview, unduh, dan cetak invoice.</p><input id="invoiceSearch" placeholder="Cari invoice atau klien..." oninput="renderInvoices()" style="margin:4px 0 14px"><div id="invoicesTable" class="tablewrap"></div></div></section>
 
   <section id="page-costs" class="panel">
-   <div class="card">
-    <h2>Form Crew & Pengeluaran</h2><p class="smalltext muted">Pilih invoice, isi fee crew dan biaya lain dalam satu form, lalu simpan bersama.</p>
-    <form id="costForm">
-     <div class="grid g2"><div><label>Invoice / Booking</label><select id="costBooking" required onchange="loadCostForm()"><option value="">Pilih invoice</option></select></div><div class="notice" id="costInvoiceInfo">Pilih invoice untuk melihat ringkasan biaya.</div></div>
-     <hr class="hr">
-     <div class="between"><div><h3>Fee Crew / SDM</h3><p class="smalltext muted">Nama crew dan fee untuk event ini.</p></div><button type="button" class="secondary" onclick="addCostCrew()">+ Crew</button></div>
-     <div id="costCrewRows"></div>
-     <hr class="hr">
-     <div class="between"><div><h3>Pengeluaran Lain</h3><p class="smalltext muted">Transport, konsumsi, sewa alat, dan lainnya.</p></div><button type="button" class="secondary" onclick="addCostExpense()">+ Expense</button></div>
-     <div id="costExpenseRows"></div>
-     <hr class="hr">
-     <div class="card" style="background:#f8f3ec">
-      <div class="line"><span>Total fee crew</span><b id="costCrewTotal">Rp0</b></div>
-      <div class="line"><span>Total expense lain</span><b id="costExpenseTotal">Rp0</b></div>
-      <div class="line total"><span>Total seluruh biaya</span><b id="costGrandTotal">Rp0</b></div>
-      <div id="costPreview" class="smalltext muted" style="margin-top:10px"></div>
+   <div class="cost-layout">
+    <div class="card">
+     <div class="between"><div><div class="section-label">Operasional event</div><h2 style="margin-bottom:4px">Crew & Pengeluaran</h2><p class="smalltext muted">Catat semua biaya event dalam satu form.</p></div></div>
+     <form id="costForm">
+      <div class="grid g2">
+       <div><label>Invoice / Booking</label><select id="costBooking" required onchange="loadCostForm()"><option value="">Pilih invoice</option></select></div>
+       <div class="notice" id="costInvoiceInfo">Pilih invoice untuk memulai pencatatan biaya.</div>
+      </div>
+      <hr class="hr">
+      <div class="between"><div><div class="section-label">01 / Tim event</div><h3 style="margin-bottom:3px">Crew & Fee</h3></div><button type="button" class="secondary small" onclick="addCostCrew()">＋ Crew</button></div>
+      <div id="costCrewRows"></div>
+      <hr class="hr">
+      <div class="between"><div><div class="section-label">02 / Biaya operasional</div><h3 style="margin-bottom:3px">Daftar Pengeluaran</h3><p class="smalltext muted">Semua biaya tercatat dalam satu kategori: Pengeluaran.</p></div><button type="button" class="secondary small" onclick="addCostExpense()">＋ Biaya</button></div>
+      <div id="costExpenseRows"></div>
+      <div class="row" style="justify-content:flex-end;margin-top:12px"><button type="button" class="secondary" onclick="loadCostForm()">Reset</button><button type="submit">Simpan Semua Biaya</button></div>
+     </form>
+    </div>
+    <div class="cost-side">
+     <div class="card" style="background:var(--dark);color:#fff;border-color:var(--dark)">
+      <div class="section-label" style="color:#d7bd94">Ringkasan biaya</div>
+      <div class="statlabel" style="color:#dfd0c0">Fee crew</div><div class="stat" id="costCrewTotal">Rp0</div>
+      <div class="line" style="border-bottom:1px solid #ffffff22;margin-top:10px"><span style="color:#dfd0c0">Pengeluaran lain</span><b id="costExpenseTotal">Rp0</b></div>
+      <div class="line total"><span>Total biaya</span><b id="costGrandTotal">Rp0</b></div>
+      <div id="costPreview" class="smalltext" style="color:#dfd0c0;margin-top:8px;line-height:1.6">Pilih invoice untuk melihat ringkasan.</div>
      </div>
-     <div class="row" style="justify-content:flex-end"><button type="button" class="secondary" onclick="loadCostForm()">Reset Form</button><button type="submit">Simpan Crew & Pengeluaran</button></div>
-    </form>
+     <div class="card"><div class="section-label">Tips</div><p class="smalltext muted" style="line-height:1.7;margin:0">Masukkan fee setiap crew pada bagian atas. Biaya transport, konsumsi, akomodasi, sewa alat, dan lainnya dicatat pada daftar pengeluaran di bawahnya.</p></div>
+    </div>
    </div>
-   <div class="card"><h2>Ringkasan Biaya per Invoice</h2><div id="costSummary" class="tablewrap"></div></div>
-   <div class="card"><h2>Riwayat Pengeluaran</h2><p class="smalltext muted">Edit atau hapus expense yang sudah tersimpan.</p><div class="grid g2" style="margin:12px 0"><select id="expenseFilterBooking" onchange="renderExpenses()"><option value="">Semua invoice</option></select><input id="expenseSearch" placeholder="Cari expense..." oninput="renderExpenses()"></div><div id="expensesTable" class="tablewrap"></div></div>
+   <div class="card"><div class="between"><div><h2>Biaya per Invoice</h2><p class="smalltext muted">Ringkasan biaya operasional tiap event.</p></div></div><div id="costSummary" class="tablewrap"></div></div>
+   <div class="card"><div class="between"><div><h2>Riwayat Pengeluaran</h2><p class="smalltext muted">Semua biaya menggunakan satu kategori laporan.</p></div></div><div class="grid g2" style="margin:10px 0"><select id="expenseFilterBooking" onchange="renderExpenses()"><option value="">Semua invoice</option></select><input id="expenseSearch" placeholder="Cari keterangan / klien..." oninput="renderExpenses()"></div><div id="expensesTable" class="tablewrap"></div></div>
   </section>
 
   <section id="page-finance" class="panel"><div class="card">
-   <div class="between"><div><h2>Laporan Keuangan</h2><p class="smalltext muted">Pembayaran masuk dikurangi biaya crew dan expense.</p></div><button onclick="exportCSV()">Export CSV</button></div>
-   <div class="grid g2" style="margin:14px 0"><div><label>Dari tanggal</label><input id="dateStart" type="date" onchange="renderFinance()"></div><div><label>Sampai tanggal</label><input id="dateEnd" type="date" onchange="renderFinance()"></div></div>
-   <div class="grid g4"><div class="card"><div class="statlabel">Pendapatan Masuk</div><div class="stat" id="fRevenue">Rp0</div></div><div class="card"><div class="statlabel">Fee Crew</div><div class="stat" id="fCrew">Rp0</div></div><div class="card"><div class="statlabel">Expense</div><div class="stat" id="fExpense">Rp0</div></div><div class="card"><div class="statlabel">Estimasi Laba</div><div class="stat" id="fProfit">Rp0</div></div></div>
+   <div class="between"><div><h2>Laporan Keuangan</h2><p class="smalltext muted">Nilai transaksi dikurangi total biaya operasional.</p></div><button onclick="exportCSV()">Export CSV</button></div>
+   <div class="grid g2" style="margin:12px 0"><div><label>Dari tanggal event</label><input id="dateStart" type="date" onchange="renderFinance()"></div><div><label>Sampai tanggal event</label><input id="dateEnd" type="date" onchange="renderFinance()"></div></div>
+   <div class="grid g4">
+    <div class="card"><div class="statlabel">Nilai Transaksi</div><div class="stat" id="fRevenue">Rp0</div></div>
+    <div class="card"><div class="statlabel">Fee Crew</div><div class="stat" id="fCrew">Rp0</div></div>
+    <div class="card"><div class="statlabel">Pengeluaran</div><div class="stat" id="fExpense">Rp0</div></div>
+    <div class="card"><div class="statlabel">Estimasi Selisih</div><div class="stat" id="fProfit">Rp0</div></div>
+   </div>
    <div id="financeTable" class="tablewrap"></div>
+   <p class="smalltext muted" style="margin-top:12px;line-height:1.7">Catatan: karena modul pembayaran tidak digunakan, nilai transaksi adalah total invoice, bukan uang yang sudah diterima. Estimasi selisih bukan saldo kas atau laba akuntansi resmi.</p>
   </div></section>
  </main>
 </div>
 
 <div id="mobileNav" class="mobile hidden">
- <button onclick="go('dashboard')">Dashboard</button><button onclick="go('bookings')">Transaksi</button><button onclick="go('invoices')">Invoice</button><button onclick="go('payments')">Bayar</button><button onclick="go('costs')">Crew & Biaya</button><button onclick="go('finance')">Keuangan</button>
+ <button onclick="go('dashboard')">Home</button><button onclick="go('bookings')">Transaksi</button><button onclick="go('invoices')">Invoice</button><button onclick="go('costs')">Biaya</button><button onclick="go('finance')">Keuangan</button>
 </div>
 <div id="modalRoot"></div><div id="toast" class="toast hidden"></div>
 
@@ -141,33 +210,33 @@ const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const n=v=>typeof v==="number"?v:(Number(String(v??"").replace(/[^\d-]/g,""))||0);
 const money=v=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n(v));
 const moneyText=v=>n(v)?new Intl.NumberFormat("id-ID",{maximumFractionDigits:0}).format(n(v)):"";
-const today=()=>new Date().toISOString().slice(0,10);
+const today=()=>{let d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
 const dateText=v=>{if(!v)return"—";let d=new Date(String(v).length===10?v+"T00:00:00":v);return isNaN(d)?"—":d.toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric"})};
-let clients=[],bookings=[],payments=[],expenses=[],user=null;
-let editingBooking=null,editingPayment=null,editingExpense=null;
-let crewDraft=[],expenseDraft=[];
+
+let clients=[],bookings=[],expenses=[],user=null;
+let editingBooking=null,crewDraft=[],expenseDraft=[];
 const PRICE={
 "Wedding Signature":3400000,"Wedding Luxury":5200000,
 "Intimate Wedding Simple":2050000,"Intimate Wedding Prime":2700000,
 "Moment":2000000,"Story":3500000,"Essential":1500000,"Promise":2500000,
 "Memoire":1950000,"Eternal":2250000,"Sakral":500000,"Senada":650000,"Abadi":800000,
-"Diamond":6300000,"Emerald":6200000,
-"Additional Hours":500000,"Additional Photographer":1350000,"Additional Videographer":1500000,
-"Print Photo (40 × 60 cm) + Frame":350000,"Simple Album 20 × 30 cm + Box 20 pages":600000,
-"Drone":1200000,"Express Highlight Video":1500000,"Express Highlight Photo":1000000,"Mini Studio":1500000
+"Diamond":6300000,"Emerald":6200000,"Additional Hours":500000,
+"Additional Photographer":1350000,"Additional Videographer":1500000,
+"Print Photo (40 × 60 cm) + Frame":350000,
+"Simple Album 20 × 30 cm + Box 20 pages":600000,"Drone":1200000,
+"Express Highlight Video":1500000,"Express Highlight Photo":1000000,"Mini Studio":1500000
 };
 const GROUPS={
 "Wedding":["Wedding Signature","Wedding Luxury"],
 "Intimate Wedding":["Intimate Wedding Simple","Intimate Wedding Prime"],
-"Prewedding":["Moment","Story"],
-"Engagement":["Essential","Promise"],
+"Prewedding":["Moment","Story"],"Engagement":["Essential","Promise"],
 "Candid Wedding":["Memoire","Eternal"],
 "Wedding Content Creator":["Sakral","Senada","Abadi"],
 "Bundling":["Diamond","Emerald"],
 "Add-on":["Additional Hours","Additional Photographer","Additional Videographer","Print Photo (40 × 60 cm) + Frame","Simple Album 20 × 30 cm + Box 20 pages","Drone","Express Highlight Video","Express Highlight Photo","Mini Studio"]
 };
 const EVENTS=["Wedding","Intimate Wedding","Prewedding","Engagement","Traditional Ceremony","Candid Wedding","Wedding Content Creator","Graduation","Other"];
-const CATEGORIES=["Transport","Konsumsi","Akomodasi","Sewa Alat","Peralatan","Cetak Foto","Produksi","Lainnya"];
+const STATUSES=["pending","confirmed","completed","cancelled"];
 const bBy=id=>bookings.find(b=>String(b.id)===String(id));
 const cBy=b=>clients.find(c=>String(c.id)===String(b?.client_id));
 const invoice=b=>b?.invoice_no||`KYP-${new Date(b?.created_at||Date.now()).getFullYear()}-${b?.id||""}`;
@@ -175,154 +244,314 @@ const bLabel=b=>`${invoice(b)} — ${cBy(b)?.full_name||"Klien"} (${b.event_type
 const items=b=>Array.isArray(b?.package_details)?b.package_details:[];
 const crew=b=>Array.isArray(b?.crew_details)?b.crew_details:[];
 const total=b=>n(b?.invoice_total);
-const paid=id=>payments.filter(p=>String(p.booking_id)===String(id)).reduce((s,p)=>s+n(p.amount),0);
-const left=b=>Math.max(0,total(b)-paid(b.id));
-const fullyPaid=b=>total(b)>0&&paid(b.id)>=total(b);
 const crewTotal=b=>crew(b).reduce((s,x)=>s+n(x.fee),0);
-const expenseTotal=b=>expenses.filter(x=>String(x.booking_id)===String(b.id)).reduce((s,x)=>s+n(x.amount),0);
-const status=b=>b?.status==="cancelled"?'<span class="badge red">Cancelled</span>':fullyPaid(b)?'<span class="badge green">Lunas</span>':'<span class="badge">Pending</span>';
-const typeName=t=>({dp:"DP",installment:"Cicilan",final:"Pelunasan"})[t]||t||"—";
+const bookingExpenses=id=>expenses.filter(x=>String(x.booking_id)===String(id));
+const expenseTotal=b=>bookingExpenses(b.id).reduce((s,x)=>s+n(x.amount),0);
+const allCost=b=>crewTotal(b)+expenseTotal(b);
+const statusLabel=s=>({pending:"Pending",confirmed:"Confirmed",completed:"Selesai",cancelled:"Cancelled"})[s]||"Pending";
+const statusBadge=b=>`<span class="badge ${b.status==="completed"?"green":b.status==="cancelled"?"red":b.status==="confirmed"?"blue":""}">${statusLabel(b.status)}</span>`;
+
 function toast(s,err=false){let t=$("toast");t.textContent=s;t.classList.toggle("error",err);t.classList.remove("hidden");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.add("hidden"),3500)}
 function fail(label,e){console.error(label,e);toast(label+": "+(e?.message||e),true)}
-function go(page){document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".nav[data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===page));$("page-"+page).classList.add("active");$("pageTitle").textContent=({dashboard:"Dashboard",bookings:"Klien & Transaksi",invoices:"Invoice",payments:"Pembayaran",costs:"Crew & Pengeluaran",finance:"Keuangan"})[page];if(page==="dashboard")renderDashboard();if(page==="bookings")renderBookings();if(page==="invoices")renderInvoices();if(page==="payments")renderPayments();if(page==="costs"){renderCostSummary();renderExpenses()}if(page==="finance")renderFinance()}
+function go(page){
+ document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+ document.querySelectorAll(".nav[data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===page));
+ $("page-"+page).classList.add("active");
+ $("pageTitle").textContent=({dashboard:"Dashboard",bookings:"Klien & Transaksi",invoices:"Invoice",costs:"Crew & Pengeluaran",finance:"Keuangan"})[page];
+ if(page==="dashboard")renderDashboard();
+ if(page==="bookings")renderBookings();
+ if(page==="invoices")renderInvoices();
+ if(page==="costs"){renderCostSummary();renderExpenses()}
+ if(page==="finance")renderFinance();
+}
 document.querySelectorAll(".nav[data-page]").forEach(x=>x.onclick=()=>go(x.dataset.page));
-$("loginForm").onsubmit=async e=>{e.preventDefault();try{let r=await db.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});if(r.error)throw r.error;await boot()}catch(e){$("loginError").textContent=e.message}};
+$("loginForm").onsubmit=async e=>{
+ e.preventDefault();
+ try{let r=await db.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});if(r.error)throw r.error;await boot()}
+ catch(e){$("loginError").textContent=e.message}
+};
 $("logout").onclick=async()=>{await db.auth.signOut();location.reload()};
-async function boot(){let r=await db.auth.getSession();if(!r.data.session){$("loginView").classList.remove("hidden");$("app").classList.add("hidden");$("mobileNav").classList.add("hidden");return}user=r.data.session.user;$("loginView").classList.add("hidden");$("app").classList.remove("hidden");$("mobileNav").classList.remove("hidden");try{await loadAll();go("dashboard")}catch(e){fail("Gagal memuat data",e)}}
+
+async function boot(){
+ let r=await db.auth.getSession();
+ if(!r.data.session){$("loginView").classList.remove("hidden");$("app").classList.add("hidden");$("mobileNav").classList.add("hidden");return}
+ user=r.data.session.user;$("loginView").classList.add("hidden");$("app").classList.remove("hidden");$("mobileNav").classList.remove("hidden");
+ try{await loadAll();go("dashboard")}catch(e){fail("Gagal memuat data",e)}
+}
 async function loadAll(){
  let rs=await Promise.all([
- db.from("clients").select("*").order("created_at",{ascending:false}),
- db.from("bookings").select("*").order("created_at",{ascending:false}),
- db.from("payments").select("*").order("created_at",{ascending:false}),
- db.from("expenses").select("*").order("expense_date",{ascending:false})
+  db.from("clients").select("*").order("created_at",{ascending:false}),
+  db.from("bookings").select("*").order("created_at",{ascending:false}),
+  db.from("expenses").select("*").order("expense_date",{ascending:false})
  ]);
  rs.forEach(r=>{if(r.error)throw r.error});
- clients=rs[0].data||[];bookings=rs[1].data||[];payments=rs[2].data||[];expenses=rs[3].data||[];
- for(const b of bookings){if(b.status==="cancelled")continue;let next=fullyPaid(b)?"completed":"pending";if(b.status!==next){let r=await db.from("bookings").update({status:next}).eq("id",b.id);if(r.error)throw r.error;b.status=next}}
+ clients=rs[0].data||[];bookings=rs[1].data||[];expenses=rs[2].data||[];
  selectors();renderDashboard();
 }
-async function refresh(){await loadAll();let p=document.querySelector(".panel.active")?.id.replace("page-","");if(p)go(p)}
+async function refresh(){
+ await loadAll();
+ let p=document.querySelector(".panel.active")?.id.replace("page-","");
+ if(p)go(p);
+}
 function selectors(){
- const opts=bookings.map(b=>`<option value="${b.id}">${esc(bLabel(b))}</option>`).join("");
- for(let id of ["paymentFilterBooking","costBooking","expenseFilterBooking"]){let el=$(id),old=el.value;el.innerHTML=(id==="costBooking"?'<option value="">Pilih invoice</option>':'<option value="">Semua invoice</option>')+opts;if([...el.options].some(o=>o.value===old))el.value=old}
+ const opts=bookings.map(b=>`<option value="${esc(b.id)}">${esc(bLabel(b))}</option>`).join("");
+ for(let id of ["costBooking","expenseFilterBooking"]){
+  let el=$(id),old=el.value;
+  el.innerHTML=(id==="costBooking"?'<option value="">Pilih invoice</option>':'<option value="">Semua invoice</option>')+opts;
+  if([...el.options].some(o=>o.value===old))el.value=old;
+ }
 }
 function renderDashboard(){
- $("sBookings").textContent=bookings.length;$("sPending").textContent=bookings.filter(b=>b.status!=="cancelled"&&!fullyPaid(b)).length;
- $("sRevenue").textContent=money(payments.reduce((s,p)=>s+n(p.amount),0));$("sOutstanding").textContent=money(bookings.filter(b=>b.status!=="cancelled").reduce((s,b)=>s+left(b),0));
- $("recentBookings").innerHTML=tableBookings(bookings.slice(0,6));
- let rev=payments.reduce((s,p)=>s+n(p.amount),0),ct=bookings.reduce((s,b)=>s+crewTotal(b),0),ex=expenses.reduce((s,x)=>s+n(x.amount),0);
- $("dashFinance").innerHTML=`<div class="line"><span>Pembayaran masuk</span><b>${money(rev)}</b></div><div class="line"><span>Fee crew</span><b>${money(ct)}</b></div><div class="line"><span>Expense lain</span><b>${money(ex)}</b></div><div class="line total"><span>Estimasi laba</span><b>${money(rev-ct-ex)}</b></div>`;
- $("dashPayments").innerHTML=payments.slice(0,5).map(p=>`<div class="line"><span>${esc(cBy(bBy(p.booking_id))?.full_name||"Klien")}<br><span class="smalltext muted">${dateText(p.payment_date)} · ${typeName(p.payment_type)}</span></span><b>${money(p.amount)}</b></div>`).join("")||'<div class="empty">Belum ada pembayaran.</div>';
+ $("sBookings").textContent=bookings.length;
+ $("sPending").textContent=bookings.filter(b=>b.status==="pending").length;
+ $("sRevenue").textContent=money(bookings.filter(b=>b.status!=="cancelled").reduce((s,b)=>s+total(b),0));
+ const ex=expenses.reduce((s,x)=>s+n(x.amount),0),ct=bookings.reduce((s,b)=>s+crewTotal(b),0);
+ $("sExpenses").textContent=money(ex+ct);
+ $("recentBookings").innerHTML=tableBookings(bookings.slice(0,6),false);
+ let value=bookings.filter(b=>b.status!=="cancelled").reduce((s,b)=>s+total(b),0);
+ $("dashFinance").innerHTML=`<div class="line"><span>Nilai transaksi aktif</span><b>${money(value)}</b></div><div class="line"><span>Fee crew</span><b>${money(ct)}</b></div><div class="line"><span>Pengeluaran lain</span><b>${money(ex)}</b></div><div class="line total"><span>Estimasi selisih</span><b>${money(value-ct-ex)}</b></div>`;
+ $("dashExpenses").innerHTML=[...expenses].sort((a,b)=>String(b.expense_date).localeCompare(String(a.expense_date))).slice(0,5).map(x=>`<div class="line"><span>${esc(x.description||"Pengeluaran")}<br><span class="smalltext muted">${dateText(x.expense_date)}</span></span><b>${money(x.amount)}</b></div>`).join("")||'<div class="empty">Belum ada pengeluaran.</div>';
 }
-function tableBookings(list){return list.length?`<table><thead><tr><th>Invoice / Klien</th><th>Event</th><th>Tanggal</th><th>Total</th><th>Dibayar</th><th>Sisa</th><th>Status</th><th>Aksi</th></tr></thead><tbody>${list.map(b=>`<tr><td><b>${esc(invoice(b))}</b><br>${esc(cBy(b)?.full_name||"—")}<br><span class="smalltext muted">${esc(cBy(b)?.phone||"")}</span></td><td>${esc(b.event_type)}<br><span class="smalltext muted">${esc(b.event_location||"")}</span></td><td>${dateText(b.event_date)}</td><td>${money(total(b))}</td><td>${money(paid(b.id))}</td><td>${money(left(b))}</td><td>${status(b)}</td><td><div class="actions"><button class="secondary small" onclick="openBooking(${b.id})">Edit</button><button class="secondary small" onclick="showInvoice(${b.id})">Invoice</button><button class="secondary small" onclick="openPayment(null,${b.id})">Bayar</button><button class="danger small" onclick="deleteClient(${b.client_id})">Hapus Klien</button></div></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Belum ada transaksi.</div>'}
-function renderBookings(){let q=$("bookingSearch").value.toLowerCase(),f=$("bookingFilter").value;let list=bookings.filter(b=>[invoice(b),cBy(b)?.full_name,cBy(b)?.phone,b.event_type,b.event_location].join(" ").toLowerCase().includes(q)&&(f==="completed"?fullyPaid(b):f==="pending"?b.status!=="cancelled"&&!fullyPaid(b):f?b.status===f:true));$("bookingsTable").innerHTML=tableBookings(list)}
-function renderInvoices(){let q=$("invoiceSearch").value.toLowerCase();let list=bookings.filter(b=>[invoice(b),cBy(b)?.full_name,cBy(b)?.phone].join(" ").toLowerCase().includes(q));$("invoicesTable").innerHTML=list.length?`<table><thead><tr><th>Invoice</th><th>Klien</th><th>Event</th><th>Total</th><th>Dibayar</th><th>Status</th><th>Aksi</th></tr></thead><tbody>${list.map(b=>`<tr><td><b>${esc(invoice(b))}</b><br>${dateText(b.created_at)}</td><td>${esc(cBy(b)?.full_name||"—")}<br>${esc(cBy(b)?.phone||"")}</td><td>${esc(b.event_type)}<br>${dateText(b.event_date)}</td><td>${money(total(b))}</td><td>${money(paid(b.id))}</td><td>${status(b)}</td><td><div class="actions"><button class="secondary small" onclick="showInvoice(${b.id})">Preview</button><button class="small" onclick="downloadPDF(${b.id})">PDF</button></div></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Belum ada invoice.</div>'}
-function renderPayments(){let bid=$("paymentFilterBooking").value,t=$("paymentFilterType").value,q=$("paymentSearch").value.toLowerCase();let list=payments.filter(p=>{let b=bBy(p.booking_id);return(!bid||String(p.booking_id)===bid)&&(!t||p.payment_type===t)&&[invoice(b),cBy(b)?.full_name,p.payment_method,p.notes].join(" ").toLowerCase().includes(q)});$("paymentsTable").innerHTML=list.length?`<table><thead><tr><th>Tanggal</th><th>Invoice / Klien</th><th>Jenis</th><th>Metode</th><th>Nominal</th><th>Catatan</th><th>Aksi</th></tr></thead><tbody>${list.map(p=>`<tr><td>${dateText(p.payment_date)}</td><td>${esc(invoice(bBy(p.booking_id)))}<br>${esc(cBy(bBy(p.booking_id))?.full_name||"")}</td><td>${typeName(p.payment_type)}</td><td>${esc(p.payment_method||"—")}</td><td><b>${money(p.amount)}</b></td><td>${esc(p.notes||"—")}</td><td><div class="actions"><button class="secondary small" onclick="openPayment(${p.id})">Edit</button><button class="danger small" onclick="deletePayment(${p.id})">Hapus</button></div></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Belum ada pembayaran.</div>'}
-function packageOptions(selected=""){let h='<option value="">Pilih paket</option>';for(let [g,arr]of Object.entries(GROUPS)){h+=`<optgroup label="${esc(g)}">`;for(let x of arr)h+=`<option value="${esc(x)}" ${x===selected?"selected":""}>${esc(x)} — ${money(PRICE[x])}</option>`;h+='</optgroup>'}h+=`<option value="__custom__" ${selected==="__custom__"?"selected":""}>Custom / lainnya</option>`;return h}
-function eventOptions(selected=""){return '<option value="">Pilih jenis event</option>'+EVENTS.map(x=>`<option value="${x}" ${x===selected?"selected":""}>${x==="Other"?"Lainnya":x}</option>`).join("")}
-function itemRow(x={name:"",quantity:1,price:0}){let known=Object.hasOwn(PRICE,x.name);let d=document.createElement("div");d.className="itemrow";d.innerHTML=`<div><label>Paket / Item</label><select class="pkg">${packageOptions(known?x.name:x.name?"__custom__":"")}</select><input class="itemname" placeholder="Nama item custom" value="${esc(x.name||"")}" style="margin-top:6px"><div class="subtotal">Subtotal: <b>${money(n(x.quantity||1)*n(x.price))}</b></div></div><div><label>Qty</label><input class="qty" type="number" min="1" value="${Math.max(1,n(x.quantity)||1)}"></div><div class="pricefield"><label>Harga</label><input class="price" inputmode="numeric" value="${moneyText(x.price)}"></div><div class="removefield"><button type="button" class="danger small">Hapus</button></div>`;
+function tableBookings(list,withActions=true){
+ return list.length?`<table><thead><tr><th>Invoice / Klien</th><th>Event</th><th>Tanggal</th><th>Total Invoice</th><th>Status</th>${withActions?"<th>Aksi</th>":""}</tr></thead><tbody>${list.map(b=>`<tr><td><b>${esc(invoice(b))}</b><br>${esc(cBy(b)?.full_name||"—")}<br><span class="smalltext muted">${esc(cBy(b)?.phone||"")}</span></td><td>${esc(b.event_type)}<br><span class="smalltext muted">${esc(b.event_location||"")}</span></td><td>${dateText(b.event_date)}</td><td>${money(total(b))}</td><td>${statusBadge(b)}</td>${withActions?`<td><div class="actions"><button class="secondary small" onclick="openBooking(${JSON.stringify(b.id)})">Edit</button><button class="secondary small" onclick="showInvoice(${JSON.stringify(b.id)})">Invoice</button><button class="danger small" onclick="deleteClient(${JSON.stringify(b.client_id)})">Hapus Klien</button></div></td>`:""}</tr>`).join("")}</tbody></table>`:'<div class="empty">Belum ada transaksi.</div>';
+}
+function renderBookings(){
+ let q=$("bookingSearch").value.toLowerCase(),f=$("bookingFilter").value;
+ let list=bookings.filter(b=>[invoice(b),cBy(b)?.full_name,cBy(b)?.phone,b.event_type,b.event_location].join(" ").toLowerCase().includes(q)&&(!f||b.status===f));
+ $("bookingsTable").innerHTML=tableBookings(list);
+}
+function renderInvoices(){
+ let q=$("invoiceSearch").value.toLowerCase();
+ let list=bookings.filter(b=>[invoice(b),cBy(b)?.full_name,cBy(b)?.phone].join(" ").toLowerCase().includes(q));
+ $("invoicesTable").innerHTML=list.length?`<table><thead><tr><th>Invoice</th><th>Klien</th><th>Event</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead><tbody>${list.map(b=>`<tr><td><b>${esc(invoice(b))}</b><br>${dateText(b.created_at)}</td><td>${esc(cBy(b)?.full_name||"—")}<br>${esc(cBy(b)?.phone||"")}</td><td>${esc(b.event_type)}<br>${dateText(b.event_date)}</td><td>${money(total(b))}</td><td>${statusBadge(b)}</td><td><div class="actions"><button class="secondary small" onclick="showInvoice(${JSON.stringify(b.id)})">Preview</button><button class="small" onclick="downloadPDF(${JSON.stringify(b.id)})">PDF</button></div></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Belum ada invoice.</div>';
+}
+function packageOptions(selected=""){
+ let h='<option value="">Pilih paket</option>';
+ for(let [g,arr]of Object.entries(GROUPS)){h+=`<optgroup label="${esc(g)}">`;for(let x of arr)h+=`<option value="${esc(x)}" ${x===selected?"selected":""}>${esc(x)} — ${money(PRICE[x])}</option>`;h+='</optgroup>'}
+ h+=`<option value="__custom__" ${selected==="__custom__"?"selected":""}>Custom / lainnya</option>`;
+ return h;
+}
+function eventOptions(selected=""){return '<option value="">Pilih jenis event</option>'+EVENTS.map(x=>`<option value="${esc(x)}" ${x===selected?"selected":""}>${x==="Other"?"Lainnya":esc(x)}</option>`).join("")}
+function statusOptions(selected="pending"){return STATUSES.map(x=>`<option value="${x}" ${x===selected?"selected":""}>${statusLabel(x)}</option>`).join("")}
+
+function itemRow(x={name:"",quantity:1,price:0}){
+ let known=Object.hasOwn(PRICE,x.name),d=document.createElement("div");d.className="itemrow";
+ d.innerHTML=`<div><label>Paket / Item</label><select class="pkg">${packageOptions(known?x.name:x.name?"__custom__":"")}</select><input class="itemname" placeholder="Nama item custom" value="${esc(x.name||"")}" style="margin-top:5px"><div class="subtotal">Subtotal: <b>${money(n(x.quantity||1)*n(x.price))}</b></div></div><div><label>Qty</label><input class="qty" type="number" min="1" value="${Math.max(1,n(x.quantity)||1)}"></div><div class="pricefield"><label>Harga</label><input class="price" inputmode="numeric" value="${moneyText(x.price)}"></div><div class="removefield"><button type="button" class="danger small">Hapus</button></div>`;
  let sel=d.querySelector(".pkg"),name=d.querySelector(".itemname"),price=d.querySelector(".price"),qty=d.querySelector(".qty");
  sel.onchange=()=>{if(sel.value&&sel.value!=="__custom__"){name.value=sel.value;price.value=moneyText(PRICE[sel.value])}else if(sel.value==="__custom__"){name.value="";name.focus()}calcItems()};
- price.oninput=()=>{price.value=moneyText(price.value);calcItems()};qty.oninput=calcItems;name.oninput=calcItems;d.querySelector("button").onclick=()=>{d.remove();calcItems()};$("packageRows").appendChild(d);if(known)name.value=x.name;calcItems()}
-function calcItems(){let s=0;document.querySelectorAll("#packageRows .itemrow").forEach(r=>{let sub=Math.max(1,n(r.querySelector(".qty").value))*n(r.querySelector(".price").value);s+=sub;r.querySelector(".subtotal b").textContent=money(sub)});if($("bookingTotal"))$("bookingTotal").textContent=money(s);if($("bookingDp"))$("bookingRemain").textContent=money(Math.max(0,s-n($("bookingDp").value)));return s}
-function openBooking(id=null){editingBooking=id;let b=id?bBy(id):null,c=cBy(b);$("modalRoot").innerHTML=`<div class="modalbg" onclick="if(event.target===this)closeModal()"><div class="modal wide"><div class="modalhead"><div><h2>${b?"Edit Transaksi":"Transaksi Baru"}</h2><div class="smalltext muted">${b?esc(invoice(b)):""}</div></div><button class="secondary" onclick="closeModal()">Tutup</button></div><form id="bookingForm"><h3>Data Klien</h3><div class="formgrid"><div><label>Nama klien *</label><input id="bName" required value="${esc(c?.full_name||"")}"></div><div><label>WhatsApp / Telepon</label><input id="bPhone" value="${esc(c?.phone||"")}"></div><div><label>Jenis event *</label><select id="bEvent" required>${eventOptions(b?.event_type||"")}</select></div><div><label>Tanggal event</label><input id="bDate" type="date" value="${esc(b?.event_date||"")}"></div><div class="full"><label>Lokasi</label><input id="bLocation" value="${esc(b?.event_location||"")}"></div><div class="full"><label>Catatan</label><textarea id="bNotes">${esc(b?.notes||"")}</textarea></div></div><hr class="hr"><div class="between"><h3>Paket & Invoice</h3><button type="button" class="secondary" onclick="itemRow()">+ Item</button></div><div id="packageRows"></div><div class="card" style="background:#f8f3ec"><div class="line total"><span>Total Invoice</span><b id="bookingTotal">Rp0</b></div><div class="grid g2" style="margin-top:10px"><div><label>DP awal (opsional)</label><input id="bookingDp" inputmode="numeric" value="${moneyText(b?.dp_amount||0)}"></div><div><label>Sisa setelah DP</label><div id="bookingRemain" style="padding:10px;font-weight:bold">Rp0</div></div></div><div class="smalltext muted">DP awal dicatat sebagai pembayaran saat transaksi baru dibuat. Status Lunas/Pending dihitung otomatis.</div></div><div class="row" style="justify-content:flex-end;margin-top:15px"><button type="button" class="secondary" onclick="closeModal()">Batal</button><button>Simpan Transaksi</button></div></form></div></div>`;
+ price.oninput=()=>{let pos=price.selectionStart;price.value=moneyText(price.value);calcItems()};
+ qty.oninput=calcItems;name.oninput=calcItems;d.querySelector("button").onclick=()=>{d.remove();calcItems()};
+ $("packageRows").appendChild(d);if(known)name.value=x.name;calcItems();
+}
+function calcItems(){
+ let s=0;
+ document.querySelectorAll("#packageRows .itemrow").forEach(r=>{let sub=Math.max(1,n(r.querySelector(".qty").value))*n(r.querySelector(".price").value);s+=sub;r.querySelector(".subtotal b").textContent=money(sub)});
+ if($("bookingTotal"))$("bookingTotal").textContent=money(s);
+ return s;
+}
+function openBooking(id=null){
+ editingBooking=id;let b=id?bBy(id):null,c=cBy(b);
+ $("modalRoot").innerHTML=`<div class="modalbg" onclick="if(event.target===this)closeModal()"><div class="modal wide"><div class="modalhead"><div><div class="section-label">Data transaksi</div><h2 style="margin-bottom:3px">${b?"Edit Transaksi":"Transaksi Baru"}</h2><div class="smalltext muted">${b?esc(invoice(b)):"Buat booking baru"}</div></div><button class="secondary" onclick="closeModal()">Tutup</button></div>
+ <form id="bookingForm"><div class="section-label">01 / Data klien</div><div class="formgrid">
+ <div><label>Nama klien *</label><input id="bName" required value="${esc(c?.full_name||"")}"></div>
+ <div><label>WhatsApp / Telepon</label><input id="bPhone" value="${esc(c?.phone||"")}"></div>
+ <div><label>Jenis event *</label><select id="bEvent" required>${eventOptions(b?.event_type||"")}</select></div>
+ <div><label>Tanggal event</label><input id="bDate" type="date" value="${esc(b?.event_date||"")}"></div>
+ <div><label>Status booking</label><select id="bStatus">${statusOptions(b?.status||"pending")}</select></div>
+ <div><label>Lokasi</label><input id="bLocation" value="${esc(b?.event_location||"")}"></div>
+ <div class="full"><label>Catatan</label><textarea id="bNotes">${esc(b?.notes||"")}</textarea></div></div>
+ <hr class="hr"><div class="between"><div><div class="section-label">02 / Paket</div><h3>Paket & Invoice</h3></div><button type="button" class="secondary" onclick="itemRow()">＋ Item</button></div>
+ <div id="packageRows"></div><div class="card" style="background:#f8f3ec;margin-top:12px"><div class="line total"><span>Total Invoice</span><b id="bookingTotal">Rp0</b></div></div>
+ <div class="row" style="justify-content:flex-end;margin-top:12px"><button type="button" class="secondary" onclick="closeModal()">Batal</button><button>Simpan Transaksi</button></div></form></div></div>`;
  (b?.package_details?.length?b.package_details:[{name:"",quantity:1,price:0}]).forEach(itemRow);
- $("bookingDp").oninput=()=>{$("bookingDp").value=moneyText($("bookingDp").value);calcItems()};
- $("bookingForm").onsubmit=saveBooking}
+ $("bookingForm").onsubmit=saveBooking;
+}
 function closeModal(){$("modalRoot").innerHTML=""}
-async function saveBooking(e){e.preventDefault();let btn=e.submitter;btn.disabled=true;try{
- let full_name=$("bName").value.trim(),phone=$("bPhone").value.trim(),event_type=$("bEvent").value;if(!full_name||!event_type)throw Error("Nama dan jenis event wajib diisi.");
- let package_details=[...document.querySelectorAll("#packageRows .itemrow")].map(r=>({name:r.querySelector(".itemname").value.trim(),quantity:Math.max(1,n(r.querySelector(".qty").value)),price:n(r.querySelector(".price").value)})).filter(x=>x.name);
- if(!package_details.length)throw Error("Tambahkan minimal satu paket.");let invoice_total=package_details.reduce((s,x)=>s+x.quantity*x.price,0);if(invoice_total<=0)throw Error("Total invoice harus lebih dari Rp0.");
- let dp=n($("bookingDp").value),old=editingBooking?bBy(editingBooking):null,clientId;
- let cp={full_name,phone:phone||null,notes:null};
- if(old){let c=cBy(old);if(!c)throw Error("Klien tidak ditemukan.");let r=await db.from("clients").update(cp).eq("id",c.id).select().single();if(r.error)throw r.error;clientId=r.data.id}
- else{let r=await db.from("clients").insert(cp).select().single();if(r.error)throw r.error;clientId=r.data.id;clients.unshift(r.data)}
- let payload={client_id:clientId,event_type,event_date:$("bDate").value||null,event_location:$("bLocation").value.trim()||null,notes:$("bNotes").value.trim()||null,package_details,package_name:package_details.map(x=>x.name).join(", "),invoice_total,dp_amount:dp};
- if(old){let r=await db.from("bookings").update(payload).eq("id",old.id);if(r.error)throw r.error;Object.assign(old,payload)}
- else{payload.status="pending";let r=await db.from("bookings").insert(payload).select().single();if(r.error)throw r.error;let created=r.data;created.invoice_no=`KYP-${new Date(created.created_at||Date.now()).getFullYear()}-${created.id}`;let u=await db.from("bookings").update({invoice_no:created.invoice_no}).eq("id",created.id);if(u.error)throw u.error;Object.assign(created,{invoice_no:created.invoice_no});bookings.unshift(created);if(dp>0){let p=await db.from("payments").insert({booking_id:created.id,amount:dp,payment_type:"dp",payment_status:"paid",payment_date:new Date().toISOString(),payment_method:"Belum ditentukan",notes:"DP awal"}).select().single();if(p.error)throw p.error;payments.unshift(p.data)}}
- closeModal();await refresh();toast("Transaksi berhasil disimpan.");
- }catch(e){fail("Gagal menyimpan transaksi",e)}finally{btn.disabled=false}}
-async function deleteClient(id){let c=clients.find(x=>String(x.id)===String(id));if(!c)return toast("Klien tidak ditemukan.",true);let bs=bookings.filter(b=>String(b.client_id)===String(id));if(!confirm(`Hapus klien ${c.full_name} dan ${bs.length} booking terkait? Semua pembayaran dan expense dari booking itu juga akan dihapus. Tindakan tidak dapat dibatalkan.`))return;try{let ids=bs.map(b=>b.id);if(ids.length){let p=await db.from("payments").delete().in("booking_id",ids);if(p.error)throw p.error;let ex=await db.from("expenses").delete().in("booking_id",ids);if(ex.error)throw ex.error;let br=await db.from("bookings").delete().in("id",ids);if(br.error)throw br.error}let cr=await db.from("clients").delete().eq("id",id);if(cr.error)throw cr.error;await refresh();toast("Klien dan booking terkait dihapus.")}catch(e){fail("Gagal menghapus klien",e)}}
+async function saveBooking(e){
+ e.preventDefault();let btn=e.submitter;btn.disabled=true;
+ try{
+  let full_name=$("bName").value.trim(),phone=$("bPhone").value.trim(),event_type=$("bEvent").value;
+  if(!full_name||!event_type)throw Error("Nama dan jenis event wajib diisi.");
+  let package_details=[...document.querySelectorAll("#packageRows .itemrow")].map(r=>({name:r.querySelector(".itemname").value.trim(),quantity:Math.max(1,n(r.querySelector(".qty").value)),price:n(r.querySelector(".price").value)})).filter(x=>x.name);
+  if(!package_details.length)throw Error("Tambahkan minimal satu paket.");
+  let invoice_total=package_details.reduce((s,x)=>s+x.quantity*x.price,0);
+  if(invoice_total<=0)throw Error("Total invoice harus lebih dari Rp0.");
+  let old=editingBooking?bBy(editingBooking):null,clientId;
+  let cp={full_name,phone:phone||null,notes:null};
+  if(old){
+   let c=cBy(old);if(!c)throw Error("Klien tidak ditemukan.");
+   let r=await db.from("clients").update(cp).eq("id",c.id).select().single();if(r.error)throw r.error;clientId=r.data.id;
+  }else{
+   let r=await db.from("clients").insert(cp).select().single();if(r.error)throw r.error;clientId=r.data.id;
+  }
+  let payload={client_id:clientId,event_type,event_date:$("bDate").value||null,event_location:$("bLocation").value.trim()||null,notes:$("bNotes").value.trim()||null,package_details,package_name:package_details.map(x=>x.name).join(", "),invoice_total,status:$("bStatus").value};
+  if(old){
+   let r=await db.from("bookings").update(payload).eq("id",old.id);if(r.error)throw r.error;
+  }else{
+   let r=await db.from("bookings").insert(payload).select().single();if(r.error)throw r.error;
+   let created=r.data,inv=`KYP-${new Date(created.created_at||Date.now()).getFullYear()}-${created.id}`;
+   let u=await db.from("bookings").update({invoice_no:inv}).eq("id",created.id);if(u.error)throw u.error;
+  }
+  closeModal();await refresh();toast("Transaksi berhasil disimpan.");
+ }catch(e){fail("Gagal menyimpan transaksi",e)}finally{btn.disabled=false}
+}
+async function deleteClient(id){
+ let c=clients.find(x=>String(x.id)===String(id));if(!c)return toast("Klien tidak ditemukan.",true);
+ let bs=bookings.filter(b=>String(b.client_id)===String(id));
+ if(!confirm(`Hapus klien ${c.full_name} dan ${bs.length} booking terkait? Semua expense terkait juga akan dihapus. Tindakan tidak dapat dibatalkan.`))return;
+ try{
+  let ids=bs.map(b=>b.id);
+  if(ids.length){
+   let ex=await db.from("expenses").delete().in("booking_id",ids);if(ex.error)throw ex.error;
+   let br=await db.from("bookings").delete().in("id",ids);if(br.error)throw br.error;
+  }
+  let cr=await db.from("clients").delete().eq("id",id);if(cr.error)throw cr.error;
+  await refresh();toast("Klien dan booking terkait dihapus.");
+ }catch(e){fail("Gagal menghapus klien",e)}
+}
 
-function openPayment(id=null,bookingId=null){editingPayment=id;let p=id?payments.find(x=>String(x.id)===String(id)):null,selected=bookingId||p?.booking_id||"";$("modalRoot").innerHTML=`<div class="modalbg" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modalhead"><h2>${p?"Edit Pembayaran":"Tambah Pembayaran"}</h2><button class="secondary" onclick="closeModal()">Tutup</button></div><form id="paymentForm"><div style="margin-bottom:12px"><label>Invoice *</label><select id="pBooking" required onchange="paymentCalc()"><option value="">Pilih invoice</option>${bookings.map(b=>`<option value="${b.id}" ${String(selected)===String(b.id)?"selected":""}>${esc(bLabel(b))}</option>`).join("")}</select></div><div class="formgrid"><div><label>Jenis *</label><select id="pType"><option value="dp" ${p?.payment_type==="dp"?"selected":""}>DP</option><option value="installment" ${p?.payment_type==="installment"?"selected":""}>Cicilan</option><option value="final" ${p?.payment_type==="final"?"selected":""}>Pelunasan</option></select></div><div><label>Tanggal *</label><input id="pDate" type="date" required value="${String(p?.payment_date||today()).slice(0,10)}"></div><div><label>Nominal (Rp) *</label><input id="pAmount" inputmode="numeric" required value="${moneyText(p?.amount||0)}"></div><div><label>Metode</label><select id="pMethod">${["Transfer Bank","QRIS","Tunai","E-Wallet","Belum ditentukan","Lainnya"].map(x=>`<option ${p?.payment_method===x?"selected":""}>${x}</option>`).join("")}</select></div><div class="full"><label>Catatan</label><textarea id="pNotes">${esc(p?.notes||"")}</textarea></div></div><div id="pCalc" class="notice" style="margin-top:12px"></div><div class="row" style="justify-content:flex-end;margin-top:15px"><button type="button" class="secondary" onclick="closeModal()">Batal</button><button>Simpan Pembayaran</button></div></form></div></div>`;
- $("pAmount").oninput=()=>{$("pAmount").value=moneyText($("pAmount").value);paymentCalc()};$("paymentForm").onsubmit=savePayment;paymentCalc()}
-function paymentCalc(){let b=bBy($("pBooking")?.value);if(!b){$("pCalc").textContent="Pilih invoice terlebih dahulu.";return}let other=payments.filter(p=>String(p.booking_id)===String(b.id)&&String(p.id)!==String(editingPayment)).reduce((s,p)=>s+n(p.amount),0),amt=n($("pAmount").value);$("pCalc").innerHTML=`Total invoice: <b>${money(total(b))}</b><br>Pembayaran lain: ${money(other)}<br>Nominal ini: ${money(amt)}<hr><b>Sisa setelah bayar: ${money(Math.max(0,total(b)-other-amt))}</b>`}
-async function savePayment(e){e.preventDefault();let btn=e.submitter;btn.disabled=true;try{let id=$("pBooking").value,amount=n($("pAmount").value);if(!id||amount<=0)throw Error("Invoice dan nominal pembayaran wajib diisi.");let payload={booking_id:id,amount,payment_type:$("pType").value,payment_status:"paid",payment_date:new Date($("pDate").value+"T12:00:00").toISOString(),payment_method:$("pMethod").value,notes:$("pNotes").value.trim()||null};if(editingPayment){let r=await db.from("payments").update(payload).eq("id",editingPayment);if(r.error)throw r.error}else{let r=await db.from("payments").insert(payload);if(r.error)throw r.error}closeModal();await refresh();toast("Pembayaran tersimpan.")}catch(e){fail("Gagal menyimpan pembayaran",e)}finally{btn.disabled=false}}
-async function deletePayment(id){let p=payments.find(x=>String(x.id)===String(id));if(!p||!confirm(`Hapus pembayaran ${money(p.amount)}? Status booking akan dihitung ulang.`))return;try{let r=await db.from("payments").delete().eq("id",id);if(r.error)throw r.error;await refresh();toast("Pembayaran dihapus.")}catch(e){fail("Gagal menghapus pembayaran",e)}}
-
+/* Crew dan semua biaya dikelola dari satu form */
 function loadCostForm(){
- let b=bBy($("costBooking").value);crewDraft=b?crew(b).map(x=>({...x})):[];
- expenseDraft=b?expenses.filter(x=>String(x.booking_id)===String(b.id)).map(x=>({...x,_saved:true,_delete:false})):[];
+ let b=bBy($("costBooking").value);
+ crewDraft=b?crew(b).map(x=>({...x})):[];
+ expenseDraft=b?bookingExpenses(b.id).map(x=>({...x,_saved:true,_delete:false})):[];
  if(!crewDraft.length)crewDraft.push({name:"",fee:0,notes:""});
- if(!expenseDraft.length)expenseDraft.push({category:"",description:"",amount:0,expense_date:today(),_saved:false,_delete:false});
- drawCostForm()
+ if(!expenseDraft.length)expenseDraft.push({category:"Pengeluaran",description:"",amount:0,expense_date:today(),_saved:false,_delete:false});
+ drawCostForm();
 }
 function addCostCrew(){crewDraft.push({name:"",fee:0,notes:""});drawCostForm()}
-function addCostExpense(){expenseDraft.push({category:"",description:"",amount:0,expense_date:today(),_saved:false,_delete:false});drawCostForm()}
+function addCostExpense(){expenseDraft.push({category:"Pengeluaran",description:"",amount:0,expense_date:today(),_saved:false,_delete:false});drawCostForm()}
 function drawCostForm(){
- $("costCrewRows").innerHTML=crewDraft.map((x,i)=>`<div class="card" style="padding:12px;margin:9px 0"><div class="formgrid"><div><label>Nama crew</label><input value="${esc(x.name||"")}" oninput="crewDraft[${i}].name=this.value;costTotals()"></div><div><label>Fee (Rp)</label><input inputmode="numeric" value="${moneyText(x.fee)}" oninput="this.value=moneyText(this.value);crewDraft[${i}].fee=n(this.value);costTotals()"></div><div class="full"><label>Catatan (opsional)</label><input value="${esc(x.notes||"")}" oninput="crewDraft[${i}].notes=this.value"></div></div><div class="row" style="justify-content:space-between;margin-top:8px"><span class="smalltext muted">Fee: ${money(x.fee)}</span><button type="button" class="danger small" onclick="crewDraft.splice(${i},1);drawCostForm()">Hapus crew</button></div></div>`).join("");
- $("costExpenseRows").innerHTML=expenseDraft.map((x,i)=>`<div class="card" style="padding:12px;margin:9px 0;${x._delete?"opacity:.5":""}"><div class="formgrid"><div><label>Tanggal</label><input type="date" value="${esc(x.expense_date||today())}" onchange="expenseDraft[${i}].expense_date=this.value"></div><div><label>Kategori</label><select onchange="expenseDraft[${i}].category=this.value"><option value="">Pilih kategori</option>${CATEGORIES.map(k=>`<option ${x.category===k?"selected":""}>${k}</option>`).join("")}</select></div><div class="full"><label>Keterangan</label><input value="${esc(x.description||"")}" oninput="expenseDraft[${i}].description=this.value"></div><div><label>Nominal (Rp)</label><input inputmode="numeric" value="${moneyText(x.amount)}" oninput="this.value=moneyText(this.value);expenseDraft[${i}].amount=n(this.value);costTotals()"></div></div><div class="row" style="justify-content:space-between;margin-top:8px"><span class="smalltext muted">${x._saved?"Expense tersimpan":"Expense baru"} · ${money(x.amount)}</span><button type="button" class="danger small" onclick="removeCostExpense(${i})">${x._saved?"Tandai Hapus":"Hapus Baris"}</button></div></div>`).join("");
- costTotals()
+ $("costCrewRows").innerHTML=crewDraft.map((x,i)=>`<div class="subcard"><div class="costcrew">
+ <div><label>Nama crew</label><input value="${esc(x.name||"")}" placeholder="Nama crew" oninput="crewDraft[${i}].name=this.value;costTotals()"></div>
+ <div><label>Fee (Rp)</label><input inputmode="numeric" value="${moneyText(x.fee)}" oninput="this.value=moneyText(this.value);crewDraft[${i}].fee=n(this.value);costTotals()"></div>
+ <div class="notesfield"><label>Catatan</label><input value="${esc(x.notes||"")}" placeholder="Opsional" oninput="crewDraft[${i}].notes=this.value"></div>
+ <button type="button" class="danger remove" onclick="crewDraft.splice(${i},1);drawCostForm()">×</button>
+ </div></div>`).join("");
+ $("costExpenseRows").innerHTML=expenseDraft.map((x,i)=>`<div class="subcard" style="${x._delete?"opacity:.5":""}">
+ <div class="costrow">
+ <div><label>Keterangan pengeluaran</label><input value="${esc(x.description||"")}" placeholder="Mis. transport, konsumsi..." oninput="expenseDraft[${i}].description=this.value"></div>
+ <div><label>Nominal (Rp)</label><input inputmode="numeric" value="${moneyText(x.amount)}" oninput="this.value=moneyText(this.value);expenseDraft[${i}].amount=n(this.value);costTotals()"></div>
+ <button type="button" class="danger remove" onclick="removeCostExpense(${i})">${x._saved?"×":"−"}</button>
+ </div>
+ <div class="row" style="justify-content:space-between;margin-top:8px"><label style="margin:0">Tanggal biaya</label><input style="width:auto;max-width:155px;padding:5px 7px;font-size:11px" type="date" value="${esc(x.expense_date||today())}" onchange="expenseDraft[${i}].expense_date=this.value"><span class="smalltext muted">${x._saved?"Tersimpan":"Baris baru"}</span></div>
+ </div>`).join("");
+ costTotals();
 }
-function removeCostExpense(i){let x=expenseDraft[i];if(x._saved){x._delete=!x._delete}else expenseDraft.splice(i,1);drawCostForm()}
+function removeCostExpense(i){let x=expenseDraft[i];if(x._saved)x._delete=!x._delete;else expenseDraft.splice(i,1);drawCostForm()}
 function costTotals(){
- let ct=crewDraft.filter(x=>x.name?.trim()).reduce((s,x)=>s+n(x.fee),0),et=expenseDraft.filter(x=>!x._delete).reduce((s,x)=>s+n(x.amount),0);
- if($("costCrewTotal"))$("costCrewTotal").textContent=money(ct);if($("costExpenseTotal"))$("costExpenseTotal").textContent=money(et);if($("costGrandTotal"))$("costGrandTotal").textContent=money(ct+et);
- let b=bBy($("costBooking")?.value);if($("costInvoiceInfo"))$("costInvoiceInfo").innerHTML=b?`<b>${esc(invoice(b))}</b><br>${esc(cBy(b)?.full_name||"Klien")}<br>Total invoice: ${money(total(b))}<br>Status: ${fullyPaid(b)?"Lunas":"Pending"}`:"Pilih invoice untuk melihat ringkasan biaya.";
- if($("costPreview"))$("costPreview").textContent=b?`Preview biaya untuk ${invoice(b)}: crew ${money(ct)} + expense ${money(et)} = ${money(ct+et)}.`:"Pilih invoice untuk preview."
+ let ct=crewDraft.filter(x=>x.name?.trim()).reduce((s,x)=>s+n(x.fee),0);
+ let et=expenseDraft.filter(x=>!x._delete).reduce((s,x)=>s+n(x.amount),0);
+ if($("costCrewTotal"))$("costCrewTotal").textContent=money(ct);
+ if($("costExpenseTotal"))$("costExpenseTotal").textContent=money(et);
+ if($("costGrandTotal"))$("costGrandTotal").textContent=money(ct+et);
+ let b=bBy($("costBooking")?.value);
+ $("costInvoiceInfo").innerHTML=b?`<b>${esc(invoice(b))}</b><br>${esc(cBy(b)?.full_name||"Klien")}<br>Nilai invoice: ${money(total(b))}<br>Status: ${statusLabel(b.status)}`:"Pilih invoice untuk memulai pencatatan biaya.";
+ $("costPreview").textContent=b?`Total biaya event ini: ${money(ct+et)}.`:"Pilih invoice untuk melihat ringkasan.";
 }
 async function saveCosts(e){
- e.preventDefault();let btn=e.submitter;btn.disabled=true;try{
- let b=bBy($("costBooking").value);if(!b)throw Error("Pilih invoice.");
- let cleanedCrew=crewDraft.filter(x=>String(x.name||"").trim()).map(x=>({name:String(x.name).trim(),fee:n(x.fee),notes:String(x.notes||"").trim()}));
- let r=await db.from("bookings").update({crew_details:cleanedCrew}).eq("id",b.id);if(r.error)throw r.error;
- for(let x of expenseDraft){
-  if(x._saved&&x._delete){let d=await db.from("expenses").delete().eq("id",x.id);if(d.error)throw d.error;continue}
-  if(x._delete)continue;
-  let has=String(x.category||"").trim()&&String(x.description||"").trim()&&n(x.amount)>0;
-  if(!has){if(x._saved)throw Error("Expense tersimpan harus memiliki kategori, keterangan, dan nominal yang valid.");continue}
-  let payload={booking_id:b.id,category:x.category,description:x.description.trim(),amount:n(x.amount),expense_date:x.expense_date||today()};
-  if(x._saved){let u=await db.from("expenses").update(payload).eq("id",x.id);if(u.error)throw u.error}
-  else{let ins=await db.from("expenses").insert(payload);if(ins.error)throw ins.error}
- }
- await refresh();$("costBooking").value=String(b.id);loadCostForm();toast("Crew dan pengeluaran berhasil disimpan.")
+ e.preventDefault();let btn=e.submitter;btn.disabled=true;
+ try{
+  let b=bBy($("costBooking").value);if(!b)throw Error("Pilih invoice.");
+  let cleanedCrew=crewDraft.filter(x=>String(x.name||"").trim()).map(x=>({name:String(x.name).trim(),fee:n(x.fee),notes:String(x.notes||"").trim()}));
+  let r=await db.from("bookings").update({crew_details:cleanedCrew}).eq("id",b.id);if(r.error)throw r.error;
+  for(let x of expenseDraft){
+   if(x._saved&&x._delete){let d=await db.from("expenses").delete().eq("id",x.id);if(d.error)throw d.error;continue}
+   if(x._delete)continue;
+   let description=String(x.description||"").trim(),amount=n(x.amount);
+   if(!description||amount<=0){
+    if(x._saved)throw Error("Pengeluaran tersimpan perlu keterangan dan nominal lebih dari Rp0.");
+    continue;
+   }
+   let payload={booking_id:b.id,category:"Pengeluaran",description,amount,expense_date:x.expense_date||today()};
+   if(x._saved){let u=await db.from("expenses").update(payload).eq("id",x.id);if(u.error)throw u.error}
+   else{let ins=await db.from("expenses").insert(payload);if(ins.error)throw ins.error}
+  }
+  await refresh();$("costBooking").value=String(b.id);loadCostForm();toast("Crew dan pengeluaran berhasil disimpan.");
  }catch(e){fail("Gagal menyimpan biaya",e)}finally{btn.disabled=false}
 }
 $("costForm").onsubmit=saveCosts;
-function renderCostSummary(){$("costSummary").innerHTML=bookings.length?`<table><thead><tr><th>Invoice / Klien</th><th>Jumlah Crew</th><th>Total Fee Crew</th><th>Total Expense</th><th>Total Biaya</th><th>Aksi</th></tr></thead><tbody>${bookings.map(b=>`<tr><td><b>${esc(invoice(b))}</b><br>${esc(cBy(b)?.full_name||"")}</td><td>${crew(b).length}</td><td>${money(crewTotal(b))}</td><td>${money(expenseTotal(b))}</td><td><b>${money(crewTotal(b)+expenseTotal(b))}</b></td><td><button class="secondary small" onclick="go('costs');$('costBooking').value='${b.id}';loadCostForm()">Kelola</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Belum ada booking.</div>'}
-function renderExpenses(){let bid=$("expenseFilterBooking").value,q=$("expenseSearch").value.toLowerCase();let list=expenses.filter(x=>{let b=bBy(x.booking_id);return(!bid||String(x.booking_id)===bid)&&[x.category,x.description,invoice(b),cBy(b)?.full_name].join(" ").toLowerCase().includes(q)});$("expensesTable").innerHTML=list.length?`<table><thead><tr><th>Tanggal</th><th>Invoice</th><th>Kategori</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody>${list.map(x=>`<tr><td>${dateText(x.expense_date)}</td><td>${esc(invoice(bBy(x.booking_id)))}</td><td>${esc(x.category)}</td><td>${esc(x.description)}</td><td>${money(x.amount)}</td><td><div class="actions"><button class="secondary small" onclick="editExpense(${x.id})">Edit</button><button class="danger small" onclick="deleteExpense(${x.id})">Hapus</button></div></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Belum ada expense.</div>'}
-function editExpense(id){let x=expenses.find(z=>String(z.id)===String(id));if(!x)return;$("costBooking").value=String(x.booking_id||"");loadCostForm();let i=expenseDraft.findIndex(z=>String(z.id)===String(id));if(i<0){expenseDraft.push({...x,_saved:true,_delete:false});i=expenseDraft.length-1}else expenseDraft[i]={...x,_saved:true,_delete:false};drawCostForm();go("costs");toast("Expense siap diedit di form Crew & Pengeluaran.")}
-async function deleteExpense(id){let x=expenses.find(z=>String(z.id)===String(id));if(!x||!confirm(`Hapus expense "${x.description}" sebesar ${money(x.amount)}?`))return;try{let r=await db.from("expenses").delete().eq("id",id);if(r.error)throw r.error;await refresh();toast("Expense dihapus.")}catch(e){fail("Gagal menghapus expense",e)}}
+
+function renderCostSummary(){
+ $("costSummary").innerHTML=bookings.length?`<table><thead><tr><th>Invoice / Klien</th><th>Jumlah Crew</th><th>Fee Crew</th><th>Pengeluaran</th><th>Total Biaya</th><th>Aksi</th></tr></thead><tbody>${bookings.map(b=>`<tr><td><b>${esc(invoice(b))}</b><br>${esc(cBy(b)?.full_name||"")}</td><td>${crew(b).length}</td><td>${money(crewTotal(b))}</td><td>${money(expenseTotal(b))}</td><td><b>${money(allCost(b))}</b></td><td><button class="secondary small" onclick="manageCosts(${JSON.stringify(b.id)})">Kelola</button></td></tr>`).join("")}</tbody></table>`:'<div class="empty">Belum ada booking.</div>';
+}
+function manageCosts(id){go("costs");$("costBooking").value=String(id);loadCostForm();window.scrollTo({top:0,behavior:"smooth"})}
+function renderExpenses(){
+ let bid=$("expenseFilterBooking").value,q=$("expenseSearch").value.toLowerCase();
+ let expenseRows=expenses.filter(x=>{let b=bBy(x.booking_id);return(!bid||String(x.booking_id)===bid)&&[x.description,invoice(b),cBy(b)?.full_name].join(" ").toLowerCase().includes(q)});
+ let crewRows=[];
+ bookings.forEach(b=>crew(b).forEach((x,i)=>crewRows.push({booking:b,name:x.name,amount:n(x.fee),notes:x.notes,index:i,date:b.event_date})));
+ let rows=[
+  ...expenseRows.map(x=>({date:x.expense_date,booking:bBy(x.booking_id),description:x.description,amount:n(x.amount),kind:"Pengeluaran",id:x.id,type:"expense"})),
+  ...crewRows.filter(x=>(!bid||String(x.booking.id)===bid)&&[x.name,invoice(x.booking),cBy(x.booking)?.full_name].join(" ").toLowerCase().includes(q)).map(x=>({date:x.date,booking:x.booking,description:"Fee crew — "+x.name,amount:x.amount,kind:"Pengeluaran",type:"crew"}))
+ ].sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+ $("expensesTable").innerHTML=rows.length?`<table><thead><tr><th>Tanggal</th><th>Invoice</th><th>Kategori</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${dateText(x.date)}</td><td>${esc(x.booking?invoice(x.booking):"—")}</td><td><span class="badge">Pengeluaran</span></td><td>${esc(x.description||"—")}</td><td>${money(x.amount)}</td><td>${x.type==="expense"?`<div class="actions"><button class="secondary small" onclick="editExpense(${JSON.stringify(x.id)})">Edit</button><button class="danger small" onclick="deleteExpense(${JSON.stringify(x.id)})">Hapus</button></div>`:`<button class="secondary small" onclick="manageCosts(${JSON.stringify(x.booking.id)})">Kelola</button>`}</td></tr>`).join("")}</tbody></table>`:'<div class="empty">Belum ada pengeluaran.</div>';
+}
+function editExpense(id){
+ let x=expenses.find(z=>String(z.id)===String(id));if(!x)return;
+ go("costs");$("costBooking").value=String(x.booking_id||"");loadCostForm();
+ let i=expenseDraft.findIndex(z=>String(z.id)===String(id));
+ if(i<0){expenseDraft.push({...x,_saved:true,_delete:false});i=expenseDraft.length-1}else expenseDraft[i]={...x,_saved:true,_delete:false};
+ drawCostForm();toast("Pengeluaran siap diedit di form utama.");
+}
+async function deleteExpense(id){
+ let x=expenses.find(z=>String(z.id)===String(id));
+ if(!x||!confirm(`Hapus pengeluaran "${x.description}" sebesar ${money(x.amount)}?`))return;
+ try{let r=await db.from("expenses").delete().eq("id",id);if(r.error)throw r.error;await refresh();toast("Pengeluaran dihapus.")}catch(e){fail("Gagal menghapus pengeluaran",e)}
+}
 
 function renderFinance(){
- let start=$("dateStart").value,end=$("dateEnd").value,inside=d=>(!start||String(d||"").slice(0,10)>=start)&&(!end||String(d||"").slice(0,10)<=end);
- let ps=payments.filter(p=>inside(p.payment_date||p.created_at)),ex=expenses.filter(x=>inside(x.expense_date));
- let rev=ps.reduce((s,p)=>s+n(p.amount),0),crewCost=bookings.filter(b=>inside(b.event_date)).reduce((s,b)=>s+crewTotal(b),0),exp=ex.reduce((s,x)=>s+n(x.amount),0);
+ let start=$("dateStart").value,end=$("dateEnd").value;
+ let inside=d=>(!start||String(d||"").slice(0,10)>=start)&&(!end||String(d||"").slice(0,10)<=end);
+ let bs=bookings.filter(b=>b.status!=="cancelled"&&inside(b.event_date));
+ let rev=bs.reduce((s,b)=>s+total(b),0),crewCost=bs.reduce((s,b)=>s+crewTotal(b),0);
+ let exp=expenses.filter(x=>inside(x.expense_date)&&(!x.booking_id||bs.some(b=>String(b.id)===String(x.booking_id)))).reduce((s,x)=>s+n(x.amount),0);
  $("fRevenue").textContent=money(rev);$("fCrew").textContent=money(crewCost);$("fExpense").textContent=money(exp);$("fProfit").textContent=money(rev-crewCost-exp);
- $("financeTable").innerHTML=`<table><thead><tr><th>Komponen</th><th>Nominal</th></tr></thead><tbody><tr><td>Pembayaran masuk</td><td>${money(rev)}</td></tr><tr><td>Fee crew</td><td>${money(crewCost)}</td></tr><tr><td>Expense lain</td><td>${money(exp)}</td></tr><tr><td><b>Estimasi laba</b></td><td><b>${money(rev-crewCost-exp)}</b></td></tr></tbody></table><p class="smalltext muted" style="margin-top:12px">Pendapatan memakai tanggal pembayaran, expense memakai tanggal pengeluaran, dan fee crew memakai tanggal event. Ini merupakan estimasi operasional, bukan laporan akuntansi resmi.</p>`
+ $("financeTable").innerHTML=`<table><thead><tr><th>Komponen</th><th>Nominal</th></tr></thead><tbody><tr><td>Nilai invoice booking aktif</td><td>${money(rev)}</td></tr><tr><td>Fee crew</td><td>${money(crewCost)}</td></tr><tr><td>Pengeluaran lain</td><td>${money(exp)}</td></tr><tr><td><b>Estimasi selisih</b></td><td><b>${money(rev-crewCost-exp)}</b></td></tr></tbody></table><p class="smalltext muted" style="margin-top:10px">Filter tanggal berdasarkan tanggal event untuk nilai invoice dan fee crew. Pengeluaran lain difilter berdasarkan tanggal pengeluaran. Angka ini bukan laporan penerimaan kas.</p>`;
 }
 function exportCSV(){
- let start=$("dateStart").value,end=$("dateEnd").value,inside=d=>(!start||String(d||"").slice(0,10)>=start)&&(!end||String(d||"").slice(0,10)<=end),rows=[["Tanggal","Jenis","Invoice","Klien","Kategori","Keterangan","Nominal"]];
- payments.filter(p=>inside(p.payment_date||p.created_at)).forEach(p=>{let b=bBy(p.booking_id);rows.push([String(p.payment_date||"").slice(0,10),"Pembayaran",invoice(b),cBy(b)?.full_name||"",typeName(p.payment_type),p.notes||"",n(p.amount)])});
- expenses.filter(x=>inside(x.expense_date)).forEach(x=>{let b=bBy(x.booking_id);rows.push([x.expense_date,"Expense",invoice(b),cBy(b)?.full_name||"",x.category,x.description,n(x.amount)])});
- bookings.filter(b=>inside(b.event_date)).forEach(b=>crew(b).forEach(x=>rows.push([b.event_date,"Fee Crew",invoice(b),cBy(b)?.full_name||"","Crew",x.name,n(x.fee)])));
- let csv=rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n"),url=URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"})),a=document.createElement("a");a.href=url;a.download=`kyra-keuangan-${today()}.csv`;a.click();URL.revokeObjectURL(url)
+ let start=$("dateStart").value,end=$("dateEnd").value;
+ let inside=d=>(!start||String(d||"").slice(0,10)>=start)&&(!end||String(d||"").slice(0,10)<=end);
+ let rows=[["Tanggal","Jenis","Invoice","Klien","Kategori","Keterangan","Nominal"]];
+ bookings.filter(b=>b.status!=="cancelled"&&inside(b.event_date)).forEach(b=>{
+  crew(b).forEach(x=>rows.push([b.event_date,"Pengeluaran",invoice(b),cBy(b)?.full_name||"","Pengeluaran","Fee crew — "+x.name,n(x.fee)]));
+ });
+ expenses.filter(x=>inside(x.expense_date)).forEach(x=>{
+  let b=bBy(x.booking_id);rows.push([x.expense_date,"Pengeluaran",invoice(b),cBy(b)?.full_name||"","Pengeluaran",x.description,n(x.amount)]);
+ });
+ bookings.filter(b=>b.status!=="cancelled"&&inside(b.event_date)).forEach(b=>{
+  rows.push([b.event_date,"Nilai transaksi",invoice(b),cBy(b)?.full_name||"","Invoice","Total invoice",total(b)]);
+ });
+ let csv=rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n");
+ let url=URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"})),a=document.createElement("a");
+ a.href=url;a.download=`kyra-keuangan-${today()}.csv`;a.click();URL.revokeObjectURL(url);
 }
 
 function invoiceHTML(b){
- let c=cBy(b)||{},hist=payments.filter(p=>String(p.booking_id)===String(b.id)).sort((a,z)=>new Date(a.payment_date)-new Date(z.payment_date));
- return `<div class="invoice-paper"><div class="invhead"><div><h2>KYRA PICTURE</h2><div class="invmuted">Wedding · Prewedding · Photography</div></div><div style="text-align:right"><div class="invmuted">INVOICE</div><h2>${esc(invoice(b))}</h2><div class="invmuted">Tanggal: ${dateText(b.created_at)}</div>${fullyPaid(b)?'<b style="color:#267347">LUNAS</b>':'<b style="color:#8a692a">PENDING</b>'}</div></div>
+ let c=cBy(b)||{};
+ return `<div class="invoice-paper"><div class="invhead"><div><h2>KYRA PICTURE</h2><div class="invmuted">Wedding · Prewedding · Photography</div></div><div style="text-align:right"><div class="invmuted">INVOICE</div><h2>${esc(invoice(b))}</h2><div class="invmuted">Tanggal: ${dateText(b.created_at)}</div><b>${esc(statusLabel(b.status).toUpperCase())}</b></div></div>
  <div class="invsection grid g2"><div><div class="invmuted">DITAGIHKAN KEPADA</div><h3>${esc(c.full_name||"—")}</h3><div>${esc(c.phone||"")}</div></div><div><div class="invmuted">DETAIL ACARA</div><h3>${esc(b.event_type)}</h3><div>Tanggal: ${dateText(b.event_date)}</div><div>Lokasi: ${esc(b.event_location||"—")}</div></div></div>
  <div class="invsection"><table><thead><tr><th>Item</th><th>Qty</th><th>Harga</th><th>Subtotal</th></tr></thead><tbody>${items(b).map(x=>`<tr><td>${esc(x.name)}</td><td>${n(x.quantity)||1}</td><td>${money(x.price)}</td><td>${money(n(x.price)*(n(x.quantity)||1))}</td></tr>`).join("")}</tbody></table></div>
- <div class="invtotal invsection"><div class="line"><span>Total Invoice</span><b>${money(total(b))}</b></div><div class="line"><span>Total Dibayar</span><b>${money(paid(b.id))}</b></div><div class="line total"><span>Sisa Tagihan</span><b>${money(left(b))}</b></div></div>
- <div class="invsection"><h3>Riwayat Pembayaran</h3>${hist.length?`<table><thead><tr><th>Tanggal</th><th>Jenis</th><th>Metode</th><th>Nominal</th></tr></thead><tbody>${hist.map(p=>`<tr><td>${dateText(p.payment_date)}</td><td>${typeName(p.payment_type)}</td><td>${esc(p.payment_method||"—")}</td><td>${money(p.amount)}</td></tr>`).join("")}</tbody></table>`:'<div class="invmuted">Belum ada pembayaran.</div>'}</div>
- ${b.notes?`<div class="invsection"><h3>Catatan</h3>${esc(b.notes)}</div>`:""}<div class="invfoot"><b>Terima kasih telah mempercayakan momen Anda kepada Kyra Picture.</b><p>Simpan invoice ini sebagai bukti transaksi.</p></div></div>`
+ <div class="invtotal invsection"><div class="line total"><span>Total Invoice</span><b>${money(total(b))}</b></div></div>
+ ${b.notes?`<div class="invsection"><h3>Catatan</h3>${esc(b.notes)}</div>`:""}<div class="invfoot"><b>Terima kasih telah mempercayakan momen Anda kepada Kyra Picture.</b><p>Simpan invoice ini sebagai bukti detail transaksi.</p></div></div>`;
 }
-function showInvoice(id){let b=bBy(id);if(!b)return;$("modalRoot").innerHTML=`<div class="modalbg" onclick="if(event.target===this)closeModal()"><div class="modal wide"><div class="modalhead"><h2>Preview Invoice</h2><div class="actions"><button onclick="downloadPDF(${id})">Unduh PDF</button><button class="secondary" onclick="printInvoice(${id})">Cetak</button><button class="secondary" onclick="closeModal()">Tutup</button></div></div>${invoiceHTML(b)}</div></div>`}
-async function downloadPDF(id){let b=bBy(id);if(!b)return;let h=document.createElement("div");h.innerHTML=invoiceHTML(b);h.style.cssText="position:fixed;left:-10000px;top:0;width:800px";document.body.appendChild(h);try{await html2pdf().set({margin:8,filename:invoice(b)+".pdf",image:{type:"jpeg",quality:.98},html2canvas:{scale:2,backgroundColor:"#fff"},jsPDF:{unit:"mm",format:"a4",orientation:"portrait"}}).from(h.querySelector(".invoice-paper")).save()}catch(e){fail("PDF gagal dibuat",e)}finally{h.remove()}}
-function printInvoice(id){let b=bBy(id),w=window.open("","_blank");if(!w)return toast("Izinkan popup browser untuk mencetak invoice.",true);w.document.write(`<html><head><title>${esc(invoice(b))}</title><style>body{font:13px Arial;margin:20px}.invoice-paper{max-width:800px;margin:auto;padding:20px}.invhead{display:flex;justify-content:space-between;border-bottom:2px solid #222;padding-bottom:18px}.invmuted{color:#666;font-size:12px}.invsection{margin-top:24px}table{border-collapse:collapse;width:100%;margin-top:10px}th,td{text-align:left;padding:9px;border-bottom:1px solid #ddd}.invtotal{width:320px;margin-left:auto}.line{display:flex;justify-content:space-between;padding:7px 0}.invfoot{border-top:1px solid #ddd;margin-top:25px;padding-top:15px}</style></head><body>${invoiceHTML(b)}</body></html>`);w.document.close();w.focus();setTimeout(()=>w.print(),400)}
-db.auth.onAuthStateChange((event)=>{if(event==="SIGNED_OUT"){ $("app").classList.add("hidden");$("loginView").classList.remove("hidden") }});
+function showInvoice(id){
+ let b=bBy(id);if(!b)return;
+ $("modalRoot").innerHTML=`<div class="modalbg" onclick="if(event.target===this)closeModal()"><div class="modal wide"><div class="modalhead"><h2>Preview Invoice</h2><div class="actions"><button onclick="downloadPDF(${JSON.stringify(id)})">Unduh PDF</button><button class="secondary" onclick="printInvoice(${JSON.stringify(id)})">Cetak</button><button class="secondary" onclick="closeModal()">Tutup</button></div></div>${invoiceHTML(b)}</div></div>`;
+}
+async function downloadPDF(id){
+ let b=bBy(id);if(!b)return;
+ let h=document.createElement("div");h.innerHTML=invoiceHTML(b);h.style.cssText="position:fixed;left:-10000px;top:0;width:800px";document.body.appendChild(h);
+ try{await html2pdf().set({margin:8,filename:invoice(b)+".pdf",image:{type:"jpeg",quality:.98},html2canvas:{scale:2,backgroundColor:"#fff"},jsPDF:{unit:"mm",format:"a4",orientation:"portrait"}}).from(h.querySelector(".invoice-paper")).save()}
+ catch(e){fail("PDF gagal dibuat",e)}finally{h.remove()}
+}
+function printInvoice(id){
+ let b=bBy(id);if(!b)return;
+ let w=window.open("","_blank");if(!w)return toast("Izinkan popup browser untuk mencetak invoice.",true);
+ w.document.write(`<html><head><title>${esc(invoice(b))}</title><style>body{font:13px Arial;margin:20px}.invoice-paper{max-width:800px;margin:auto;padding:20px}.invhead{display:flex;justify-content:space-between;border-bottom:2px solid #222;padding-bottom:18px}.invmuted{color:#666;font-size:12px}.invsection{margin-top:24px}table{border-collapse:collapse;width:100%;margin-top:10px}th,td{text-align:left;padding:9px;border-bottom:1px solid #ddd}.invtotal{width:320px;margin-left:auto}.line{display:flex;justify-content:space-between;padding:7px 0}.invfoot{border-top:1px solid #ddd;margin-top:25px;padding-top:15px}</style></head><body>${invoiceHTML(b)}</body></html>`);
+ w.document.close();w.focus();setTimeout(()=>w.print(),400);
+}
+db.auth.onAuthStateChange(event=>{if(event==="SIGNED_OUT"){$("app").classList.add("hidden");$("loginView").classList.remove("hidden")}});
 boot();
 </script>
 </body>
