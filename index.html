@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f5f0e7">
-  <meta name="description" content="Abadikan momen pernikahan, prewedding, dan engagement bersama Kyra Picture. Temukan portofolio, pilihan paket fotografi, dan layanan kami.">
-  <title>Kyra Picture | Fotografi Wedding & Prewedding</title>
+  <meta name="description" content="Kyra Picture menyediakan jasa fotografi wedding, prewedding, dan engagement. Lihat portofolio, pilihan paket fotografi, serta dokumentasi momen spesial Anda.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Kyra Picture">
+  <link rel="canonical" href="https://kyra-picture-new.pages.dev/">
 
+  <title>Kyra Picture | Fotografi Wedding & Prewedding</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -164,7 +166,6 @@
       margin-bottom:32px;
     }
 
-    /* HERO CTA: tulisan tanpa kotak */
     .home-page .explore-link {
       display:inline-block;
       padding:0;
@@ -183,7 +184,6 @@
       color:var(--champagne);
     }
 
-    /* Tombol halaman lain tetap seperti semula */
     .home-page .button {
       display:inline-block;
       padding:16px 23px;
@@ -684,7 +684,10 @@
 
 <body class="home-page">
 <header class="site-header">
-  <a class="brand" href="index.html">KYRA PICTURE<span>PHOTOGRAPHY</span></a>
+  <a class="brand" href="index.html" aria-label="Kyra Picture home">
+    KYRA PICTURE<span>PHOTOGRAPHY</span>
+  </a>
+
   <nav class="main-nav" aria-label="Main navigation">
     <a href="index.html">HOME</a>
     <a href="portfolio.html">PORTFOLIO</a>
@@ -696,11 +699,28 @@
 </header>
 
 <main>
-  <section class="hero hero-carousel" aria-label="Featured photography">
+  <section class="hero hero-carousel" aria-label="Wedding and prewedding photography highlights">
     <div class="hero-slides">
-      <div class="hero-slide active" style="background-image:url('https://drive.google.com/thumbnail?id=1IpTXNqsMybPVXCOX_2v0v3xDvhUnXWS6&sz=w2000')" role="img" aria-label="Wedding celebration"></div>
-      <div class="hero-slide" style="background-image:url('https://drive.google.com/thumbnail?id=1zLYM_qt_8ziKHEJg0JJ7Bj4TW2fFp--x&sz=w2000')" role="img" aria-label="Romantic prewedding photography"></div>
-      <div class="hero-slide" style="background-image:url('https://drive.google.com/thumbnail?id=1qKN01Z7Xd9qgJqyzjS7ywPFNfSnHq7Zf&sz=w2000')" role="img" aria-label="Wedding moments"></div>
+      <div
+        class="hero-slide active"
+        style="background-image:url('https://drive.google.com/thumbnail?id=1IpTXNqsMybPVXCOX_2v0v3xDvhUnXWS6&sz=w2000')"
+        role="img"
+        aria-label="Wedding photography by Kyra Picture">
+      </div>
+
+      <div
+        class="hero-slide"
+        style="background-image:url('https://drive.google.com/thumbnail?id=1zLYM_qt_8ziKHEJg0JJ7Bj4TW2fFp--x&sz=w2000')"
+        role="img"
+        aria-label="Romantic prewedding photography by Kyra Picture">
+      </div>
+
+      <div
+        class="hero-slide"
+        style="background-image:url('https://drive.google.com/thumbnail?id=1qKN01Z7Xd9qgJqyzjS7ywPFNfSnHq7Zf&sz=w2000')"
+        role="img"
+        aria-label="Wedding moments captured by Kyra Picture">
+      </div>
     </div>
 
     <div class="hero-overlay"></div>
@@ -708,13 +728,17 @@
     <div class="hero-content">
       <p class="eyebrow">WEDDING · PREWEDDING · ENGAGEMENT</p>
       <h1>Your Story,<br><em>Beautifully</em><br>Captured.</h1>
-      <p class="description">Turning your most meaningful moments into timeless photographs.</p>
+      <p class="description">
+        Turning your most meaningful moments into timeless photographs.
+      </p>
       <a class="explore-link" href="portfolio.html">EXPLORE OUR WORK</a>
     </div>
 
     <div class="hero-controls">
       <button class="hero-arrow hero-prev" type="button" aria-label="Previous photo">←</button>
-      <span class="hero-counter" aria-live="polite"><span id="hero-current">01</span> / 03</span>
+      <span class="hero-counter" aria-live="polite">
+        <span id="hero-current">01</span> / 03
+      </span>
       <button class="hero-arrow hero-next" type="button" aria-label="Next photo">→</button>
     </div>
   </section>
@@ -727,20 +751,29 @@
     </div>
 
     <div class="featured-grid">
-      <a class="featured-card" href="wedding.html">
-        <img src="https://drive.google.com/thumbnail?id=1ZDJcCGEuBTk4UvSrfM1mRFTiU4O_mo9o&sz=w2000" alt="Wedding photography" loading="lazy">
+      <a class="featured-card" href="portfolio.html">
+        <img
+          src="https://drive.google.com/thumbnail?id=1ZDJcCGEuBTk4UvSrfM1mRFTiU4O_mo9o&sz=w2000"
+          alt="Wedding photography portfolio by Kyra Picture"
+          loading="lazy">
         <h3>Wedding Stories</h3>
         <p>For the beginning of forever.</p>
       </a>
 
-      <a class="featured-card" href="prewedding.html">
-        <img src="https://drive.google.com/thumbnail?id=1R8NsuQbnyZCH7vBsK9OVpiIqxDAMPW9T&sz=w2000" alt="Prewedding photography" loading="lazy">
+      <a class="featured-card" href="portfolio.html">
+        <img
+          src="https://drive.google.com/thumbnail?id=1R8NsuQbnyZCH7vBsK9OVpiIqxDAMPW9T&sz=w2000"
+          alt="Prewedding photography portfolio by Kyra Picture"
+          loading="lazy">
         <h3>Prewedding Moments</h3>
         <p>Your love story, captured before the big day.</p>
       </a>
 
-      <a class="featured-card" href="engagement.html">
-        <img src="https://drive.google.com/thumbnail?id=1W1S_gusPEBevHo1gwXxR-5V9WSdBoVoR&sz=w2000" alt="Engagement photography" loading="lazy">
+      <a class="featured-card" href="portfolio.html">
+        <img
+          src="https://drive.google.com/thumbnail?id=1W1S_gusPEBevHo1gwXxR-5V9WSdBoVoR&sz=w2000"
+          alt="Engagement photography portfolio by Kyra Picture"
+          loading="lazy">
         <h3>Engagement Stories</h3>
         <p>A little promise, a beautiful beginning.</p>
       </a>
@@ -777,11 +810,17 @@
     <div>
       <p class="eyebrow">THE KYRA APPROACH</p>
       <h2>Photographs that feel like you.</h2>
-      <p>We believe the most meaningful photographs come from real connections, little gestures, and the moments in between. Our approach is thoughtful, natural, and timeless.</p>
+      <p>
+        We believe the most meaningful photographs come from real connections,
+        little gestures, and the moments in between. Our approach is thoughtful,
+        natural, and timeless.
+      </p>
       <a class="button" href="about.html">GET TO KNOW US</a>
     </div>
 
-    <div class="about-note">“Your story deserves to be remembered beautifully.”</div>
+    <div class="about-note">
+      “Your story deserves to be remembered beautifully.”
+    </div>
   </section>
 </main>
 
@@ -1013,7 +1052,7 @@
 
     const avatar = document.createElement("img");
     avatar.className = "testimonial-photo";
-    avatar.alt = "Foto " + name;
+    avatar.alt = "Client portrait for " + name + " — Kyra Picture testimonial";
     avatar.loading = "lazy";
 
     if (photo) {
