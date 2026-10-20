@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -28,7 +27,7 @@ h3{margin:0 0 12px}
 .btn{border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--paper);color:var(--ink)}
 .primary{background:var(--ink);color:white;border-color:var(--ink)}
 .small{font-size:11px;padding:6px 8px}
-.notice{padding:12px;background:#f6eee3;border:1px solid #e6d5c2;border-radius:9px;color:#725b48;font-size:12px;margin-bottom:18px}
+.notice{padding:12px;background:#f6eee3;border:1px solid #e6d5c2;border-radius:9px;color:#725b48;font-size:12px;margin-bottom:18px;white-space:pre-wrap}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:15px}
 .stat,.panel{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:17px;margin-bottom:15px}
 .stat span{font-size:12px;color:var(--muted)}
@@ -47,7 +46,7 @@ tr:last-child td{border-bottom:0}
 .red{background:#f7e6e3;color:var(--red)}
 .actions{display:flex;gap:6px;flex-wrap:wrap}
 .search{display:flex;gap:8px;margin-bottom:14px}
-.search input,.search select,.field input,.field select,.field textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:7px;background:white;color:var(--ink)}
+.search input,.search select,.field input,.field select,.field textarea,.item-input{width:100%;padding:10px;border:1px solid var(--line);border-radius:7px;background:white;color:var(--ink)}
 .search input{flex:1}
 .field{display:grid;gap:5px;margin-bottom:12px}
 .field label{font-size:11px;color:var(--muted);font-weight:bold}
@@ -55,7 +54,7 @@ tr:last-child td{border-bottom:0}
 .full{grid-column:1/-1}
 .modalbg{display:none;position:fixed;inset:0;background:#1f1713aa;z-index:5;align-items:center;justify-content:center;padding:15px}
 .modalbg.show{display:flex}
-.modal{width:min(680px,100%);max-height:92vh;overflow:auto;background:var(--paper);border-radius:14px;padding:22px}
+.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:var(--paper);border-radius:14px;padding:22px}
 .modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .close{border:0;background:none;font-size:24px}
 .formfoot{display:flex;justify-content:flex-end;gap:8px}
@@ -70,13 +69,34 @@ tr:last-child td{border-bottom:0}
 .login h1{font-size:30px}
 .error{color:var(--red);font-size:12px;white-space:pre-wrap}
 .hidden{display:none!important}
+.item-editor{border:1px solid var(--line);border-radius:9px;padding:12px;margin-bottom:8px;background:white}
+.item-editor-grid{display:grid;grid-template-columns:minmax(0,1fr) 75px 125px 30px;gap:7px;align-items:center}
+.item-editor-grid input{min-width:0;width:100%;padding:9px;border:1px solid var(--line);border-radius:6px}
+.item-labels{display:grid;grid-template-columns:minmax(0,1fr) 75px 125px 30px;gap:7px;margin-bottom:5px;font-size:10px;color:var(--muted)}
+.invoice-total{text-align:right;margin-top:15px}
+.invoice-total div{padding:5px 0}
+.invoice-total .grand{font-size:19px;font-weight:bold;border-top:1px solid #222;margin-top:7px;padding-top:12px}
 @media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.app{grid-template-columns:180px 1fr}.main{padding:16px}}
-@media(max-width:650px){.app{display:block}.side{padding:12px}.brand{margin-bottom:10px;font-size:22px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;width:auto;padding:9px}.main{padding:12px}.top{align-items:flex-start;flex-direction:column}h1{font-size:29px}.stat{padding:12px}.stat strong{font-size:18px}.formgrid,.minigrid{grid-template-columns:1fr}.full{grid-column:auto}.search{flex-direction:column}}
+@media(max-width:650px){.app{display:block}.side{padding:12px}.brand{margin-bottom:10px;font-size:22px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;width:auto;padding:9px}.main{padding:12px}.top{align-items:flex-start;flex-direction:column}h1{font-size:29px}.stat{padding:12px}.stat strong{font-size:18px}.formgrid,.minigrid{grid-template-columns:1fr}.full{grid-column:auto}.search{flex-direction:column}.modal{padding:15px}.item-editor-grid{grid-template-columns:minmax(0,1fr) 55px 95px 28px;gap:4px}.item-labels{grid-template-columns:minmax(0,1fr) 55px 95px 28px;gap:4px}.item-editor-grid input{padding:7px;font-size:12px}}
 @media print{
- body{background:white}.side,.top,.notice,.no-print,.footer,.modalbg{display:none!important}
- .app{display:block}.main{padding:0;max-width:none}
+ @page{size:A4;margin:15mm}
+ body{background:white!important;color:#111!important;font-size:11px}
+ .side,.top,.notice,.no-print,.footer,.modalbg,.screen-only{display:none!important}
+ .app{display:block;min-height:0}.main{padding:0;max-width:none;width:100%}
  .view{display:none!important}#view-print{display:block!important}
- .panel{border:0;padding:0;margin:0}
+ #view-print .panel{border:0;padding:0;margin:0;border-radius:0;background:white}
+ #printArea{color:#111!important;font-size:11px}
+ #printArea h1{font-size:28px;color:#111!important}
+ #printArea h2{font-size:20px;color:#111!important}
+ #printArea .muted{color:#555!important}
+ #printArea table{min-width:0;width:100%;border-collapse:collapse}
+ #printArea th,#printArea td{color:#111!important;border-bottom:1px solid #ddd;padding:8px 5px;font-size:10px}
+ #printArea th{border-bottom:1px solid #222}
+ #printArea .invoice-footer{border-top:1px solid #222;margin-top:34px;padding-top:14px}
+ #printArea .contact-row{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:nowrap}
+ #printArea .contact-item{display:flex;align-items:center;gap:5px;white-space:nowrap;font-size:9px}
+ #printArea .contact-item svg{width:15px;height:15px;flex-shrink:0}
+ #printArea .office-address{text-align:center;font-size:9px;line-height:1.5;margin-top:10px;color:#333}
 }
 </style>
 </head>
@@ -188,7 +208,6 @@ tr:last-child td{border-bottom:0}
 <div class="modalbg" id="modal"><div class="modal"><div class="modalhead"><h2 id="modalTitle">Form</h2><button class="close" id="close">×</button></div><div id="modalContent"></div></div></div>
 
 <script>
-/* Konfigurasi Supabase: gunakan publishable/anon key, bukan service_role. */
 const SUPABASE_URL='https://vgiczgeleincrhlhsdzy.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_ua5vsHvJnweG2zWCT_jkxg_BJsjQPXl';
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
@@ -229,9 +248,51 @@ function closeModal(){$('modal').classList.remove('show')}
 function field(label,name,value='',type='text',required=false,extra=''){
  return `<div class="field"><label for="${esc(name)}">${label}${required?' *':''}</label><input id="${esc(name)}" name="${esc(name)}" type="${type}" value="${esc(value)}" ${required?'required':''} ${extra}></div>`;
 }
-function packageOptions(selected){return PACKAGES.map(p=>`<option value="${esc(p[0])}" ${p[0]===selected?'selected':''}>${esc(p[0])}${p[1]?' — '+rp(p[1]):' — harga manual'}</option>`).join('')}
-function itemRow(item){return `<div class="itemrow" style="display:grid;grid-template-columns:1fr 120px 30px;gap:6px;margin-bottom:7px"><select class="pkg">${packageOptions(item.name)}</select><input class="price" type="number" min="0" value="${Number(item.price)||0}"><button type="button" class="btn small remove">×</button></div>`}
-function clientForBooking(id){const b=booking(id);return b?clientFor(b):null}
+function packageOptions(selected){return PACKAGES.map(p=>`<option value="${esc(p[0])}" ${p[0]===selected?'selected':''}>${esc(p[0])}</option>`).join('')}
+function normalizeItems(items,b){
+ if(!Array.isArray(items)||!items.length)return[{name:b?.package_name||b?.event_type||'Paket fotografi',quantity:1,price:Number(b?.invoice_total||0)}];
+ return items.map(x=>({name:x.name||'Item tambahan',quantity:Math.max(1,Number(x.quantity||1)),price:Math.max(0,Number(x.price||0))}));
+}
+function itemRow(item={}){
+ return `<div class="item-editor"><div class="item-editor-grid">
+ <input class="item-name" aria-label="Nama item" placeholder="Nama paket / biaya tambahan" value="${esc(item.name||'')}">
+ <input class="item-qty" aria-label="Kuantitas" type="number" min="1" step="1" value="${Math.max(1,Number(item.quantity||1))}">
+ <input class="item-price" aria-label="Harga satuan" type="number" min="0" step="1000" value="${Math.max(0,Number(item.price||0))}">
+ <button type="button" class="btn small remove-item" title="Hapus item">×</button>
+ </div><div class="muted item-subtotal" style="text-align:right;font-size:11px;margin-top:7px">Subtotal: Rp0</div></div>`;
+}
+function readItems(){
+ return [...document.querySelectorAll('.item-editor')].map(r=>({
+  name:r.querySelector('.item-name').value.trim(),
+  quantity:Math.max(1,Math.floor(Number(r.querySelector('.item-qty').value)||1)),
+  price:Math.max(0,Number(r.querySelector('.item-price').value)||0)
+ })).filter(x=>x.name);
+}
+function bindItemEditor(){
+ const update=()=>{
+  let sum=0;
+  document.querySelectorAll('.item-editor').forEach(r=>{
+   const q=Math.max(1,Math.floor(Number(r.querySelector('.item-qty').value)||1));
+   const p=Math.max(0,Number(r.querySelector('.item-price').value)||0);
+   const sub=q*p;sum+=sub;
+   r.querySelector('.item-subtotal').textContent='Subtotal: '+rp(sub);
+  });
+  $('calculatedTotal').textContent=rp(sum);
+ };
+ document.querySelectorAll('.item-editor').forEach(r=>{
+  r.querySelectorAll('.item-name,.item-qty,.item-price').forEach(el=>el.addEventListener('input',update));
+  r.querySelector('.remove-item').onclick=()=>{
+   if(document.querySelectorAll('.item-editor').length===1){alert('Invoice minimal harus memiliki satu item.');return}
+   r.remove();update();
+  };
+ });
+ update();
+}
+function newInvoiceNo(){
+ const year=new Date().getFullYear();
+ const random=String(Math.floor(Math.random()*900000)+100000);
+ return `KYP-${year}-${Date.now().toString().slice(-6)}${random.slice(-2)}`;
+}
 
 async function refresh(){
  clearError();
@@ -242,80 +303,67 @@ async function refresh(){
   sb.from('expenses').select('*').order('created_at',{ascending:false})
  ]);
  const err=results.find(r=>r.error);
- if(err){showError('Gagal memuat data Supabase: '+err.error.message+' Pastikan SQL migrasi sudah dijalankan.');return}
+ if(err){showError('Gagal memuat data Supabase: '+err.error.message+'\nPeriksa koneksi, hak akses, dan kolom invoice di database.');return false}
  [clients,bookings,payments,expenses]=results.map(r=>r.data||[]);
- render();
+ render();return true;
 }
 
 function clientForm(id=null){
  const b=id?booking(id):null;
  const existing=b?clientFor(b):null;
- const storedItems=Array.isArray(b?.package_details)?b.package_details:[];
- const items=storedItems.length?storedItems:[{name:b?.package_name||PACKAGES[0][0],price:Number(b?.invoice_total||PACKAGES[0][1])}];
-
+ const items=normalizeItems(b?.package_details,b);
+ const typeOptions=['Wedding','Prewedding','Engagement','Candid Wedding','Wisuda','Lainnya'];
  modal(b?'Edit Klien & Invoice':'Tambah Klien & Event',`
  <form id="clientForm"><div class="formgrid">
  ${field('Nama klien','name',existing?.full_name||'','text',true)}
- ${field('WhatsApp','phone',existing?.phone||'')}
- ${field('Email','email',existing?.email||'','email')}
- <div class="field"><label>Jenis event *</label><select name="type" required>${['Wedding','Prewedding','Engagement','Candid Wedding','Wisuda','Lainnya'].map(x=>`<option ${b?.event_type===x?'selected':''}>${x}</option>`).join('')}</select></div>
+ ${field('WhatsApp','phone',existing?.phone||'','text',false)}
+ <div class="field"><label>Jenis event *</label><select name="type" required>${typeOptions.map(x=>`<option ${b?.event_type===x?'selected':''}>${x}</option>`).join('')}</select></div>
  ${field('Tanggal event','date',b?.event_date||'','date',true)}
  ${field('Lokasi','location',b?.event_location||'')}
- ${field('Nomor invoice','invoice_no',b?.invoice_no||'')}
- <div class="field full"><label>Paket / layanan</label><div id="items">${items.map(itemRow).join('')}</div><button type="button" class="btn small" id="addItem">＋ Tambah paket</button></div>
- ${field('Total invoice (Rp)','total',b?.invoice_total??items.reduce((s,x)=>s+Number(x.price||0),0),'number',true,'min="0"')}
- ${field('DP yang disepakati (Rp)','dp',b?.dp_amount||0,'number',false,'min="0"')}
  <div class="field"><label>Status event</label><select name="event_status">${[['pending','Booking'],['confirmed','Persiapan / Confirmed'],['completed','Selesai'],['cancelled','Dibatalkan']].map(x=>`<option value="${x[0]}" ${(b?.status||'pending')===x[0]?'selected':''}>${x[1]}</option>`).join('')}</select></div>
- <div class="field full"><label>Catatan klien / event</label><textarea name="notes" rows="2">${esc(existing?.notes||b?.notes||'')}</textarea></div>
+ <div class="field full">
+  <label>Rincian invoice — paket dan biaya tambahan</label>
+  <div class="item-labels"><span>Nama item</span><span>Qty</span><span>Harga satuan (Rp)</span><span></span></div>
+  <div id="items">${items.map(itemRow).join('')}</div>
+  <button type="button" class="btn small" id="addItem">＋ Tambah item / biaya</button>
+  <div class="invoice-total"><div>Total invoice: <strong id="calculatedTotal">Rp0</strong></div></div>
  </div>
- <p class="muted" style="font-size:11px">Harga paket bisa diedit. Total invoice dihitung dari daftar paket, tetapi juga bisa disesuaikan manual.</p>
+ ${field('DP yang disepakati (Rp)','dp',b?.dp_amount||0,'number',false,'min="0" step="1000"')}
+ <div class="field full"><label>Catatan klien / event</label><textarea name="notes" rows="2">${esc(b?.notes||existing?.notes||'')}</textarea></div>
+ </div>
+ <p class="muted" style="font-size:11px">Nomor invoice dibuat otomatis. Total invoice dihitung dari kuantitas × harga satuan setiap item. Biaya yang ditagihkan ke klien masuk ke invoice; pembayaran kru dicatat terpisah di Crew & Expense.</p>
  <p id="formError" class="error"></p>
- <div class="formfoot"><button type="button" class="btn" id="cancel">Batal</button><button class="btn primary">Simpan</button></div></form>`);
-
+ <div class="formfoot"><button type="button" class="btn" id="cancel">Batal</button><button class="btn primary" id="saveClient">Simpan</button></div></form>`);
  $('cancel').onclick=closeModal;
-
- function sumItems(){
-  $('total').value=[...document.querySelectorAll('.itemrow .price')].reduce((s,x)=>s+Number(x.value||0),0);
- }
- function bindItems(){
-  document.querySelectorAll('.itemrow').forEach(row=>{
-   row.querySelector('.pkg').onchange=()=>{
-    const p=PACKAGES.find(x=>x[0]===row.querySelector('.pkg').value);
-    if(p&&p[1])row.querySelector('.price').value=p[1];
-    sumItems();
-   };
-   row.querySelector('.price').oninput=sumItems;
-   row.querySelector('.remove').onclick=()=>{
-    if(document.querySelectorAll('.itemrow').length>1){row.remove();sumItems()}
-   };
-  });
- }
- $('addItem').onclick=()=>{$('items').insertAdjacentHTML('beforeend',itemRow({name:'Custom / Paket Lain',price:0}));bindItems()};
- bindItems();
+ $('addItem').onclick=()=>{
+  $('items').insertAdjacentHTML('beforeend',itemRow({name:'',quantity:1,price:0}));
+  bindItemEditor();
+ };
+ bindItemEditor();
 
  $('clientForm').onsubmit=async e=>{
   e.preventDefault();
-  const btn=e.submitter;
-  if(btn)btn.disabled=true;
+  const btn=$('saveClient');btn.disabled=true;
   const f=new FormData(e.target);
-  const newItems=[...document.querySelectorAll('.itemrow')].map(r=>({name:r.querySelector('.pkg').value,price:Number(r.querySelector('.price').value||0)}));
-  const newTotal=Number(f.get('total')||0);
+  const newItems=readItems();
+  if(!newItems.length){$('formError').textContent='Tambahkan minimal satu item dengan nama yang jelas.';btn.disabled=false;return}
+  const newTotal=newItems.reduce((s,x)=>s+x.quantity*x.price,0);
+  const dp=Number(f.get('dp')||0);
+  if(dp>newTotal){$('formError').textContent='DP yang disepakati tidak boleh melebihi total invoice.';btn.disabled=false;return}
   try{
-   const clientPayload={full_name:String(f.get('name')).trim(),phone:f.get('phone')||null,email:f.get('email')||null,notes:f.get('notes')||null};
+   const clientPayload={full_name:String(f.get('name')).trim(),phone:String(f.get('phone')||'').trim()||null,notes:String(f.get('notes')||'').trim()||null};
    let cr=existing
     ?await sb.from('clients').update(clientPayload).eq('id',existing.id).select().single()
     :await sb.from('clients').insert(clientPayload).select().single();
    if(cr.error)throw cr.error;
 
-   let invoiceNo=String(f.get('invoice_no')||'').trim();
-   if(!invoiceNo&&!b)invoiceNo='KYP-'+new Date().getFullYear()+'-'+String(Date.now()).slice(-6);
-
    const bookingPayload={
     client_id:cr.data.id,event_type:f.get('type'),event_date:f.get('date')||null,
-    event_location:f.get('location')||null,status:f.get('event_status'),
-    notes:f.get('notes')||null,invoice_no:invoiceNo||null,
+    event_location:String(f.get('location')||'').trim()||null,status:f.get('event_status'),
+    notes:String(f.get('notes')||'').trim()||null,
+    invoice_no:b?.invoice_no||newInvoiceNo(),
     package_name:newItems.map(x=>x.name).join(', '),
-    package_details:newItems,invoice_total:newTotal,dp_amount:Number(f.get('dp')||0)
+    package_details:newItems,invoice_total:newTotal,dp_amount:dp
    };
    const br=b
     ?await sb.from('bookings').update(bookingPayload).eq('id',b.id).select().single()
@@ -323,33 +371,33 @@ function clientForm(id=null){
    if(br.error)throw br.error;
    closeModal();await refresh();detail(br.data.id);
   }catch(err){
-   $('formError').textContent='Gagal menyimpan: '+err.message;
-   if(btn)btn.disabled=false;
+   $('formError').textContent='Gagal menyimpan: '+(err.message||String(err));
+   btn.disabled=false;
   }
  };
 }
 
 function paymentForm(id){
- const b=booking(id),c=clientFor(b);
- if(!b||!c)return;
+ const b=booking(id);if(!b)return;
  modal('Catat Pembayaran',`
  <p class="muted">Invoice ${esc(b.invoice_no||('INV-'+b.id))} · Total ${rp(total(b))} · Terbayar ${rp(paid(b))} · Sisa ${rp(remaining(b))}</p>
  <form id="payForm"><div class="formgrid">
  ${field('Tanggal','date',new Date().toISOString().slice(0,10),'date',true)}
- ${field('Nominal diterima (Rp)','amount','','number',true,`min="1" max="${remaining(b)}"`)}
+ ${field('Nominal diterima (Rp)','amount','','number',true,`min="1" max="${remaining(b)}" step="1000"`)}
  <div class="field"><label>Metode</label><select name="method"><option>Transfer bank</option><option>Tunai</option><option>E-wallet</option><option>Lainnya</option></select></div>
- <div class="field"><label>Jenis pembayaran</label><select name="kind"><option>DP</option><option>Cicilan</option><option>Pelunasan</option></select></div>
+ <div class="field"><label>Jenis pembayaran</label><select name="kind"><option value="dp">DP</option><option value="installment">Cicilan</option><option value="final">Pelunasan</option></select></div>
  </div><p id="formError" class="error"></p><div class="formfoot"><button type="button" class="btn" id="cancel">Batal</button><button class="btn primary">Simpan Pembayaran</button></div></form>`);
  $('cancel').onclick=closeModal;
  $('payForm').onsubmit=async e=>{
   e.preventDefault();
+  const btn=e.submitter; if(btn)btn.disabled=true;
   const f=new FormData(e.target),amount=Number(f.get('amount'));
-  if(amount<=0||amount>remaining(b)){$('formError').textContent='Nominal tidak boleh melebihi sisa tagihan.';return}
+  if(amount<=0||amount>remaining(b)){$('formError').textContent='Nominal harus lebih dari nol dan tidak boleh melebihi sisa tagihan.';if(btn)btn.disabled=false;return}
   const r=await sb.from('payments').insert({
    booking_id:b.id,amount,payment_type:f.get('kind'),payment_status:'paid',
    payment_date:f.get('date'),payment_method:f.get('method'),notes:null
   });
-  if(r.error){$('formError').textContent='Gagal menyimpan: '+r.error.message;return}
+  if(r.error){$('formError').textContent='Gagal menyimpan: '+r.error.message;if(btn)btn.disabled=false;return}
   closeModal();await refresh();detail(b.id);
  };
 }
@@ -358,21 +406,23 @@ function costForm(bookingId=null){
  if(!bookings.length){alert('Tambahkan klien dan event dulu.');return}
  modal('Catat Crew / Expense',`
  <form id="costForm"><div class="formgrid">
- <div class="field full"><label>Event *</label><select name="booking_id">${bookings.map(b=>`<option value="${b.id}" ${String(b.id)===String(bookingId)?'selected':''}>${esc(clientFor(b)?.full_name||'Klien')} — ${esc(b.event_type)} (${date(b.event_date)})</option>`).join('')}</select></div>
+ <div class="field full"><label>Event *</label><select name="booking_id" required>${bookings.map(b=>`<option value="${b.id}" ${String(b.id)===String(bookingId)?'selected':''}>${esc(clientFor(b)?.full_name||'Klien')} — ${esc(b.event_type)} (${date(b.event_date)})</option>`).join('')}</select></div>
  <div class="field"><label>Kategori</label><select name="category">${CATEGORIES.map(x=>`<option>${x}</option>`).join('')}</select></div>
- ${field('Nominal (Rp)','amount','','number',true,'min="1"')}
+ ${field('Nominal (Rp)','amount','','number',true,'min="1" step="1000"')}
  ${field('Nama crew / keterangan','description','','text',true)}
  ${field('Tanggal','date',new Date().toISOString().slice(0,10),'date',true)}
  </div><p id="formError" class="error"></p><div class="formfoot"><button type="button" class="btn" id="cancel">Batal</button><button class="btn primary">Simpan Biaya</button></div></form>`);
  $('cancel').onclick=closeModal;
  $('costForm').onsubmit=async e=>{
-  e.preventDefault();const f=new FormData(e.target);
+  e.preventDefault();const btn=e.submitter;if(btn)btn.disabled=true;
+  const f=new FormData(e.target);
   const r=await sb.from('expenses').insert({
    booking_id:f.get('booking_id'),category:f.get('category'),
    amount:Number(f.get('amount')),description:f.get('description'),expense_date:f.get('date')
   });
-  if(r.error){$('formError').textContent='Gagal menyimpan: '+r.error.message;return}
-  closeModal();await refresh();if(bookingId)detail(bookingId);
+  if(r.error){$('formError').textContent='Gagal menyimpan: '+r.error.message;if(btn)btn.disabled=false;return}
+  const savedId=f.get('booking_id');
+  closeModal();await refresh();detail(savedId);
  };
 }
 
@@ -388,14 +438,14 @@ function detail(id){
 
  $('info').innerHTML=`
  <p><b>Invoice:</b> ${esc(b.invoice_no||('INV-'+b.id))}</p>
- <p><b>WhatsApp:</b> ${esc(c.phone||'—')}</p><p><b>Email:</b> ${esc(c.email||'—')}</p>
+ <p><b>WhatsApp:</b> ${esc(c.phone||'—')}</p>
  <p><b>Tanggal:</b> ${date(b.event_date)}</p><p><b>Lokasi:</b> ${esc(b.event_location||'—')}</p>
- <p><b>Paket:</b> ${esc(b.package_name||'—')}</p><p><b>DP disepakati:</b> ${rp(b.dp_amount)}</p>
+ <p><b>Paket / item:</b> ${esc(b.package_name||'—')}</p><p><b>DP disepakati:</b> ${rp(b.dp_amount)}</p>
  <p><b>Status event:</b> ${esc(b.status)}</p><p><b>Catatan:</b> ${esc(b.notes||c.notes||'—')}</p>`;
 
  const ps=payments.filter(p=>String(p.booking_id)===String(id));
  $('payments').innerHTML=ps.length
- ?`<div class="tablewrap"><table style="min-width:0"><tr><th>Tanggal</th><th>Jenis</th><th>Nominal</th><th>Metode</th></tr>${ps.map(p=>`<tr><td>${date(p.payment_date)}</td><td>${esc(p.payment_type||'Pembayaran')}</td><td>${rp(p.amount)}</td><td>${esc(p.payment_method||'—')}</td></tr>`).join('')}</table></div>`
+ ?`<div class="tablewrap"><table style="min-width:0"><tr><th>Tanggal</th><th>Jenis</th><th>Nominal</th><th>Metode</th></tr>${ps.map(p=>`<tr><td>${date(p.payment_date)}</td><td>${esc(({dp:'DP',installment:'Cicilan',final:'Pelunasan'})[p.payment_type]||p.payment_type||'Pembayaran')}</td><td>${rp(p.amount)}</td><td>${esc(p.payment_method||'—')}</td></tr>`).join('')}</table></div>`
  :'<div class="empty">Belum ada pembayaran.</div>';
 
  const cs=expenses.filter(x=>String(x.booking_id)===String(id));
@@ -409,28 +459,48 @@ function detail(id){
  $('costDetail').onclick=()=>costForm(id);
 }
 
+const ICONS={
+ web:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>`,
+ instagram:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>`,
+ whatsapp:`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.08 0C5.5 0 .15 5.34.15 11.92c0 2.1.55 4.15 1.6 5.96L.05 24l6.27-1.64a11.9 11.9 0 0 0 5.76 1.47h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.19-1.24-6.19-3.49-8.43ZM12.08 21.8a9.9 9.9 0 0 1-5.05-1.38l-.36-.21-3.72.97.99-3.63-.24-.37a9.85 9.85 0 0 1-1.51-5.26c0-5.46 4.44-9.9 9.9-9.9a9.84 9.84 0 0 1 7.01 2.9 9.84 9.84 0 0 1 2.9 7c0 5.45-4.45 9.88-9.92 9.88Zm5.43-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.8-1.49-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.5 1.7.64.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.27-.2-.57-.35Z"/></svg>`
+};
+
 function invoice(id){
  const b=booking(id),c=clientFor(b);if(!b||!c)return;
- const items=Array.isArray(b.package_details)?b.package_details:[];
+ const items=normalizeItems(b.package_details,b);
+ const itemsTotal=items.reduce((s,x)=>s+x.quantity*x.price,0);
+ const itemRows=items.map(x=>`<tr><td>${esc(x.name)}</td><td style="text-align:center">${x.quantity}</td><td style="text-align:right">${rp(x.price)}</td><td style="text-align:right">${rp(x.quantity*x.price)}</td></tr>`).join('');
+ const invNo=b.invoice_no||('INV-'+b.id);
+ const today=date(new Date().toISOString().slice(0,10));
  $('printArea').innerHTML=`
- <div style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
-  <div><div class="eyebrow">PHOTOGRAPHY & CINEMATIC</div><h1>Kyra Picture</h1><p class="muted">Wedding · Prewedding · Engagement</p></div>
-  <div><h2>INVOICE</h2><b>${esc(b.invoice_no||('INV-'+b.id))}</b><p>${date(new Date().toISOString().slice(0,10))}</p></div>
+ <div style="display:flex;justify-content:space-between;gap:20px;align-items:flex-start">
+  <div><div style="font-size:10px;letter-spacing:2px;color:#555">PHOTOGRAPHY & CINEMATIC</div><h1 style="margin-top:8px">Kyra Picture</h1><p class="muted">Wedding · Prewedding · Engagement</p></div>
+  <div style="text-align:right"><h2 style="letter-spacing:2px">INVOICE</h2><b>${esc(invNo)}</b><p style="margin-top:8px">${today}</p></div>
  </div>
- <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
- <div class="grid2">
-  <div><b>Ditagihkan kepada</b><p>${esc(c.full_name)}<br>${esc(c.phone||'')}<br>${esc(c.email||'')}</p></div>
-  <div><b>Detail event</b><p>${esc(b.event_type)}<br>${date(b.event_date)}<br>${esc(b.event_location||'')}</p></div>
+ <hr style="border:0;border-top:1px solid #222;margin:20px 0">
+ <div class="grid2" style="grid-template-columns:1fr 1fr">
+  <div><b>DITAGIHKAN KEPADA</b><p style="line-height:1.7">${esc(c.full_name)}<br>${esc(c.phone||'')}</p></div>
+  <div><b>DETAIL EVENT</b><p style="line-height:1.7">${esc(b.event_type)}<br>${date(b.event_date)}<br>${esc(b.event_location||'—')}</p></div>
  </div>
- <table style="min-width:0;margin-top:15px">
-  <tr><th>Deskripsi</th><th>Harga</th></tr>
-  ${items.length?items.map(x=>`<tr><td>${esc(x.name)}</td><td>${rp(x.price)}</td></tr>`).join(''):`<tr><td>${esc(b.package_name||b.event_type)}</td><td>${rp(total(b))}</td></tr>`}
-  <tr><td><b>Total Invoice</b></td><td><b>${rp(total(b))}</b></td></tr>
-  <tr><td>DP disepakati</td><td>${rp(b.dp_amount)}</td></tr>
-  <tr><td>Telah dibayar</td><td>${rp(paid(b))}</td></tr>
-  <tr><td><b>Sisa tagihan</b></td><td><b>${rp(remaining(b))}</b></td></tr>
+ <table style="min-width:0;margin-top:20px">
+  <thead><tr><th>Deskripsi</th><th style="text-align:center">Qty</th><th style="text-align:right">Harga satuan</th><th style="text-align:right">Subtotal</th></tr></thead>
+  <tbody>${itemRows}</tbody>
  </table>
- <p style="margin-top:30px">Terima kasih telah mempercayakan momen spesial Anda kepada Kyra Picture.</p>`;
+ <div class="invoice-total">
+  <div>Total invoice: <strong>${rp(itemsTotal)}</strong></div>
+  <div>DP disepakati: ${rp(b.dp_amount)}</div>
+  <div>Telah dibayar: ${rp(paid(b))}</div>
+  <div class="grand">SISA TAGIHAN: ${rp(Math.max(0,itemsTotal-paid(b)))}</div>
+ </div>
+ <p style="margin-top:32px;line-height:1.6">Terima kasih telah mempercayakan momen spesial Anda kepada Kyra Picture.</p>
+ <div class="invoice-footer">
+  <div class="contact-row">
+   <a class="contact-item" href="https://kyrapicture.com" style="color:#111;text-decoration:none">${ICONS.web}<span>kyrapicture.com</span></a>
+   <a class="contact-item" href="https://www.instagram.com/kyra.picture/" style="color:#111;text-decoration:none">${ICONS.instagram}<span>@kyra.picture</span></a>
+   <a class="contact-item" href="https://wa.me/6289519847571" style="color:#111;text-decoration:none">${ICONS.whatsapp}<span>0895-1984-7571</span></a>
+  </div>
+  <div class="office-address">Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28, Jayamulya, Serang Baru,<br>Kabupaten Bekasi, Jawa Barat 17330.</div>
+ </div>`;
  view('print');
 }
 
