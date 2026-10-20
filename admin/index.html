@@ -1,603 +1,418 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>Kyra Picture | Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kyra Picture — Admin</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#f5f0e7;--paper:#fffdf9;--ink:#392a24;--muted:#81756e;--line:#e7ded3;--green:#39785b;--red:#a64c42}
+:root{font-family:Arial,sans-serif;color:#171717;background:#f5f5f5}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:14px Arial,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer}
-.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
-.side{background:var(--ink);color:#fff8ef;padding:24px 15px}
-.brand{font:25px Georgia,serif;margin-bottom:28px}
-.brand small{display:block;font:10px Arial;letter-spacing:2px;color:#d5bca7;margin-top:5px}
-.nav button{display:block;width:100%;text-align:left;padding:12px;border:0;border-radius:8px;background:none;color:#eee0d3;margin:4px 0}
-.nav button.active,.nav button:hover{background:#ffffff1b}
-.main{padding:25px;max-width:1400px;width:100%;margin:auto}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
-.eyebrow{font-size:10px;letter-spacing:2px;color:#9b6b4d;font-weight:bold}
-h1{font:34px Georgia,serif;margin:6px 0}
-h2{font:23px Georgia,serif;margin:0}
-h3{margin:0 0 12px}
-.muted{color:var(--muted)}
-.btn{border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--paper);color:var(--ink)}
-.primary{background:var(--ink);color:white;border-color:var(--ink)}
-.small{font-size:11px;padding:6px 8px}
-.notice{padding:12px;background:#f6eee3;border:1px solid #e6d5c2;border-radius:9px;color:#725b48;font-size:12px;margin-bottom:18px;white-space:pre-wrap}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:15px}
-.stat,.panel{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:17px;margin-bottom:15px}
-.stat span{font-size:12px;color:var(--muted)}
-.stat strong{display:block;font-size:22px;margin:9px 0;overflow-wrap:anywhere}
-.stat small{font-size:11px;color:var(--muted)}
-.grid2{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}
-.panelhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
-.view{display:none}.view.active{display:block}
-.tablewrap{overflow:auto}
-table{width:100%;border-collapse:collapse;min-width:560px}
-th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);font-size:12px;vertical-align:middle}
-th{color:var(--muted);font-size:10px;text-transform:uppercase}
-tr:last-child td{border-bottom:0}
-.badge{display:inline-block;border-radius:30px;padding:4px 7px;background:#eee7dd;font-size:10px}
-.green{background:#e4f1e9;color:var(--green)}
-.red{background:#f7e6e3;color:var(--red)}
-.actions{display:flex;gap:6px;flex-wrap:wrap}
-.search{display:flex;gap:8px;margin-bottom:14px}
-.search input,.search select,.field input,.field select,.field textarea,.item-input{width:100%;padding:10px;border:1px solid var(--line);border-radius:7px;background:white;color:var(--ink)}
-.search input{flex:1}
-.field{display:grid;gap:5px;margin-bottom:12px}
-.field label{font-size:11px;color:var(--muted);font-weight:bold}
-.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
-.full{grid-column:1/-1}
-.modalbg{display:none;position:fixed;inset:0;background:#1f1713aa;z-index:5;align-items:center;justify-content:center;padding:15px}
-.modalbg.show{display:flex}
-.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:var(--paper);border-radius:14px;padding:22px}
-.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.close{border:0;background:none;font-size:24px}
-.formfoot{display:flex;justify-content:flex-end;gap:8px}
-.empty{text-align:center;color:var(--muted);padding:22px}
-.mini{padding:12px;border:1px solid var(--line);border-radius:8px}
-.mini span{display:block;font-size:11px;color:var(--muted)}
-.mini strong{display:block;margin-top:5px}
-.minigrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:15px}
-.footer{text-align:center;color:var(--muted);font-size:10px;padding:10px}
-.loginwrap{min-height:100vh;display:grid;place-items:center;padding:20px}
-.login{width:min(420px,100%);background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:28px}
-.login h1{font-size:30px}
-.error{color:var(--red);font-size:12px;white-space:pre-wrap}
-.hidden{display:none!important}
-.item-editor{border:1px solid var(--line);border-radius:9px;padding:12px;margin-bottom:8px;background:white}
-.item-editor-grid{display:grid;grid-template-columns:minmax(0,1fr) 75px 125px 30px;gap:7px;align-items:center}
-.item-editor-grid input{min-width:0;width:100%;padding:9px;border:1px solid var(--line);border-radius:6px}
-.item-labels{display:grid;grid-template-columns:minmax(0,1fr) 75px 125px 30px;gap:7px;margin-bottom:5px;font-size:10px;color:var(--muted)}
-.invoice-total{text-align:right;margin-top:15px}
-.invoice-total div{padding:5px 0}
-.invoice-total .grand{font-size:19px;font-weight:bold;border-top:1px solid #222;margin-top:7px;padding-top:12px}
-@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.app{grid-template-columns:180px 1fr}.main{padding:16px}}
-@media(max-width:650px){.app{display:block}.side{padding:12px}.brand{margin-bottom:10px;font-size:22px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;width:auto;padding:9px}.main{padding:12px}.top{align-items:flex-start;flex-direction:column}h1{font-size:29px}.stat{padding:12px}.stat strong{font-size:18px}.formgrid,.minigrid{grid-template-columns:1fr}.full{grid-column:auto}.search{flex-direction:column}.modal{padding:15px}.item-editor-grid{grid-template-columns:minmax(0,1fr) 55px 95px 28px;gap:4px}.item-labels{grid-template-columns:minmax(0,1fr) 55px 95px 28px;gap:4px}.item-editor-grid input{padding:7px;font-size:12px}}
+body{margin:0}
+header{background:#111;color:white;padding:18px 22px;display:flex;justify-content:space-between;align-items:center}
+header h1{font-size:20px;margin:0}
+main{max-width:900px;margin:24px auto;padding:0 14px}
+.card{background:white;border:1px solid #ddd;border-radius:10px;padding:20px;margin-bottom:16px}
+h2{font-size:17px;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #ccc;border-radius:6px;font:inherit;background:white}
+textarea{min-height:75px;resize:vertical}
+.field{margin-bottom:12px}
+button{border:0;border-radius:6px;padding:11px 15px;font-weight:bold;cursor:pointer}
+.primary{background:#111;color:white}
+.secondary{background:#eee;color:#111}
+.danger{background:white;border:1px solid #bbb;color:#111}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.line,.crewline{display:grid;grid-template-columns:minmax(100px,2fr) 75px minmax(100px,1fr) 35px;gap:8px;align-items:center;margin-bottom:8px}
+.crewline{grid-template-columns:minmax(100px,2fr) minmax(100px,1fr) 35px}
+.line input,.crewline input{min-width:0}
+.remove{padding:8px}
+.total{display:flex;justify-content:space-between;padding:8px 0}
+.grand{font-size:20px;font-weight:bold;border-top:1px solid #ddd;margin-top:8px;padding-top:14px}
+.muted{font-size:12px;color:#666}
+#app,#login{display:none}
+#message{white-space:pre-wrap;margin:12px 0;font-size:14px}
+#message.error{color:#b00020}
+#message.success{color:#176b36}
+@media(max-width:560px){
+ .grid{grid-template-columns:1fr}
+ .card{padding:15px}
+ .line{grid-template-columns:minmax(0,2fr) 55px minmax(75px,1fr) 30px;gap:5px}
+ .crewline{grid-template-columns:minmax(0,2fr) minmax(85px,1fr) 30px;gap:5px}
+ input{padding:9px}
+}
 @media print{
  @page{size:A4;margin:15mm}
- body{background:white!important;color:#111!important;font-size:11px}
- .side,.top,.notice,.no-print,.footer,.modalbg,.screen-only{display:none!important}
- .app{display:block;min-height:0}.main{padding:0;max-width:none;width:100%}
- .view{display:none!important}#view-print{display:block!important}
- #view-print .panel{border:0;padding:0;margin:0;border-radius:0;background:white}
- #printArea{color:#111!important;font-size:11px}
- #printArea h1{font-size:28px;color:#111!important}
- #printArea h2{font-size:20px;color:#111!important}
- #printArea .muted{color:#555!important}
- #printArea table{min-width:0;width:100%;border-collapse:collapse}
- #printArea th,#printArea td{color:#111!important;border-bottom:1px solid #ddd;padding:8px 5px;font-size:10px}
- #printArea th{border-bottom:1px solid #222}
- #printArea .invoice-footer{border-top:1px solid #222;margin-top:34px;padding-top:14px}
- #printArea .contact-row{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:nowrap}
- #printArea .contact-item{display:flex;align-items:center;gap:5px;white-space:nowrap;font-size:9px}
- #printArea .contact-item svg{width:15px;height:15px;flex-shrink:0}
- #printArea .office-address{text-align:center;font-size:9px;line-height:1.5;margin-top:10px;color:#333}
+ body{background:white;color:black}
+ header,#login,#app,.no-print{display:none!important}
+ #printArea{display:block!important}
+ #printArea *{color:#000!important;background:#fff!important;box-shadow:none!important}
+ .invoice{font-family:Arial,sans-serif;font-size:11pt}
+ .invoice h1{font-size:24pt}
+ .invoice table{width:100%;border-collapse:collapse;margin:18px 0}
+ .invoice th,.invoice td{padding:9px 6px;border-bottom:1px solid #bbb;text-align:left}
+ .invoice .right{text-align:right}
+ .invoice .footer{border-top:1px solid #000;margin-top:50px;padding-top:12px;font-size:9pt}
+ .invoice .contacts{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+ .invoice .address{text-align:center;margin-top:12px}
 }
+#printArea{display:none}
 </style>
 </head>
 <body>
+<header>
+  <h1>KYRA PICTURE <span style="font-weight:normal">/ Admin</span></h1>
+  <button id="logoutBtn" class="secondary" style="display:none">Keluar</button>
+</header>
 
-<section id="loginScreen" class="loginwrap">
- <div class="login">
-  <div class="eyebrow">KYRA PICTURE / ADMIN</div>
-  <h1>Admin Workspace</h1>
-  <p class="muted">Masuk untuk mengelola klien, invoice, pembayaran, dan biaya event.</p>
-  <form id="loginForm">
-   <div class="field"><label>Email admin</label><input type="email" name="email" required autocomplete="username"></div>
-   <div class="field"><label>Password</label><input type="password" name="password" required autocomplete="current-password"></div>
-   <button class="btn primary" style="width:100%">Masuk</button>
-   <p id="loginError" class="error"></p>
-  </form>
- </div>
-</section>
+<main>
+  <section id="login" class="card">
+    <h2>Login Admin</h2>
+    <form id="loginForm">
+      <div class="field"><label>Email</label><input id="email" type="email" required autocomplete="username"></div>
+      <div class="field"><label>Password</label><input id="password" type="password" required autocomplete="current-password"></div>
+      <button class="primary" type="submit">Login</button>
+    </form>
+  </section>
 
-<div id="workspace" class="app hidden">
-<aside class="side">
- <div class="brand">Kyra Picture<small>ADMIN WORKSPACE</small></div>
- <nav class="nav">
-  <button class="active" data-view="dashboard">▦ Dashboard</button>
-  <button data-view="clients">♙ Klien & Transaksi</button>
-  <button data-view="costs">◎ Crew & Expense</button>
-  <button data-view="invoices">▤ Invoice</button>
-  <button data-view="finance">↗ Keuangan</button>
-  <button id="website">↗ Lihat Website</button>
-  <button id="logout">⇥ Keluar</button>
- </nav>
-</aside>
+  <section id="app">
+    <div class="card">
+      <h2>1. Data Klien & Acara</h2>
+      <div class="grid">
+        <div class="field"><label>Nama klien *</label><input id="clientName" required placeholder="Nama lengkap"></div>
+        <div class="field"><label>WhatsApp *</label><input id="clientPhone" required placeholder="08xxxxxxxxxx"></div>
+        <div class="field"><label>Jenis acara *</label>
+          <select id="eventType">
+            <option>Wedding</option><option>Prewedding</option><option>Engagement</option>
+            <option>Wisuda</option><option>Event</option><option>Lainnya</option>
+          </select>
+        </div>
+        <div class="field"><label>Tanggal acara</label><input id="eventDate" type="date"></div>
+        <div class="field" style="grid-column:1/-1"><label>Lokasi acara</label><input id="eventLocation" placeholder="Alamat / venue"></div>
+      </div>
+    </div>
 
-<main class="main">
-<div class="top">
- <div><div class="eyebrow">KYRA PICTURE / ADMIN</div><h1 id="title">Dashboard</h1><div class="muted" id="subtitle">Ringkasan bisnis dan aktivitas event.</div></div>
- <button class="btn primary" data-action="client">＋ Tambah Klien & Event</button>
-</div>
-<div id="globalError" class="notice hidden"></div>
+    <div class="card">
+      <h2>2. Harga untuk Klien</h2>
+      <div class="field"><label>Nama paket</label><input id="packageName" placeholder="Contoh: Wedding Photo Package"></div>
+      <div class="muted" style="margin-bottom:10px">Nama item · Qty · Harga satuan · Hapus</div>
+      <div id="items"></div>
+      <button class="secondary no-print" type="button" id="addItem">+ Tambah item / overtime</button>
+      <div class="total"><span>Total tagihan</span><strong id="total">Rp0</strong></div>
+      <div class="grid">
+        <div class="field"><label>DP yang disepakati (Rp)</label><input id="dp" type="number" min="0" value="0"></div>
+        <div class="field"><label>Catatan invoice</label><input id="invoiceNote" placeholder="Contoh: pelunasan sebelum acara"></div>
+      </div>
+    </div>
 
-<section class="view active" id="view-dashboard">
- <div class="stats">
-  <div class="stat"><span>Pendapatan Event</span><strong id="revenue">Rp0</strong><small>Total nilai invoice</small></div>
-  <div class="stat"><span>Uang Masuk</span><strong id="cash">Rp0</strong><small>Pembayaran diterima</small></div>
-  <div class="stat"><span>Pengeluaran</span><strong id="expense">Rp0</strong><small>Biaya tercatat</small></div>
-  <div class="stat"><span>Laba Event</span><strong id="profit">Rp0</strong><small>Pendapatan - biaya</small></div>
- </div>
- <div class="stats">
-  <div class="stat"><span>Jumlah Event</span><strong id="events">0</strong></div>
-  <div class="stat"><span>Sisa Tagihan</span><strong id="receivable">Rp0</strong></div>
-  <div class="stat"><span>Event Lunas</span><strong id="paidCount">0</strong></div>
-  <div class="stat"><span>Honor Crew</span><strong id="crewTotal">Rp0</strong></div>
- </div>
- <div class="grid2">
-  <div class="panel"><div class="panelhead"><h2>Transaksi Terbaru</h2><button class="btn small" data-view="clients">Lihat semua</button></div><div class="tablewrap"><table><thead><tr><th>Klien</th><th>Invoice</th><th>Sisa</th><th>Status</th></tr></thead><tbody id="recent"></tbody></table></div></div>
-  <div class="panel"><h2 style="margin-bottom:14px">Aksi Cepat</h2><div class="actions"><button class="btn" data-action="client">＋ Klien baru</button><button class="btn" data-action="cost">＋ Catat biaya</button><button class="btn" data-view="finance">Laporan keuangan</button></div><p class="muted">Pembayaran dan biaya terhubung ke event.</p></div>
- </div>
-</section>
+    <div class="card">
+      <h2>3. Crew & Fee</h2>
+      <div class="muted" style="margin-bottom:10px">Nama crew · Fee crew · Hapus</div>
+      <div id="crew"></div>
+      <button class="secondary no-print" type="button" id="addCrew">+ Tambah crew</button>
+      <div class="total"><span>Total biaya crew</span><strong id="crewTotal">Rp0</strong></div>
+      <div class="total grand"><span>Estimasi sisa</span><strong id="profit">Rp0</strong></div>
+      <p class="muted">Estimasi sisa = total tagihan klien dikurangi fee crew. Biaya operasional lain belum dihitung.</p>
+    </div>
 
-<section class="view" id="view-clients">
- <div class="panel">
-  <div class="panelhead"><h2>Klien & Transaksi</h2><button class="btn primary" data-action="client">＋ Tambah Klien</button></div>
-  <div class="search"><input id="search" placeholder="Cari nama, WhatsApp, event, invoice..."><select id="filter"><option value="all">Semua status</option><option>Belum Bayar</option><option>DP</option><option>Cicilan</option><option>Lunas</option></select></div>
-  <div class="tablewrap"><table><thead><tr><th>Klien / Event</th><th>Tanggal</th><th>Invoice</th><th>Terbayar</th><th>Sisa</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="clientRows"></tbody></table></div>
- </div>
-</section>
-
-<section class="view" id="view-costs">
- <div class="panel"><div class="panelhead"><h2>Crew & Expense</h2><button class="btn primary" data-action="cost">＋ Catat Biaya</button></div>
- <p class="muted">Catat honor crew, transportasi, makan, sewa alat, album, dan biaya lain per event.</p>
- <div class="tablewrap"><table><thead><tr><th>Klien / Event</th><th>Kategori</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody id="costRows"></tbody></table></div></div>
-</section>
-
-<section class="view" id="view-invoices">
- <div class="panel"><div class="panelhead"><h2>Invoice</h2><button class="btn primary" data-action="client">＋ Buat Invoice</button></div>
- <p class="muted">Preview invoice, lalu cetak atau simpan sebagai PDF melalui dialog cetak browser.</p>
- <div class="tablewrap"><table><thead><tr><th>No. Invoice</th><th>Klien</th><th>Event</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="invoiceRows"></tbody></table></div></div>
-</section>
-
-<section class="view" id="view-finance">
- <div class="stats">
-  <div class="stat"><span>Pendapatan Event</span><strong id="fRevenue">Rp0</strong></div>
-  <div class="stat"><span>Uang Masuk</span><strong id="fCash">Rp0</strong></div>
-  <div class="stat"><span>Pengeluaran</span><strong id="fExpense">Rp0</strong></div>
-  <div class="stat"><span>Laba Event</span><strong id="fProfit">Rp0</strong></div>
- </div>
- <div class="panel"><div class="panelhead"><h2>Rekap per Event</h2><button class="btn" id="csv">Ekspor CSV</button></div>
- <div class="tablewrap"><table><thead><tr><th>Klien / Event</th><th>Pendapatan</th><th>Uang masuk</th><th>Biaya</th><th>Laba event</th><th>Sisa</th></tr></thead><tbody id="financeRows"></tbody></table></div></div>
-</section>
-
-<section class="view" id="view-detail">
- <div class="panel">
-  <div class="panelhead"><h2 id="detailTitle">Detail Klien</h2><div class="actions"><button class="btn" id="editDetail">Edit</button><button class="btn primary" id="payDetail">＋ Pembayaran</button><button class="btn" id="printDetail">Invoice PDF</button></div></div>
-  <div class="minigrid" id="metrics"></div>
-  <div class="grid2"><div class="panel"><h3>Data Event</h3><div id="info"></div></div><div class="panel"><h3>Riwayat Pembayaran</h3><div id="payments"></div></div></div>
-  <div class="panel"><div class="panelhead"><h3>Biaya Event</h3><button class="btn small" id="costDetail">＋ Biaya</button></div><div class="tablewrap"><table><thead><tr><th>Kategori</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody id="detailCosts"></tbody></table></div></div>
-  <button class="btn" data-view="clients">← Kembali</button>
- </div>
-</section>
-
-<section class="view" id="view-print">
- <div class="panel" id="printArea"></div>
- <button class="btn no-print" onclick="window.print()">Cetak / Simpan PDF</button>
-</section>
-<div class="footer">Kyra Picture Admin Workspace</div>
+    <div class="card no-print">
+      <h2>4. Simpan & PDF</h2>
+      <div class="field"><label>Status booking</label>
+        <select id="bookingStatus">
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="actions">
+        <button class="primary" id="saveBtn" type="button">Simpan transaksi</button>
+        <button class="secondary" id="pdfBtn" type="button">Generate PDF / Cetak</button>
+        <button class="danger" id="newBtn" type="button">Form baru</button>
+      </div>
+      <div id="message" role="status"></div>
+      <p class="muted">PDF dibuat lewat fitur cetak browser. Pilih “Save as PDF” atau “Simpan sebagai PDF”.</p>
+    </div>
+  </section>
 </main>
-</div>
 
-<div class="modalbg" id="modal"><div class="modal"><div class="modalhead"><h2 id="modalTitle">Form</h2><button class="close" id="close">×</button></div><div id="modalContent"></div></div></div>
+<div id="printArea"></div>
 
 <script>
-const SUPABASE_URL='https://vgiczgeleincrhlhsdzy.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_ua5vsHvJnweG2zWCT_jkxg_BJsjQPXl';
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+const SUPABASE_URL = "https://vgiczgeleincrhlhsdzy.supabase.co";
+const SUPABASE_KEY = "sb_publishable_ua5vsHvJnweG2zWCT_jkxg_BJsjQPXl";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const PACKAGES=[
- ['Wedding Essential',6500000],['Wedding Signature',8500000],
- ['Wedding Premium',12000000],['Prewedding',3000000],
- ['Engagement',2500000],['Candid Wedding',3500000],
- ['Wedding + Prewedding',10500000],['Custom / Paket Lain',0]
-];
-const CATEGORIES=['Honor Crew','Transportasi','Makan & Minum','Sewa Alat','Album / Printing','Operasional','Lainnya'];
-let clients=[],bookings=[],payments=[],expenses=[],activeId=null;
-const $=id=>document.getElementById(id);
+const $ = id => document.getElementById(id);
+let savedBookingId = null;
+let busy = false;
 
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function rp(v){return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(v)||0)}
-function date(v){return v?new Date(String(v).slice(0,10)+'T00:00:00').toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'—'}
-function showError(msg){$('globalError').textContent=msg;$('globalError').classList.remove('hidden')}
-function clearError(){$('globalError').textContent='';$('globalError').classList.add('hidden')}
-function clientFor(b){return clients.find(c=>String(c.id)===String(b.client_id))}
-function booking(id){return bookings.find(b=>String(b.id)===String(id))}
-function clientBookings(cid){return bookings.filter(b=>String(b.client_id)===String(cid))}
-function paid(b){return payments.filter(p=>String(p.booking_id)===String(b.id)&&['paid','lunas','success','completed'].includes(String(p.payment_status||'paid').toLowerCase())).reduce((s,p)=>s+Number(p.amount||0),0)}
-function costs(b){return expenses.filter(x=>String(x.booking_id)===String(b.id)).reduce((s,x)=>s+Number(x.amount||0),0)}
-function total(b){return Number(b.invoice_total||0)}
-function remaining(b){return Math.max(0,total(b)-paid(b))}
-function status(b){if(total(b)>0&&paid(b)>=total(b))return'Lunas';if(paid(b)===0)return'Belum Bayar';if(paid(b)<total(b)*.4)return'DP';return'Cicilan'}
-function badge(s){return `<span class="badge ${s==='Lunas'?'green':s==='Belum Bayar'?'red':''}">${esc(s)}</span>`}
-function view(v){
- document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
- $('view-'+v)?.classList.add('active');
- document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===v));
- const t={dashboard:['Dashboard','Ringkasan bisnis dan aktivitas event.'],clients:['Klien & Transaksi','Klien, event, invoice, dan pembayaran.'],costs:['Crew & Expense','Catat semua biaya per event.'],invoices:['Invoice','Kelola invoice dan PDF.'],finance:['Keuangan','Pendapatan, pengeluaran, laba dan tagihan.'],detail:['Detail Klien','Rincian event dan transaksi.'],print:['Invoice','Pratinjau invoice.']}[v]||['Dashboard',''];
- $('title').textContent=t[0];$('subtitle').textContent=t[1];window.scrollTo(0,0);
+function rupiah(value){
+  return new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(Number(value)||0);
 }
-function modal(title,html){$('modalTitle').textContent=title;$('modalContent').innerHTML=html;$('modal').classList.add('show')}
-function closeModal(){$('modal').classList.remove('show')}
-function field(label,name,value='',type='text',required=false,extra=''){
- return `<div class="field"><label for="${esc(name)}">${label}${required?' *':''}</label><input id="${esc(name)}" name="${esc(name)}" type="${type}" value="${esc(value)}" ${required?'required':''} ${extra}></div>`;
+function esc(value){
+  return String(value ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
 }
-function packageOptions(selected){return PACKAGES.map(p=>`<option value="${esc(p[0])}" ${p[0]===selected?'selected':''}>${esc(p[0])}</option>`).join('')}
-function normalizeItems(items,b){
- if(!Array.isArray(items)||!items.length)return[{name:b?.package_name||b?.event_type||'Paket fotografi',quantity:1,price:Number(b?.invoice_total||0)}];
- return items.map(x=>({name:x.name||'Item tambahan',quantity:Math.max(1,Number(x.quantity||1)),price:Math.max(0,Number(x.price||0))}));
+function message(text,type=""){
+  $("message").textContent=text;
+  $("message").className=type;
 }
-function itemRow(item={}){
- return `<div class="item-editor"><div class="item-editor-grid">
- <input class="item-name" aria-label="Nama item" placeholder="Nama paket / biaya tambahan" value="${esc(item.name||'')}">
- <input class="item-qty" aria-label="Kuantitas" type="number" min="1" step="1" value="${Math.max(1,Number(item.quantity||1))}">
- <input class="item-price" aria-label="Harga satuan" type="number" min="0" step="1000" value="${Math.max(0,Number(item.price||0))}">
- <button type="button" class="btn small remove-item" title="Hapus item">×</button>
- </div><div class="muted item-subtotal" style="text-align:right;font-size:11px;margin-top:7px">Subtotal: Rp0</div></div>`;
+function showLogin(){
+  $("login").style.display="block";
+  $("app").style.display="none";
+  $("logoutBtn").style.display="none";
 }
-function readItems(){
- return [...document.querySelectorAll('.item-editor')].map(r=>({
-  name:r.querySelector('.item-name').value.trim(),
-  quantity:Math.max(1,Math.floor(Number(r.querySelector('.item-qty').value)||1)),
-  price:Math.max(0,Number(r.querySelector('.item-price').value)||0)
- })).filter(x=>x.name);
+function showApp(){
+  $("login").style.display="none";
+  $("app").style.display="block";
+  $("logoutBtn").style.display="inline-block";
 }
-function bindItemEditor(){
- const update=()=>{
-  let sum=0;
-  document.querySelectorAll('.item-editor').forEach(r=>{
-   const q=Math.max(1,Math.floor(Number(r.querySelector('.item-qty').value)||1));
-   const p=Math.max(0,Number(r.querySelector('.item-price').value)||0);
-   const sub=q*p;sum+=sub;
-   r.querySelector('.item-subtotal').textContent='Subtotal: '+rp(sub);
-  });
-  $('calculatedTotal').textContent=rp(sum);
- };
- document.querySelectorAll('.item-editor').forEach(r=>{
-  r.querySelectorAll('.item-name,.item-qty,.item-price').forEach(el=>el.addEventListener('input',update));
-  r.querySelector('.remove-item').onclick=()=>{
-   if(document.querySelectorAll('.item-editor').length===1){alert('Invoice minimal harus memiliki satu item.');return}
-   r.remove();update();
+
+function addItem(name="",qty=1,price=0){
+  const row=document.createElement("div");
+  row.className="line";
+  row.innerHTML=`
+    <input class="item-name" aria-label="Nama item" placeholder="Paket / overtime" value="${esc(name)}">
+    <input class="item-qty" aria-label="Jumlah" type="number" min="1" step="1" value="${qty}">
+    <input class="item-price" aria-label="Harga satuan" type="number" min="0" step="1000" value="${price}">
+    <button class="danger remove no-print" type="button" aria-label="Hapus item">×</button>`;
+  row.querySelectorAll("input").forEach(el=>el.addEventListener("input",recalculate));
+  row.querySelector(".remove").addEventListener("click",()=>{row.remove();recalculate();});
+  $("items").appendChild(row);
+  recalculate();
+}
+function addCrew(name="",fee=0){
+  const row=document.createElement("div");
+  row.className="crewline";
+  row.innerHTML=`
+    <input class="crew-name" aria-label="Nama crew" placeholder="Nama crew" value="${esc(name)}">
+    <input class="crew-fee" aria-label="Fee crew" type="number" min="0" step="1000" value="${fee}">
+    <button class="danger remove no-print" type="button" aria-label="Hapus crew">×</button>`;
+  row.querySelectorAll("input").forEach(el=>el.addEventListener("input",recalculate));
+  row.querySelector(".remove").addEventListener("click",()=>{row.remove();recalculate();});
+  $("crew").appendChild(row);
+  recalculate();
+}
+function getItems(){
+  return [...document.querySelectorAll("#items .line")].map(row=>({
+    name:row.querySelector(".item-name").value.trim(),
+    quantity:Math.max(1,Number(row.querySelector(".item-qty").value)||1),
+    price:Math.max(0,Number(row.querySelector(".item-price").value)||0)
+  })).filter(x=>x.name);
+}
+function getCrew(){
+  return [...document.querySelectorAll("#crew .crewline")].map(row=>({
+    name:row.querySelector(".crew-name").value.trim(),
+    fee:Math.max(0,Number(row.querySelector(".crew-fee").value)||0)
+  })).filter(x=>x.name);
+}
+function recalculate(){
+  const total=getItems().reduce((sum,x)=>sum+x.quantity*x.price,0);
+  const crewTotal=getCrew().reduce((sum,x)=>sum+x.fee,0);
+  $("total").textContent=rupiah(total);
+  $("crewTotal").textContent=rupiah(crewTotal);
+  $("profit").textContent=rupiah(total-crewTotal);
+}
+function readForm(){
+  const items=getItems(), crew=getCrew();
+  return {
+    clientName:$("clientName").value.trim(),
+    clientPhone:$("clientPhone").value.trim(),
+    eventType:$("eventType").value,
+    eventDate:$("eventDate").value||null,
+    eventLocation:$("eventLocation").value.trim(),
+    packageName:$("packageName").value.trim(),
+    items,crew,
+    total:items.reduce((sum,x)=>sum+x.quantity*x.price,0),
+    dp:Math.max(0,Number($("dp").value)||0),
+    invoiceNote:$("invoiceNote").value.trim(),
+    status:$("bookingStatus").value
   };
- });
- update();
 }
-function newInvoiceNo(){
- const year=new Date().getFullYear();
- const random=String(Math.floor(Math.random()*900000)+100000);
- return `KYP-${year}-${Date.now().toString().slice(-6)}${random.slice(-2)}`;
-}
-
-async function refresh(){
- clearError();
- const results=await Promise.all([
-  sb.from('clients').select('*').order('created_at',{ascending:false}),
-  sb.from('bookings').select('*').order('created_at',{ascending:false}),
-  sb.from('payments').select('*').order('created_at',{ascending:false}),
-  sb.from('expenses').select('*').order('created_at',{ascending:false})
- ]);
- const err=results.find(r=>r.error);
- if(err){showError('Gagal memuat data Supabase: '+err.error.message+'\nPeriksa koneksi, hak akses, dan kolom invoice di database.');return false}
- [clients,bookings,payments,expenses]=results.map(r=>r.data||[]);
- render();return true;
-}
-
-function clientForm(id=null){
- const b=id?booking(id):null;
- const existing=b?clientFor(b):null;
- const items=normalizeItems(b?.package_details,b);
- const typeOptions=['Wedding','Prewedding','Engagement','Candid Wedding','Wisuda','Lainnya'];
- modal(b?'Edit Klien & Invoice':'Tambah Klien & Event',`
- <form id="clientForm"><div class="formgrid">
- ${field('Nama klien','name',existing?.full_name||'','text',true)}
- ${field('WhatsApp','phone',existing?.phone||'','text',false)}
- <div class="field"><label>Jenis event *</label><select name="type" required>${typeOptions.map(x=>`<option ${b?.event_type===x?'selected':''}>${x}</option>`).join('')}</select></div>
- ${field('Tanggal event','date',b?.event_date||'','date',true)}
- ${field('Lokasi','location',b?.event_location||'')}
- <div class="field"><label>Status event</label><select name="event_status">${[['pending','Booking'],['confirmed','Persiapan / Confirmed'],['completed','Selesai'],['cancelled','Dibatalkan']].map(x=>`<option value="${x[0]}" ${(b?.status||'pending')===x[0]?'selected':''}>${x[1]}</option>`).join('')}</select></div>
- <div class="field full">
-  <label>Rincian invoice — paket dan biaya tambahan</label>
-  <div class="item-labels"><span>Nama item</span><span>Qty</span><span>Harga satuan (Rp)</span><span></span></div>
-  <div id="items">${items.map(itemRow).join('')}</div>
-  <button type="button" class="btn small" id="addItem">＋ Tambah item / biaya</button>
-  <div class="invoice-total"><div>Total invoice: <strong id="calculatedTotal">Rp0</strong></div></div>
- </div>
- ${field('DP yang disepakati (Rp)','dp',b?.dp_amount||0,'number',false,'min="0" step="1000"')}
- <div class="field full"><label>Catatan klien / event</label><textarea name="notes" rows="2">${esc(b?.notes||existing?.notes||'')}</textarea></div>
- </div>
- <p class="muted" style="font-size:11px">Nomor invoice dibuat otomatis. Total invoice dihitung dari kuantitas × harga satuan setiap item. Biaya yang ditagihkan ke klien masuk ke invoice; pembayaran kru dicatat terpisah di Crew & Expense.</p>
- <p id="formError" class="error"></p>
- <div class="formfoot"><button type="button" class="btn" id="cancel">Batal</button><button class="btn primary" id="saveClient">Simpan</button></div></form>`);
- $('cancel').onclick=closeModal;
- $('addItem').onclick=()=>{
-  $('items').insertAdjacentHTML('beforeend',itemRow({name:'',quantity:1,price:0}));
-  bindItemEditor();
- };
- bindItemEditor();
-
- $('clientForm').onsubmit=async e=>{
-  e.preventDefault();
-  const btn=$('saveClient');btn.disabled=true;
-  const f=new FormData(e.target);
-  const newItems=readItems();
-  if(!newItems.length){$('formError').textContent='Tambahkan minimal satu item dengan nama yang jelas.';btn.disabled=false;return}
-  const newTotal=newItems.reduce((s,x)=>s+x.quantity*x.price,0);
-  const dp=Number(f.get('dp')||0);
-  if(dp>newTotal){$('formError').textContent='DP yang disepakati tidak boleh melebihi total invoice.';btn.disabled=false;return}
-  try{
-   const clientPayload={full_name:String(f.get('name')).trim(),phone:String(f.get('phone')||'').trim()||null,notes:String(f.get('notes')||'').trim()||null};
-   let cr=existing
-    ?await sb.from('clients').update(clientPayload).eq('id',existing.id).select().single()
-    :await sb.from('clients').insert(clientPayload).select().single();
-   if(cr.error)throw cr.error;
-
-   const bookingPayload={
-    client_id:cr.data.id,event_type:f.get('type'),event_date:f.get('date')||null,
-    event_location:String(f.get('location')||'').trim()||null,status:f.get('event_status'),
-    notes:String(f.get('notes')||'').trim()||null,
-    invoice_no:b?.invoice_no||newInvoiceNo(),
-    package_name:newItems.map(x=>x.name).join(', '),
-    package_details:newItems,invoice_total:newTotal,dp_amount:dp
-   };
-   const br=b
-    ?await sb.from('bookings').update(bookingPayload).eq('id',b.id).select().single()
-    :await sb.from('bookings').insert(bookingPayload).select().single();
-   if(br.error)throw br.error;
-   closeModal();await refresh();detail(br.data.id);
-  }catch(err){
-   $('formError').textContent='Gagal menyimpan: '+(err.message||String(err));
-   btn.disabled=false;
+function validate(data){
+  if(!data.clientName||!data.clientPhone){
+    message("Isi nama klien dan nomor WhatsApp dulu.","error");return false;
   }
- };
+  if(data.items.length===0||data.total<=0){
+    message("Tambahkan minimal satu item dengan harga.","error");return false;
+  }
+  if(data.dp>data.total){
+    message("DP tidak boleh melebihi total tagihan.","error");return false;
+  }
+  return true;
 }
 
-function paymentForm(id){
- const b=booking(id);if(!b)return;
- modal('Catat Pembayaran',`
- <p class="muted">Invoice ${esc(b.invoice_no||('INV-'+b.id))} · Total ${rp(total(b))} · Terbayar ${rp(paid(b))} · Sisa ${rp(remaining(b))}</p>
- <form id="payForm"><div class="formgrid">
- ${field('Tanggal','date',new Date().toISOString().slice(0,10),'date',true)}
- ${field('Nominal diterima (Rp)','amount','','number',true,`min="1" max="${remaining(b)}" step="1000"`)}
- <div class="field"><label>Metode</label><select name="method"><option>Transfer bank</option><option>Tunai</option><option>E-wallet</option><option>Lainnya</option></select></div>
- <div class="field"><label>Jenis pembayaran</label><select name="kind"><option value="dp">DP</option><option value="installment">Cicilan</option><option value="final">Pelunasan</option></select></div>
- </div><p id="formError" class="error"></p><div class="formfoot"><button type="button" class="btn" id="cancel">Batal</button><button class="btn primary">Simpan Pembayaran</button></div></form>`);
- $('cancel').onclick=closeModal;
- $('payForm').onsubmit=async e=>{
+async function saveTransaction(){
+  if(busy)return;
+  const data=readForm();
+  if(!validate(data))return;
+  busy=true;$("saveBtn").disabled=true;
+  message("Menyimpan transaksi...");
+  try{
+    const {data:authData,error:authError}=await db.auth.getUser();
+    if(authError||!authData.user)throw new Error("Sesi login habis. Silakan login kembali.");
+
+    let clientId;
+    const {data:existing,error:findError}=await db.from("clients")
+      .select("id").eq("phone",data.clientPhone).limit(1);
+    if(findError)throw findError;
+
+    if(existing&&existing.length){
+      clientId=existing[0].id;
+      const {error:updateClientError}=await db.from("clients")
+        .update({full_name:data.clientName,notes:""})
+        .eq("id",clientId);
+      if(updateClientError)throw updateClientError;
+    }else{
+      const {data:newClient,error:newClientError}=await db.from("clients")
+        .insert({full_name:data.clientName,phone:data.clientPhone})
+        .select("id").single();
+      if(newClientError)throw newClientError;
+      clientId=newClient.id;
+    }
+
+    const bookingData={
+      client_id:clientId,
+      event_type:data.eventType,
+      event_date:data.eventDate,
+      event_location:data.eventLocation||null,
+      status:data.status,
+      package_name:data.packageName||data.eventType,
+      package_details:data.items,
+      invoice_total:data.total,
+      dp_amount:data.dp,
+      crew_details:data.crew,
+      notes:data.invoiceNote||null
+    };
+
+    if(savedBookingId){
+      const {error}=await db.from("bookings").update(bookingData).eq("id",savedBookingId);
+      if(error)throw error;
+    }else{
+      const {data:booking,error}=await db.from("bookings")
+        .insert(bookingData).select("id").single();
+      if(error)throw error;
+      savedBookingId=booking.id;
+    }
+    message("Transaksi berhasil disimpan. Form tetap terisi.","success");
+  }catch(error){
+    console.error(error);
+    message("Gagal menyimpan: "+(error.message||"Periksa koneksi dan struktur tabel Supabase."),"error");
+  }finally{
+    busy=false;$("saveBtn").disabled=false;
+  }
+}
+
+function generatePDF(){
+  const data=readForm();
+  if(!validate(data))return;
+  const items=data.items, crew=data.crew;
+  const today=new Date().toLocaleDateString("id-ID",{day:"2-digit",month:"long",year:"numeric"});
+  const itemRows=items.map((x,i)=>`
+    <tr>
+      <td>${i+1}. ${esc(x.name)}</td>
+      <td class="right">${x.quantity}</td>
+      <td class="right">${rupiah(x.price)}</td>
+      <td class="right">${rupiah(x.quantity*x.price)}</td>
+    </tr>`).join("");
+  const paidCrew=crew.length?crew.map(x=>`${esc(x.name)} (${rupiah(x.fee)})`).join(", "):"—";
+  const remaining=Math.max(0,data.total-data.dp);
+
+  $("printArea").innerHTML=`
+    <article class="invoice">
+      <h1>KYRA PICTURE</h1>
+      <p>INVOICE</p>
+      <hr>
+      <div style="display:flex;justify-content:space-between;gap:20px">
+        <div>
+          <strong>DITAGIHKAN KEPADA</strong><br>
+          ${esc(data.clientName)}<br>
+          WhatsApp: ${esc(data.clientPhone)}<br>
+          ${esc(data.eventLocation||"")} 
+        </div>
+        <div style="text-align:right">
+          <strong>TANGGAL INVOICE</strong><br>${today}<br><br>
+          <strong>JENIS ACARA</strong><br>${esc(data.eventType)}<br>
+          <strong>TANGGAL ACARA</strong><br>${esc(data.eventDate||"Belum ditentukan")}
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Deskripsi</th><th class="right">Qty</th><th class="right">Harga</th><th class="right">Jumlah</th></tr></thead>
+        <tbody>${itemRows}</tbody>
+      </table>
+      <div style="margin-left:auto;max-width:320px">
+        <div class="total"><span>Total</span><strong>${rupiah(data.total)}</strong></div>
+        <div class="total"><span>DP</span><strong>${rupiah(data.dp)}</strong></div>
+        <div class="total" style="font-size:15pt;border-top:1px solid #000;padding-top:12px">
+          <strong>Sisa pembayaran</strong><strong>${rupiah(remaining)}</strong>
+        </div>
+      </div>
+      ${data.invoiceNote?`<p><strong>Catatan:</strong> ${esc(data.invoiceNote)}</p>`:""}
+      <div class="footer">
+        <div class="contacts">
+          <span>◎ kyra-picture-new.pages.dev</span>
+          <span>◎ @kyra.picture</span>
+          <span>◉ 0895-1984-7571</span>
+        </div>
+        <div class="address">
+          Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28,<br>
+          Jayamulya, Serang Baru, Kabupaten Bekasi, Jawa Barat 17330.
+        </div>
+      </div>
+    </article>`;
+  window.print();
+}
+
+function newForm(){
+  if(!confirm("Mulai form baru? Data yang belum disimpan akan hilang."))return;
+  savedBookingId=null;
+  ["clientName","clientPhone","eventDate","eventLocation","packageName","invoiceNote"].forEach(id=>$(id).value="");
+  $("eventType").value="Wedding";
+  $("bookingStatus").value="pending";
+  $("dp").value=0;
+  $("items").innerHTML="";
+  $("crew").innerHTML="";
+  addItem();
+  addCrew();
+  message("");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+$("addItem").addEventListener("click",()=>addItem());
+$("addCrew").addEventListener("click",()=>addCrew());
+$("saveBtn").addEventListener("click",saveTransaction);
+$("pdfBtn").addEventListener("click",generatePDF);
+$("newBtn").addEventListener("click",newForm);
+
+$("loginForm").addEventListener("submit",async e=>{
   e.preventDefault();
-  const btn=e.submitter; if(btn)btn.disabled=true;
-  const f=new FormData(e.target),amount=Number(f.get('amount'));
-  if(amount<=0||amount>remaining(b)){$('formError').textContent='Nominal harus lebih dari nol dan tidak boleh melebihi sisa tagihan.';if(btn)btn.disabled=false;return}
-  const r=await sb.from('payments').insert({
-   booking_id:b.id,amount,payment_type:f.get('kind'),payment_status:'paid',
-   payment_date:f.get('date'),payment_method:f.get('method'),notes:null
+  const {error}=await db.auth.signInWithPassword({
+    email:$("email").value.trim(),
+    password:$("password").value
   });
-  if(r.error){$('formError').textContent='Gagal menyimpan: '+r.error.message;if(btn)btn.disabled=false;return}
-  closeModal();await refresh();detail(b.id);
- };
-}
-
-function costForm(bookingId=null){
- if(!bookings.length){alert('Tambahkan klien dan event dulu.');return}
- modal('Catat Crew / Expense',`
- <form id="costForm"><div class="formgrid">
- <div class="field full"><label>Event *</label><select name="booking_id" required>${bookings.map(b=>`<option value="${b.id}" ${String(b.id)===String(bookingId)?'selected':''}>${esc(clientFor(b)?.full_name||'Klien')} — ${esc(b.event_type)} (${date(b.event_date)})</option>`).join('')}</select></div>
- <div class="field"><label>Kategori</label><select name="category">${CATEGORIES.map(x=>`<option>${x}</option>`).join('')}</select></div>
- ${field('Nominal (Rp)','amount','','number',true,'min="1" step="1000"')}
- ${field('Nama crew / keterangan','description','','text',true)}
- ${field('Tanggal','date',new Date().toISOString().slice(0,10),'date',true)}
- </div><p id="formError" class="error"></p><div class="formfoot"><button type="button" class="btn" id="cancel">Batal</button><button class="btn primary">Simpan Biaya</button></div></form>`);
- $('cancel').onclick=closeModal;
- $('costForm').onsubmit=async e=>{
-  e.preventDefault();const btn=e.submitter;if(btn)btn.disabled=true;
-  const f=new FormData(e.target);
-  const r=await sb.from('expenses').insert({
-   booking_id:f.get('booking_id'),category:f.get('category'),
-   amount:Number(f.get('amount')),description:f.get('description'),expense_date:f.get('date')
-  });
-  if(r.error){$('formError').textContent='Gagal menyimpan: '+r.error.message;if(btn)btn.disabled=false;return}
-  const savedId=f.get('booking_id');
-  closeModal();await refresh();detail(savedId);
- };
-}
-
-function detail(id){
- const b=booking(id),c=clientFor(b);if(!b||!c)return;
- activeId=id;view('detail');
- $('detailTitle').textContent=c.full_name+' — '+b.event_type;
- $('metrics').innerHTML=[
-  ['Nilai invoice',rp(total(b))],['Uang masuk',rp(paid(b))],
-  ['Sisa tagihan',rp(remaining(b))],['Pengeluaran',rp(costs(b))],
-  ['Laba event',rp(total(b)-costs(b))],['Status',status(b)]
- ].map(x=>`<div class="mini"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join('');
-
- $('info').innerHTML=`
- <p><b>Invoice:</b> ${esc(b.invoice_no||('INV-'+b.id))}</p>
- <p><b>WhatsApp:</b> ${esc(c.phone||'—')}</p>
- <p><b>Tanggal:</b> ${date(b.event_date)}</p><p><b>Lokasi:</b> ${esc(b.event_location||'—')}</p>
- <p><b>Paket / item:</b> ${esc(b.package_name||'—')}</p><p><b>DP disepakati:</b> ${rp(b.dp_amount)}</p>
- <p><b>Status event:</b> ${esc(b.status)}</p><p><b>Catatan:</b> ${esc(b.notes||c.notes||'—')}</p>`;
-
- const ps=payments.filter(p=>String(p.booking_id)===String(id));
- $('payments').innerHTML=ps.length
- ?`<div class="tablewrap"><table style="min-width:0"><tr><th>Tanggal</th><th>Jenis</th><th>Nominal</th><th>Metode</th></tr>${ps.map(p=>`<tr><td>${date(p.payment_date)}</td><td>${esc(({dp:'DP',installment:'Cicilan',final:'Pelunasan'})[p.payment_type]||p.payment_type||'Pembayaran')}</td><td>${rp(p.amount)}</td><td>${esc(p.payment_method||'—')}</td></tr>`).join('')}</table></div>`
- :'<div class="empty">Belum ada pembayaran.</div>';
-
- const cs=expenses.filter(x=>String(x.booking_id)===String(id));
- $('detailCosts').innerHTML=cs.length
- ?cs.map(x=>`<tr><td>${esc(x.category)}</td><td>${esc(x.description)}</td><td>${rp(x.amount)}</td><td><button class="btn small" data-del="${x.id}">Hapus</button></td></tr>`).join('')
- :'<tr><td colspan="4" class="empty">Belum ada biaya.</td></tr>';
-
- $('editDetail').onclick=()=>clientForm(id);
- $('payDetail').onclick=()=>paymentForm(id);
- $('printDetail').onclick=()=>invoice(id);
- $('costDetail').onclick=()=>costForm(id);
-}
-
-const ICONS={
- web:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>`,
- instagram:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>`,
- whatsapp:`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.08 0C5.5 0 .15 5.34.15 11.92c0 2.1.55 4.15 1.6 5.96L.05 24l6.27-1.64a11.9 11.9 0 0 0 5.76 1.47h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.19-1.24-6.19-3.49-8.43ZM12.08 21.8a9.9 9.9 0 0 1-5.05-1.38l-.36-.21-3.72.97.99-3.63-.24-.37a9.85 9.85 0 0 1-1.51-5.26c0-5.46 4.44-9.9 9.9-9.9a9.84 9.84 0 0 1 7.01 2.9 9.84 9.84 0 0 1 2.9 7c0 5.45-4.45 9.88-9.92 9.88Zm5.43-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.8-1.49-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.5 1.7.64.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.27-.2-.57-.35Z"/></svg>`
-};
-
-function invoice(id){
- const b=booking(id),c=clientFor(b);if(!b||!c)return;
- const items=normalizeItems(b.package_details,b);
- const itemsTotal=items.reduce((s,x)=>s+x.quantity*x.price,0);
- const itemRows=items.map(x=>`<tr><td>${esc(x.name)}</td><td style="text-align:center">${x.quantity}</td><td style="text-align:right">${rp(x.price)}</td><td style="text-align:right">${rp(x.quantity*x.price)}</td></tr>`).join('');
- const invNo=b.invoice_no||('INV-'+b.id);
- const today=date(new Date().toISOString().slice(0,10));
- $('printArea').innerHTML=`
- <div style="display:flex;justify-content:space-between;gap:20px;align-items:flex-start">
-  <div><div style="font-size:10px;letter-spacing:2px;color:#555">PHOTOGRAPHY & CINEMATIC</div><h1 style="margin-top:8px">Kyra Picture</h1><p class="muted">Wedding · Prewedding · Engagement</p></div>
-  <div style="text-align:right"><h2 style="letter-spacing:2px">INVOICE</h2><b>${esc(invNo)}</b><p style="margin-top:8px">${today}</p></div>
- </div>
- <hr style="border:0;border-top:1px solid #222;margin:20px 0">
- <div class="grid2" style="grid-template-columns:1fr 1fr">
-  <div><b>DITAGIHKAN KEPADA</b><p style="line-height:1.7">${esc(c.full_name)}<br>${esc(c.phone||'')}</p></div>
-  <div><b>DETAIL EVENT</b><p style="line-height:1.7">${esc(b.event_type)}<br>${date(b.event_date)}<br>${esc(b.event_location||'—')}</p></div>
- </div>
- <table style="min-width:0;margin-top:20px">
-  <thead><tr><th>Deskripsi</th><th style="text-align:center">Qty</th><th style="text-align:right">Harga satuan</th><th style="text-align:right">Subtotal</th></tr></thead>
-  <tbody>${itemRows}</tbody>
- </table>
- <div class="invoice-total">
-  <div>Total invoice: <strong>${rp(itemsTotal)}</strong></div>
-  <div>DP disepakati: ${rp(b.dp_amount)}</div>
-  <div>Telah dibayar: ${rp(paid(b))}</div>
-  <div class="grand">SISA TAGIHAN: ${rp(Math.max(0,itemsTotal-paid(b)))}</div>
- </div>
- <p style="margin-top:32px;line-height:1.6">Terima kasih telah mempercayakan momen spesial Anda kepada Kyra Picture.</p>
- <div class="invoice-footer">
-  <div class="contact-row">
-   <a class="contact-item" href="https://kyrapicture.com" style="color:#111;text-decoration:none">${ICONS.web}<span>kyrapicture.com</span></a>
-   <a class="contact-item" href="https://www.instagram.com/kyra.picture/" style="color:#111;text-decoration:none">${ICONS.instagram}<span>@kyra.picture</span></a>
-   <a class="contact-item" href="https://wa.me/6289519847571" style="color:#111;text-decoration:none">${ICONS.whatsapp}<span>0895-1984-7571</span></a>
-  </div>
-  <div class="office-address">Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28, Jayamulya, Serang Baru,<br>Kabupaten Bekasi, Jawa Barat 17330.</div>
- </div>`;
- view('print');
-}
-
-function render(){
- const rev=bookings.reduce((s,b)=>s+total(b),0);
- const cash=bookings.reduce((s,b)=>s+paid(b),0);
- const exp=expenses.reduce((s,x)=>s+Number(x.amount||0),0);
- const rec=bookings.reduce((s,b)=>s+remaining(b),0);
- const set=(id,v)=>$(id).textContent=v;
- [
-  ['revenue',rp(rev)],['cash',rp(cash)],['expense',rp(exp)],['profit',rp(rev-exp)],
-  ['events',bookings.length],['receivable',rp(rec)],
-  ['paidCount',bookings.filter(b=>status(b)==='Lunas').length],
-  ['crewTotal',rp(expenses.filter(x=>x.category==='Honor Crew').reduce((s,x)=>s+Number(x.amount||0),0))],
-  ['fRevenue',rp(rev)],['fCash',rp(cash)],['fExpense',rp(exp)],['fProfit',rp(rev-exp)]
- ].forEach(x=>set(...x));
-
- const q=($('search')?.value||'').toLowerCase();
- const filter=$('filter')?.value||'all';
- const list=bookings.filter(b=>{
-  const c=clientFor(b)||{};
-  return(!q||[c.full_name,c.phone,b.event_type,b.invoice_no,b.package_name].join(' ').toLowerCase().includes(q))&&(filter==='all'||status(b)===filter);
- });
- $('clientRows').innerHTML=list.length?list.map(b=>{
-  const c=clientFor(b)||{};
-  return `<tr><td><b>${esc(c.full_name||'—')}</b><br>${esc(b.event_type)}</td><td>${date(b.event_date)}</td><td>${esc(b.invoice_no||('INV-'+b.id))}<br>${rp(total(b))}</td><td>${rp(paid(b))}</td><td>${rp(remaining(b))}</td><td>${badge(status(b))}</td><td><div class="actions"><button class="btn small" data-detail="${b.id}">Detail</button><button class="btn small" data-pay="${b.id}">Bayar</button><button class="btn small" data-edit="${b.id}">Edit</button></div></td></tr>`;
- }).join(''):'<tr><td colspan="7" class="empty">Belum ada event.</td></tr>';
-
- $('recent').innerHTML=bookings.slice(0,5).map(b=>{
-  const c=clientFor(b)||{};
-  return `<tr><td><b>${esc(c.full_name||'—')}</b><br>${esc(b.event_type)}</td><td>${rp(total(b))}</td><td>${rp(remaining(b))}</td><td>${badge(status(b))}</td></tr>`;
- }).join('')||'<tr><td colspan="4" class="empty">Belum ada transaksi.</td></tr>';
-
- $('invoiceRows').innerHTML=bookings.map(b=>{
-  const c=clientFor(b)||{};
-  return `<tr><td>${esc(b.invoice_no||('INV-'+b.id))}</td><td>${esc(c.full_name||'—')}</td><td>${esc(b.event_type)}</td><td>${rp(total(b))}</td><td>${badge(status(b))}</td><td><div class="actions"><button class="btn small" data-invoice="${b.id}">Preview PDF</button><button class="btn small" data-edit="${b.id}">Edit</button></div></td></tr>`;
- }).join('')||'<tr><td colspan="6" class="empty">Belum ada invoice.</td></tr>';
-
- $('costRows').innerHTML=expenses.map(x=>{
-  const b=booking(x.booking_id),c=b?clientFor(b):null;
-  return `<tr><td>${esc(c?.full_name||'—')}<br>${esc(b?.event_type||'')}</td><td>${esc(x.category)}</td><td>${esc(x.description)}<br>${date(x.expense_date)}</td><td>${rp(x.amount)}</td><td><button class="btn small" data-del="${x.id}">Hapus</button></td></tr>`;
- }).join('')||'<tr><td colspan="5" class="empty">Belum ada biaya.</td></tr>';
-
- $('financeRows').innerHTML=bookings.map(b=>{
-  const c=clientFor(b)||{};
-  return `<tr><td><b>${esc(c.full_name||'—')}</b><br>${esc(b.event_type)}</td><td>${rp(total(b))}</td><td>${rp(paid(b))}</td><td>${rp(costs(b))}</td><td>${rp(total(b)-costs(b))}</td><td>${rp(remaining(b))}</td></tr>`;
- }).join('')||'<tr><td colspan="6" class="empty">Belum ada data.</td></tr>';
-}
-
-document.addEventListener('click',async e=>{
- const v=e.target.closest('[data-view]');if(v)view(v.dataset.view);
- const a=e.target.closest('[data-action]');
- if(a){if(a.dataset.action==='client')clientForm();if(a.dataset.action==='cost')costForm()}
- const d=e.target.closest('[data-detail]');if(d)detail(d.dataset.detail);
- const p=e.target.closest('[data-pay]');if(p)paymentForm(p.dataset.pay);
- const ed=e.target.closest('[data-edit]');if(ed)clientForm(ed.dataset.edit);
- const inv=e.target.closest('[data-invoice]');if(inv)invoice(inv.dataset.invoice);
- const del=e.target.closest('[data-del]');
- if(del&&confirm('Hapus catatan biaya ini?')){
-  const r=await sb.from('expenses').delete().eq('id',del.dataset.del);
-  if(r.error)showError(r.error.message);
-  else{await refresh();if(activeId)detail(activeId)}
- }
+  if(error){alert("Login gagal: "+error.message);return;}
+  await start();
+});
+$("logoutBtn").addEventListener("click",async()=>{
+  await db.auth.signOut();
+  showLogin();
 });
 
-$('loginForm').onsubmit=async e=>{
- e.preventDefault();$('loginError').textContent='';
- const f=new FormData(e.target);
- const r=await sb.auth.signInWithPassword({email:f.get('email'),password:f.get('password')});
- if(r.error){$('loginError').textContent='Login gagal: '+r.error.message;return}
- await startApp();
-};
-$('logout').onclick=async()=>{
- await sb.auth.signOut();$('workspace').classList.add('hidden');$('loginScreen').classList.remove('hidden');
-};
-$('close').onclick=closeModal;
-$('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
-$('search').addEventListener('input',render);
-$('filter').addEventListener('change',render);
-$('website').onclick=()=>window.open('https://kyra-picture-new.pages.dev/','_blank');
-
-$('csv').onclick=()=>{
- const rows=[['Klien','Event','Invoice','Pendapatan','Uang masuk','Pengeluaran','Laba','Sisa'],
- ...bookings.map(b=>[clientFor(b)?.full_name||'',b.event_type,b.invoice_no||('INV-'+b.id),total(b),paid(b),costs(b),total(b)-costs(b),remaining(b)])];
- const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
- const a=document.createElement('a');
- a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
- a.download='kyra-picture-keuangan.csv';a.click();
- setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-};
-
-async function startApp(){
- $('loginScreen').classList.add('hidden');
- $('workspace').classList.remove('hidden');
- await refresh();
+async function start(){
+  const {data,error}=await db.auth.getSession();
+  if(error||!data.session){showLogin();return;}
+  showApp();
+  if(!$("items").children.length)addItem();
+  if(!$("crew").children.length)addCrew();
 }
-sb.auth.getSession().then(({data})=>{if(data.session)startApp()});
+db.auth.onAuthStateChange((_event,session)=>{
+  if(session){showApp();}else{showLogin();}
+});
+start();
 </script>
 </body>
 </html>
