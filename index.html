@@ -162,6 +162,26 @@
       margin-bottom:32px;
     }
 
+    /* HERO CTA: tulisan tanpa kotak */
+    .home-page .explore-link {
+      display:inline-block;
+      padding:0;
+      background:transparent;
+      border:none;
+      color:var(--paper);
+      text-decoration:none;
+      font-family:"DM Sans",sans-serif;
+      font-size:10px;
+      letter-spacing:1.5px;
+      transition:color .25s;
+      cursor:pointer;
+    }
+
+    .home-page .explore-link:hover {
+      color:var(--champagne);
+    }
+
+    /* Tombol halaman lain tetap seperti semula */
     .home-page .button {
       display:inline-block;
       padding:16px 23px;
@@ -385,7 +405,6 @@
       line-height:1;
     }
 
-    /* Font testimoni dibuat sederhana dan mudah dibaca */
     .home-page .testimonial-quote {
       flex:0 0 auto;
       margin:0 0 20px;
@@ -632,7 +651,6 @@
 
       .home-page .testimonials { padding:70px 7%; }
 
-      /* Tinggi kartu HP mengikuti isi testimoni */
       .home-page .testimonial-card {
         flex-basis:100%;
         min-height:0;
@@ -689,7 +707,7 @@
       <p class="eyebrow">WEDDING · PREWEDDING · ENGAGEMENT</p>
       <h1>Your Story,<br><em>Beautifully</em><br>Captured.</h1>
       <p class="description">Turning your most meaningful moments into timeless photographs.</p>
-      <a class="button" href="portfolio.html">EXPLORE OUR WORK ↗</a>
+      <a class="explore-link" href="portfolio.html">EXPLORE OUR WORK</a>
     </div>
 
     <div class="hero-controls">
@@ -709,24 +727,24 @@
     <div class="featured-grid">
       <a class="featured-card" href="wedding.html">
         <img src="https://drive.google.com/thumbnail?id=1ZDJcCGEuBTk4UvSrfM1mRFTiU4O_mo9o&sz=w2000" alt="Wedding photography" loading="lazy">
-        <h3>Wedding Stories ↗</h3>
+        <h3>Wedding Stories</h3>
         <p>For the beginning of forever.</p>
       </a>
 
       <a class="featured-card" href="prewedding.html">
         <img src="https://drive.google.com/thumbnail?id=1R8NsuQbnyZCH7vBsK9OVpiIqxDAMPW9T&sz=w2000" alt="Prewedding photography" loading="lazy">
-        <h3>Prewedding Moments ↗</h3>
+        <h3>Prewedding Moments</h3>
         <p>Your love story, captured before the big day.</p>
       </a>
 
       <a class="featured-card" href="engagement.html">
         <img src="https://drive.google.com/thumbnail?id=1W1S_gusPEBevHo1gwXxR-5V9WSdBoVoR&sz=w2000" alt="Engagement photography" loading="lazy">
-        <h3>Engagement Stories ↗</h3>
+        <h3>Engagement Stories</h3>
         <p>A little promise, a beautiful beginning.</p>
       </a>
     </div>
 
-    <a class="button" href="portfolio.html">VIEW ALL PORTFOLIO ↗</a>
+    <a class="button" href="portfolio.html">VIEW ALL PORTFOLIO</a>
   </section>
 
   <section class="testimonials" id="testimonials">
@@ -750,7 +768,7 @@
       <button class="testimonial-arrow" id="testimonial-next" type="button" aria-label="Next testimonial">→</button>
     </div>
 
-    <a class="button" href="testimonials.html">VIEW ALL TESTIMONIALS ↗</a>
+    <a class="button" href="testimonials.html">VIEW ALL TESTIMONIALS</a>
   </section>
 
   <section class="about-strip">
@@ -758,7 +776,7 @@
       <p class="eyebrow">THE KYRA APPROACH</p>
       <h2>Photographs that feel like you.</h2>
       <p>We believe the most meaningful photographs come from real connections, little gestures, and the moments in between. Our approach is thoughtful, natural, and timeless.</p>
-      <a class="button" href="about.html">GET TO KNOW US ↗</a>
+      <a class="button" href="about.html">GET TO KNOW US</a>
     </div>
 
     <div class="about-note">“Your story deserves to be remembered beautifully.”</div>
@@ -772,9 +790,9 @@
   </div>
 
   <div class="footer-links">
-    <a href="https://www.instagram.com/kyra.picture/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
-    <a href="https://www.tiktok.com/@kyra.picture" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
-    <a href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+    <a href="https://www.instagram.com/kyra.picture/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="https://www.tiktok.com/@kyra.picture" target="_blank" rel="noopener noreferrer">TikTok</a>
+    <a href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">WhatsApp</a>
   </div>
 </footer>
 
@@ -1079,10 +1097,6 @@
     const offset = slideIndex * (cardWidth + gap);
     track.style.transform = "translateX(-" + offset + "px)";
 
-    /*
-     * Di HP, tinggi viewport mengikuti kartu yang sedang aktif.
-     * Desktop dan tablet tetap menggunakan tinggi normal.
-     */
     if (window.innerWidth <= 520) {
       viewport.style.height = cards[slideIndex].offsetHeight + "px";
     } else {
