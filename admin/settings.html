@@ -2,794 +2,335 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pengaturan | Kyra Picture Admin</title>
-  <link rel="stylesheet" href="css/admin.css">
-
-  <style>
-    .settings-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 22px;
-    }
-
-    .settings-tab {
-      border: 1px solid var(--line);
-      background: #fff;
-      color: var(--text);
-      padding: 10px 16px;
-      border-radius: 9px;
-      cursor: pointer;
-      font: inherit;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .settings-tab.active {
-      background: var(--gold-light);
-      border-color: var(--gold);
-    }
-
-    .settings-panel[hidden] {
-      display: none !important;
-    }
-
-    .settings-panel {
-      display: grid;
-      gap: 20px;
-    }
-
-    .settings-card {
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      padding: 22px;
-      background: #fff;
-    }
-
-    .settings-card h3 {
-      font-size: 16px;
-      margin: 0 0 7px;
-    }
-
-    .settings-card > p {
-      font-size: 13px;
-      color: var(--muted);
-      margin: 0 0 22px;
-      line-height: 1.6;
-    }
-
-    .settings-card .field input,
-    .settings-card .field select,
-    .settings-card .field textarea {
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .settings-card .field label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 7px;
-    }
-
-    .settings-card .field input,
-    .settings-card .field select,
-    .settings-card .field textarea {
-      padding: 11px 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      font: inherit;
-      font-size: 13px;
-      color: var(--text);
-      background: #fff;
-    }
-
-    .settings-card .field textarea {
-      min-height: 85px;
-      resize: vertical;
-    }
-
-    .settings-card .field input:focus,
-    .settings-card .field select:focus,
-    .settings-card .field textarea:focus {
-      outline: 2px solid var(--gold-light);
-      border-color: var(--gold);
-    }
-
-    .settings-card .form-grid {
-      gap: 18px;
-    }
-
-    .settings-actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 22px;
-    }
-
-    .settings-note {
-      padding: 13px 15px;
-      border-radius: 9px;
-      background: var(--gold-light);
-      font-size: 12px;
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-
-    .settings-table-wrap {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    .settings-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      min-width: 570px;
-    }
-
-    .settings-table th,
-    .settings-table td {
-      padding: 13px 12px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: middle;
-    }
-
-    .settings-table th {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .settings-table td:last-child {
-      white-space: nowrap;
-    }
-
-    .settings-table .empty-row {
-      text-align: center;
-      color: var(--muted);
-      padding: 30px 10px;
-    }
-
-    .settings-status {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 5px 8px;
-      border-radius: 20px;
-      background: var(--green-light);
-      color: var(--green);
-    }
-
-    .settings-status.inactive {
-      background: var(--red-light);
-      color: var(--red);
-    }
-
-    .settings-muted {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .settings-danger {
-      border-color: var(--red-light);
-    }
-
-    .settings-danger h3 {
-      color: var(--red);
-    }
-
-    .settings-inline-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-    }
-
-    .settings-btn-small {
-      padding: 7px 10px;
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      background: white;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .settings-btn-small:hover {
-      background: var(--gold-light);
-    }
-
-    .settings-btn-delete {
-      color: var(--red);
-    }
-
-    .settings-check {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 13px;
-      line-height: 1.6;
-      cursor: pointer;
-    }
-
-    .settings-check input {
-      margin-top: 4px;
-    }
-
-    .settings-footer-note {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.7;
-    }
-
-    .settings-toast {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      z-index: 9999;
-      background: #222;
-      color: #fff;
-      padding: 13px 18px;
-      border-radius: 10px;
-      font-size: 13px;
-      box-shadow: 0 8px 30px #0002;
-      max-width: calc(100vw - 44px);
-    }
-
-    .settings-toast[hidden] {
-      display: none;
-    }
-
-    .settings-subtitle {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 5px;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 600px) {
-      .settings-card {
-        padding: 16px;
-      }
-
-      .settings-tab {
-        padding: 9px 11px;
-        font-size: 12px;
-      }
-
-      .settings-actions {
-        justify-content: stretch;
-      }
-
-      .settings-actions .btn {
-        flex: 1;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengaturan | Kyra Picture Admin</title>
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+.settings-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.settings-tab{padding:10px 15px;border:1px solid var(--line);border-radius:9px;background:white;cursor:pointer;font-size:13px}
+.settings-tab.active{background:var(--gold-light);border-color:var(--gold);font-weight:700}
+.settings-panel[hidden]{display:none}
+.settings-panel{display:grid;gap:18px}
+.settings-card{background:white;border:1px solid var(--line);border-radius:13px;padding:22px;margin-bottom:4px}
+.settings-card h2{font-size:17px;margin:0 0 7px}
+.settings-card>p{font-size:12px;color:var(--muted);line-height:1.7;margin:0 0 20px}
+.settings-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.settings-field{min-width:0}
+.settings-field.full{grid-column:1/-1}
+.settings-field label{display:block;font-size:12px;font-weight:600;margin-bottom:7px}
+.settings-field input,.settings-field select,.settings-field textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:white;color:var(--text);font:inherit;font-size:13px}
+.settings-field textarea{min-height:85px;resize:vertical}
+.settings-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:9px;margin-top:20px}
+.settings-note{background:var(--gold-light);border-radius:9px;padding:13px 15px;font-size:12px;line-height:1.7;margin-bottom:18px}
+.settings-table-wrap{width:100%;overflow-x:auto}
+.settings-table{border-collapse:collapse;width:100%;min-width:620px}
+.settings-table th,.settings-table td{padding:13px 11px;text-align:left;border-bottom:1px solid var(--line);font-size:12px;vertical-align:middle}
+.settings-table th{color:var(--muted);white-space:nowrap}
+.settings-small-btn{padding:7px 10px;border:1px solid var(--line);background:white;border-radius:7px;font-size:12px;cursor:pointer;margin:2px}
+.settings-delete{color:var(--red)}
+.settings-status{display:inline-block;padding:5px 8px;border-radius:20px;background:var(--green-light);color:var(--green);font-size:11px}
+.settings-status.off{background:var(--red-light);color:var(--red)}
+.settings-muted{color:var(--muted);font-size:12px;line-height:1.7}
+.settings-toast{position:fixed;right:20px;bottom:20px;z-index:9999;background:#222;color:white;padding:13px 17px;border-radius:9px;font-size:13px;max-width:calc(100vw - 40px)}
+.settings-toast[hidden]{display:none}
+#settingsLogin{max-width:430px;margin:50px auto;background:white;border:1px solid var(--line);border-radius:14px;padding:25px}
+#settingsLogin h2{margin-top:0}
+#settingsLogin .settings-field{margin:15px 0}
+#settingsLoginError{color:var(--red);font-size:12px;line-height:1.6}
+.settings-top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+@media(max-width:800px){.settings-form{grid-template-columns:1fr}.settings-field.full{grid-column:auto}}
+@media(max-width:600px){.settings-card{padding:16px}.settings-tabs{gap:6px}.settings-tab{padding:9px 10px;font-size:12px}.settings-actions{justify-content:stretch}.settings-actions .btn{flex:1}}
+</style>
 </head>
-
 <body>
-<div class="layout">
 
+<div id="settingsLogin">
+  <h2>Kyra Picture Admin</h2>
+  <p class="settings-muted">Login untuk mengakses pengaturan yang terhubung ke Supabase.</p>
+  <form id="loginForm">
+    <div class="settings-field">
+      <label for="loginEmail">Email admin</label>
+      <input id="loginEmail" type="email" autocomplete="username" required>
+    </div>
+    <div class="settings-field">
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password" autocomplete="current-password" required>
+    </div>
+    <button class="btn btn-gold" type="submit" style="width:100%">Login</button>
+    <p id="settingsLoginError"></p>
+  </form>
+</div>
+
+<div class="layout" id="settingsApp" hidden>
   <aside class="sidebar">
     <div class="brand">
       <div class="brand-name">KYRA PICTURE</div>
       <div class="brand-subtitle">ADMIN PANEL</div>
     </div>
-
     <div class="nav-heading">MENU UTAMA</div>
     <nav class="nav-list">
-      <a href="index.html" class="nav-link">
-        <span class="nav-icon">▦</span> Dashboard
-      </a>
-      <a href="bookings.html" class="nav-link">
-        <span class="nav-icon">▣</span> Booking
-      </a>
-      <a href="invoices.html" class="nav-link">
-        <span class="nav-icon">▤</span> Invoice
-      </a>
-      <a href="payments.html" class="nav-link">
-        <span class="nav-icon">↗</span> Pembayaran
-      </a>
-      <a href="crew.html" class="nav-link">
-        <span class="nav-icon">♙</span> Crew
-      </a>
-      <a href="expenses.html" class="nav-link">
-        <span class="nav-icon">↘</span> Pengeluaran
-      </a>
-      <a href="finance.html" class="nav-link">
-        <span class="nav-icon">▥</span> Keuangan
-      </a>
-      <a href="settings.html" class="nav-link active">
-        <span class="nav-icon">⚙</span> Pengaturan
-      </a>
+      <a href="index.html" class="nav-link"><span class="nav-icon">▦</span> Dashboard</a>
+      <a href="bookings.html" class="nav-link"><span class="nav-icon">▣</span> Booking</a>
+      <a href="invoices.html" class="nav-link"><span class="nav-icon">▤</span> Invoice</a>
+      <a href="payments.html" class="nav-link"><span class="nav-icon">↗</span> Pembayaran</a>
+      <a href="crew.html" class="nav-link"><span class="nav-icon">♙</span> Crew</a>
+      <a href="expenses.html" class="nav-link"><span class="nav-icon">↘</span> Pengeluaran</a>
+      <a href="finance.html" class="nav-link"><span class="nav-icon">▥</span> Keuangan</a>
+      <a href="settings.html" class="nav-link active"><span class="nav-icon">⚙</span> Pengaturan</a>
     </nav>
-
     <div class="sidebar-bottom">
       <div class="settings-muted">KYRA PICTURE</div>
-      <div class="settings-muted">Admin Workspace</div>
+      <button class="btn btn-light" id="logoutBtn" style="margin-top:10px;width:100%">Logout</button>
     </div>
   </aside>
 
   <main class="main">
-
     <header class="topbar">
       <div>
         <div class="eyebrow">ADMINISTRATION</div>
         <h1 class="welcome">Pengaturan</h1>
       </div>
-      <div class="date-label" id="currentDate"></div>
+      <div class="settings-top-actions">
+        <span class="date-label" id="currentDate"></span>
+        <button type="button" class="btn btn-light" id="refreshBtn">↻ Refresh</button>
+      </div>
     </header>
 
-    <div class="notice">
-      Kelola informasi bisnis, identitas invoice, dan daftar paket fotografi
-      Kyra Picture dari satu halaman.
-    </div>
+    <div class="notice" id="connectionNotice">Menghubungkan ke Supabase...</div>
 
-    <div class="settings-tabs" role="tablist" aria-label="Kategori pengaturan">
-      <button class="settings-tab active" type="button" data-tab="business"
-        role="tab" aria-selected="true">
-        Identitas Bisnis
-      </button>
-      <button class="settings-tab" type="button" data-tab="invoice"
-        role="tab" aria-selected="false">
-        Invoice
-      </button>
-      <button class="settings-tab" type="button" data-tab="packages"
-        role="tab" aria-selected="false">
-        Paket Fotografi
-      </button>
-      <button class="settings-tab" type="button" data-tab="system"
-        role="tab" aria-selected="false">
-        Sistem & Data
-      </button>
+    <div class="settings-tabs" role="tablist">
+      <button type="button" class="settings-tab active" data-tab="business">Identitas Bisnis</button>
+      <button type="button" class="settings-tab" data-tab="invoice">Invoice</button>
+      <button type="button" class="settings-tab" data-tab="packages">Paket Fotografi</button>
     </div>
 
     <!-- IDENTITAS BISNIS -->
-    <section class="settings-panel" id="panel-business" role="tabpanel">
-
+    <section class="settings-panel" id="panel-business">
       <div class="settings-card">
-        <h3>Identitas Bisnis</h3>
-        <p>Informasi dasar yang digunakan sebagai identitas Kyra Picture.</p>
-
+        <h2>Identitas Bisnis</h2>
+        <p>Data ini disimpan di tabel app_settings Supabase.</p>
         <form id="businessForm">
-          <div class="form-grid">
-
-            <div class="field">
+          <div class="settings-form">
+            <div class="settings-field">
               <label for="businessName">Nama bisnis *</label>
-              <input id="businessName" name="businessName"
-                value="Kyra Picture" required>
+              <input id="businessName" required>
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="businessEmail">Email bisnis</label>
-              <input id="businessEmail" name="businessEmail"
-                type="email" placeholder="Email bisnis">
+              <input id="businessEmail" type="email">
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="businessPhone">Nomor WhatsApp</label>
-              <input id="businessPhone" name="businessPhone"
-                value="6289519847571" placeholder="628xxxxxxxxxx">
+              <input id="businessPhone">
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="businessInstagram">Instagram</label>
-              <input id="businessInstagram" name="businessInstagram"
-                value="https://instagram.com/kyra.picture">
+              <input id="businessInstagram" type="url">
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="businessWebsite">Website</label>
-              <input id="businessWebsite" name="businessWebsite"
-                value="https://kyrapicture.com">
+              <input id="businessWebsite" type="url">
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="businessOwner">Nama pemilik / penanggung jawab</label>
-              <input id="businessOwner" name="businessOwner"
-                placeholder="Masukkan nama">
+              <input id="businessOwner">
             </div>
-
-            <div class="field full">
+            <div class="settings-field full">
               <label for="businessAddress">Alamat bisnis</label>
-              <textarea id="businessAddress" name="businessAddress">Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28, Jayamulya, Serang Baru, Kabupaten Bekasi, Jawa Barat 17330</textarea>
+              <textarea id="businessAddress"></textarea>
             </div>
-
-            <div class="field full">
+            <div class="settings-field full">
               <label for="businessDescription">Deskripsi bisnis</label>
-              <textarea id="businessDescription" name="businessDescription"
-                placeholder="Deskripsi singkat tentang Kyra Picture"></textarea>
+              <textarea id="businessDescription"></textarea>
             </div>
-
           </div>
-
           <div class="settings-actions">
-            <button type="reset" class="btn btn-light">Reset Form</button>
-            <button type="submit" class="btn btn-gold">Simpan Identitas</button>
+            <button type="button" class="btn btn-light" id="resetBusiness">Batalkan Perubahan</button>
+            <button class="btn btn-gold" type="submit">Simpan ke Supabase</button>
           </div>
         </form>
       </div>
-
-      <div class="settings-card">
-        <h3>Informasi Kontak</h3>
-        <p>Pastikan informasi kontak yang dicantumkan selalu benar.</p>
-
-        <div class="settings-note">
-          Perubahan pada halaman ini disimpan di browser yang sedang digunakan.
-          Perubahan belum otomatis diterapkan ke website publik atau invoice
-          yang dibuat oleh halaman lain.
-        </div>
-
-        <div class="settings-muted">
-          Website:
-          <a href="https://kyrapicture.com" target="_blank" rel="noopener">
-            kyrapicture.com
-          </a>
-          <br>
-          Instagram:
-          <a href="https://instagram.com/kyra.picture"
-             target="_blank" rel="noopener">@kyra.picture</a>
-          <br>
-          WhatsApp: 6289519847571
-        </div>
-      </div>
-
     </section>
 
-    <!-- PENGATURAN INVOICE -->
-    <section class="settings-panel" id="panel-invoice"
-      role="tabpanel" hidden>
-
+    <!-- INVOICE -->
+    <section class="settings-panel" id="panel-invoice" hidden>
       <div class="settings-card">
-        <h3>Identitas Invoice</h3>
-        <p>Atur format nomor dan informasi tambahan untuk dokumen invoice.</p>
-
+        <h2>Pengaturan Invoice</h2>
+        <p>Data format invoice tersimpan di Supabase. Integrasi ke halaman Invoice dilakukan terpisah.</p>
         <form id="invoiceForm">
-          <div class="form-grid">
-
-            <div class="field">
+          <div class="settings-form">
+            <div class="settings-field">
               <label for="invoicePrefix">Awalan nomor invoice</label>
-              <input id="invoicePrefix" name="invoicePrefix"
-                value="KP">
+              <input id="invoicePrefix" required>
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="invoiceSeparator">Pemisah nomor</label>
-              <select id="invoiceSeparator" name="invoiceSeparator">
+              <select id="invoiceSeparator">
                 <option value="-">Strip (-)</option>
                 <option value="/">Garis miring (/)</option>
                 <option value="">Tanpa pemisah</option>
               </select>
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="invoiceDateFormat">Format tanggal</label>
-              <select id="invoiceDateFormat" name="invoiceDateFormat">
+              <select id="invoiceDateFormat">
                 <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                 <option value="DD-MM-YYYY">DD-MM-YYYY</option>
                 <option value="YYYY-MM-DD">YYYY-MM-DD</option>
               </select>
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="invoiceCurrency">Mata uang</label>
-              <select id="invoiceCurrency" name="invoiceCurrency">
-                <option value="IDR">IDR — Rupiah</option>
-              </select>
+              <select id="invoiceCurrency"><option value="IDR">IDR — Rupiah</option></select>
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="invoicePaymentTerm">Jatuh tempo (hari)</label>
-              <input id="invoicePaymentTerm" name="invoicePaymentTerm"
-                type="number" min="0" max="365" value="7">
+              <input id="invoicePaymentTerm" type="number" min="0" max="365" required>
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="invoiceTax">Pajak (%)</label>
-              <input id="invoiceTax" name="invoiceTax"
-                type="number" min="0" max="100" step="0.01" value="0">
+              <input id="invoiceTax" type="number" min="0" max="100" step="0.01" required>
             </div>
-
-            <div class="field full">
+            <div class="settings-field full">
               <label for="invoiceFooter">Catatan / footer invoice</label>
-              <textarea id="invoiceFooter" name="invoiceFooter"
-                placeholder="Contoh: Terima kasih telah mempercayakan momen Anda kepada Kyra Picture."></textarea>
+              <textarea id="invoiceFooter"></textarea>
             </div>
-
           </div>
-
+          <div class="settings-note">Pratinjau nomor: <strong id="invoicePreview">KP-202610-001</strong></div>
           <div class="settings-actions">
-            <button type="reset" class="btn btn-light">Reset Form</button>
-            <button type="submit" class="btn btn-gold">Simpan Invoice</button>
+            <button type="button" class="btn btn-light" id="resetInvoice">Batalkan Perubahan</button>
+            <button class="btn btn-gold" type="submit">Simpan ke Supabase</button>
           </div>
         </form>
       </div>
-
-      <div class="settings-card">
-        <h3>Contoh Nomor Invoice</h3>
-        <p>Pratinjau berdasarkan pengaturan nomor invoice di atas.</p>
-        <div class="settings-note" id="invoicePreview">KP-202610-001</div>
-        <div class="settings-muted">
-          Pratinjau ini hanya contoh format. Mengubah pengaturan di sini
-          belum mengubah nomor invoice yang dibuat di halaman Invoice.
-        </div>
-      </div>
-
     </section>
 
-    <!-- PAKET FOTOGRAFI -->
-    <section class="settings-panel" id="panel-packages"
-      role="tabpanel" hidden>
-
+    <!-- PAKET -->
+    <section class="settings-panel" id="panel-packages" hidden>
       <div class="settings-card">
-        <h3>Daftar Paket Fotografi</h3>
-        <p>
-          Tambahkan dan kelola daftar paket yang ditawarkan Kyra Picture.
-          Harga yang dimasukkan di sini merupakan data pengaturan lokal.
-        </p>
-
+        <h2>Daftar Paket Fotografi</h2>
+        <p>Paket di bawah ini disimpan langsung di tabel photo_packages.</p>
         <div class="settings-note">
-          Belum ada paket bawaan yang ditambahkan agar harga dan detail paket
-          tidak dikarang. Masukkan data paket sesuai pricelist resmi lo.
+          Harga paket tidak diisi otomatis supaya kita tidak mengarang pricelist.
+          Masukkan data paket resmi Kyra Picture.
         </div>
-
-        <div class="settings-actions" style="margin-top:0;margin-bottom:20px">
-          <button type="button" class="btn btn-gold" id="addPackageBtn">
-            + Tambah Paket
-          </button>
-        </div>
-
-        <div class="settings-table-wrap">
+        <button type="button" class="btn btn-gold" id="addPackageBtn">+ Tambah Paket</button>
+        <div class="settings-table-wrap" style="margin-top:20px">
           <table class="settings-table">
-            <thead>
-              <tr>
-                <th>Nama Paket</th>
-                <th>Kategori</th>
-                <th>Harga</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="packageTableBody">
-              <tr>
-                <td colspan="5" class="empty-row">
-                  Belum ada paket. Klik "Tambah Paket" untuk memulai.
-                </td>
-              </tr>
-            </tbody>
+            <thead><tr><th>Nama Paket</th><th>Kategori</th><th>Harga</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody id="packageRows"><tr><td colspan="5">Memuat data...</td></tr></tbody>
           </table>
         </div>
       </div>
 
       <div class="settings-card" id="packageEditor" hidden>
-        <h3 id="packageEditorTitle">Tambah Paket</h3>
-        <p>Lengkapi informasi paket di bawah ini.</p>
-
+        <h2 id="packageEditorTitle">Tambah Paket</h2>
+        <p>Isi detail paket lalu simpan langsung ke Supabase.</p>
         <form id="packageForm">
           <input type="hidden" id="packageId">
-
-          <div class="form-grid">
-
-            <div class="field">
+          <div class="settings-form">
+            <div class="settings-field">
               <label for="packageName">Nama paket *</label>
-              <input id="packageName" required maxlength="100"
-                placeholder="Contoh: Wedding Package A">
+              <input id="packageName" required maxlength="120">
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="packageCategory">Kategori *</label>
               <select id="packageCategory" required>
                 <option value="">Pilih kategori</option>
-                <option value="Wedding">Wedding</option>
-                <option value="Prewedding">Prewedding</option>
-                <option value="Engagement">Engagement</option>
-                <option value="Graduation">Graduation</option>
-                <option value="Event">Event</option>
-                <option value="Lainnya">Lainnya</option>
+                <option>Wedding</option>
+                <option>Prewedding</option>
+                <option>Engagement</option>
+                <option>Graduation</option>
+                <option>Event</option>
+                <option>Lainnya</option>
               </select>
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="packagePrice">Harga (Rp) *</label>
-              <input id="packagePrice" type="number"
-                min="0" step="1000" required placeholder="0">
+              <input id="packagePrice" type="number" min="0" step="1000" required>
             </div>
-
-            <div class="field">
+            <div class="settings-field">
               <label for="packageStatus">Status</label>
               <select id="packageStatus">
-                <option value="active">Aktif</option>
-                <option value="inactive">Nonaktif</option>
+                <option value="true">Aktif</option>
+                <option value="false">Nonaktif</option>
               </select>
             </div>
-
-            <div class="field full">
-              <label for="packageDescription">Detail / isi paket</label>
-              <textarea id="packageDescription"
-                placeholder="Tuliskan detail layanan yang termasuk dalam paket"></textarea>
+            <div class="settings-field full">
+              <label for="packageDescription">Detail paket</label>
+              <textarea id="packageDescription"></textarea>
             </div>
-
           </div>
-
           <div class="settings-actions">
-            <button type="button" class="btn btn-light"
-              id="cancelPackageBtn">Batal</button>
+            <button type="button" class="btn btn-light" id="cancelPackage">Batal</button>
             <button type="submit" class="btn btn-gold">Simpan Paket</button>
           </div>
         </form>
       </div>
-
-      <div class="settings-card">
-        <h3>Catatan Penggunaan Paket</h3>
-        <p>
-          Paket yang dibuat di halaman ini belum otomatis muncul pada form
-          Booking, Invoice, atau website publik. Integrasi antarhalaman
-          memerlukan koneksi data bersama.
-        </p>
-      </div>
-
     </section>
 
-    <!-- SISTEM DAN DATA -->
-    <section class="settings-panel" id="panel-system"
-      role="tabpanel" hidden>
-
-      <div class="settings-card">
-        <h3>Status Penyimpanan</h3>
-        <p>Informasi mengenai cara pengaturan disimpan saat ini.</p>
-
-        <div class="settings-note">
-          <strong>Mode saat ini: penyimpanan lokal browser.</strong><br>
-          Data disimpan di localStorage browser ini. Data tidak otomatis
-          tersedia di browser atau perangkat lain, dan belum terhubung
-          dengan Supabase.
-        </div>
-
-        <div class="settings-muted">
-          Data identitas: <strong id="businessStorageStatus">Memeriksa...</strong>
-          <br>
-          Data invoice: <strong id="invoiceStorageStatus">Memeriksa...</strong>
-          <br>
-          Data paket: <strong id="packageStorageStatus">Memeriksa...</strong>
-        </div>
-      </div>
-
-      <div class="settings-card">
-        <h3>Cadangkan Pengaturan</h3>
-        <p>
-          Unduh pengaturan lokal sebagai file JSON untuk menyimpan salinan
-          atau memindahkannya secara manual.
-        </p>
-
-        <button type="button" class="btn btn-gold" id="exportSettingsBtn">
-          Unduh Backup JSON
-        </button>
-      </div>
-
-      <div class="settings-card">
-        <h3>Impor Pengaturan</h3>
-        <p>
-          Pulihkan pengaturan dari file JSON yang sebelumnya diekspor
-          menggunakan halaman ini.
-        </p>
-
-        <div class="field">
-          <label for="importSettingsFile">Pilih file backup JSON</label>
-          <input type="file" id="importSettingsFile" accept=".json,application/json">
-        </div>
-
-        <div class="settings-actions">
-          <button type="button" class="btn btn-light" id="importSettingsBtn">
-            Impor Pengaturan
-          </button>
-        </div>
-
-        <div class="settings-footer-note">
-          Impor akan mengganti pengaturan identitas, invoice, dan daftar paket
-          lokal yang sedang tersimpan. Ekspor backup lama terlebih dahulu
-          sebelum melakukan impor.
-        </div>
-      </div>
-
-      <div class="settings-card settings-danger">
-        <h3>Reset Pengaturan Lokal</h3>
-        <p>
-          Menghapus pengaturan yang disimpan oleh halaman ini dari browser
-          dan mengembalikan nilai awal. Tindakan ini tidak menghapus database
-          Supabase maupun data pada modul admin lain.
-        </p>
-
-        <button type="button" class="btn btn-light" id="resetSettingsBtn">
-          Reset Pengaturan
-        </button>
-      </div>
-
-    </section>
-
-    <footer class="footer">
-      Kyra Picture Admin · Pengaturan
-    </footer>
-
+    <footer class="footer">Kyra Picture Admin · Pengaturan</footer>
   </main>
 </div>
 
-<div class="settings-toast" id="settingsToast" role="status"
-  aria-live="polite" hidden></div>
+<div class="settings-toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
 (() => {
   "use strict";
 
-  const KEYS = {
-    business: "kyra_picture_settings_business_v1",
-    invoice: "kyra_picture_settings_invoice_v1",
-    packages: "kyra_picture_settings_packages_v1"
-  };
-
-  const DEFAULTS = {
-    business: {
-      businessName: "Kyra Picture",
-      businessEmail: "",
-      businessPhone: "6289519847571",
-      businessInstagram: "https://instagram.com/kyra.picture",
-      businessWebsite: "https://kyrapicture.com",
-      businessOwner: "",
-      businessAddress:
-        "Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28, Jayamulya, Serang Baru, Kabupaten Bekasi, Jawa Barat 17330",
-      businessDescription: ""
-    },
-    invoice: {
-      invoicePrefix: "KP",
-      invoiceSeparator: "-",
-      invoiceDateFormat: "DD/MM/YYYY",
-      invoiceCurrency: "IDR",
-      invoicePaymentTerm: "7",
-      invoiceTax: "0",
-      invoiceFooter: ""
-    },
-    packages: []
-  };
-
+  const SUPABASE_URL = "https://vgiczgeleincrhlhsdzy.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_ua5vsHvJnweG2zWCT_jkxg_BJsjQPXl";
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   const $ = id => document.getElementById(id);
 
+  const DEFAULT_BUSINESS = {
+    businessName: "Kyra Picture",
+    businessEmail: "",
+    businessPhone: "6289519847571",
+    businessInstagram: "https://instagram.com/kyra.picture",
+    businessWebsite: "https://kyrapicture.com",
+    businessOwner: "",
+    businessAddress: "Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28, Jayamulya, Serang Baru, Kabupaten Bekasi, Jawa Barat 17330",
+    businessDescription: ""
+  };
+
+  const DEFAULT_INVOICE = {
+    invoicePrefix: "KP",
+    invoiceSeparator: "-",
+    invoiceDateFormat: "DD/MM/YYYY",
+    invoiceCurrency: "IDR",
+    invoicePaymentTerm: "7",
+    invoiceTax: "0",
+    invoiceFooter: ""
+  };
+
+  let savedBusiness = {...DEFAULT_BUSINESS};
+  let savedInvoice = {...DEFAULT_INVOICE};
+  let packages = [];
   let toastTimer;
 
-  function showToast(message) {
-    const toast = $("settingsToast");
-    toast.textContent = message;
-    toast.hidden = false;
+  function toast(message) {
+    $("toast").textContent = message;
+    $("toast").hidden = false;
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-      toast.hidden = true;
-    }, 3000);
+    toastTimer = setTimeout(() => $("toast").hidden = true, 3500);
   }
 
-  function readStorage(key, fallback) {
-    try {
-      const raw = localStorage.getItem(key);
-      return raw === null ? structuredClone(fallback) : JSON.parse(raw);
-    } catch (error) {
-      console.error("Gagal membaca pengaturan:", error);
-      return structuredClone(fallback);
-    }
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;",
+      '"': "&quot;", "'": "&#39;"
+    })[c]);
   }
 
-  function writeStorage(key, value) {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-      return true;
-    } catch (error) {
-      console.error("Gagal menyimpan pengaturan:", error);
-      showToast("Gagal menyimpan. Periksa ruang penyimpanan browser.");
-      return false;
-    }
+  function rupiah(value) {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency", currency: "IDR", maximumFractionDigits: 0
+    }).format(Number(value) || 0);
   }
 
   function fillForm(formId, values) {
@@ -800,122 +341,180 @@
     });
   }
 
-  function formValues(formId) {
-    const form = $(formId);
+  function getForm(formId) {
     const values = {};
-    new FormData(form).forEach((value, key) => {
-      values[key] = String(value).trim();
-    });
+    new FormData($(formId)).forEach((value, key) => values[key] = String(value).trim());
     return values;
   }
 
-  function loadSettings() {
-    fillForm("businessForm", {
-      ...DEFAULTS.business,
-      ...readStorage(KEYS.business, DEFAULTS.business)
-    });
+  async function loadSetting(key, fallback) {
+    const {data, error} = await db
+      .from("app_settings")
+      .select("setting_value")
+      .eq("setting_key", key)
+      .maybeSingle();
 
-    fillForm("invoiceForm", {
-      ...DEFAULTS.invoice,
-      ...readStorage(KEYS.invoice, DEFAULTS.invoice)
-    });
-
-    renderPackages();
-    updateInvoicePreview();
-    updateStorageStatus();
+    if (error) throw error;
+    return data?.setting_value ?? {...fallback};
   }
 
-  // Navigasi tab
+  async function saveSetting(key, value) {
+    const {data: authData, error: authError} = await db.auth.getUser();
+    if (authError || !authData.user) throw new Error("Sesi login tidak ditemukan.");
+
+    const {error} = await db.from("app_settings").upsert({
+      setting_key: key,
+      setting_value: value,
+      updated_at: new Date().toISOString(),
+      updated_by: authData.user.id
+    }, {onConflict: "setting_key"});
+
+    if (error) throw error;
+  }
+
+  async function loadAll() {
+    $("connectionNotice").textContent = "Mengambil pengaturan dari Supabase...";
+
+    try {
+      const [business, invoice] = await Promise.all([
+        loadSetting("business", DEFAULT_BUSINESS),
+        loadSetting("invoice", DEFAULT_INVOICE)
+      ]);
+
+      savedBusiness = {...DEFAULT_BUSINESS, ...business};
+      savedInvoice = {...DEFAULT_INVOICE, ...invoice};
+
+      fillForm("businessForm", savedBusiness);
+      fillForm("invoiceForm", savedInvoice);
+
+      await loadPackages();
+
+      $("connectionNotice").textContent =
+        "Terhubung ke Supabase. Perubahan yang disimpan akan masuk ke database.";
+      updateInvoicePreview();
+    } catch (error) {
+      console.error(error);
+      $("connectionNotice").textContent =
+        "Gagal memuat data Supabase: " + (error.message || "Periksa tabel dan kebijakan akses.");
+      toast("Tidak bisa membaca data Supabase.");
+    }
+  }
+
+  // Auth: gunakan sesi yang sudah login, atau tampilkan form login.
+  async function checkSession() {
+    const {data, error} = await db.auth.getSession();
+
+    if (error) {
+      $("settingsLoginError").textContent = error.message;
+      return;
+    }
+
+    if (data.session) {
+      $("settingsLogin").hidden = true;
+      $("settingsApp").hidden = false;
+      await loadAll();
+    } else {
+      $("settingsLogin").hidden = false;
+      $("settingsApp").hidden = true;
+    }
+  }
+
+  $("loginForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    $("settingsLoginError").textContent = "";
+
+    const {error} = await db.auth.signInWithPassword({
+      email: $("loginEmail").value.trim(),
+      password: $("loginPassword").value
+    });
+
+    if (error) {
+      $("settingsLoginError").textContent = error.message;
+      return;
+    }
+
+    await checkSession();
+  });
+
+  $("logoutBtn").addEventListener("click", async () => {
+    const {error} = await db.auth.signOut();
+    if (error) return toast(error.message);
+    location.reload();
+  });
+
+  // Tab
   document.querySelectorAll(".settings-tab").forEach(button => {
     button.addEventListener("click", () => {
       const tab = button.dataset.tab;
-
       document.querySelectorAll(".settings-tab").forEach(item => {
-        const active = item === button;
-        item.classList.toggle("active", active);
-        item.setAttribute("aria-selected", String(active));
+        item.classList.toggle("active", item === button);
       });
-
       document.querySelectorAll(".settings-panel").forEach(panel => {
         panel.hidden = panel.id !== "panel-" + tab;
       });
-
-      if (tab === "system") updateStorageStatus();
     });
   });
 
-  // Simpan identitas bisnis
-  $("businessForm").addEventListener("submit", event => {
+  // Business settings
+  $("businessForm").addEventListener("submit", async event => {
     event.preventDefault();
+    const values = getForm("businessForm");
 
-    const values = formValues("businessForm");
+    if (!values.businessName) return toast("Nama bisnis wajib diisi.");
 
-    if (!values.businessName) {
-      showToast("Nama bisnis wajib diisi.");
-      return;
-    }
-
-    if (writeStorage(KEYS.business, values)) {
-      updateStorageStatus();
-      showToast("Identitas bisnis berhasil disimpan di browser.");
+    try {
+      await saveSetting("business", values);
+      savedBusiness = {...values};
+      toast("Identitas bisnis tersimpan di Supabase.");
+    } catch (error) {
+      console.error(error);
+      toast("Gagal menyimpan: " + (error.message || "periksa koneksi"));
     }
   });
 
-  $("businessForm").addEventListener("reset", () => {
-    setTimeout(() => {
-      fillForm("businessForm", DEFAULTS.business);
-    }, 0);
+  $("resetBusiness").addEventListener("click", () => {
+    fillForm("businessForm", savedBusiness);
+    toast("Perubahan dibatalkan.");
   });
 
-  // Simpan pengaturan invoice
-  $("invoiceForm").addEventListener("submit", event => {
+  // Invoice settings
+  $("invoiceForm").addEventListener("submit", async event => {
     event.preventDefault();
-
-    const values = formValues("invoiceForm");
-
-    if (!values.invoicePrefix) {
-      showToast("Awalan invoice wajib diisi.");
-      return;
-    }
-
+    const values = getForm("invoiceForm");
     const term = Number(values.invoicePaymentTerm);
     const tax = Number(values.invoiceTax);
 
-    if (!Number.isFinite(term) || term < 0 || term > 365) {
-      showToast("Jatuh tempo harus antara 0 dan 365 hari.");
-      return;
-    }
+    if (!values.invoicePrefix) return toast("Awalan invoice wajib diisi.");
+    if (!Number.isFinite(term) || term < 0 || term > 365)
+      return toast("Jatuh tempo harus 0–365 hari.");
+    if (!Number.isFinite(tax) || tax < 0 || tax > 100)
+      return toast("Pajak harus 0–100 persen.");
 
-    if (!Number.isFinite(tax) || tax < 0 || tax > 100) {
-      showToast("Pajak harus antara 0 dan 100 persen.");
-      return;
-    }
-
-    if (writeStorage(KEYS.invoice, values)) {
+    try {
+      await saveSetting("invoice", values);
+      savedInvoice = {...values};
       updateInvoicePreview();
-      updateStorageStatus();
-      showToast("Pengaturan invoice berhasil disimpan di browser.");
+      toast("Pengaturan invoice tersimpan di Supabase.");
+    } catch (error) {
+      console.error(error);
+      toast("Gagal menyimpan: " + (error.message || "periksa koneksi"));
     }
   });
 
-  $("invoiceForm").addEventListener("reset", () => {
-    setTimeout(() => {
-      fillForm("invoiceForm", DEFAULTS.invoice);
-      updateInvoicePreview();
-    }, 0);
+  $("resetInvoice").addEventListener("click", () => {
+    fillForm("invoiceForm", savedInvoice);
+    updateInvoicePreview();
+    toast("Perubahan dibatalkan.");
   });
 
   function updateInvoicePreview() {
-    const prefix = $("invoicePrefix").value.trim() || "KP";
+    const prefix = $("invoicePrefix").value || "KP";
     const separator = $("invoiceSeparator").value;
     const now = new Date();
-
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const number = "001";
-
     $("invoicePreview").textContent =
-      prefix + separator + year + month + separator + number;
+      prefix + separator + now.getFullYear() +
+      String(now.getMonth() + 1).padStart(2, "0") +
+      separator + "001";
   }
 
   ["invoicePrefix", "invoiceSeparator"].forEach(id => {
@@ -923,42 +522,21 @@
     $(id).addEventListener("change", updateInvoicePreview);
   });
 
-  // Manajemen paket
-  function getPackages() {
-    const data = readStorage(KEYS.packages, []);
-    return Array.isArray(data) ? data : [];
-  }
+  // CRUD packages
+  async function loadPackages() {
+    const {data, error} = await db.from("photo_packages")
+      .select("*").order("created_at", {ascending: false});
 
-  function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, character => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    })[character]);
-  }
-
-  function formatRupiah(value) {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      maximumFractionDigits: 0
-    }).format(Number(value) || 0);
+    if (error) throw error;
+    packages = data || [];
+    renderPackages();
   }
 
   function renderPackages() {
-    const tbody = $("packageTableBody");
-    const packages = getPackages();
+    const tbody = $("packageRows");
 
     if (!packages.length) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="5" class="empty-row">
-            Belum ada paket. Klik "Tambah Paket" untuk memulai.
-          </td>
-        </tr>`;
-      updateStorageStatus();
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:25px;color:var(--muted)">Belum ada paket. Klik Tambah Paket.</td></tr>';
       return;
     }
 
@@ -966,286 +544,112 @@
       <tr>
         <td>
           <strong>${escapeHTML(item.name)}</strong>
-          ${item.description
-            ? `<div class="settings-muted">${escapeHTML(item.description)}</div>`
-            : ""}
+          ${item.description ? `<div class="settings-muted">${escapeHTML(item.description)}</div>` : ""}
         </td>
         <td>${escapeHTML(item.category)}</td>
-        <td>${escapeHTML(formatRupiah(item.price))}</td>
+        <td>${escapeHTML(rupiah(item.price))}</td>
+        <td><span class="settings-status ${item.is_active ? "" : "off"}">${item.is_active ? "Aktif" : "Nonaktif"}</span></td>
         <td>
-          <span class="settings-status ${item.status === "active" ? "" : "inactive"}">
-            ${item.status === "active" ? "Aktif" : "Nonaktif"}
-          </span>
+          <button class="settings-small-btn" type="button" data-edit="${escapeHTML(item.id)}">Edit</button>
+          <button class="settings-small-btn settings-delete" type="button" data-delete="${escapeHTML(item.id)}">Hapus</button>
         </td>
-        <td>
-          <div class="settings-inline-actions">
-            <button type="button" class="settings-btn-small"
-              data-edit-package="${escapeHTML(item.id)}">Edit</button>
-            <button type="button"
-              class="settings-btn-small settings-btn-delete"
-              data-delete-package="${escapeHTML(item.id)}">Hapus</button>
-          </div>
-        </td>
-      </tr>
-    `).join("");
-
-    updateStorageStatus();
+      </tr>`).join("");
   }
 
-  function openPackageEditor(item = null) {
+  function openPackage(item = null) {
     $("packageEditor").hidden = false;
-    $("packageEditorTitle").textContent =
-      item ? "Edit Paket" : "Tambah Paket";
-
+    $("packageEditorTitle").textContent = item ? "Edit Paket" : "Tambah Paket";
     $("packageId").value = item?.id || "";
     $("packageName").value = item?.name || "";
     $("packageCategory").value = item?.category || "";
     $("packagePrice").value = item?.price ?? "";
-    $("packageStatus").value = item?.status || "active";
+    $("packageStatus").value = String(item?.is_active ?? true);
     $("packageDescription").value = item?.description || "";
-
-    $("packageEditor").scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
-    $("packageName").focus();
+    $("packageEditor").scrollIntoView({behavior:"smooth", block:"start"});
   }
 
-  function closePackageEditor() {
+  function closePackage() {
     $("packageEditor").hidden = true;
     $("packageForm").reset();
     $("packageId").value = "";
   }
 
-  $("addPackageBtn").addEventListener("click", () => {
-    openPackageEditor();
-  });
+  $("addPackageBtn").addEventListener("click", () => openPackage());
+  $("cancelPackage").addEventListener("click", closePackage);
 
-  $("cancelPackageBtn").addEventListener("click", closePackageEditor);
-
-  $("packageForm").addEventListener("submit", event => {
+  $("packageForm").addEventListener("submit", async event => {
     event.preventDefault();
 
+    const id = $("packageId").value;
     const name = $("packageName").value.trim();
     const category = $("packageCategory").value;
     const price = Number($("packagePrice").value);
-    const status = $("packageStatus").value;
     const description = $("packageDescription").value.trim();
-    const existingId = $("packageId").value;
+    const is_active = $("packageStatus").value === "true";
 
-    if (!name || !category) {
-      showToast("Nama dan kategori paket wajib diisi.");
-      return;
-    }
+    if (!name || !category) return toast("Nama dan kategori paket wajib diisi.");
+    if (!Number.isFinite(price) || price < 0) return toast("Harga paket tidak valid.");
 
-    if (!Number.isFinite(price) || price < 0) {
-      showToast("Masukkan harga paket yang valid.");
-      return;
-    }
-
-    const packages = getPackages();
-
-    if (existingId) {
-      const index = packages.findIndex(item => item.id === existingId);
-
-      if (index === -1) {
-        showToast("Paket tidak ditemukan.");
-        return;
-      }
-
-      packages[index] = {
-        ...packages[index],
-        name, category, price, status, description
-      };
-    } else {
-      packages.push({
-        id: "pkg_" + Date.now() + "_" +
-          Math.random().toString(36).slice(2, 8),
-        name, category, price, status, description,
-        createdAt: new Date().toISOString()
-      });
-    }
-
-    if (writeStorage(KEYS.packages, packages)) {
-      renderPackages();
-      closePackageEditor();
-      showToast("Paket berhasil disimpan di browser.");
-    }
-  });
-
-  $("packageTableBody").addEventListener("click", event => {
-    const editButton = event.target.closest("[data-edit-package]");
-    const deleteButton = event.target.closest("[data-delete-package]");
-
-    if (editButton) {
-      const item = getPackages().find(
-        packageItem => packageItem.id === editButton.dataset.editPackage
-      );
-
-      if (item) openPackageEditor(item);
-    }
-
-    if (deleteButton) {
-      const id = deleteButton.dataset.deletePackage;
-      const packages = getPackages();
-      const item = packages.find(packageItem => packageItem.id === id);
-
-      if (!item) return;
-
-      if (!confirm(`Hapus paket "${item.name}" dari pengaturan lokal?`)) {
-        return;
-      }
-
-      const updated = packages.filter(packageItem => packageItem.id !== id);
-
-      if (writeStorage(KEYS.packages, updated)) {
-        renderPackages();
-        showToast("Paket dihapus dari pengaturan lokal.");
-      }
-    }
-  });
-
-  // Status penyimpanan
-  function updateStorageStatus() {
-    const items = [
-      ["businessStorageStatus", KEYS.business],
-      ["invoiceStorageStatus", KEYS.invoice],
-      ["packageStorageStatus", KEYS.packages]
-    ];
-
-    items.forEach(([elementId, key]) => {
-      try {
-        $(elementId).textContent =
-          localStorage.getItem(key) !== null
-            ? "Data tersimpan di browser"
-            : "Belum ada perubahan tersimpan";
-      } catch (error) {
-        $(elementId).textContent = "Tidak dapat mengakses penyimpanan";
-      }
-    });
-  }
-
-  // Ekspor backup
-  $("exportSettingsBtn").addEventListener("click", () => {
-    const backup = {
-      app: "Kyra Picture Admin Settings",
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      business: readStorage(KEYS.business, DEFAULTS.business),
-      invoice: readStorage(KEYS.invoice, DEFAULTS.invoice),
-      packages: getPackages()
+    const payload = {
+      name, category, price, description, is_active,
+      updated_at: new Date().toISOString()
     };
 
-    const blob = new Blob(
-      [JSON.stringify(backup, null, 2)],
-      { type: "application/json" }
-    );
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "kyra-picture-settings-backup.json";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
-
-    showToast("Backup pengaturan berhasil dibuat.");
-  });
-
-  // Impor backup
-  $("importSettingsBtn").addEventListener("click", async () => {
-    const file = $("importSettingsFile").files[0];
-
-    if (!file) {
-      showToast("Pilih file backup JSON terlebih dahulu.");
-      return;
-    }
-
     try {
-      const data = JSON.parse(await file.text());
+      let result;
 
-      if (
-        data.app !== "Kyra Picture Admin Settings" ||
-        data.version !== 1 ||
-        !data.business ||
-        !data.invoice ||
-        !Array.isArray(data.packages)
-      ) {
-        throw new Error("Format backup tidak dikenali.");
+      if (id) {
+        result = await db.from("photo_packages").update(payload).eq("id", id);
+      } else {
+        result = await db.from("photo_packages").insert(payload);
       }
 
-      const validPackages = data.packages.every(item =>
-        item &&
-        typeof item.id === "string" &&
-        typeof item.name === "string" &&
-        typeof item.category === "string" &&
-        Number.isFinite(Number(item.price)) &&
-        Number(item.price) >= 0 &&
-        ["active", "inactive"].includes(item.status)
-      );
+      if (result.error) throw result.error;
 
-      if (!validPackages) {
-        throw new Error("Data paket di backup tidak valid.");
-      }
-
-      if (!confirm(
-        "Impor akan mengganti pengaturan identitas, invoice, dan paket lokal. Lanjutkan?"
-      )) return;
-
-      const okBusiness = writeStorage(KEYS.business, {
-        ...DEFAULTS.business, ...data.business
-      });
-
-      const okInvoice = writeStorage(KEYS.invoice, {
-        ...DEFAULTS.invoice, ...data.invoice
-      });
-
-      const okPackages = writeStorage(KEYS.packages, data.packages);
-
-      if (!okBusiness || !okInvoice || !okPackages) {
-        showToast("Impor tidak sepenuhnya berhasil. Periksa penyimpanan.");
-        return;
-      }
-
-      loadSettings();
-      $("importSettingsFile").value = "";
-      showToast("Pengaturan berhasil diimpor.");
+      await loadPackages();
+      closePackage();
+      toast(id ? "Paket berhasil diperbarui." : "Paket berhasil ditambahkan.");
     } catch (error) {
       console.error(error);
-      showToast("File backup tidak valid atau tidak bisa dibaca.");
+      toast("Gagal menyimpan paket: " + (error.message || "periksa koneksi"));
     }
   });
 
-  // Reset data lokal modul ini
-  $("resetSettingsBtn").addEventListener("click", () => {
-    const confirmed = confirm(
-      "Yakin reset pengaturan lokal? Identitas, invoice, dan daftar paket yang disimpan halaman ini akan dihapus."
-    );
+  $("packageRows").addEventListener("click", async event => {
+    const edit = event.target.closest("[data-edit]");
+    const remove = event.target.closest("[data-delete]");
 
-    if (!confirmed) return;
+    if (edit) {
+      const item = packages.find(row => row.id === edit.dataset.edit);
+      if (item) openPackage(item);
+    }
 
-    try {
-      Object.values(KEYS).forEach(key => localStorage.removeItem(key));
-      loadSettings();
-      showToast("Pengaturan lokal berhasil direset.");
-    } catch (error) {
-      showToast("Gagal mereset pengaturan lokal.");
+    if (remove) {
+      const item = packages.find(row => row.id === remove.dataset.delete);
+      if (!item) return;
+
+      if (!confirm(`Hapus paket "${item.name}" dari database?`)) return;
+
+      try {
+        const {error} = await db.from("photo_packages").delete().eq("id", item.id);
+        if (error) throw error;
+        await loadPackages();
+        toast("Paket berhasil dihapus dari Supabase.");
+      } catch (error) {
+        console.error(error);
+        toast("Gagal menghapus paket: " + (error.message || "periksa koneksi"));
+      }
     }
   });
 
-  // Tanggal di bagian atas
+  $("refreshBtn").addEventListener("click", loadAll);
+
   $("currentDate").textContent = new Intl.DateTimeFormat("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
+    day: "numeric", month: "long", year: "numeric"
   }).format(new Date());
 
-  loadSettings();
+  checkSession();
 })();
 </script>
 </body>
 </html>
-
