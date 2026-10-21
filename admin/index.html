@@ -5,128 +5,165 @@
 <style>
 :root{--bg:#0e0e10;--c:#18181b;--b:#2a2a2f;--t:#ececec;--m:#8d8d95;--g:#c9a96a;--r:#e5675f;--ok:#5fbf8a}
 *{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--t);font:14px Inter,sans-serif}
-h1,h2,h3,.logo{font-family:'Cormorant Garamond',serif;letter-spacing:.14em;font-weight:600;margin:0}
-.logo{color:var(--g);font-size:22px}a{cursor:pointer}
-#login{min-height:100vh;display:grid;place-items:center;padding:20px}#lf{background:var(--c);border:1px solid var(--b);padding:32px;border-radius:14px;width:100%;max-width:340px;display:grid;gap:12px;text-align:center}
+h2,h3,.logo{font-family:'Cormorant Garamond',serif;letter-spacing:.14em;font-weight:600;margin:0}.logo{color:var(--g);font-size:22px}a{cursor:pointer}
 input,select,textarea{width:100%;background:#0e0e10;border:1px solid var(--b);color:var(--t);padding:10px;border-radius:8px;font:inherit}
 button{background:var(--g);color:#111;border:0;padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer}button.ghost{background:none;color:var(--t);border:1px solid var(--b)}button.red{background:none;color:var(--r);border:1px solid var(--r)}
 header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--b)}
 #nav{display:flex;gap:4px;padding:8px 14px;overflow-x:auto;border-bottom:1px solid var(--b)}#nav a{padding:8px 14px;border-radius:20px;color:var(--m);white-space:nowrap}#nav a.on{background:var(--g);color:#111}
 #main{padding:18px;max-width:980px;margin:auto}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
-.card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:16px;margin-bottom:14px}.grid .card{margin:0}.card small,.m{color:var(--m)}.card b.big{display:block;font-size:20px;margin-top:6px;color:var(--g)}
-.li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--b)}.li:last-child{border:0}.li a{color:var(--m);margin-left:8px}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:12px 0}.tag{font-size:11px;padding:3px 8px;border-radius:12px;border:1px solid var(--g);color:var(--g);font-style:normal}.tag.ok{border-color:var(--ok);color:var(--ok)}
+.card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:16px;margin-bottom:14px}.grid .card{margin:0}.card small,.m,small{color:var(--m)}.card b.big{display:block;font-size:19px;margin-top:6px;color:var(--g)}
+.li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--b);cursor:pointer}.li:last-child{border:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:12px 0}.row select,.row input{width:auto;flex:1;min-width:120px}
+.tag{font-size:11px;padding:3px 8px;border-radius:12px;border:1px solid var(--g);color:var(--g);font-style:normal;white-space:nowrap}.tag.ok{border-color:var(--ok);color:var(--ok)}.tag.no{border-color:var(--r);color:var(--r)}
 .bars{display:flex;gap:10px;align-items:flex-end;height:120px}.bars div{flex:1;text-align:center;font-size:11px;color:var(--m)}.bars i{display:block;background:var(--g);border-radius:4px 4px 0 0;min-height:2px;margin-bottom:4px}
-.modal{position:fixed;inset:0;background:#000b;display:grid;place-items:center;padding:14px;z-index:9;overflow:auto}.box{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:22px;width:100%;max-width:440px;display:grid;gap:10px;max-height:94vh;overflow:auto}.box label{display:grid;gap:4px;color:var(--m);font-size:12px}.box .row{margin:0}
+.modal{position:fixed;inset:0;background:#000b;display:grid;place-items:center;padding:14px;z-index:9;overflow:auto}.box{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:22px;width:100%;max-width:440px;display:grid;gap:10px;max-height:94vh;overflow:auto}
+.box label{display:grid;gap:4px;color:var(--m);font-size:12px}.fg{max-width:620px;grid-template-columns:1fr 1fr}.fg h2,.w{grid-column:1/-1}.box .row{margin:0}
+@media(max-width:560px){.fg{grid-template-columns:1fr}}
 </style></head><body>
-<div id="login"><form id="lf"><h1 class="logo" style="font-size:30px">KYRA PICTURE</h1><small class="m">Admin Panel</small><input id="em" type="email" placeholder="Email" required><input id="pw" type="password" placeholder="Password" required><button>Masuk</button><small id="err" style="color:var(--r)"></small></form></div>
-<div id="app" hidden><header><span class="logo">KYRA PICTURE</span><button class="ghost" onclick="out()">Keluar</button></header><div id="nav"></div><div id="main"></div></div>
+<div id="app"><header><span class="logo">KYRA PICTURE</span><small>Admin</small></header><div id="nav"></div><div id="main"></div></div>
 <script>
 const SB_URL='https://uhwbafngzkicergeqqzm.supabase.co',SB_KEY='sb_publishable_DC_aE9FvhZO71tv7kFIwGw_Iuzx_Wn_';
-const NO_LOGIN=true; // ganti ke false untuk mengaktifkan login lagi
 const sb=supabase.createClient(SB_URL,SB_KEY);
-const $=s=>document.querySelector(s),rp=n=>'Rp '+Math.round(+n||0).toLocaleString('id-ID'),today=()=>new Date().toISOString().slice(0,10);
+const $=s=>document.querySelector(s),rp=n=>'Rp '+Math.round(+n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'),num=s=>+String(s).replace(/\D/g,'')||0;
+const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10),mk=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt=d=>d?new Date(d+'T00:00').toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}):'-';
-const T=['packages','addon_catalog','crew','clients','orders','order_items','payments','costs','settings'];
-let D={},view='dash',oid=null,flt='all';
+const T=['packages','addon_catalog','crew','clients','orders','order_items','payments','expenses','settings'];
+let D={},view='dash',oid=null,cid=null,qo='',qc='',per=today().slice(0,7),ef={m:'',i:'',c:''},tab='all',EDIT=null,PQ=0;
 async function load(){for(const t of T){const r=await sb.from(t).select('*').order('id');if(r.error){alert(r.error.message);return}D[t]=r.data}}
 const by=(t,o)=>D[t].filter(x=>x.order_id==o),sum=a=>a.reduce((s,x)=>s+(+x.amount||0),0);
-function calc(o){const items=sum(by('order_items',o.id)),tot=+o.package_price+items-(+o.discount||0),paid=sum(by('payments',o.id)),cost=sum(by('costs',o.id));return{tot,paid,rest:tot-paid,cost,profit:tot-cost,closed:tot>0&&paid>=tot,items}}
-const invNo=o=>`KP-${(o.inv_date||'').slice(0,4)}-${String(o.inv_no).padStart(4,'0')}`,cl=id=>D.clients.find(c=>c.id==id)||{};
+function calc(o){const items=sum(by('order_items',o.id)),tot=+o.package_price+items-(+o.discount||0),paid=sum(by('payments',o.id)),cost=sum(by('expenses',o.id)),closed=tot>0&&paid>=tot,st=o.cancelled?'BATAL':closed?'CLOSED':'OPEN';return{items,tot,paid,cost,st,rest:st=='OPEN'?tot-paid:0,profit:(o.cancelled?paid:tot)-cost}}
+const invNo=o=>`KP-${(o.inv_date||'').slice(0,4)}-${String(o.inv_no).padStart(4,'0')}`,cl=id=>D.clients.find(c=>c.id==id)||{},ordOf=id=>D.orders.find(o=>o.id==id);
 const op=(a,f)=>'<option value="">—</option>'+a.map(f).join('');
+const METODE=['Transfer','Cash','PayPal'],CAT=['Crew','Transport','Cetak','Sewa Alat','Sewa Studio','Langganan','Iklan','Lainnya'];
+const ORD=a=>op(a,o=>`<option value="${o.id}">${invNo(o)} · ${esc(cl(o.client_id).name)}</option>`);
 function form(title,fields,vals,save){
  const m=document.createElement('div');m.className='modal';
- m.innerHTML=`<form class="box"><h2>${title}</h2>${fields.map(f=>`<label>${f.l}${f.t=='select'?`<select name="${f.k}">${f.o}</select>`:f.t=='area'?`<textarea name="${f.k}" rows="3"></textarea>`:`<input name="${f.k}" type="${f.t||'text'}" ${f.t=='number'?'step="any"':''} ${f.r?'required':''}>`}</label>`).join('')}<div class="row"><button type="button" class="ghost">Batal</button><button>Simpan</button></div></form>`;
+ const inp=f=>f.t=='select'?`<select name="${f.k}" ${f.r?'required':''}>${f.o}</select>`:f.t=='area'?`<textarea name="${f.k}" rows="2"></textarea>`:f.t=='info'?'<small id="pv"></small>':f.t=='number'?`<input name="${f.k}" class="rp" inputmode="numeric" autocomplete="off">`:`<input name="${f.k}" type="${f.t||'text'}" ${f.r?'required':''}>`;
+ m.innerHTML=`<form class="box fg"><h2>${title}</h2>${fields.map(f=>`<label class="${f.w?'w':''}">${f.t=='info'?'':f.l}${inp(f)}</label>`).join('')}<div class="row w"><button type="button" class="ghost">Batal</button><button>Simpan</button></div></form>`;
  document.body.append(m);const fm=m.querySelector('form');
- fields.forEach(f=>{const e=fm[f.k];if(vals&&vals[f.k]!=null)e.value=vals[f.k];f.h&&f.h(fm)});
+ fm.querySelectorAll('.rp').forEach(e=>e.oninput=()=>{const d=e.value.replace(/\D/g,'');e.value=d?rp(d):''});
+ fields.forEach(f=>{const e=fm[f.k];if(e&&vals&&vals[f.k]!=null)e.value=f.t=='number'?rp(vals[f.k]):vals[f.k];f.h&&f.h(fm)});
  fm.querySelector('.ghost').onclick=()=>m.remove();
- fm.onsubmit=async e=>{e.preventDefault();const v={};fields.forEach(f=>{let x=fm[f.k].value;if(f.t=='number')x=+x||0;else if(x==='')x=null;v[f.k]=x});if(await save(v)!==false)m.remove()}}
+ fm.onsubmit=async e=>{e.preventDefault();const v={};fields.forEach(f=>{if(f.t=='info')return;let x=fm[f.k].value;if(f.t=='number')x=num(x);else if(x==='')x=null;v[f.k]=x});if(await save(v)!==false)m.remove()}}
 async function db(p){const r=await p;if(r.error){alert(r.error.message);return false}await load();render();return true}
 const ins=(t,v)=>db(sb.from(t).insert(v)),up=(t,id,v)=>db(sb.from(t).update(v).eq('id',id));
+const fill=(fm,k,v)=>{fm[k].value=v;fm[k].dispatchEvent(new Event('input'))};
 const CF={
-clients:{t:'Client',f:()=>[{k:'name',l:'Nama',r:1},{k:'phone',l:'WhatsApp'},{k:'ig',l:'Instagram'},{k:'notes',l:'Catatan',t:'area'}],s:x=>`${esc(x.name)} <small>${esc(x.phone||'')} ${esc(x.ig||'')}</small>`},
+clients:{t:'Client',f:()=>[{k:'name',l:'Nama',r:1},{k:'phone',l:'WhatsApp'},{k:'ig',l:'Instagram'},{k:'notes',l:'Catatan',t:'area',w:1}]},
 packages:{t:'Paket',f:()=>[{k:'category',l:'Kategori',r:1},{k:'name',l:'Nama paket',r:1},{k:'price',l:'Harga',t:'number'}],s:x=>`${esc(x.category)} · ${esc(x.name)} <b>${rp(x.price)}</b>`},
-addon_catalog:{t:'Additional',f:()=>[{k:'name',l:'Nama',r:1},{k:'amount',l:'Harga',t:'number'}],s:x=>`${esc(x.name)} <b>${rp(x.amount)}</b>`},
-crew:{t:'Crew',f:()=>[{k:'name',l:'Nama',r:1},{k:'role',l:'Peran'},{k:'amount',l:'Fee default',t:'number'}],s:x=>`${esc(x.name)} <small>${esc(x.role||'')}</small> <b>${rp(x.amount)}</b>`},
-order_items:{o:1,t:'Add-on / Tambahan',f:()=>[{k:'_p',l:'Pilih dari katalog (opsional)',t:'select',o:op(D.addon_catalog,a=>`<option value="${a.id}">${esc(a.name)}</option>`),h:fm=>fm._p.onchange=()=>{const a=D.addon_catalog.find(x=>x.id==fm._p.value);if(a){fm.name.value=a.name;fm.amount.value=a.amount}}},{k:'name',l:'Nama item (bisa custom: transport, dll)',r:1},{k:'amount',l:'Harga',t:'number'}],s:x=>`${esc(x.name)} <b>${rp(x.amount)}</b>`},
-payments:{o:1,t:'Pembayaran',f:()=>[{k:'label',l:'Keterangan (DP / Termin 2 / Pelunasan)',r:1},{k:'amount',l:'Jumlah',t:'number'},{k:'paid_at',l:'Tanggal',t:'date'}],s:x=>`${esc(x.label)} <small>${fmt(x.paid_at)}</small> <b>${rp(x.amount)}</b>`},
-costs:{o:1,t:'Crew / Biaya',f:()=>[{k:'_p',l:'Pilih crew tetap (opsional)',t:'select',o:op(D.crew,a=>`<option value="${a.id}">${esc(a.name)} (${esc(a.role||'')})</option>`),h:fm=>fm._p.onchange=()=>{const a=D.crew.find(x=>x.id==fm._p.value);if(a){fm.name.value=a.name;fm.role.value=a.role||'';fm.amount.value=a.amount;fm.kind.value='crew'}}},{k:'kind',l:'Jenis',t:'select',o:'<option value="crew">Crew</option><option value="lain">Biaya lain (transport dll)</option>'},{k:'name',l:'Nama',r:1},{k:'role',l:'Peran / keterangan'},{k:'amount',l:'Jumlah',t:'number'},{k:'paid',l:'Status bayar',t:'select',o:'<option value="false">Belum dibayar</option><option value="true">Sudah dibayar</option>'}],s:x=>`${esc(x.name)} <small>${esc(x.role||x.kind)}</small> <b>${rp(x.amount)}</b> <i class="tag ${x.paid?'ok':''}" onclick="tg(${x.id})">${x.paid?'Dibayar':'Belum dibayar'}</i>`}};
-const tg=id=>up('costs',id,{paid:!D.costs.find(x=>x.id==id).paid});
-const E=(t,id)=>{const c=CF[t];form((id?'Ubah ':'Tambah ')+c.t,c.f(),id?D[t].find(r=>r.id==id):{kind:'crew',paid:false,paid_at:today()},v=>{Object.keys(v).forEach(k=>k[0]=='_'&&delete v[k]);if('paid'in v)v.paid=v.paid=='true';if(c.o&&!id)v.order_id=oid;return id?up(t,id,v):ins(t,v)})};
-const X=(t,id)=>{if(t=='clients'&&D.orders.some(o=>o.client_id==id))return alert('Client ini masih punya order. Hapus ordernya dulu.');confirm('Hapus data ini?')&&db(sb.from(t).delete().eq('id',id))};
-const lst=(t,a)=>a.map(x=>`<div class="li"><span>${CF[t].s(x)}</span><span><a onclick="E('${t}',${x.id})">✎</a><a onclick="X('${t}',${x.id})">✕</a></span></div>`).join('')||'<p class="m">Belum ada data</p>';
-const sec=(t,title,a)=>`<div class="card"><div class="row" style="margin-top:0"><h3>${title}</h3><button onclick="E('${t}')">＋ Tambah</button></div>${lst(t,a)}</div>`;
+addon_catalog:{t:'Additional',f:()=>[{k:'name',l:'Nama',r:1,w:1},{k:'amount',l:'Harga',t:'number'}],s:x=>`${esc(x.name)} <b>${rp(x.amount)}</b>`},
+crew:{t:'Crew',f:()=>[{k:'name',l:'Nama',r:1},{k:'role',l:'Peran'},{k:'phone',l:'Kontak'},{k:'amount',l:'Fee default',t:'number'}],
+ s:x=>{const j=D.expenses.filter(e=>e.crew_id==x.id);return`${esc(x.name)} <small>${esc(x.role||'')} · ${j.length} job · belum dibayar ${rp(sum(j.filter(e=>!e.paid)))}</small> <b>${rp(x.amount)}</b>`},
+ x:c=>'<h3 style="margin-top:8px">Riwayat job</h3>'+(D.expenses.filter(e=>e.crew_id==c.id).map(e=>`<div class="li"><span>${e.order_id?invNo(ordOf(e.order_id)):'-'} <small>${fmt(e.exp_date)}</small></span><span>${rp(e.amount)} <i class="tag ${e.paid?'ok':''}">${e.paid?'Dibayar':'Belum'}</i></span></div>`).join('')||'<p class="m">Belum ada job</p>')},
+order_items:{o:1,t:'Add-on',f:()=>[{k:'_p',l:'Pilih dari katalog (opsional)',t:'select',w:1,o:op(D.addon_catalog,a=>`<option value="${a.id}">${esc(a.name)}</option>`),h:fm=>fm._p.onchange=()=>{const a=D.addon_catalog.find(x=>x.id==fm._p.value);if(a){fm.name.value=a.name;fill(fm,'amount',rp(a.amount))}}},{k:'name',l:'Nama item (custom: transport, dll)',r:1},{k:'amount',l:'Harga',t:'number'}],s:x=>`${esc(x.name)} <b>${rp(x.amount)}</b>`},
+payments:{o:1,t:'Pembayaran',d:()=>({method:'Transfer',paid_at:today()}),
+ f:q=>[...(q?[{k:'order_id',l:'Invoice',t:'select',r:1,w:1,o:ORD(D.orders.filter(o=>calc(o).st=='OPEN'))}]:[]),{k:'label',l:'Keterangan (DP / Pelunasan)',r:1},{k:'method',l:'Metode',t:'select',o:METODE.map(m=>`<option>${m}</option>`).join('')},{k:'amount',l:'Jumlah',t:'number',h:fm=>{const u=()=>{const o=ordOf(fm.order_id?fm.order_id.value:oid);if(!o)return;const c=calc(o),old=EDIT?+D.payments.find(p=>p.id==EDIT).amount:0;fm.querySelector('#pv').textContent='Sisa setelah pembayaran ini: '+rp(Math.max(c.tot-(c.paid-old+num(fm.amount.value)),0))};fm.amount.addEventListener('input',u);fm.order_id&&fm.order_id.addEventListener('change',u);u()}},{k:'paid_at',l:'Tanggal',t:'date'},{k:'_i',t:'info',w:1}],
+ s:x=>`${fmt(x.paid_at)} · ${esc(x.label)} <small>${esc(x.method||'')}</small> <b>${rp(x.amount)}</b>`},
+expenses:{t:'Pengeluaran',d:()=>({exp_date:today(),paid:false,category:'Lainnya'}),
+ f:()=>[{k:'order_id',l:'No. Invoice (kosong = Operasional)',t:'select',w:1,o:ORD(D.orders.filter(o=>!o.cancelled))},{k:'category',l:'Kategori',t:'select',o:CAT.map(c=>`<option>${c}</option>`).join('')},{k:'crew_id',l:'Crew (jika kategori Crew)',t:'select',o:op(D.crew,c=>`<option value="${c.id}">${esc(c.name)} (${esc(c.role||'')})</option>`),h:fm=>fm.crew_id.onchange=()=>{const c=D.crew.find(x=>x.id==fm.crew_id.value);if(c){fm.category.value='Crew';fm.name.value=c.name+(c.role?' - '+c.role:'');fill(fm,'amount',rp(c.amount))}}},{k:'name',l:'Keterangan / Nama',r:1},{k:'amount',l:'Jumlah',t:'number'},{k:'exp_date',l:'Tanggal',t:'date'},{k:'paid',l:'Status bayar',t:'select',o:'<option value="false">Belum dibayar</option><option value="true">Sudah dibayar</option>'}],
+ s:x=>`${fmt(x.exp_date)} · ${esc(x.name)} <small>${x.order_id?invNo(ordOf(x.order_id)):'Operasional'} · ${esc(x.category)}</small> <b>${rp(x.amount)}</b> <i class="tag ${x.paid?'ok':''}" onclick="event.stopPropagation();tg(${x.id})">${x.paid?'Dibayar':'Belum dibayar'}</i>`}};
+const tg=id=>up('expenses',id,{paid:!D.expenses.find(x=>x.id==id).paid});
+function E(t,id,pre){EDIT=id;const q=PQ;PQ=0;const c=CF[t];
+ form((id?'Ubah ':'Tambah ')+c.t,c.f(q),id?D[t].find(r=>r.id==id):{...(c.d?c.d():{}),...pre},async v=>{
+  Object.keys(v).forEach(k=>k[0]=='_'&&delete v[k]);if('paid'in v)v.paid=v.paid=='true';
+  if(t=='payments'){if(!id&&!v.order_id)v.order_id=oid;const o=ordOf(id?D.payments.find(p=>p.id==id).order_id:v.order_id),old=id?+D.payments.find(p=>p.id==id).amount:0,rest=calc(o).tot-calc(o).paid+old;if(v.amount>rest&&!confirm('Nominal melebihi sisa tagihan ('+rp(Math.max(rest,0))+'). Tetap simpan?'))return false}
+  if(c.o&&!id&&!v.order_id)v.order_id=oid;return id?up(t,id,v):ins(t,v)})}
+const payQuick=()=>{PQ=1;E('payments')};
+const X=(t,id)=>{if(t=='clients'&&D.orders.some(o=>o.client_id==id))return alert('Client ini masih punya order. Hapus ordernya dulu.');confirm('Hapus data ini?')&&db(sb.from(t).delete().eq('id',id)).then(ok=>ok&&t=='clients'&&go('clients'))};
+function show(t,id){const c=CF[t],x=D[t].find(r=>r.id==id),m=document.createElement('div');m.className='modal';
+ const val=f=>{const v=x[f.k];if(f.k=='order_id')return v?invNo(ordOf(v)):'Operasional';if(v==null||v==='')return'-';if(f.t=='number')return rp(v);if(f.t=='date')return fmt(v);if(f.k=='paid')return v?'Sudah dibayar':'Belum dibayar';if(f.k=='crew_id')return esc((D.crew.find(o=>o.id==v)||{}).name);return esc(v)};
+ m.innerHTML=`<div class="box"><h2>${c.t}</h2>${c.f(1).filter(f=>f.t!='info').map(f=>`<div class="li" style="cursor:default"><span class="m">${f.l.replace(/\s*\(.*\)/,'')}</span><b>${val(f)}</b></div>`).join('')}${c.x?c.x(x):''}<div class="row"><button class="ghost">Tutup</button><span><button class="ghost">Ubah</button> <button class="red">Hapus</button></span></div></div>`;
+ document.body.append(m);const b=m.querySelectorAll('button');b[0].onclick=()=>m.remove();b[1].onclick=()=>{m.remove();E(t,id)};b[2].onclick=()=>{m.remove();X(t,id)}}
+const lst=(t,a)=>a.map(x=>`<div class="li" onclick="show('${t}',${x.id})"><span>${CF[t].s(x)}</span></div>`).join('')||'<p class="m">Belum ada data</p>';
+const sec=(t,title,a,pre)=>`<div class="card"><div class="row" style="margin-top:0"><h3>${title}</h3><button onclick="E('${t}',null,${pre||'{}'})">＋ Tambah</button></div>${lst(t,a)}</div>`;
+const RK={OPEN:0,CLOSED:1,BATAL:2};
+const orow=x=>`<div class="li" onclick="oid=${x.o.id};go('order')"><span><b>${esc(cl(x.o.client_id).name)}</b><br><small>${invNo(x.o)} · ${esc(x.o.package_name)} · ${fmt(x.o.event_date)}</small></span><span style="text-align:right">${rp(x.tot)}<br><i class="tag ${x.st=='CLOSED'?'ok':x.st=='BATAL'?'no':''}">${x.st}</i></span></div>`;
+const oList=(os=D.orders,q=qo)=>{q=q.toLowerCase();return os.map(o=>({o,...calc(o)})).filter(x=>!q||(cl(x.o.client_id).name+invNo(x.o)+x.o.package_name).toLowerCase().includes(q)).sort((a,b)=>RK[a.st]-RK[b.st]||b.o.inv_no-a.o.inv_no).map(orow).join('')||'<p class="m">Tidak ada order</p>'};
+const cList=()=>{const q=qc.toLowerCase();return D.clients.filter(c=>!q||(c.name+(c.phone||'')+(c.ig||'')).toLowerCase().includes(q)).reverse().map(c=>{const os=D.orders.filter(o=>o.client_id==c.id);return`<div class="li" onclick="cid=${c.id};go('client')"><span><b>${esc(c.name)}</b><br><small>${esc(c.phone||'')} ${esc(c.ig||'')}</small></span><small>${os.length} order</small></div>`}).join('')||'<p class="m">Belum ada client</p>'};
 function orderForm(id){
- const o=id?D.orders.find(x=>x.id==id):{inv_date:today(),discount:0,terms:(D.settings.find(s=>s.key=='terms')||{}).value};
- const g={};D.packages.forEach(p=>(g[p.category]??=[]).push(p));
+ const o=id?ordOf(id):{inv_date:today(),discount:0,terms:(D.settings.find(s=>s.key=='terms')||{}).value},g={};D.packages.forEach(p=>(g[p.category]??=[]).push(p));
  const pk='<option value="">— pilih paket —</option>'+Object.entries(g).map(([c,a])=>`<optgroup label="${esc(c)}">${a.map(p=>`<option value="${p.id}">${esc(p.name)} — ${rp(p.price)}</option>`).join('')}</optgroup>`).join('');
  form(id?'Ubah Order':'Order Baru',[
- {k:'client_id',l:'Client',t:'select',o:op(D.clients,c=>`<option value="${c.id}">${esc(c.name)}</option>`)},{k:'_nc',l:'Atau client baru (isi nama jika belum ada)'},
- {k:'_pk',l:'Paket',t:'select',o:pk,h:fm=>fm._pk.onchange=()=>{const p=D.packages.find(x=>x.id==fm._pk.value);if(p){fm.package_name.value=p.category+' - '+p.name;fm.package_price.value=p.price}}},
- {k:'package_name',l:'Nama paket (di invoice)',r:1},{k:'package_price',l:'Harga paket',t:'number'},{k:'discount',l:'Diskon / potongan (opsional)',t:'number'},
- {k:'inv_date',l:'Tanggal invoice',t:'date'},{k:'event_date',l:'Tanggal acara',t:'date'},{k:'event_time',l:'Jam acara',t:'time'},{k:'location',l:'Lokasi'},{k:'terms',l:'Syarat & ketentuan',t:'area'}],o,async v=>{
- const nc=v._nc;delete v._nc;delete v._pk;
- if(nc){const r=await sb.from('clients').insert({name:nc}).select().single();if(r.error)return alert(r.error.message)||false;v.client_id=r.data.id}
- if(!v.client_id){alert('Pilih client atau isi client baru');return false}
+ {k:'client_id',l:'Client',t:'select',o:op(D.clients,c=>`<option value="${c.id}">${esc(c.name)}</option>`)},{k:'_nc',l:'Atau client baru (ketik nama)'},
+ {k:'_pk',l:'Paket',t:'select',o:pk,h:fm=>fm._pk.onchange=()=>{const p=D.packages.find(x=>x.id==fm._pk.value);if(p){fm.package_name.value=p.category+' - '+p.name;fill(fm,'package_price',rp(p.price))}}},{k:'package_name',l:'Nama paket (di invoice)',r:1},
+ {k:'package_price',l:'Harga paket',t:'number'},{k:'discount',l:'Diskon (opsional)',t:'number'},
+ {k:'event_date',l:'Tanggal acara',t:'date'},{k:'event_time',l:'Jam acara',t:'time'},{k:'location',l:'Lokasi',w:1},
+ ...(id?[]:[{k:'_dp',l:'DP awal (opsional)',t:'number'},{k:'_dm',l:'Metode DP',t:'select',o:METODE.map(m=>`<option>${m}</option>`).join('')}]),
+ {k:'inv_date',l:'Tanggal invoice',t:'date'},{k:'terms',l:'Syarat & ketentuan',t:'area',w:1}],o,async v=>{
+ const nc=v._nc,dp=v._dp,dm=v._dm;delete v._nc;delete v._pk;delete v._dp;delete v._dm;
+ if(nc){const r=await sb.from('clients').insert({name:nc}).select().single();if(r.error){alert(r.error.message);return false}v.client_id=r.data.id}
+ if(!v.client_id){alert('Pilih client atau ketik nama client baru');return false}
  const r=id?await sb.from('orders').update(v).eq('id',id):await sb.from('orders').insert(v).select().single();
  if(r.error){alert(r.error.message);return false}
- if(!id){oid=r.data.id;view='order'}await load();render()})}
-const delOrder=async()=>{if(!confirm('Hapus order beserta pembayaran & biayanya? Nomor invoice tidak akan dipakai ulang.'))return;if(await db(sb.from('orders').delete().eq('id',oid)))go('orders')};
+ if(!id){oid=r.data.id;view='order';if(dp>0)await sb.from('payments').insert({order_id:oid,label:'DP',method:dm,amount:dp,paid_at:today()})}
+ await load();render()})}
+async function delOrder(){const p=by('payments',oid),e=by('expenses',oid);if(!confirm(`Hapus order ini?\nIkut terhapus: ${p.length} pembayaran (${rp(sum(p))}) dan ${e.length} pengeluaran (${rp(sum(e))}).\nNomor invoice tidak dipakai ulang.`))return;if(await db(sb.from('orders').delete().eq('id',oid)))go('orders')}
 const V={
-dash(){const ym=today().slice(0,7),os=D.orders.map(o=>({o,...calc(o)})),open=os.filter(x=>!x.closed);
- const inc=sum(D.payments.filter(p=>(p.paid_at||'').startsWith(ym))),exp=os.filter(x=>(x.o.event_date||x.o.inv_date||'').startsWith(ym)).reduce((s,x)=>s+x.cost,0);
- const ms=[...Array(6)].map((_,i)=>{const d=new Date();d.setMonth(d.getMonth()-5+i,1);const k=d.toISOString().slice(0,7);return[d.toLocaleDateString('id-ID',{month:'short'}),sum(D.payments.filter(p=>(p.paid_at||'').startsWith(k)))]}),mx=Math.max(...ms.map(m=>m[1]),1);
- const up=os.filter(x=>x.o.event_date>=today()).sort((a,b)=>a.o.event_date.localeCompare(b.o.event_date)).slice(0,6);
- const cd=(l,v)=>`<div class="card"><small>${l}</small><b class="big">${v}</b></div>`;
- return `<div class="grid">${cd('Pemasukan bulan ini',rp(inc))}${cd('Pengeluaran bulan ini',rp(exp))}${cd('Profit bulan ini',rp(inc-exp))}${cd('Piutang (sisa tagihan)',rp(open.reduce((s,x)=>s+x.rest,0)))}${cd('Order OPEN',open.length)}${cd('Order CLOSED',os.length-open.length)}</div>
+dash(){const ym=per=='all'?'':per,os=D.orders.map(o=>({o,...calc(o)})),open=os.filter(x=>x.st=='OPEN'),mm=s=>(s||'').startsWith(ym);
+ const inc=sum(D.payments.filter(p=>mm(p.paid_at))),ex=D.expenses.filter(e=>mm(e.exp_date)),exI=sum(ex.filter(e=>e.order_id)),exO=sum(ex.filter(e=>!e.order_id));
+ const ms=[...Array(6)].map((_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-5+i);const k=mk(d);return[d.toLocaleDateString('id-ID',{month:'short'}),sum(D.payments.filter(p=>(p.paid_at||'').startsWith(k)))]}),mx=Math.max(...ms.map(m=>m[1]),1);
+ const upc=os.filter(x=>x.st!='BATAL'&&x.o.event_date>=today()).sort((a,b)=>a.o.event_date.localeCompare(b.o.event_date)).slice(0,6),cd=(l,v)=>`<div class="card"><small>${l}</small><b class="big">${v}</b></div>`;
+ return `<div class="row"><button onclick="orderForm()">＋ Order Baru</button><button class="ghost" onclick="payQuick()">＋ Pembayaran</button><button class="ghost" onclick="E('expenses')">＋ Pengeluaran</button></div>
+ <div class="row"><small>Periode</small><select onchange="per=this.value;render()"><option value="all" ${per=='all'?'selected':''}>Semua waktu</option>${[...Array(12)].map((_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);const k=mk(d);return`<option value="${k}" ${k==per?'selected':''}>${k}</option>`}).join('')}</select></div>
+ <div class="grid">${cd('Pemasukan',rp(inc))}${cd('Pengeluaran Invoice',rp(exI))}${cd('Pengeluaran Operasional',rp(exO))}${cd('Profit Bersih',rp(inc-exI-exO))}</div>
+ <div class="grid">${cd('Piutang',rp(open.reduce((s,x)=>s+x.rest,0)))}${cd('OPEN',open.length)}${cd('CLOSED',os.filter(x=>x.st=='CLOSED').length)}${cd('BATAL',os.filter(x=>x.st=='BATAL').length)}</div>
  <div class="card"><h3>Pemasukan 6 bulan</h3><div class="bars" style="margin-top:14px">${ms.map(m=>`<div><i style="height:${m[1]/mx*90}px"></i>${m[0]}</div>`).join('')}</div></div>
- <div class="card"><h3>Sesi mendatang</h3>${up.map(x=>`<div class="li"><span>${fmt(x.o.event_date)} ${(x.o.event_time||'').slice(0,5)} · ${esc(cl(x.o.client_id).name)}<br><small>${esc(x.o.location||'')}</small></span><a onclick="oid=${x.o.id};go('order')">Buka</a></div>`).join('')||'<p class="m">Belum ada sesi</p>'}</div>`},
-orders(){const os=D.orders.map(o=>({o,...calc(o)})).filter(x=>flt=='all'||(flt=='open')==!x.closed).reverse();
- return `<div class="row"><select style="width:auto" onchange="flt=this.value;render()">${['all','open','closed'].map(f=>`<option value="${f}" ${f==flt?'selected':''}>${f.toUpperCase()}</option>`).join('')}</select><button onclick="orderForm()">＋ Order Baru</button></div>
- <div class="card">${os.map(x=>`<div class="li" style="cursor:pointer" onclick="oid=${x.o.id};go('order')"><span><b>${esc(cl(x.o.client_id).name)}</b> <small>${invNo(x.o)} · ${esc(x.o.package_name)} · ${fmt(x.o.event_date)}</small></span><span>${rp(x.tot)} <i class="tag ${x.closed?'ok':''}">${x.closed?'CLOSED':'OPEN'}</i></span></div>`).join('')||'<p class="m">Belum ada order</p>'}</div>`},
-order(){const o=D.orders.find(x=>x.id==oid);if(!o){view='orders';return V.orders()}const c=calc(o),k=cl(o.client_id);
- return `<div class="row"><a onclick="go('orders')">← Kembali</a><span><button onclick="pdf(${o.id})">Invoice PDF</button> <button class="ghost" onclick="orderForm(${o.id})">Ubah</button> <button class="red" onclick="delOrder()">Hapus</button></span></div>
- <div class="card"><h2>${invNo(o)} <i class="tag ${c.closed?'ok':''}">${c.closed?'CLOSED':'OPEN'}</i></h2><p>${esc(k.name)} <small>${esc(k.phone||'')} ${esc(k.ig||'')}</small><br><small>${fmt(o.event_date)} ${(o.event_time||'').slice(0,5)} · ${esc(o.location||'')}</small></p>
- <div class="li"><span>${esc(o.package_name)}</span><b>${rp(o.package_price)}</b></div><div class="li"><span>Add-on</span><b>${rp(c.items)}</b></div><div class="li"><span>Diskon</span><b>- ${rp(o.discount)}</b></div><div class="li"><span>Total tagihan</span><b>${rp(c.tot)}</b></div><div class="li"><span>Terbayar</span><b>${rp(c.paid)}</b></div><div class="li"><span>Sisa</span><b style="color:var(--g)">${rp(c.rest)}</b></div></div>
- ${sec('order_items','Add-on / Tambahan',by('order_items',o.id))}${sec('payments','Riwayat Pembayaran',by('payments',o.id))}${sec('costs','Crew & Pengeluaran',by('costs',o.id))}
- <div class="card"><div class="li"><span>Total pengeluaran</span><b>${rp(c.cost)}</b></div><div class="li"><span>Profit order ini</span><b style="color:var(--ok)">${rp(c.profit)}</b></div></div>`},
-clients:()=>sec('clients','Client',D.clients),
-cat:()=>sec('packages','Paket',D.packages)+sec('addon_catalog','Katalog Additional',D.addon_catalog)+sec('crew','Crew Tetap',D.crew),
+ <div class="card"><h3>Sesi mendatang</h3>${upc.map(x=>`<div class="li" onclick="oid=${x.o.id};go('order')"><span>${fmt(x.o.event_date)} ${(x.o.event_time||'').slice(0,5)} · ${esc(cl(x.o.client_id).name)}<br><small>${esc(x.o.location||'')}</small></span></div>`).join('')||'<p class="m">Belum ada sesi</p>'}</div>`},
+orders:()=>`<div class="row"><input placeholder="Cari client / no. invoice / paket" value="${esc(qo)}" oninput="qo=this.value;$('#ol').innerHTML=oList()"><button onclick="orderForm()">＋ Order Baru</button></div><div class="card" id="ol">${oList()}</div>`,
+clients:()=>`<div class="row"><input placeholder="Cari client" value="${esc(qc)}" oninput="qc=this.value;$('#cl').innerHTML=cList()"><button onclick="E('clients')">＋ Client</button></div><div class="card" id="cl">${cList()}</div>`,
+client(){const c=D.clients.find(x=>x.id==cid);if(!c){view='clients';return V.clients()}const os=D.orders.filter(o=>o.client_id==c.id);
+ return `<div class="row"><a onclick="go('clients')">← Kembali</a><span><button class="ghost" onclick="E('clients',${c.id})">Ubah</button> <button class="red" onclick="X('clients',${c.id})">Hapus</button></span></div>
+ <div class="card"><h2>${esc(c.name)}</h2><p>${esc(c.phone||'-')} · ${esc(c.ig||'-')}<br><small>${esc(c.notes||'')}</small></p><div class="li" style="cursor:default"><span>Total sudah dibayar</span><b>${rp(os.reduce((s,o)=>s+calc(o).paid,0))}</b></div></div>
+ <div class="card"><h3>Order</h3>${oList(os,'')}</div>`},
+order(){const o=ordOf(oid);if(!o){view='orders';return V.orders()}const c=calc(o),k=cl(o.client_id);
+ return `<div class="row"><a onclick="go('orders')">← Kembali</a><span><button onclick="prev(${o.id})">Invoice PDF</button> <button class="ghost" onclick="orderForm(${o.id})">Ubah</button> <button class="ghost" onclick="up('orders',${o.id},{cancelled:${!o.cancelled}})">${o.cancelled?'Aktifkan lagi':'Batalkan'}</button> <button class="red" onclick="delOrder()">Hapus</button></span></div>
+ <div class="card"><h2>${invNo(o)} <i class="tag ${c.st=='CLOSED'?'ok':c.st=='BATAL'?'no':''}">${c.st}</i></h2><p><a onclick="cid=${k.id};go('client')">${esc(k.name)}</a> <small>${esc(k.phone||'')} ${esc(k.ig||'')}</small><br><small>${fmt(o.event_date)} ${(o.event_time||'').slice(0,5)} · ${esc(o.location||'')}</small></p>
+ <div class="li" style="cursor:default"><span>${esc(o.package_name)}</span><b>${rp(o.package_price)}</b></div><div class="li" style="cursor:default"><span>Add-on</span><b>${rp(c.items)}</b></div><div class="li" style="cursor:default"><span>Diskon</span><b>- ${rp(o.discount)}</b></div><div class="li" style="cursor:default"><span>Total tagihan</span><b>${rp(c.tot)}</b></div><div class="li" style="cursor:default"><span>Terbayar</span><b>${rp(c.paid)}</b></div><div class="li" style="cursor:default"><span>Sisa</span><b style="color:var(--g)">${rp(Math.max(c.tot-c.paid,0))}</b></div></div>
+ ${sec('order_items','Add-on / Tambahan',by('order_items',o.id))}${sec('payments','Riwayat Pembayaran',by('payments',o.id))}${sec('expenses','Pengeluaran',by('expenses',o.id),'{order_id:oid}')}
+ <div class="card"><div class="li" style="cursor:default"><span>Total pengeluaran</span><b>${rp(c.cost)}</b></div><div class="li" style="cursor:default"><span>Profit order ini</span><b style="color:var(--ok)">${rp(c.profit)}</b></div></div>`},
+exp(){const sl=(v,a)=>a.map(([k,l])=>`<option value="${k}" ${k==v?'selected':''}>${l}</option>`).join('');
+ if(tab=='crew')return `<div class="row"><span><button class="ghost" onclick="tab='all';render()">Semua Pengeluaran</button> <button>Daftar Crew</button></span></div>`+sec('crew','Daftar Crew',D.crew);
+ const a=D.expenses.filter(e=>(!ef.m||(e.exp_date||'').startsWith(ef.m))&&(!ef.c||e.category==ef.c)&&(!ef.i||(ef.i=='ops'?!e.order_id:e.order_id==ef.i))).reverse(),ms=[['','Semua bulan'],...[...Array(12)].map((_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);return[mk(d),mk(d)]})];
+ return `<div class="row"><span><button>Semua Pengeluaran</button> <button class="ghost" onclick="tab='crew';render()">Daftar Crew</button></span><button onclick="E('expenses')">＋ Pengeluaran</button></div>
+ <div class="row"><select onchange="ef.m=this.value;render()">${sl(ef.m,ms)}</select><select onchange="ef.i=this.value;render()">${sl(ef.i,[['','Semua invoice'],['ops','Operasional (tanpa invoice)'],...D.orders.map(o=>[o.id,invNo(o)+' · '+cl(o.client_id).name])])}</select><select onchange="ef.c=this.value;render()">${sl(ef.c,[['','Semua kategori'],...CAT.map(c=>[c,c])])}</select></div>
+ <div class="grid"><div class="card"><small>Total (sesuai filter)</small><b class="big">${rp(sum(a))}</b></div><div class="card"><small>Fee crew belum dibayar</small><b class="big">${rp(sum(D.expenses.filter(e=>e.category=='Crew'&&!e.paid)))}</b></div></div><div class="card">${lst('expenses',a)}</div>`},
+cat:()=>sec('packages','Paket',D.packages)+sec('addon_catalog','Katalog Additional',D.addon_catalog),
 set(){const t=(D.settings.find(s=>s.key=='terms')||{}).value||'';return `<div class="card"><h3>Syarat & ketentuan default</h3><p class="m">Dipakai untuk order baru.</p><textarea id="tt" rows="3">${esc(t)}</textarea><div class="row"><button onclick="saveT()">Simpan</button></div></div><div class="card"><h3>Backup</h3><p class="m">Download semua data sebagai CSV.</p><button onclick="csv()">Export CSV</button></div>`}};
 const saveT=()=>db(sb.from('settings').upsert({key:'terms',value:$('#tt').value},{onConflict:'key'}));
 function csv(){T.forEach((t,i)=>setTimeout(()=>{const r=D[t];if(!r.length)return;const h=Object.keys(r[0]),s=[h,...r.map(x=>h.map(k=>x[k]))].map(a=>a.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+s],{type:'text/csv'}));a.download=`kyra_${t}.csv`;a.click()},i*500))}
-function render(){if(!D.orders)return;$('#nav').innerHTML=[['dash','Dashboard'],['orders','Order'],['clients','Client'],['cat','Katalog'],['set','Pengaturan']].map(([k,l])=>`<a class="${view==k||view=='order'&&k=='orders'?'on':''}" onclick="go('${k}')">${l}</a>`).join('');$('#main').innerHTML=V[view]()}
+function render(){if(!D.orders)return;const on={order:'orders',client:'clients'}[view]||view;$('#nav').innerHTML=[['dash','Dashboard'],['orders','Order'],['clients','Client'],['exp','Pengeluaran'],['cat','Katalog'],['set','Pengaturan']].map(([k,l])=>`<a class="${on==k?'on':''}" onclick="go('${k}')">${l}</a>`).join('');$('#main').innerHTML=V[view]()}
 const go=v=>{view=v;render();scrollTo(0,0)};
-function pdf(id){
- const o=D.orders.find(x=>x.id==id),c=calc(o),k=cl(o.client_id),d=new jspdf.jsPDF();let y=0;
+function ic(d,t,x,y){d.setLineWidth(.3);d.setDrawColor(90);
+ if(t=='w'){d.circle(x,y,2);d.ellipse(x,y,.9,2);d.line(x-2,y,x+2,y)}
+ else if(t=='i'){d.roundedRect(x-2,y-2,4,4,1.2,1.2);d.circle(x,y,.9);d.circle(x+1.2,y-1.2,.2,'F')}
+ else{d.setFillColor(37,160,90);d.circle(x,y,2,'F');d.setDrawColor(255);d.circle(x,y,1.1);d.setFillColor(255);d.triangle(x-2,y+2,x-1.6,y+.6,x-.6,y+1.4,'F')}}
+function mkpdf(o){
+ const c=calc(o),k=cl(o.client_id),d=new jspdf.jsPDF();let y;const need=h=>{if(y+h>255){d.addPage();y=20}};
  d.setFont('times','bold');d.setFontSize(28);d.setTextColor(150,115,50);d.text('KYRA PICTURE',15,22);
  d.setFont('helvetica','bold');d.setFontSize(18);d.setTextColor(40);d.text('INVOICE',195,20,{align:'right'});
  d.setFont('helvetica','normal');d.setFontSize(10);d.setTextColor(90);d.text(invNo(o),195,27,{align:'right'});d.text('Tanggal: '+fmt(o.inv_date),195,32,{align:'right'});
- d.setDrawColor(200,170,110);d.line(15,38,195,38);
- d.setTextColor(40);d.setFont('helvetica','bold');d.text('Ditagihkan kepada',15,48);d.setFont('helvetica','normal');
- d.text([k.name||'',k.phone||'',k.ig||''].filter(Boolean),15,54);
- d.setFont('helvetica','bold');d.text('Detail acara',110,48);d.setFont('helvetica','normal');
+ d.setDrawColor(200,170,110);d.line(15,38,195,38);d.setTextColor(40);d.setFont('helvetica','bold');d.text('Ditagihkan kepada',15,48);d.setFont('helvetica','normal');
+ d.text([k.name||'',k.phone||'',k.ig||''].filter(Boolean),15,54);d.setFont('helvetica','bold');d.text('Detail acara',110,48);d.setFont('helvetica','normal');
  d.text(d.splitTextToSize(`${fmt(o.event_date)} ${(o.event_time||'').slice(0,5)}\n${o.location||''}`,85),110,54);
  y=80;d.setFillColor(30,30,32);d.rect(15,y-6,180,9,'F');d.setTextColor(255);d.setFont('helvetica','bold');d.text('Deskripsi',18,y);d.text('Jumlah',192,y,{align:'right'});
  d.setTextColor(40);d.setFont('helvetica','normal');y+=10;
  const L=[[o.package_name,o.package_price],...by('order_items',o.id).map(i=>['+ '+i.name,i.amount])];if(+o.discount)L.push(['Diskon',-o.discount]);
- L.forEach(([n,a])=>{const s=d.splitTextToSize(String(n),120);d.text(s,18,y);d.text((a<0?'- ':'')+rp(Math.abs(a)),192,y,{align:'right'});y+=s.length*5+3});
- d.line(110,y,195,y);y+=7;d.setFont('helvetica','bold');
- [['Total',c.tot],['Terbayar',c.paid],['Sisa tagihan',c.rest]].forEach(([n,a])=>{d.text(n,112,y);d.text(rp(a),192,y,{align:'right'});y+=7});
- const st=c.closed?['LUNAS',[40,150,90]]:c.paid>0?['DP',[210,130,30]]:null;
- if(st){d.setTextColor(...st[1]);d.setFontSize(38);d.text(st[0],30,y+8,{angle:15});d.setFontSize(10)}
- y=Math.max(y+22,170);d.setTextColor(40);d.setFont('helvetica','bold');d.text('Syarat & Ketentuan',15,y);d.setFont('helvetica','normal');
- const ts=d.splitTextToSize(o.terms||'',180);d.text(ts,15,y+6);y+=ts.length*5+14;
- d.setFont('helvetica','bold');d.text('Informasi Pembayaran',15,y);d.setFont('helvetica','normal');
- d.text(['BCA (Bank Central Asia) - Indonesia','No. Rek: 736-033-6519','PayPal: paypal.me/deniwan'],15,y+6);
- d.line(15,266,195,266);d.setFontSize(8.5);d.setTextColor(90);
- d.text('kyrapicture.com   |   IG: @kyra.picture   |   WA: +62 895-1984-7571',105,272,{align:'center'});
- d.text('Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28, Jayamulya, Serang Baru',105,277,{align:'center'});
- d.text('Serang Baru, Kab. Bekasi, Jawa Barat, ID 17330',105,282,{align:'center'});
- d.save(invNo(o)+'.pdf')}
-async function boot(){const{data:{session}}=await sb.auth.getSession(),ok=NO_LOGIN||!!session;$('#login').hidden=ok;$('#app').hidden=!ok;document.querySelector('header button').hidden=NO_LOGIN;if(ok){await load();render()}}
-$('#lf').onsubmit=async e=>{e.preventDefault();const r=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});if(SB_URL.startsWith('ISI_')||SB_KEY.startsWith('ISI_'))$('#err').textContent='URL / key Supabase belum diisi di index.html';else if(r.error)$('#err').textContent='Gagal: '+r.error.message;else boot()};
-const out=async()=>{await sb.auth.signOut();D={};boot()};
-boot();
+ L.forEach(([n,a])=>{const s=d.splitTextToSize(String(n),120);need(s.length*5+3);d.text(s,18,y);d.text((a<0?'- ':'')+rp(Math.abs(a)),192,y,{align:'right'});y+=s.length*5+3});
+ need(30);d.line(110,y,195,y);y+=7;const y0=y;d.setFont('helvetica','bold');
+ [['Total',c.tot],['Terbayar',c.paid],['Sisa tagihan',Math.max(c.tot-c.paid,0)]].forEach(([n,a])=>{d.text(n,112,y);d.text(rp(a),192,y,{align:'right'});y+=7});
+ if(c.st!='OPEN'){d.setTextColor(...(c.st=='BATAL'?[200,70,60]:[40,150,90]));d.setFontSize(38);d.text(c.st=='BATAL'?'BATAL':'PAID',25,y0+10,{angle:12});d.setFontSize(10);d.setTextColor(40)}
+ const P=by('payments',o.id).sort((a,b)=>(a.paid_at||'').localeCompare(b.paid_at||'')||a.id-b.id);
+ if(P.length){y+=6;need(20);d.setFontSize(10);d.text('Riwayat Pembayaran',15,y);y+=6;d.setFontSize(9);d.setTextColor(90);d.text('Tanggal',18,y);d.text('Keterangan',55,y);d.text('Metode',115,y);d.text('Nominal',192,y,{align:'right'});d.setFont('helvetica','normal');d.setTextColor(40);y+=2;d.line(15,y,195,y);y+=5;
+  P.forEach(p=>{need(7);d.text(fmt(p.paid_at),18,y);d.text(String(p.label||''),55,y);d.text(String(p.method||''),115,y);d.text(rp(p.amount),192,y,{align:'right'});y+=6})}
+ y+=6;need(50);d.setFontSize(10);d.setFont('helvetica','bold');d.text('Syarat & Ketentuan',15,y);d.setFont('helvetica','normal');const ts=d.splitTextToSize(o.terms||'',180);d.text(ts,15,y+6);y+=ts.length*5+14;
+ d.setFont('helvetica','bold');d.text('Informasi Pembayaran',15,y);d.setFont('helvetica','normal');d.text(['BCA (Bank Central Asia) - Indonesia','No. Rek: 736-033-6519','PayPal: paypal.me/deniwan'],15,y+6);
+ d.setPage(d.getNumberOfPages());d.setDrawColor(200,170,110);d.line(15,266,195,266);d.setFontSize(8.5);d.setTextColor(90);
+ ic(d,'w',20,271.2);d.text('kyrapicture.com',24,272);ic(d,'i',76,271.2);d.text('@kyra.picture',80,272);ic(d,'a',125,271.2);d.text('+62 895-1984-7571',129,272);
+ d.text('Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28, Jayamulya, Serang Baru',105,278,{align:'center'});d.text('Serang Baru, Kab. Bekasi, Jawa Barat, ID 17330',105,283,{align:'center'});
+ return d}
+function prev(id){const o=ordOf(id),d=mkpdf(o),u=d.output('bloburl'),m=document.createElement('div');m.className='modal';
+ m.innerHTML=`<div class="box" style="max-width:720px;height:92vh;grid-template-rows:auto 1fr auto"><h2>${invNo(o)}</h2><iframe src="${u}" style="width:100%;height:100%;border:0;background:#fff;border-radius:8px"></iframe><div class="row"><button class="ghost">Tutup</button><span><a href="${u}" target="_blank"><button type="button" class="ghost">Tab baru</button></a> <button>Unduh PDF</button></span></div></div>`;
+ document.body.append(m);const b=m.querySelectorAll('button');b[0].onclick=()=>m.remove();b[2].onclick=()=>d.save(invNo(o)+'.pdf')}
+load().then(render);
 </script></body></html>
