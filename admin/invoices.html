@@ -1,1 +1,922 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice | Kyra Picture</title>
+  <link rel="stylesheet" href="css/admin.css">
+
+  <style>
+    .invoice-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .invoice-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      flex: 1;
+    }
+
+    .invoice-filters input,
+    .invoice-filters select {
+      min-height: 40px;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: var(--text);
+      outline: none;
+    }
+
+    .invoice-filters input {
+      width: 250px;
+      max-width: 100%;
+    }
+
+    .invoice-filters select {
+      min-width: 150px;
+    }
+
+    .invoice-number {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .client-secondary {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .money {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .invoice-preview-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      padding: 20px;
+      overflow-y: auto;
+      align-items: flex-start;
+      justify-content: center;
+      background: rgba(20, 21, 18, .6);
+    }
+
+    .invoice-preview-overlay.show {
+      display: flex;
+    }
+
+    .preview-window {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .preview-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: #f5f5f1;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .preview-toolbar strong {
+      font-size: 13px;
+    }
+
+    .preview-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .invoice-paper {
+      padding: 48px;
+      color: #292a25;
+      background: #fff;
+    }
+
+    .invoice-paper-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 28px;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .invoice-logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .invoice-logo span {
+      color: var(--gold);
+    }
+
+    .invoice-company-details {
+      color: #77796f;
+      font-size: 11px;
+      line-height: 1.8;
+      margin-top: 10px;
+    }
+
+    .invoice-heading {
+      text-align: right;
+    }
+
+    .invoice-heading h2 {
+      font-size: 28px;
+      letter-spacing: 2px;
+    }
+
+    .invoice-heading p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: #77796f;
+    }
+
+    .invoice-parties {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      padding: 30px 0;
+    }
+
+    .invoice-label {
+      color: #88897f;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 10px;
+      margin-bottom: 9px;
+    }
+
+    .invoice-party-name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .invoice-party-detail {
+      margin-top: 5px;
+      color: #77796f;
+      font-size: 11px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .invoice-table {
+      margin-top: 5px;
+    }
+
+    .invoice-table th {
+      background: #f6f4ee;
+      color: #55564e;
+    }
+
+    .invoice-table th,
+    .invoice-table td {
+      padding: 14px 12px;
+    }
+
+    .invoice-summary {
+      width: 100%;
+      max-width: 320px;
+      margin: 22px 0 0 auto;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 8px 0;
+      font-size: 12px;
+    }
+
+    .summary-row.total {
+      margin-top: 7px;
+      padding-top: 15px;
+      border-top: 1px solid #dddcd4;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .summary-row.balance {
+      margin-top: 4px;
+      padding: 12px;
+      background: #f5f1e7;
+      border-radius: 7px;
+      font-weight: 700;
+    }
+
+    .invoice-payment-info {
+      margin-top: 32px;
+      padding: 18px;
+      background: #faf9f5;
+      border-radius: 8px;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .invoice-payment-info strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .invoice-footer {
+      margin-top: 32px;
+      padding-top: 18px;
+      border-top: 1px solid #e9e8e1;
+      text-align: center;
+      color: #77796f;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .invoice-footer a {
+      color: #77796f;
+    }
+
+    .empty-invoices {
+      text-align: center;
+      color: var(--muted);
+      padding: 35px 15px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .invoice-toolbar {
+        align-items: stretch;
+      }
+
+      .invoice-filters {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .invoice-filters input,
+      .invoice-filters select {
+        width: 100%;
+      }
+
+      .invoice-paper {
+        padding: 24px 17px;
+      }
+
+      .invoice-paper-header {
+        flex-direction: column;
+      }
+
+      .invoice-heading {
+        text-align: left;
+      }
+
+      .invoice-heading h2 {
+        font-size: 23px;
+      }
+
+      .invoice-parties {
+        gap: 16px;
+      }
+
+      .invoice-table th,
+      .invoice-table td {
+        padding: 10px 8px;
+      }
+
+      .preview-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+
+      #invoicePaper,
+      #invoicePaper * {
+        visibility: visible !important;
+      }
+
+      #invoicePaper {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 15mm;
+        border: 0;
+      }
+
+      .invoice-preview-overlay {
+        position: static;
+        display: block !important;
+        padding: 0;
+        overflow: visible;
+        background: white;
+      }
+
+      .preview-window {
+        max-width: none;
+        overflow: visible;
+      }
+
+      .preview-toolbar {
+        display: none !important;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="brand">
+        KYRA <span>PICTURE</span>
+        <div class="brand-subtitle">ADMIN FINANCE SYSTEM</div>
+      </div>
+
+      <div class="nav-heading">Workspace</div>
+
+      <nav class="nav-list">
+        <a class="nav-link" href="index.html">
+          <span class="nav-icon">⌂</span>Dashboard
+        </a>
+        <a class="nav-link" href="bookings.html">
+          <span class="nav-icon">▤</span>Klien & Transaksi
+        </a>
+        <a class="nav-link active" href="invoices.html">
+          <span class="nav-icon">▧</span>Invoice
+        </a>
+        <a class="nav-link" href="payments.html">
+          <span class="nav-icon">↔</span>Pembayaran
+        </a>
+        <a class="nav-link" href="crew.html">
+          <span class="nav-icon">♙</span>Crew
+        </a>
+        <a class="nav-link" href="expenses.html">
+          <span class="nav-icon">↗</span>Pengeluaran
+        </a>
+        <a class="nav-link" href="finance.html">
+          <span class="nav-icon">▥</span>Rekap Keuangan
+        </a>
+        <a class="nav-link" href="settings.html">
+          <span class="nav-icon">⚙</span>Pengaturan
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div>Kyra Picture</div>
+        <div>Admin Finance System</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">Kyra Picture / Workspace</div>
+          <h1>Invoice</h1>
+          <div class="welcome">
+            Kelola tagihan, pembayaran, dan cetak invoice klien.
+          </div>
+        </div>
+        <div class="date-label" id="todayDate"></div>
+      </header>
+
+      <section class="stats">
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-label">Total Invoice</div>
+            <div class="stat-icon">▧</div>
+          </div>
+          <div class="stat-value" id="countInvoices">0</div>
+          <div class="stat-note">Seluruh invoice</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-label">Nilai Invoice</div>
+            <div class="stat-icon">Rp</div>
+          </div>
+          <div class="stat-value" id="sumInvoices">Rp0</div>
+          <div class="stat-note">Total tagihan tercatat</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-label">Pembayaran Masuk</div>
+            <div class="stat-icon">↓</div>
+          </div>
+          <div class="stat-value" id="sumPaid">Rp0</div>
+          <div class="stat-note">Total pembayaran tercatat</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-label">Sisa Tagihan</div>
+            <div class="stat-icon">◷</div>
+          </div>
+          <div class="stat-value" id="sumBalance">Rp0</div>
+          <div class="stat-note">Belum dibayar</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <h2>Daftar Invoice</h2>
+            <div class="section-description">
+              Cari invoice dan lihat rincian tagihan klien.
+            </div>
+          </div>
+        </div>
+
+        <div class="notice" style="padding:12px 14px;background:#f5f1e7;border-radius:8px;font-size:12px;margin-bottom:18px;line-height:1.7">
+          <strong>Mode preview:</strong> data di halaman ini masih berupa contoh sementara. Invoice belum tersambung ke booking maupun pembayaran di database.
+        </div>
+
+        <div class="invoice-toolbar">
+          <div class="invoice-filters">
+            <input
+              id="searchInvoice"
+              type="search"
+              placeholder="Cari nomor invoice atau nama klien..."
+              aria-label="Cari invoice"
+            >
+
+            <select id="filterPayment">
+              <option value="">Semua Status Pembayaran</option>
+              <option value="Lunas">Lunas</option>
+              <option value="DP">Sudah DP</option>
+              <option value="Belum Bayar">Belum Bayar</option>
+            </select>
+          </div>
+
+          <button class="btn btn-gold" id="showSample">
+            Tampilkan Contoh
+          </button>
+        </div>
+
+        <div class="table-count" id="invoiceCount">
+          Belum ada invoice.
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No. Invoice</th>
+                <th>Klien</th>
+                <th>Event</th>
+                <th>Total Invoice</th>
+                <th>Dibayar</th>
+                <th>Sisa</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="invoiceTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer class="footer">
+        © <span id="currentYear"></span> Kyra Picture · Admin Finance System
+      </footer>
+    </main>
+  </div>
+
+  <!-- PREVIEW INVOICE -->
+  <div class="invoice-preview-overlay" id="previewOverlay">
+    <div class="preview-window">
+      <div class="preview-toolbar">
+        <strong>Preview Invoice</strong>
+        <div class="preview-actions">
+          <button class="btn btn-gold btn-small" id="printInvoice">
+            Cetak / Simpan PDF
+          </button>
+          <button class="btn btn-light btn-small" id="closePreview">
+            Tutup
+          </button>
+        </div>
+      </div>
+
+      <div class="invoice-paper" id="invoicePaper">
+        <div class="invoice-paper-header">
+          <div>
+            <div class="invoice-logo">KYRA <span>PICTURE</span></div>
+            <div class="invoice-company-details">
+              Wedding · Prewedding · Engagement · Photography<br>
+              Website: kyrapicture.com<br>
+              Instagram: @kyra.picture
+            </div>
+          </div>
+
+          <div class="invoice-heading">
+            <h2>INVOICE</h2>
+            <p id="previewInvoiceNumber">-</p>
+            <p id="previewInvoiceDate">-</p>
+          </div>
+        </div>
+
+        <div class="invoice-parties">
+          <div>
+            <div class="invoice-label">Ditagihkan kepada</div>
+            <div class="invoice-party-name" id="previewClientName">-</div>
+            <div class="invoice-party-detail" id="previewClientDetail"></div>
+          </div>
+
+          <div>
+            <div class="invoice-label">Detail Event</div>
+            <div class="invoice-party-name" id="previewEventName">-</div>
+            <div class="invoice-party-detail" id="previewEventDetail"></div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="invoice-table">
+            <thead>
+              <tr>
+                <th>Deskripsi</th>
+                <th class="text-center">Qty</th>
+                <th class="text-right">Harga</th>
+                <th class="text-right">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="previewPackage">Paket Fotografi</td>
+                <td class="text-center">1</td>
+                <td class="text-right" id="previewPrice">Rp0</td>
+                <td class="text-right" id="previewSubtotal">Rp0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="invoice-summary">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <strong id="previewSubtotal2">Rp0</strong>
+          </div>
+          <div class="summary-row">
+            <span>Diskon</span>
+            <strong id="previewDiscount">Rp0</strong>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <strong id="previewTotal">Rp0</strong>
+          </div>
+          <div class="summary-row">
+            <span>Pembayaran masuk</span>
+            <strong id="previewPaid">Rp0</strong>
+          </div>
+          <div class="summary-row balance">
+            <span>Sisa tagihan</span>
+            <strong id="previewBalance">Rp0</strong>
+          </div>
+        </div>
+
+        <div class="invoice-payment-info">
+          <strong>Informasi Pembayaran</strong>
+          Silakan hubungi Kyra Picture untuk informasi rekening dan konfirmasi pembayaran.
+          <div style="margin-top:8px">
+            Status pembayaran: <strong id="previewStatus" style="display:inline">-</strong>
+          </div>
+        </div>
+
+        <div class="invoice-footer">
+          Terima kasih telah mempercayakan momen berharga Anda kepada Kyra Picture.<br>
+          <a href="https://kyrapicture.com">kyrapicture.com</a> ·
+          <a href="https://instagram.com/kyra.picture">@kyra.picture</a><br>
+          <span id="previewOffice"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const today = new Date();
+
+    document.getElementById("todayDate").textContent =
+      new Intl.DateTimeFormat("id-ID", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(today);
+
+    document.getElementById("currentYear").textContent =
+      today.getFullYear();
+
+    // Konfigurasi bisnis sementara.
+    // Nanti dapat dipindahkan ke settings.html.
+    const BUSINESS_INFO = {
+      website: "https://kyrapicture.com",
+      instagram: "https://instagram.com/kyra.picture",
+      office: "Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28, Jayamulya, Serang Baru, Kabupaten Bekasi, Jawa Barat 17330"
+    };
+
+    // Data contoh hanya untuk preview, bukan data database.
+    const sampleInvoices = [
+      {
+        id: 1,
+        number: "KP-DEMO-001",
+        client: "Contoh Klien Wedding",
+        phone: "08xxxxxxxxxx",
+        email: "klien@example.com",
+        event: "Wedding",
+        date: "2026-11-15",
+        location: "Bekasi",
+        package: "Wedding Photography Package",
+        total: 5000000,
+        discount: 0,
+        paid: 2000000
+      },
+      {
+        id: 2,
+        number: "KP-DEMO-002",
+        client: "Contoh Klien Prewedding",
+        phone: "08xxxxxxxxxx",
+        email: "",
+        event: "Prewedding",
+        date: "2026-12-05",
+        location: "Bogor",
+        package: "Prewedding Package",
+        total: 3500000,
+        discount: 250000,
+        paid: 3250000
+      },
+      {
+        id: 3,
+        number: "KP-DEMO-003",
+        client: "Contoh Klien Engagement",
+        phone: "",
+        email: "",
+        event: "Engagement",
+        date: "2026-12-20",
+        location: "Jakarta",
+        package: "Engagement Photography",
+        total: 2500000,
+        discount: 0,
+        paid: 0
+      }
+    ];
+
+    let invoices = [];
+
+    const rupiah = value =>
+      new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        maximumFractionDigits: 0
+      }).format(value || 0);
+
+    const escapeHTML = value =>
+      String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+
+    function getBalance(invoice) {
+      return Math.max(0, invoice.total - invoice.paid);
+    }
+
+    function getStatus(invoice) {
+      if (getBalance(invoice) === 0) return "Lunas";
+      if (invoice.paid > 0) return "DP";
+      return "Belum Bayar";
+    }
+
+    function formatDate(value) {
+      if (!value) return "-";
+
+      return new Intl.DateTimeFormat("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(new Date(value + "T00:00:00"));
+    }
+
+    function badgeClass(status) {
+      if (status === "Lunas") return "badge-success";
+      if (status === "DP") return "badge-warning";
+      return "badge-danger";
+    }
+
+    function renderInvoices() {
+      const keyword = document
+        .getElementById("searchInvoice")
+        .value.trim().toLowerCase();
+
+      const selectedStatus =
+        document.getElementById("filterPayment").value;
+
+      const filtered = invoices.filter(invoice => {
+        const searchText = [
+          invoice.number,
+          invoice.client,
+          invoice.event,
+          invoice.package
+        ].join(" ").toLowerCase();
+
+        return searchText.includes(keyword) &&
+          (!selectedStatus || getStatus(invoice) === selectedStatus);
+      });
+
+      document.getElementById("countInvoices").textContent =
+        invoices.length;
+
+      document.getElementById("sumInvoices").textContent =
+        rupiah(invoices.reduce((sum, item) => sum + item.total, 0));
+
+      document.getElementById("sumPaid").textContent =
+        rupiah(invoices.reduce((sum, item) => sum + item.paid, 0));
+
+      document.getElementById("sumBalance").textContent =
+        rupiah(invoices.reduce((sum, item) => sum + getBalance(item), 0));
+
+      document.getElementById("invoiceCount").textContent =
+        `Menampilkan ${filtered.length} dari ${invoices.length} invoice`;
+
+      if (!filtered.length) {
+        document.getElementById("invoiceTableBody").innerHTML = `
+          <tr>
+            <td colspan="8">
+              <div class="empty-invoices">
+                ${invoices.length
+                  ? "Invoice tidak ditemukan. Coba ubah pencarian atau filter."
+                  : "Belum ada invoice. Klik Tampilkan Contoh untuk mencoba preview."}
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      document.getElementById("invoiceTableBody").innerHTML =
+        filtered.map(invoice => {
+          const status = getStatus(invoice);
+
+          return `
+            <tr>
+              <td>
+                <div class="invoice-number">${escapeHTML(invoice.number)}</div>
+              </td>
+              <td>
+                <strong>${escapeHTML(invoice.client)}</strong>
+                <div class="client-secondary">${escapeHTML(invoice.phone || invoice.email || "-")}</div>
+              </td>
+              <td>${escapeHTML(invoice.event)}</td>
+              <td>${escapeHTML(formatDate(invoice.date))}</td>
+              <td class="money">${escapeHTML(rupiah(invoice.total))}</td>
+              <td class="money">${escapeHTML(rupiah(invoice.paid))}</td>
+              <td class="money">${escapeHTML(rupiah(getBalance(invoice)))}</td>
+              <td>
+                <span class="badge ${badgeClass(status)}">${status}</span>
+              </td>
+              <td>
+                <button
+                  class="btn btn-light btn-small"
+                  data-preview="${invoice.id}"
+                  type="button"
+                >Preview</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+    }
+
+    function showPreview(invoice) {
+      const status = getStatus(invoice);
+      const subtotal = invoice.total + invoice.discount;
+
+      document.getElementById("previewInvoiceNumber").textContent =
+        invoice.number;
+
+      document.getElementById("previewInvoiceDate").textContent =
+        "Tanggal: " + formatDate(today.toISOString().slice(0, 10));
+
+      document.getElementById("previewClientName").textContent =
+        invoice.client;
+
+      document.getElementById("previewClientDetail").textContent =
+        [invoice.phone, invoice.email].filter(Boolean).join(" · ") || "-";
+
+      document.getElementById("previewEventName").textContent =
+        invoice.event;
+
+      document.getElementById("previewEventDetail").textContent =
+        "Tanggal: " + formatDate(invoice.date) +
+        "\nLokasi: " + (invoice.location || "-");
+
+      document.getElementById("previewEventDetail").style.whiteSpace =
+        "pre-line";
+
+      document.getElementById("previewPackage").textContent =
+        invoice.package;
+
+      document.getElementById("previewPrice").textContent =
+        rupiah(subtotal);
+
+      document.getElementById("previewSubtotal").textContent =
+        rupiah(subtotal);
+
+      document.getElementById("previewSubtotal2").textContent =
+        rupiah(subtotal);
+
+      document.getElementById("previewDiscount").textContent =
+        rupiah(invoice.discount);
+
+      document.getElementById("previewTotal").textContent =
+        rupiah(invoice.total);
+
+      document.getElementById("previewPaid").textContent =
+        rupiah(invoice.paid);
+
+      document.getElementById("previewBalance").textContent =
+        rupiah(getBalance(invoice));
+
+      document.getElementById("previewStatus").textContent = status;
+
+      document.getElementById("previewOffice").textContent =
+        BUSINESS_INFO.office;
+
+      document.getElementById("previewOverlay").classList.add("show");
+    }
+
+    document.getElementById("showSample").addEventListener("click", () => {
+      invoices = sampleInvoices.map(invoice => ({ ...invoice }));
+      renderInvoices();
+    });
+
+    document.getElementById("searchInvoice")
+      .addEventListener("input", renderInvoices);
+
+    document.getElementById("filterPayment")
+      .addEventListener("change", renderInvoices);
+
+    document.getElementById("invoiceTableBody")
+      .addEventListener("click", event => {
+        const button = event.target.closest("[data-preview]");
+        if (!button) return;
+
+        const invoice = invoices.find(
+          item => String(item.id) === button.dataset.preview
+        );
+
+        if (invoice) showPreview(invoice);
+      });
+
+    document.getElementById("closePreview").addEventListener("click", () => {
+      document.getElementById("previewOverlay").classList.remove("show");
+    });
+
+    document.getElementById("previewOverlay")
+      .addEventListener("click", event => {
+        if (event.target.id === "previewOverlay") {
+          event.currentTarget.classList.remove("show");
+        }
+      });
+
+    document.getElementById("printInvoice").addEventListener("click", () => {
+      window.print();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        document.getElementById("previewOverlay").classList.remove("show");
+      }
+    });
+
+    // Awal halaman kosong agar data contoh tidak disangka data asli.
+    renderInvoices();
+  </script>
+</body>
+</html>
+
