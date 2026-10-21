@@ -125,6 +125,30 @@ tbody tr:last-child td{border:0}
 .act-list .item .dot.in{background:var(--ok)}
 .act-list .item .dot.out{background:var(--r)}
 .act-list .item small{display:block;color:var(--m);font-size:11px;margin-top:1px}
+/* ===== REMINDER PANEL ===== */
+.remind{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 1px 2px #0000000a}
+.remind-h{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.remind-h h3{margin:0;display:flex;align-items:center;gap:8px}
+.remind-h .badge{background:var(--r);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px}
+.remind-item{border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin-bottom:8px;transition:all .15s}
+.remind-item:last-child{margin-bottom:0}
+.remind-item:hover{border-color:var(--a);background:#faf9f7}
+.remind-item.urgent{border-left:3px solid var(--r)}
+.remind-item.warn{border-left:3px solid #d4922a}
+.remind-item.ok{border-left:3px solid var(--ok)}
+.remind-item .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.remind-item .top .date-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--t);color:#fff;white-space:nowrap}
+.remind-item .top .date-badge.h3{background:var(--r)}
+.remind-item .top .date-badge.h7{background:#d4922a}
+.remind-item .top .title{flex:1;min-width:0;font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.remind-item .checks{display:flex;flex-wrap:wrap;gap:6px;font-size:11.5px}
+.remind-item .checks span{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:6px;background:#f1f0ee;color:var(--m)}
+.remind-item .checks span.bad{background:#f8e4e2;color:var(--r);font-weight:600}
+.remind-item .checks span.ok{background:#e3f2ea;color:var(--ok);font-weight:600}
+.remind-item .actions{margin-top:8px;display:flex;gap:4px;flex-wrap:wrap}
+.remind-item .actions button,.remind-item .actions a{font-size:11px;padding:4px 10px;font-weight:600}
+.remind-empty{padding:20px;text-align:center;color:var(--m);font-size:13px;background:#e3f2ea;border-radius:10px}
+.remind-empty b{color:var(--ok)}
 /* ===== ORDER DETAIL v2 ===== */
 .progress{height:8px;background:#f1f0ee;border-radius:10px;overflow:hidden;margin-top:8px}
 .progress i{display:block;height:100%;background:linear-gradient(90deg,#2f7d57,#4a9d73);border-radius:10px;transition:width .3s}
@@ -457,7 +481,7 @@ function show(t,id){
   return esc(v);
  };
   const briefedRow=(t=='order_crew'&&x.briefed_at)?`<div class="li nc"><span class="m">Briefing terkirim</span><b>✅ ${fmt(x.briefed_at.slice(0,10))}</b></div>`:'';
- m.innerHTML=`<div class="box"><h2>${c.t}</h2>${c.f(1).filter(f=>!['info','addons'].includes(f.t)).map(f=>`<div class="li nc"><span class="m">${f.l.replace(/\s*\(.*\)/,'')}</span><b>${val(f)}</b></div>`).join('')}${briefedRow}${c.x?c.x(x):''}...<div class="row"><button class="ghost" data-act="close">Tutup</button><span><button class="ghost" data-act="edit">Ubah</button> <button class="red" data-act="del">Hapus</button></span></div></div>`;
+ m.innerHTML=`<div class="box"><h2>${c.t}</h2>${c.f(1).filter(f=>!['info','addons'].includes(f.t)).map(f=>`<div class="li nc"><span class="m">${f.l.replace(/\s*\(.*\)/,'')}</span><b>${val(f)}</b></div>`).join('')}${briefedRow}${c.x?c.x(x):''}<div class="row"><button class="ghost" data-act="close">Tutup</button><span><button class="ghost" data-act="edit">Ubah</button> <button class="red" data-act="del">Hapus</button></span></div></div>`;
  document.body.append(m);
  const onKey=e=>{if(e.key==='Escape')close()};
  const close=()=>{m.remove();document.removeEventListener('keydown',onKey)};
@@ -798,6 +822,9 @@ const V={
    ${st('Order CLOSED',os.filter(x=>x.st=='CLOSED').length)}
    ${st('Order BATAL',os.filter(x=>x.st=='BATAL').length)}
   </div>`+
+  
+    // Reminder panel
+  reminderPanel() +
   // Chart 6 bulan
   `<div class="card"><div class="row" style="margin-top:0"><h3>Pemasukan 6 bulan</h3><small class="m">Total ${rp(months.reduce((s,m)=>s+m.total,0))}</small></div>
    <div class="chart">${months.map(m=>{const h=Math.max(2,Math.round(m.total/maxChart*100));return`<div class="bar ${m.k===nowYm?'cur':''}"><b>${m.total>0?Math.round(m.total/1e6)+'jt':'-'}</b><div class="fill" style="height:${h}px"></div><small>${m.k.slice(5)}</small></div>`}).join('')}</div>
@@ -1502,7 +1529,128 @@ function render(){
  $('#main').innerHTML=V[view]();
 }
 const go=v=>{view=v;render();scrollTo(0,0)};
+// ===== REMINDER PANEL =====
+function reminderPanel(){
+ const todayStr = today();
+ const h7 = new Date(Date.now() + 7*864e5).toISOString().slice(0,10);
 
+ // Ambil event 7 hari ke depan yang belum cancelled & belum lewat
+ const upcoming = D.orders.filter(function(o){
+  if (o.cancelled) return false;
+  if (!o.event_date) return false;
+  if (o.event_date < todayStr) return false;
+  if (o.event_date > h7) return false;
+  return true;
+ }).sort(function(a,b){ return a.event_date.localeCompare(b.event_date); });
+
+ if (!upcoming.length) {
+  // Kalau nggak ada event 7 hari ke depan, tampil "aman" — tapi cuma kalau dashboard ada data
+  return '';
+ }
+
+ const items = upcoming.map(function(o){
+  const c = calc(o);
+  const crew = by('order_crew', o.id);
+  const briefed = crew.filter(function(x){return x.briefed_at}).length;
+  const rest = Math.max(c.tot - c.paid, 0);
+
+  const hasMaps = !!o.location_maps;
+  const hasCrew = crew.length > 0;
+  const allBriefed = crew.length > 0 && briefed === crew.length;
+  const hasCrewWithoutPhone = crew.some(function(x){return !(crw(x.crew_id).phone || '').replace(/\D/g,'')});
+  const isPaid = rest <= 0 && !o.cancelled;
+
+  const days = Math.ceil((new Date(o.event_date + 'T00:00') - new Date(todayStr + 'T00:00')) / 864e5);
+  const dayLabel = days === 0 ? 'HARI INI' : days === 1 ? 'BESOK' : 'H-' + days;
+  const dateBadgeClass = days <= 1 ? 'h3' : days <= 3 ? 'h7' : '';
+
+  // Hitung ada berapa masalah
+  let problems = 0;
+  if (!hasMaps) problems++;
+  if (!hasCrew) problems++;
+  if (hasCrew && !allBriefed) problems++;
+  if (!isPaid) problems++;
+  if (hasCrewWithoutPhone) problems++;
+
+  // Status keseluruhan
+  const level = problems === 0 ? 'ok' : days <= 1 || problems >= 3 ? 'urgent' : 'warn';
+  if (problems === 0 && days > 1) {
+   // Masih ada waktu, tapi udah siap semua — boleh tetap ditampilkan atau di-skip
+   // Gua tetap tampilkan biar user seneng liat checklist hijau
+  }
+
+  // Build checklist
+  let checks = '';
+
+  // Maps
+  if (hasMaps) {
+   checks += '<span class="ok">✅ Maps</span>';
+  } else {
+   checks += '<span class="bad">⚠ Maps belum diisi</span>';
+  }
+
+  // Crew
+  if (!hasCrew) {
+   checks += '<span class="bad">⚠ Crew belum di-assign</span>';
+  } else {
+   if (allBriefed) {
+    checks += '<span class="ok">✅ Crew ' + crew.length + '/' + crew.length + ' briefed</span>';
+   } else {
+    checks += '<span class="bad">⚠ Briefed ' + briefed + '/' + crew.length + '</span>';
+   }
+   if (hasCrewWithoutPhone) {
+    checks += '<span class="bad">⚠ Ada crew tanpa no. HP</span>';
+   }
+  }
+
+  // Payment
+  if (isPaid) {
+   checks += '<span class="ok">✅ Lunas</span>';
+  } else {
+   checks += '<span class="bad">⚠ Sisa ' + rp(rest) + '</span>';
+  }
+
+  // Actions
+  let actions = '<a class="ghost" style="background:#fff;border:1px solid var(--b);border-radius:9px;color:var(--t);cursor:pointer;font:inherit;font-weight:600" onclick="oid=' + o.id + ';go(\'order\')">Buka Order →</a>';
+  if (!hasMaps) {
+   actions += ' <button class="ghost" onclick="quickMaps(' + o.id + ')">＋ Isi Maps</button>';
+  }
+  if (hasCrew && !allBriefed) {
+   actions += ' <button onclick="waCrewPicker(' + o.id + ')" style="background:var(--ok);border-color:var(--ok);color:#fff">📤 Kirim Briefing</button>';
+  }
+  if (rest > 0) {
+   actions += ' <button class="ghost" onclick="oid=' + o.id + ';E(\'payments\')">＋ Bayar</button>';
+  }
+
+  return '<div class="remind-item ' + level + '">' +
+   '<div class="top">' +
+   '<span class="date-badge ' + dateBadgeClass + '">' + dayLabel + '</span>' +
+   '<span class="title">' + fmt(o.event_date) + ' · ' + esc(cl(o.client_id).name) + '</span>' +
+   '</div>' +
+   '<div class="checks">' + checks + '</div>' +
+   '<div class="actions">' + actions + '</div>' +
+   '</div>';
+ }).join('');
+
+ const urgentCount = upcoming.filter(function(o){
+  const c = calc(o);
+  const crew = by('order_crew', o.id);
+  const rest = Math.max(c.tot - c.paid, 0);
+  const hasMaps = !!o.location_maps;
+  const hasCrew = crew.length > 0;
+  const allBriefed = crew.length > 0 && crew.filter(function(x){return x.briefed_at}).length === crew.length;
+  const isPaid = rest <= 0;
+  return !hasMaps || !hasCrew || (hasCrew && !allBriefed) || !isPaid;
+ }).length;
+
+ return '<div class="remind">' +
+  '<div class="remind-h">' +
+  '<h3>🔔 Perlu Perhatian ' + (urgentCount ? '<span class="badge">' + urgentCount + '</span>' : '') + '</h3>' +
+  '<small class="m">' + upcoming.length + ' event dalam 7 hari</small>' +
+  '</div>' +
+  items +
+  '</div>';
+}
 // ===== CREW SECTION + WA BRIEFING =====
 function crewSection(o){
  const list = by('order_crew', o.id);
