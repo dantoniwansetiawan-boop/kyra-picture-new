@@ -125,7 +125,7 @@ function pdf(id){
  d.text('Serang Baru, Kab. Bekasi, Jawa Barat, ID 17330',105,282,{align:'center'});
  d.save(invNo(o)+'.pdf')}
 async function boot(){const{data:{session}}=await sb.auth.getSession();$('#login').hidden=!!session;$('#app').hidden=!session;if(session){await load();render()}}
-$('#lf').onsubmit=async e=>{e.preventDefault();const r=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});if(r.error)$('#err').textContent='Email atau password salah';else boot()};
+$('#lf').onsubmit=async e=>{e.preventDefault();const r=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});if(SB_URL.startsWith('ISI_')||SB_KEY.startsWith('ISI_'))$('#err').textContent='URL / key Supabase belum diisi di index.html';else if(r.error)$('#err').textContent='Gagal: '+r.error.message;else boot()};
 const out=async()=>{await sb.auth.signOut();D={};boot()};
 boot();
 </script></body></html>
