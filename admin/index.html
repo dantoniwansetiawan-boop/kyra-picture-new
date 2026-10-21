@@ -22,7 +22,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:14p
 <div id="login"><form id="lf"><h1 class="logo" style="font-size:30px">KYRA PICTURE</h1><small class="m">Admin Panel</small><input id="em" type="email" placeholder="Email" required><input id="pw" type="password" placeholder="Password" required><button>Masuk</button><small id="err" style="color:var(--r)"></small></form></div>
 <div id="app" hidden><header><span class="logo">KYRA PICTURE</span><button class="ghost" onclick="out()">Keluar</button></header><div id="nav"></div><div id="main"></div></div>
 <script>
-const SB_URL='ISI_URL_SUPABASE',SB_KEY='ISI_ANON_KEY';
+const SB_URL='https://uhwbafngzkicergeqqzm.supabase.co',SB_KEY='ISI_ANON_KEY';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const $=s=>document.querySelector(s),rp=n=>'Rp '+Math.round(+n||0).toLocaleString('id-ID'),today=()=>new Date().toISOString().slice(0,10);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -125,7 +125,7 @@ function pdf(id){
  d.text('Serang Baru, Kab. Bekasi, Jawa Barat, ID 17330',105,282,{align:'center'});
  d.save(invNo(o)+'.pdf')}
 async function boot(){const{data:{session}}=await sb.auth.getSession();$('#login').hidden=!!session;$('#app').hidden=!session;if(session){await load();render()}}
-$('#lf').onsubmit=async e=>{e.preventDefault();const r=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});if(SB_URL.startsWith('ISI_')||SB_KEY.startsWith('ISI_'))$('#err').textContent='URL / key Supabase belum diisi di index.html';else if(r.error)$('#err').textContent='Gagal: '+r.error.message;else boot()};
+$('#lf').onsubmit=async e=>{e.preventDefault();const r=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});if(SB_URL.startsWith('ISI_')||SB_KEY.startsWith('sb_secret_en0ORdhauCoY3sD8UNHFMQ_WWSouZgz'))$('#err').textContent='URL / key Supabase belum diisi di index.html';else if(r.error)$('#err').textContent='Gagal: '+r.error.message;else boot()};
 const out=async()=>{await sb.auth.signOut();D={};boot()};
 boot();
 </script></body></html>
