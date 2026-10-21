@@ -1,63 +1,775 @@
+
 <!doctype html>
 <html lang="id">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kyra Picture — Admin Studio</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kyra Picture | Admin Studio</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+
 <style>
-:root{--bg:#f5f6fa;--card:#fff;--ink:#202238;--muted:#85879a;--line:#e9eaf1;--purple:#6558e8;--purple2:#eeeaff;--green:#16876b;--red:#d9485f;--shadow:0 8px 30px #29234a0a}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font-weight:650}.primary{background:var(--purple);color:#fff}.soft{background:var(--purple2);color:var(--purple)}.danger{background:#fff0f2;color:var(--red)}.plain{background:#f4f5f9;color:#41435b}.shell{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.side{background:#202039;color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:22px}.brand{display:flex;gap:11px;align-items:center;padding:3px 8px 22px;border-bottom:1px solid #ffffff20}.logo{width:42px;height:42px;background:#8c80ff;border-radius:14px;display:grid;place-items:center;font-weight:900;font-size:19px}.brand strong{display:block;font-size:15px}.brand small{color:#b9b8d0}.navlabel{font-size:10px;letter-spacing:1.5px;color:#9292b2;padding:0 10px}.nav{display:grid;gap:6px}.nav button{background:transparent;color:#c5c5dc;text-align:left;display:flex;gap:11px;align-items:center;font-weight:550}.nav button.active,.nav button:hover{background:#373653;color:white}.nav .ico{width:20px;text-align:center}.sidefoot{margin-top:auto;color:#aaaac5;font-size:12px;padding:10px}.main{min-width:0;padding:28px clamp(16px,3vw,38px)}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:24px}.eyebrow{color:var(--purple);font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}.top h1{font-size:27px;letter-spacing:-.8px;margin:4px 0}.sub{color:var(--muted)}.status{border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 13px;color:var(--muted);font-size:12px;white-space:nowrap}.status:before{content:'';display:inline-block;width:7px;height:7px;background:#e5a53b;border-radius:50%;margin-right:7px}.status.ok:before{background:#1ba57b}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}.stat,.panel{background:var(--card);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}.stat{padding:19px}.stat .label{color:var(--muted);font-size:12px}.stat .value{font-size:25px;font-weight:800;letter-spacing:-.6px;margin:9px 0 3px;overflow-wrap:anywhere}.stat .hint{font-size:11px;color:var(--muted)}.panel{padding:20px;margin-bottom:18px}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}.panelhead h2{margin:0;font-size:16px}.tools{display:flex;gap:8px;flex-wrap:wrap}.field{display:grid;gap:6px}.field label{font-size:12px;font-weight:700;color:#555770}.field input,.field select,.field textarea,.search{width:100%;border:1px solid #e2e3ed;background:#fff;border-radius:10px;padding:11px 12px;outline:none;color:var(--ink)}.field input:focus,.field select:focus,.field textarea:focus,.search:focus{border-color:#9389ff;box-shadow:0 0 0 3px #eeeaff}.field textarea{min-height:88px;resize:vertical}.gridform{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.wide{grid-column:1/-1}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:700px;background:#fff}th,td{padding:12px 13px;text-align:left;border-bottom:1px solid var(--line);font-size:12px;vertical-align:middle}th{background:#fafaff;color:#74768c;font-weight:750;white-space:nowrap}td{max-width:280px;overflow-wrap:anywhere}tr:last-child td{border-bottom:0}.actions{display:flex;gap:6px;white-space:nowrap}.actions button{padding:7px 9px;font-size:11px}.pill{display:inline-block;padding:4px 8px;background:#eeeaff;color:#6257d9;border-radius:99px;font-size:11px}.empty{text-align:center;padding:36px;color:var(--muted)}.muted{color:var(--muted)}.hidden{display:none!important}.notice{padding:12px 14px;border-radius:11px;background:#f1efff;color:#5147bb;margin-bottom:15px}.error{background:#fff0f2;color:#b52e46}.success{background:#e9faf3;color:#167353}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.search{max-width:260px}.footerhint{font-size:11px;color:var(--muted);margin-top:10px}.modalback{position:fixed;inset:0;background:#16162e88;display:grid;place-items:center;padding:18px;z-index:10}.modal{background:#fff;width:min(850px,100%);max-height:90vh;overflow:auto;border-radius:18px;padding:23px;box-shadow:0 20px 70px #17172b33}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modalhead h2{margin:0}.modalfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.jsonbox{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;min-height:220px}.moneyhint{font-size:11px;color:var(--muted)}.mobilemenu{display:none}@media(max-width:900px){.shell{grid-template-columns:1fr}.side{padding:13px 14px;gap:12px}.brand{padding:3px 6px 12px}.nav{display:flex;overflow:auto}.navlabel,.sidefoot{display:none}.nav button{white-space:nowrap;padding:9px}.main{padding:20px 14px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.gridform{grid-template-columns:1fr 1fr}}@media(max-width:540px){.top{align-items:flex-start;flex-direction:column}.gridform{grid-template-columns:1fr}.stats{gap:9px}.stat{padding:14px}.stat .value{font-size:21px}.panel{padding:14px}}
-</style></head>
-<body><div class="shell"><aside class="side"><div class="brand"><div class="logo">K</div><div><strong>KYRA PICTURE</strong><small>Admin Studio</small></div></div><div class="navlabel">WORKSPACE</div><nav class="nav" id="nav"><button class="active" data-page="dashboard"><span class="ico">◫</span>Dashboard</button><button data-page="02_clients"><span class="ico">♙</span>Klien</button><button data-page="01_service_packages"><span class="ico">▧</span>Paket layanan</button><button data-page="03_bookings"><span class="ico">▣</span>Booking</button><button data-page="04_projects"><span class="ico">▤</span>Proyek</button><button data-page="05_project_tasks"><span class="ico">☷</span>Tugas proyek</button><button data-page="06_payments"><span class="ico">Rp</span>Pembayaran</button><button data-page="07_deliverables"><span class="ico">▣</span>Deliverables</button><button data-page="08_check_database"><span class="ico">◉</span>Check database</button><button data-page="09_secure_private_tables"><span class="ico">♢</span>Private tables</button><button data-page="10_check_security"><span class="ico">⌑</span>Security</button></nav><div class="sidefoot">Kyra Picture · Database workspace<br>Perubahan disimpan ke Supabase</div></aside>
-<main class="main"><header class="top"><div><div class="eyebrow">KYRA PICTURE / MANAGEMENT</div><h1 id="pageTitle">Dashboard</h1><div class="sub" id="pageSub">Ringkasan operasional dan keuangan.</div></div><div class="status" id="connection">Menghubungkan ke Supabase…</div></header><div id="notice" class="notice hidden"></div><section id="dashboard"><div class="stats"><div class="stat"><div class="label">Total klien</div><div class="value" id="statClients">—</div><div class="hint">Data tersimpan</div></div><div class="stat"><div class="label">Total booking</div><div class="value" id="statBookings">—</div><div class="hint">Semua status</div></div><div class="stat"><div class="label">Pembayaran tercatat</div><div class="value" id="statPayments">—</div><div class="hint">Jumlah nominal pembayaran</div></div><div class="stat"><div class="label">Estimasi nilai booking</div><div class="value" id="statRevenue">Rp0</div><div class="hint">Berdasarkan kolom nominal yang tersedia</div></div></div><div class="panel"><div class="panelhead"><div><h2>Mulai kelola data</h2><div class="sub">Pilih modul di sidebar untuk melihat, menambah, mengedit, menghapus, dan mengunduh PDF.</div></div><button class="primary" onclick="openPage('03_bookings')">＋ Booking baru</button></div><div class="notice">Setiap aksi Create / Edit / Delete dilakukan langsung ke Supabase. Pastikan policy RLS tabel mengizinkan operasi tersebut.</div></div><div class="panel"><div class="panelhead"><h2>Booking terbaru</h2><button class="soft" onclick="openPage('03_bookings')">Lihat semua →</button></div><div id="recentBookings" class="empty">Memuat data…</div></div></section>
-<section id="tablePage" class="hidden"><div class="panel"><div class="panelhead"><div><h2 id="tableHeading">Data</h2><div class="sub" id="tableDescription">Kelola data database.</div></div><div class="tools"><button class="plain" onclick="refreshCurrent()">↻ Refresh</button><button class="soft" onclick="downloadPDF()">↓ Download PDF</button><button class="primary" onclick="openCreate()">＋ Tambah data</button></div></div><div class="toolbar" style="margin-bottom:13px"><input class="search" id="search" placeholder="Cari data…" oninput="renderRows()"><span id="rowCount" class="muted"></span></div><div class="tablewrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div><div class="footerhint">Angka dengan nama kolom nominal/harga/biaya/total/DP dibaca sebagai rupiah dan diformat otomatis. Klik Edit untuk mengubah kolom lain atau mengisi data tambahan.</div></div></section>
-</main></div>
-<div id="modalBack" class="modalback hidden"><div class="modal"><div class="modalhead"><h2 id="modalTitle">Tambah data</h2><button class="plain" onclick="closeModal()">✕</button></div><div id="modalNotice" class="notice hidden"></div><form id="dataForm" onsubmit="saveForm(event)"><div id="formFields" class="gridform"></div><div class="footerhint">Kolom wajib mengikuti aturan database Supabase. Format rupiah ditampilkan dengan titik pemisah ribuan, lalu disimpan sebagai angka.</div><div class="modalfoot"><button type="button" class="plain" onclick="closeModal()">Batal</button><button class="primary" id="saveBtn" type="submit">Simpan ke Supabase</button></div></form></div></div>
+:root{
+ --bg:#f6f7fb;--white:#fff;--ink:#202238;--muted:#81849b;
+ --line:#e9eaf2;--purple:#6959e8;--pale:#f0edff;
+ --green:#138566;--red:#d9435b;--dark:#22213b;
+ --shadow:0 8px 28px rgba(32,34,56,.045);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:14px/1.55 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font-weight:700}
+button:disabled{opacity:.55;cursor:wait}
+.primary{background:var(--purple);color:#fff}
+.soft{background:var(--pale);color:var(--purple)}
+.neutral{background:#f0f1f6;color:#42445c}
+.danger{background:#fff0f2;color:var(--red)}
+.shell{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
+.sidebar{background:var(--dark);color:#fff;padding:23px 15px;display:flex;flex-direction:column;gap:23px}
+.brand{display:flex;align-items:center;gap:12px;padding:0 8px 20px;border-bottom:1px solid #ffffff20}
+.logo{width:43px;height:43px;display:grid;place-items:center;background:#8174ff;border-radius:14px;font-weight:900;font-size:21px}
+.brand strong{display:block;letter-spacing:.5px}
+.brand small{color:#b6b5d1}
+.nav-label{font-size:10px;letter-spacing:1.7px;color:#9392b3;padding:0 10px}
+nav{display:grid;gap:5px}
+nav button{display:flex;align-items:center;gap:11px;text-align:left;background:transparent;color:#c6c5dd;font-weight:550}
+nav button:hover,nav button.active{background:#3b3958;color:#fff}
+.nav-icon{width:22px;text-align:center}
+.side-bottom{margin-top:auto;color:#a9a8c4;font-size:12px;padding:10px}
+main{min-width:0;padding:29px clamp(15px,3vw,40px)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+.eyebrow{font-size:10px;letter-spacing:1.6px;color:var(--purple);font-weight:850}
+h1{font-size:29px;letter-spacing:-.8px;margin:4px 0}
+h2{font-size:16px;margin:0}
+.subtitle,.muted{color:var(--muted)}
+.subtitle{font-size:13px}
+.connection{background:#fff;border:1px solid var(--line);border-radius:30px;padding:9px 13px;color:var(--muted);font-size:12px;white-space:nowrap}
+.connection:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#e5a43a;margin-right:7px}
+.connection.ok:before{background:#17a578}
+.connection.ok{color:var(--green)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:19px}
+.stat,.panel{background:var(--white);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}
+.stat{padding:19px}
+.stat-label{font-size:12px;color:var(--muted)}
+.stat-value{font-size:25px;font-weight:850;letter-spacing:-.6px;margin:9px 0 4px;overflow-wrap:anywhere}
+.stat-note{font-size:11px;color:var(--muted)}
+.panel{padding:21px;margin-bottom:18px}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:13px;flex-wrap:wrap;margin-bottom:17px}
+.tools,.toolbar,.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.search{width:min(290px,100%);border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+.field{display:grid;gap:6px;min-width:0}
+.field label{font-size:12px;font-weight:750;color:#555770}
+.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid #e1e3ee;background:#fff;border-radius:10px;padding:11px 12px;outline:none;color:var(--ink)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#9286ff;box-shadow:0 0 0 3px #f0edff}
+.field textarea{min-height:85px;resize:vertical}
+.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.wide{grid-column:1/-1}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;background:#fff;min-width:650px}
+th,td{padding:12px 13px;border-bottom:1px solid var(--line);text-align:left;font-size:12px;vertical-align:middle}
+th{background:#fafaff;color:#73758c;font-weight:800;white-space:nowrap}
+td{max-width:300px;overflow-wrap:anywhere}
+tr:last-child td{border-bottom:0}
+.actions{flex-wrap:nowrap}
+.actions button{padding:7px 10px;font-size:11px}
+.pill{display:inline-block;padding:4px 9px;background:#f0edff;color:#6658dc;border-radius:30px;font-size:11px}
+.notice{padding:12px 14px;background:#f0edff;color:#5146b8;border-radius:11px;margin-bottom:15px;overflow-wrap:anywhere}
+.notice.error{background:#fff0f2;color:#b72e46}
+.notice.success{background:#e9faf3;color:#167353}
+.hidden{display:none!important}
+.empty{text-align:center;padding:30px;color:var(--muted)}
+.hint{font-size:11px;color:var(--muted);margin-top:11px}
+.quick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.quick{border:1px solid var(--line);border-radius:13px;padding:17px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.quick strong{display:block;font-size:13px}
+.quick small{color:var(--muted)}
+.modal-back{position:fixed;inset:0;background:#17172dbb;z-index:20;display:grid;place-items:center;padding:16px}
+.modal{width:min(900px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:19px;padding:23px;box-shadow:0 25px 90px #11112840}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.modal-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+#modalNotice{white-space:pre-wrap}
+.row-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.detail{padding:12px;background:#f8f8fc;border-radius:10px;overflow-wrap:anywhere}
+.detail small{display:block;color:var(--muted);margin-bottom:4px}
+@media(max-width:1000px){
+ .shell{grid-template-columns:1fr}
+ .sidebar{padding:13px;gap:12px}
+ .brand{padding:0 5px 12px}
+ .nav-label,.side-bottom{display:none}
+ nav{display:flex;overflow-x:auto;padding-bottom:3px}
+ nav button{white-space:nowrap;padding:9px 11px}
+ main{padding:20px 14px}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+ .top{align-items:flex-start;flex-direction:column}
+ .form-grid,.row-details{grid-template-columns:1fr}
+ .stats{gap:9px}
+ .stat{padding:14px}
+ .stat-value{font-size:20px}
+ .panel{padding:14px}
+ .quick-grid{grid-template-columns:1fr}
+ .modal{padding:16px}
+}
+</style>
+</head>
+
+<body>
+<div class="shell">
+<aside class="sidebar">
+ <div class="brand">
+  <div class="logo">K</div>
+  <div><strong>KYRA PICTURE</strong><small>Admin Studio</small></div>
+ </div>
+ <div class="nav-label">WORKSPACE</div>
+ <nav id="navigation">
+  <button class="active" data-page="dashboard"><span class="nav-icon">◫</span>Dashboard</button>
+  <button data-page="02_clients"><span class="nav-icon">♙</span>Klien</button>
+  <button data-page="01_service_packages"><span class="nav-icon">▧</span>Paket layanan</button>
+  <button data-page="03_bookings"><span class="nav-icon">▣</span>Booking</button>
+  <button data-page="04_projects"><span class="nav-icon">▤</span>Proyek</button>
+  <button data-page="05_project_tasks"><span class="nav-icon">☷</span>Tugas proyek</button>
+  <button data-page="06_payments"><span class="nav-icon">Rp</span>Pembayaran</button>
+  <button data-page="07_deliverables"><span class="nav-icon">▣</span>Deliverables</button>
+  <button data-page="08_check_database"><span class="nav-icon">◉</span>Check database</button>
+  <button data-page="09_secure_private_tables"><span class="nav-icon">♢</span>Private tables</button>
+  <button data-page="10_check_security"><span class="nav-icon">⌑</span>Security</button>
+ </nav>
+ <div class="side-bottom">Kyra Picture · Database workspace<br>Data tersimpan di Supabase</div>
+</aside>
+
+<main>
+ <header class="top">
+  <div>
+   <div class="eyebrow">KYRA PICTURE / MANAGEMENT</div>
+   <h1 id="pageTitle">Dashboard</h1>
+   <div class="subtitle" id="pageSubtitle">Ringkasan operasional dan keuangan.</div>
+  </div>
+  <div class="connection" id="connection">Menghubungkan...</div>
+ </header>
+
+ <div id="notice" class="notice hidden"></div>
+
+ <section id="dashboard">
+  <div class="stats">
+   <div class="stat"><div class="stat-label">Total klien</div><div class="stat-value" id="statClients">—</div><div class="stat-note">Data klien tersimpan</div></div>
+   <div class="stat"><div class="stat-label">Total booking</div><div class="stat-value" id="statBookings">—</div><div class="stat-note">Semua status booking</div></div>
+   <div class="stat"><div class="stat-label">Total pembayaran</div><div class="stat-value" id="statPayments">Rp0</div><div class="stat-note">Akumulasi nominal pembayaran</div></div>
+   <div class="stat"><div class="stat-label">Nilai booking</div><div class="stat-value" id="statRevenue">Rp0</div><div class="stat-note">Berdasarkan kolom nominal</div></div>
+  </div>
+
+  <div class="panel">
+   <div class="panel-head">
+    <div><h2>Selamat datang di Admin Studio</h2><div class="subtitle">Kelola data operasional Kyra Picture.</div></div>
+    <button class="primary" onclick="openPage('03_bookings');openCreate()">＋ Booking baru</button>
+   </div>
+   <div class="quick-grid">
+    <div class="quick"><div><strong>Data klien</strong><small>Kontak dan informasi klien</small></div><button class="soft" onclick="openPage('02_clients')">Buka →</button></div>
+    <div class="quick"><div><strong>Paket layanan</strong><small>Harga dan layanan foto</small></div><button class="soft" onclick="openPage('01_service_packages')">Buka →</button></div>
+    <div class="quick"><div><strong>Pembayaran</strong><small>Catatan transaksi</small></div><button class="soft" onclick="openPage('06_payments')">Buka →</button></div>
+   </div>
+  </div>
+
+  <div class="panel">
+   <div class="panel-head"><div><h2>Booking terbaru</h2><div class="subtitle">Data terakhir dari database.</div></div><button class="soft" onclick="openPage('03_bookings')">Lihat semua →</button></div>
+   <div id="recentBookings" class="empty">Memuat data...</div>
+  </div>
+ </section>
+
+ <section id="tablePage" class="hidden">
+  <div class="panel">
+   <div class="panel-head">
+    <div><h2 id="tableHeading">Data</h2><div class="subtitle" id="tableDescription"></div></div>
+    <div class="tools">
+     <button class="neutral" onclick="refreshCurrent()">↻ Refresh</button>
+     <button class="soft" onclick="downloadPDF()">↓ PDF</button>
+     <button class="primary" onclick="openCreate()">＋ Tambah data</button>
+    </div>
+   </div>
+   <div class="toolbar" style="margin-bottom:14px">
+    <input class="search" id="search" placeholder="Cari data..." oninput="renderRows()">
+    <span class="muted" id="rowCount"></span>
+   </div>
+   <div class="table-wrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+   <div class="hint">Data diambil dari Supabase. Edit dan hapus memakai primary key tabel, bukan foreign key. Format nominal ditampilkan sebagai Rupiah.</div>
+  </div>
+ </section>
+</main>
+</div>
+
+<div id="modalBack" class="modal-back hidden">
+ <div class="modal">
+  <div class="modal-head">
+   <div><h2 id="modalTitle">Tambah data</h2><div class="subtitle" id="modalSubtitle">Data akan disimpan ke Supabase.</div></div>
+   <button class="neutral" type="button" onclick="closeModal()">✕</button>
+  </div>
+  <div id="modalNotice" class="notice hidden"></div>
+  <form id="dataForm">
+   <div id="formFields" class="form-grid"></div>
+   <div class="hint">Nominal ditampilkan dengan titik pemisah ribuan dan dikirim sebagai angka. ID otomatis tidak perlu diisi.</div>
+   <div class="modal-foot">
+    <button type="button" class="neutral" onclick="closeModal()">Batal</button>
+    <button type="submit" class="primary" id="saveBtn">Simpan ke Supabase</button>
+   </div>
+  </form>
+ </div>
+</div>
+
 <script>
-const SUPABASE_URL='https://vgiczgeleincrhlhsdzy.supabase.co';
-const SUPABASE_KEY='sb_publishable_ua5vsHvJnweG2zWCT_jkxg_BJsjQPXl';
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const TABLES={
-'02_clients':{label:'Klien',desc:'Data pelanggan Kyra Picture',fields:{name:'text',full_name:'text',phone:'text',email:'email',address:'textarea',notes:'textarea'}},
-'01_service_packages':{label:'Paket layanan',desc:'Daftar paket dan harga jasa',fields:{name:'text',package_name:'text',description:'textarea',price:'money',base_price:'money',duration:'text',deliverables:'textarea'}},
-'03_bookings':{label:'Booking',desc:'Kelola jadwal event dan detail pemesanan',fields:{client_id:'number',package_id:'number',event_type:'text',event_date:'date',event_location:'text',status:'select:pending,confirmed,completed,cancelled',notes:'textarea',total_amount:'money',amount:'money',dp_amount:'money'}},
-'04_projects':{label:'Proyek',desc:'Data proyek foto/video',fields:{booking_id:'number',client_id:'number',name:'text',title:'text',status:'text',start_date:'date',due_date:'date',notes:'textarea'}},
-'05_project_tasks':{label:'Tugas proyek',desc:'Daftar tugas dan progres tim',fields:{project_id:'number',title:'text',task_name:'text',status:'text',assigned_to:'text',due_date:'date',notes:'textarea'}},
-'06_payments':{label:'Pembayaran',desc:'Pencatatan pembayaran dalam rupiah',fields:{booking_id:'number',client_id:'number',amount:'money',payment_amount:'money',payment_date:'date',method:'text',payment_method:'text',status:'text',notes:'textarea'}},
-'07_deliverables':{label:'Deliverables',desc:'File dan hasil yang dikirim ke klien',fields:{project_id:'number',booking_id:'number',name:'text',title:'text',url:'url',status:'text',delivered_at:'date',notes:'textarea'}},
-'08_check_database':{label:'Check database',desc:'Data pemeriksaan database',fields:{}},
-'09_secure_private_tables':{label:'Private tables',desc:'Tabel privat (akses tergantung policy Supabase)',fields:{}},
-'10_check_security':{label:'Security',desc:'Data pemeriksaan keamanan',fields:{}}
+/* ==========================================================
+   KONFIGURASI SUPABASE
+   Gunakan publishable/anon key, jangan gunakan service_role.
+========================================================== */
+const SUPABASE_URL = 'https://vgiczgeleincrhlhsdzy.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_ua5vsHvJnweG2zWCT_jkxg_BJsjQPXl';
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* Kolom untuk form ketika tabel belum memiliki data.
+   Nama kolom harus cocok dengan skema Supabase milikmu. */
+const TABLES = {
+ '02_clients': {
+  label:'Klien', desc:'Data pelanggan Kyra Picture',
+  fields:{
+   name:'text',phone:'text',email:'email',address:'textarea',notes:'textarea'
+  }
+ },
+ '01_service_packages': {
+  label:'Paket layanan', desc:'Daftar paket dan harga jasa',
+  fields:{
+   name:'text',description:'textarea',price:'money',duration:'text',deliverables:'textarea'
+  }
+ },
+ '03_bookings': {
+  label:'Booking', desc:'Jadwal event dan detail pemesanan',
+  fields:{
+   client_id:'number',package_id:'number',event_type:'text',
+   event_date:'date',event_location:'text',
+   status:'select:pending,confirmed,completed,cancelled',notes:'textarea'
+  }
+ },
+ '04_projects': {
+  label:'Proyek', desc:'Data proyek foto dan video',
+  fields:{
+   booking_id:'number',name:'text',status:'text',
+   start_date:'date',due_date:'date',notes:'textarea'
+  }
+ },
+ '05_project_tasks': {
+  label:'Tugas proyek', desc:'Daftar tugas dan progres tim',
+  fields:{
+   project_id:'number',title:'text',status:'text',
+   assigned_to:'text',due_date:'date',notes:'textarea'
+  }
+ },
+ '06_payments': {
+  label:'Pembayaran', desc:'Pencatatan pembayaran dalam Rupiah',
+  fields:{
+   booking_id:'number',amount:'money',payment_date:'date',
+   method:'text',status:'text',notes:'textarea'
+  }
+ },
+ '07_deliverables': {
+  label:'Deliverables', desc:'File dan hasil yang dikirim ke klien',
+  fields:{
+   project_id:'number',name:'text',url:'url',
+   status:'text',delivered_at:'date',notes:'textarea'
+  }
+ },
+ '08_check_database': {
+  label:'Check database',desc:'Pemeriksaan database',fields:{}
+ },
+ '09_secure_private_tables': {
+  label:'Private tables',desc:'Tabel privat sesuai izin akses',fields:{}
+ },
+ '10_check_security': {
+  label:'Security',desc:'Pemeriksaan keamanan',fields:{}
+ }
 };
-let currentPage='dashboard',rows=[],columns=[],editId=null,formMode='create',allCache={},resolvedTables={};
-const TABLE_ALIASES={'02_clients':['02_clients','clients'],'01_service_packages':['01_service_packages','service_packages'],'03_bookings':['03_bookings','bookings'],'04_projects':['04_projects','projects'],'05_project_tasks':['05_project_tasks','project_tasks'],'06_payments':['06_payments','payments'],'07_deliverables':['07_deliverables','deliverables'],'08_check_database':['08_check_database','check_database'],'09_secure_private_tables':['09_secure_private_tables','secure_private_tables'],'10_check_security':['10_check_security','check_security']};
-async function resolveTable(name){if(resolvedTables[name])return resolvedTables[name];let last;for(const candidate of (TABLE_ALIASES[name]||[name])){try{const {error}=await db.from(candidate).select('*').limit(1);if(!error){resolvedTables[name]=candidate;return candidate}last=error}catch(e){last=e}}throw last||new Error('Nama tabel tidak ditemukan')}
-async function activeTable(){return await resolveTable(currentPage)}
-const moneyFmt=new Intl.NumberFormat('id-ID',{maximumFractionDigits:0});
-function money(v){const n=Number(v);return Number.isFinite(n)?'Rp'+moneyFmt.format(n):'—'}
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function human(s){return String(s).replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())}
-function isMoney(k){return /(price|amount|nominal|total|cost|fee|budget|payment|dp|downpayment|revenue|income|expense|biaya|harga|bayar|rupiah)/i.test(k)}
-function fmtCell(k,v){if(v===null||v===undefined||v==='')return '—';if(isMoney(k)&&!isNaN(Number(v)))return money(v);if(typeof v==='object')return JSON.stringify(v);return String(v)}
-function notify(msg,type=''){const n=document.getElementById('notice');n.textContent=msg;n.className='notice '+type;n.classList.remove('hidden');setTimeout(()=>n.classList.add('hidden'),6500)}
-function setConnection(ok,msg){const e=document.getElementById('connection');e.textContent=msg;e.classList.toggle('ok',ok)}
-async function testConnection(){try{const actual=await resolveTable('02_clients');const {error}=await db.from(actual).select('*').limit(1);if(error)throw error;setConnection(true,'Supabase terhubung')}catch(e){setConnection(false,'Periksa koneksi / RLS');console.warn(e)}}
-function openPage(page){currentPage=page;document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));document.getElementById('dashboard').classList.toggle('hidden',page!=='dashboard');document.getElementById('tablePage').classList.toggle('hidden',page==='dashboard');if(page==='dashboard'){document.getElementById('pageTitle').textContent='Dashboard';document.getElementById('pageSub').textContent='Ringkasan operasional dan keuangan.';loadDashboard()}else{const t=TABLES[page];document.getElementById('pageTitle').textContent=t?.label||page;document.getElementById('pageSub').textContent=t?.desc||'Kelola data';document.getElementById('tableHeading').textContent=t?.label||page;document.getElementById('tableDescription').textContent=t?.desc||'Kelola data database';document.getElementById('search').value='';loadTable(page)}}
-document.querySelectorAll('#nav button').forEach(b=>b.addEventListener('click',()=>openPage(b.dataset.page)));
-async function fetchTable(name){const actual=await resolveTable(name);const {data,error}=await db.from(actual).select('*').limit(1000);if(error)throw error;return data||[]}
-async function loadDashboard(){try{const [c,b,p]=await Promise.all([fetchTable('02_clients'),fetchTable('03_bookings'),fetchTable('06_payments')]);document.getElementById('statClients').textContent=c.length;document.getElementById('statBookings').textContent=b.length;let paid=p.reduce((s,r)=>s+Number(r.amount??r.payment_amount??r.total_amount??0),0);document.getElementById('statPayments').textContent=money(paid);let rev=b.reduce((s,r)=>s+Number(r.total_amount??r.amount??r.price??0),0);document.getElementById('statRevenue').textContent=money(rev);let el=document.getElementById('recentBookings');if(!b.length){el.innerHTML='<div class="empty">Belum ada booking. Klik “Booking baru” untuk mulai.</div>';return}let cols=Object.keys(b[0]);let show=cols.slice(0,Math.min(5,cols.length));el.innerHTML='<div class="tablewrap"><table><thead><tr>'+show.map(k=>'<th>'+esc(human(k))+'</th>').join('')+'<th>Aksi</th></tr></thead><tbody>'+b.slice(-6).reverse().map(r=>'<tr>'+show.map(k=>'<td>'+esc(fmtCell(k,r[k]))+'</td>').join('')+'<td><button class="soft" onclick="openPage(\'03_bookings\')">Kelola</button></td></tr>').join('')+'</tbody></table></div>'}catch(e){notify('Dashboard belum bisa membaca data: '+e.message,'error')}}
-async function loadTable(name){const body=document.getElementById('tbody');body.innerHTML='<tr><td colspan="10" class="empty">Memuat data dari Supabase…</td></tr>';try{rows=await fetchTable(name);allCache[name]=rows;columns=rows.length?Object.keys(rows[0]):Object.keys(TABLES[name]?.fields||{});if(!columns.length){document.getElementById('thead').innerHTML='';body.innerHTML='<tr><td class="empty">Tabel kosong dan belum ada konfigurasi kolom. Isi skema kolom di TABLES pada HTML agar form bisa dibuat.</td></tr>';document.getElementById('rowCount').textContent='0 data';return}renderRows();setConnection(true,'Supabase terhubung')}catch(e){body.innerHTML='<tr><td class="empty">Gagal memuat tabel <b>'+esc(name)+'</b><br>'+esc(e.message)+'<br><br>Pastikan nama tabel benar dan policy SELECT mengizinkan akses.</td></tr>';document.getElementById('thead').innerHTML='';document.getElementById('rowCount').textContent='';setConnection(false,'Gagal membaca tabel');console.error(e)}}
-function renderRows(){const q=(document.getElementById('search')?.value||'').toLowerCase();const filtered=rows.filter(r=>JSON.stringify(r).toLowerCase().includes(q));const visible=columns.slice(0,7);document.getElementById('thead').innerHTML='<tr>'+visible.map(k=>'<th>'+esc(human(k))+'</th>').join('')+'<th>Aksi</th></tr>';document.getElementById('tbody').innerHTML=filtered.length?filtered.map((r)=>'<tr>'+visible.map(k=>'<td>'+esc(fmtCell(k,r[k]))+'</td>').join('')+'<td><div class="actions"><button class="soft" onclick="openEdit('+JSON.stringify(String(rowKey(r)))+')">Edit</button><button class="danger" onclick="deleteRow('+JSON.stringify(String(rowKey(r)))+')">Hapus</button></div></td></tr>').join(''):'<tr><td colspan="'+(visible.length+1)+'" class="empty">Tidak ada data yang cocok.</td></tr>';document.getElementById('rowCount').textContent=filtered.length+' dari '+rows.length+' data'}
-function rowKey(r){return r.id??r.booking_id??r.client_id??r.package_id??r.project_id??null}
-function inputTypeFor(k,v,conf){if(conf)return conf;if(v===null||v===undefined)return isMoney(k)?'money':(/date/i.test(k)?'date':(/notes|description|address/i.test(k)?'textarea':(/status/i.test(k)?'text':'text')));if(typeof v==='boolean')return 'checkbox';if(typeof v==='number')return isMoney(k)?'money':'number';if(/date|_at$/.test(k))return 'date';if(isMoney(k)&&!isNaN(Number(v)))return 'money';if(typeof v==='object')return 'json';return /notes|description|address/i.test(k)?'textarea':'text'}
-function openCreate(){formMode='create';editId=null;document.getElementById('modalTitle').textContent='Tambah '+(TABLES[currentPage]?.label||'data');buildForm({});document.getElementById('modalBack').classList.remove('hidden')}
-function openEdit(id){const r=rows.find(x=>String(rowKey(x))===String(id));if(!r){notify('Data tidak ditemukan di daftar.','error');return}formMode='edit';editId=id;document.getElementById('modalTitle').textContent='Edit '+(TABLES[currentPage]?.label||'data');buildForm(r);document.getElementById('modalBack').classList.remove('hidden')}
-function buildForm(record){const conf=TABLES[currentPage]?.fields||{};let keys=Object.keys(record).length?Object.keys(record).filter(k=>!['created_at','updated_at'].includes(k)):Object.keys(conf);if(!keys.length){keys=['name','notes']}const box=document.getElementById('formFields');box.innerHTML=keys.map(k=>{let type=inputTypeFor(k,record[k],conf[k]);if(k==='id'||k.endsWith('_id')&&k==='id')return '';let value=record[k]??'';if(type.startsWith('select:')){let opts=type.slice(7).split(',');return '<div class="field"><label>'+esc(human(k))+'</label><select name="'+esc(k)+'"><option value="">— pilih —</option>'+opts.map(o=>'<option '+(String(value)===o?'selected':'')+' value="'+esc(o)+'">'+esc(human(o))+'</option>').join('')+'</select></div>'}if(type==='textarea'||type==='json'){let val=type==='json'?JSON.stringify(value,null,2):value;return '<div class="field '+(type==='json'?'wide':'')+'"><label>'+esc(human(k))+'</label><textarea name="'+esc(k)+'" class="'+(type==='json'?'jsonbox':'')+'">'+esc(val)+'</textarea></div>'}if(type==='checkbox')return '<div class="field"><label>'+esc(human(k))+'</label><select name="'+esc(k)+'"><option value="true" '+(value?'selected':'')+'>Ya</option><option value="false" '+(!value?'selected':'')+'>Tidak</option></select></div>';let htmlType=['number','date','email','url','text'].includes(type)?type:'text';let val=type==='money'&&value!==''?moneyFmt.format(Number(value)):value;return '<div class="field"><label>'+esc(human(k))+(isMoney(k)?' (Rp)':'')+'</label><input name="'+esc(k)+'" type="'+htmlType+'" '+(type==='money'?'inputmode="numeric" data-money="1"':'')+' value="'+esc(val)+'" '+(k==='id'?'readonly':'')+'></div>'}).join('');box.querySelectorAll('[data-money]').forEach(el=>{el.addEventListener('input',()=>{let digits=el.value.replace(/\D/g,'');el.value=digits?moneyFmt.format(Number(digits)):''})});document.getElementById('modalNotice').classList.add('hidden')}
-function closeModal(){document.getElementById('modalBack').classList.add('hidden')}
-async function saveForm(ev){ev.preventDefault();const btn=document.getElementById('saveBtn');btn.disabled=true;btn.textContent='Menyimpan…';try{const data={};new FormData(ev.target).forEach((v,k)=>{const el=ev.target.elements[k];let val=String(v).trim();if(el?.dataset?.money)val=val.replace(/\./g,'').replace(/\D/g,'');if(val==='')data[k]=null;else if(el?.type==='number'||el?.dataset?.money)data[k]=Number(val);else if(el?.tagName==='TEXTAREA'&&/json/i.test(el.className))data[k]=JSON.parse(val);else if(el?.tagName==='SELECT'&&['true','false'].includes(val))data[k]=val==='true';else data[k]=val});if(formMode==='create'){delete data.id;const actual=await activeTable();const {error}=await db.from(actual).insert(data);if(error)throw error;notify('Data berhasil dibuat dan tersimpan di Supabase.','success')}else{const keyCol=columns.includes('id')?'id':columns.find(k=>k.endsWith('_id'))||'id';const actual=await activeTable();const {error}=await db.from(actual).update(data).eq(keyCol,editId);if(error)throw error;notify('Data berhasil diperbarui di Supabase.','success')}closeModal();await loadTable(currentPage);await loadDashboard()}catch(e){const n=document.getElementById('modalNotice');n.textContent='Gagal menyimpan: '+e.message;n.className='notice error';n.classList.remove('hidden');console.error(e)}finally{btn.disabled=false;btn.textContent='Simpan ke Supabase'}}
-async function deleteRow(id){const r=rows.find(x=>String(rowKey(x))===String(id));if(!r)return;const keyCol=Object.keys(r).includes('id')?'id':Object.keys(r).find(k=>k.endsWith('_id'));if(!keyCol){notify('Tidak menemukan kolom ID untuk menghapus data ini.','error');return}if(!confirm('Hapus permanen data ini dari Supabase?\nID: '+id+'\nTindakan ini tidak bisa dibatalkan.'))return;try{const actual=await activeTable();const {error}=await db.from(actual).delete().eq(keyCol,r[keyCol]);if(error)throw error;notify('Data berhasil dihapus dari Supabase.','success');await loadTable(currentPage);await loadDashboard()}catch(e){notify('Gagal menghapus: '+e.message+' (periksa policy DELETE/RLS).','error')}}
-async function refreshCurrent(){await loadTable(currentPage)}
-function downloadPDF(){if(!rows.length){notify('Tidak ada data untuk diunduh.','error');return}try{const {jsPDF}=window.jspdf;const doc=new jsPDF({orientation:columns.length>5?'landscape':'portrait'});doc.setFontSize(16);doc.text('KYRA PICTURE — '+(TABLES[currentPage]?.label||currentPage),14,16);doc.setFontSize(9);doc.text('Dicetak: '+new Date().toLocaleString('id-ID'),14,23);const visible=columns.slice(0,12);doc.autoTable({startY:29,head:[visible.map(human)],body:rows.map(r=>visible.map(k=>fmtCell(k,r[k]))),styles:{fontSize:8,cellPadding:2.5,overflow:'linebreak'},headStyles:{fillColor:[101,88,232]},});doc.save('kyra-picture-'+currentPage+'-'+new Date().toISOString().slice(0,10)+'.pdf')}catch(e){notify('PDF gagal dibuat: '+e.message,'error')}}
-testConnection();loadDashboard();
-</script></body></html>
+
+/* Coba nama tabel bernomor terlebih dahulu, lalu nama tabel biasa. */
+const ALIASES = {
+ '02_clients':['02_clients','clients'],
+ '01_service_packages':['01_service_packages','service_packages'],
+ '03_bookings':['03_bookings','bookings'],
+ '04_projects':['04_projects','projects'],
+ '05_project_tasks':['05_project_tasks','project_tasks'],
+ '06_payments':['06_payments','payments'],
+ '07_deliverables':['07_deliverables','deliverables'],
+ '08_check_database':['08_check_database','check_database'],
+ '09_secure_private_tables':['09_secure_private_tables','secure_private_tables'],
+ '10_check_security':['10_check_security','check_security']
+};
+
+let currentPage='dashboard';
+let rows=[];
+let columns=[];
+let primaryKey='id';
+let editId=null;
+let formMode='create';
+let resolvedTables={};
+let tableColumns={};
+
+const numberFormat=new Intl.NumberFormat('id-ID',{maximumFractionDigits:0});
+const rupiah=v=>'Rp'+numberFormat.format(Number(v)||0);
+
+function escapeHTML(value){
+ return String(value??'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+function human(value){
+ return String(value).replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+}
+function isMoney(key){
+ return /(price|amount|nominal|total|cost|fee|budget|payment|dp|downpayment|revenue|income|expense|biaya|harga|bayar|rupiah)/i.test(key);
+}
+function formatCell(key,value){
+ if(value===null||value===undefined||value==='')return '—';
+ if(isMoney(key)&&!isNaN(Number(value)))return rupiah(value);
+ if(typeof value==='object')return JSON.stringify(value);
+ return String(value);
+}
+function notify(message,type=''){
+ const el=document.getElementById('notice');
+ el.textContent=message;
+ el.className='notice '+type;
+ el.classList.remove('hidden');
+}
+function connection(ok,message){
+ const el=document.getElementById('connection');
+ el.textContent=message;
+ el.classList.toggle('ok',ok);
+}
+
+/* Mencari tabel yang bisa dibaca. SELECT yang berhasil belum tentu
+   berarti INSERT/UPDATE/DELETE juga diizinkan oleh policy RLS. */
+async function resolveTable(logicalName){
+ if(resolvedTables[logicalName])return resolvedTables[logicalName];
+ let lastError=null;
+ for(const candidate of (ALIASES[logicalName]||[logicalName])){
+  const result=await db.from(candidate).select('*').limit(1);
+  if(!result.error){
+   resolvedTables[logicalName]=candidate;
+   return candidate;
+  }
+  lastError=result.error;
+ }
+ throw lastError||new Error('Tabel tidak ditemukan.');
+}
+async function fetchTable(logicalName){
+ const actual=await resolveTable(logicalName);
+ const {data,error}=await db.from(actual).select('*').limit(1000);
+ if(error)throw error;
+ return data||[];
+}
+function detectPrimaryKey(record){
+ if(Object.prototype.hasOwnProperty.call(record,'id'))return 'id';
+ const likely=['booking_id','client_id','package_id','project_id','payment_id','task_id','deliverable_id'];
+ return likely.find(k=>Object.prototype.hasOwnProperty.call(record,k))||null;
+}
+function keyForRow(record){
+ const pk=detectPrimaryKey(record);
+ return pk?record[pk]:null;
+}
+
+async function testConnection(){
+ try{
+  await resolveTable('02_clients');
+  connection(true,'Supabase terhubung');
+ }catch(error){
+  connection(false,'Koneksi / tabel bermasalah');
+  console.error(error);
+ }
+}
+
+/* NAVIGASI */
+function openPage(page){
+ currentPage=page;
+ document.querySelectorAll('#navigation button').forEach(b=>{
+  b.classList.toggle('active',b.dataset.page===page);
+ });
+ const isDashboard=page==='dashboard';
+ document.getElementById('dashboard').classList.toggle('hidden',!isDashboard);
+ document.getElementById('tablePage').classList.toggle('hidden',isDashboard);
+
+ if(isDashboard){
+  document.getElementById('pageTitle').textContent='Dashboard';
+  document.getElementById('pageSubtitle').textContent='Ringkasan operasional dan keuangan.';
+  loadDashboard();
+  return;
+ }
+
+ const config=TABLES[page];
+ document.getElementById('pageTitle').textContent=config.label;
+ document.getElementById('pageSubtitle').textContent=config.desc;
+ document.getElementById('tableHeading').textContent=config.label;
+ document.getElementById('tableDescription').textContent=config.desc;
+ document.getElementById('search').value='';
+ loadTable(page);
+}
+document.querySelectorAll('#navigation button').forEach(b=>{
+ b.addEventListener('click',()=>openPage(b.dataset.page));
+});
+
+/* DASHBOARD */
+async function loadDashboard(){
+ try{
+  const [clients,bookings,payments]=await Promise.all([
+   fetchTable('02_clients'),
+   fetchTable('03_bookings'),
+   fetchTable('06_payments')
+  ]);
+  document.getElementById('statClients').textContent=clients.length;
+  document.getElementById('statBookings').textContent=bookings.length;
+
+  const paymentTotal=payments.reduce((sum,r)=>
+   sum+Number(r.amount??r.payment_amount??r.total_amount??0),0);
+  const bookingTotal=bookings.reduce((sum,r)=>
+   sum+Number(r.total_amount??r.amount??r.price??0),0);
+
+  document.getElementById('statPayments').textContent=rupiah(paymentTotal);
+  document.getElementById('statRevenue').textContent=rupiah(bookingTotal);
+
+  const target=document.getElementById('recentBookings');
+  if(!bookings.length){
+   target.innerHTML='<div class="empty">Belum ada booking. Klik Booking baru untuk mulai.</div>';
+   return;
+  }
+  const sample=bookings.slice(-6).reverse();
+  const keys=Object.keys(sample[0]).slice(0,5);
+  target.innerHTML='<div class="table-wrap"><table><thead><tr>'+
+   keys.map(k=>'<th>'+escapeHTML(human(k))+'</th>').join('')+
+   '<th>Aksi</th></tr></thead><tbody>'+
+   sample.map(r=>'<tr>'+keys.map(k=>'<td>'+escapeHTML(formatCell(k,r[k]))+'</td>').join('')+
+    '<td><button class="soft" onclick="openPage(\'03_bookings\')">Kelola</button></td></tr>').join('')+
+   '</tbody></table></div>';
+ }catch(error){
+  console.error(error);
+  notify('Dashboard gagal membaca data: '+error.message,'error');
+ }
+}
+
+/* LOAD DAN TAMPILKAN TABEL */
+async function loadTable(name){
+ const body=document.getElementById('tbody');
+ body.innerHTML='<tr><td class="empty">Memuat data...</td></tr>';
+
+ try{
+  rows=await fetchTable(name);
+  columns=rows.length?Object.keys(rows[0]):Object.keys(TABLES[name].fields);
+  tableColumns[name]=columns;
+
+  const sample=rows[0]||{};
+  primaryKey=detectPrimaryKey(sample)||'id';
+
+  renderRows();
+  connection(true,'Supabase terhubung');
+ }catch(error){
+  console.error(error);
+  document.getElementById('thead').innerHTML='';
+  body.innerHTML='<tr><td class="empty">Gagal membaca tabel '+escapeHTML(name)+
+   '<br><br>'+escapeHTML(error.message)+
+   '<br><br>Periksa nama tabel, SELECT policy, dan koneksi Supabase.</td></tr>';
+  document.getElementById('rowCount').textContent='';
+  connection(false,'Gagal membaca tabel');
+ }
+}
+
+function renderRows(){
+ const q=(document.getElementById('search').value||'').toLowerCase();
+ const filtered=rows.filter(r=>JSON.stringify(r).toLowerCase().includes(q));
+ const visible=columns.slice(0,8);
+
+ document.getElementById('thead').innerHTML='<tr>'+
+  visible.map(k=>'<th>'+escapeHTML(human(k))+'</th>').join('')+
+  '<th>Aksi</th></tr>';
+
+ const body=document.getElementById('tbody');
+ if(!filtered.length){
+  body.innerHTML='<tr><td colspan="'+(visible.length+1)+'" class="empty">Tidak ada data yang cocok.</td></tr>';
+ }else{
+  body.innerHTML=filtered.map((r,index)=>{
+   const pk=detectPrimaryKey(r);
+   const id=pk?r[pk]:'';
+   return '<tr>'+visible.map(k=>'<td>'+escapeHTML(formatCell(k,r[k]))+'</td>').join('')+
+    '<td><div class="actions">'+
+    '<button class="soft" data-action="view" data-index="'+rows.indexOf(r)+'">Lihat</button>'+
+    '<button class="neutral" data-action="edit" data-index="'+rows.indexOf(r)+'">Edit</button>'+
+    '<button class="danger" data-action="delete" data-index="'+rows.indexOf(r)+'">Hapus</button>'+
+    '</div></td></tr>';
+  }).join('');
+ }
+ document.getElementById('rowCount').textContent=filtered.length+' dari '+rows.length+' data';
+}
+
+document.getElementById('tbody').addEventListener('click',async event=>{
+ const button=event.target.closest('button[data-action]');
+ if(!button)return;
+ const record=rows[Number(button.dataset.index)];
+ if(!record)return;
+ if(button.dataset.action==='view')viewRow(record);
+ if(button.dataset.action==='edit')openEdit(record);
+ if(button.dataset.action==='delete')await deleteRow(record);
+});
+
+function refreshCurrent(){loadTable(currentPage);}
+
+/* FORM */
+function inferType(key,value,configured){
+ if(configured)return configured;
+ if(typeof value==='boolean')return 'checkbox';
+ if(/date|_at$/.test(key))return 'date';
+ if(isMoney(key))return 'money';
+ if(typeof value==='number')return 'number';
+ if(value&&typeof value==='object')return 'json';
+ if(/notes|description|address/i.test(key))return 'textarea';
+ return 'text';
+}
+function openCreate(){
+ if(currentPage==='dashboard')return;
+ formMode='create';
+ editId=null;
+ document.getElementById('modalTitle').textContent='Tambah '+TABLES[currentPage].label;
+ document.getElementById('modalSubtitle').textContent='Data baru akan dikirim ke Supabase.';
+ buildForm({});
+ document.getElementById('modalBack').classList.remove('hidden');
+}
+function openEdit(record){
+ const pk=detectPrimaryKey(record);
+ if(!pk){
+  notify('Primary key tidak ditemukan. Edit dibatalkan agar data tidak salah diperbarui.','error');
+  return;
+ }
+ formMode='edit';
+ editId=record[pk];
+ primaryKey=pk;
+ document.getElementById('modalTitle').textContent='Edit '+TABLES[currentPage].label;
+ document.getElementById('modalSubtitle').textContent='ID '+editId+' · perubahan disimpan ke Supabase.';
+ buildForm(record);
+ document.getElementById('modalBack').classList.remove('hidden');
+}
+function closeModal(){
+ document.getElementById('modalBack').classList.add('hidden');
+}
+function showModalError(message){
+ const n=document.getElementById('modalNotice');
+ n.textContent=message;
+ n.className='notice error';
+ n.classList.remove('hidden');
+}
+
+function buildForm(record){
+ const config=TABLES[currentPage].fields||{};
+ let keys=Object.keys(record).length
+  ?Object.keys(record).filter(k=>!['created_at','updated_at'].includes(k))
+  :Object.keys(config);
+
+ if(formMode==='create'){
+  keys=keys.filter(k=>!['id','created_at','updated_at'].includes(k));
+ }
+ const box=document.getElementById('formFields');
+
+ if(!keys.length){
+  box.innerHTML='<div class="wide notice error">Belum ada kolom yang diketahui untuk tabel ini. Tambahkan konfigurasi kolom pada objek TABLES di HTML.</div>';
+  return;
+ }
+
+ box.innerHTML=keys.map(key=>{
+  const value=record[key]??'';
+  const type=inferType(key,value,config[key]);
+  const label=escapeHTML(human(key));
+  const name=escapeHTML(key);
+  const wide=type==='textarea'||type==='json'?'wide':'';
+
+  if(type.startsWith('select:')){
+   const options=type.slice(7).split(',');
+   return '<div class="field"><label>'+label+'</label><select name="'+name+'">'+
+    '<option value="">— pilih —</option>'+
+    options.map(o=>'<option value="'+escapeHTML(o)+'" '+(String(value)===o?'selected':'')+'>'+escapeHTML(human(o))+'</option>').join('')+
+    '</select></div>';
+  }
+  if(type==='textarea'||type==='json'){
+   const val=type==='json'?JSON.stringify(value,null,2):value;
+   return '<div class="field '+wide+'"><label>'+label+'</label><textarea name="'+name+'" '+(type==='json'?'data-json="1"':'')+'>'+escapeHTML(val)+'</textarea></div>';
+  }
+  if(type==='checkbox'){
+   return '<div class="field"><label>'+label+'</label><select name="'+name+'">'+
+    '<option value="true" '+(value===true?'selected':'')+'>Ya</option>'+
+    '<option value="false" '+(value===false?'selected':'')+'>Tidak</option></select></div>';
+  }
+  let htmlType=['number','date','email','url'].includes(type)?type:'text';
+  let displayValue=value;
+  if(type==='money'&&value!=='')displayValue=numberFormat.format(Number(value));
+  return '<div class="field"><label>'+label+(isMoney(key)?' (Rp)':'')+'</label>'+
+   '<input name="'+name+'" type="'+htmlType+'" value="'+escapeHTML(displayValue)+'" '+
+   (type==='money'?'inputmode="numeric" data-money="1"':'')+
+   (key==='id'?' readonly':'')+'></div>';
+ }).join('');
+
+ box.querySelectorAll('[data-money]').forEach(input=>{
+  input.addEventListener('input',()=>{
+   const digits=input.value.replace(/\D/g,'');
+   input.value=digits?numberFormat.format(Number(digits)):'';
+  });
+ });
+ document.getElementById('modalNotice').classList.add('hidden');
+}
+
+/* Simpan data dan periksa respons database. */
+document.getElementById('dataForm').addEventListener('submit',saveForm);
+
+async function saveForm(event){
+ event.preventDefault();
+ const button=document.getElementById('saveBtn');
+ button.disabled=true;
+ button.textContent='Menyimpan...';
+
+ try{
+  const data={};
+  const form=event.currentTarget;
+
+  for(const element of Array.from(form.elements)){
+   if(!element.name)continue;
+   const key=element.name;
+   let value=String(element.value??'').trim();
+
+   if(formMode==='create'&&['id','created_at','updated_at'].includes(key))continue;
+   if(formMode==='edit'&&key===primaryKey)continue;
+
+   if(element.dataset.money)value=value.replace(/\./g,'').replace(/\D/g,'');
+   if(value===''){data[key]=null;continue;}
+
+   if(element.dataset.json){
+    try{data[key]=JSON.parse(value);}
+    catch{throw new Error('Format JSON pada kolom '+key+' tidak valid.');}
+   }else if(element.type==='number'||element.dataset.money){
+    const number=Number(value);
+    if(!Number.isFinite(number))throw new Error('Nominal/angka pada '+key+' tidak valid.');
+    data[key]=number;
+   }else if(element.tagName==='SELECT'&&['true','false'].includes(value)){
+    data[key]=value==='true';
+   }else{
+    data[key]=value;
+   }
+  }
+
+  const actual=await resolveTable(currentPage);
+  let result;
+
+  if(formMode==='create'){
+   result=await db.from(actual).insert(data).select('*');
+  }else{
+   if(editId===null||editId===undefined)throw new Error('ID data tidak ditemukan.');
+   result=await db.from(actual).update(data).eq(primaryKey,editId).select('*');
+  }
+
+  if(result.error)throw result.error;
+  if(!result.data||result.data.length===0){
+   throw new Error('Supabase tidak mengembalikan data yang berubah. Periksa policy INSERT/UPDATE RLS dan izin akses tabel.');
+  }
+
+  closeModal();
+  notify(formMode==='create'?'Data berhasil dibuat dan disimpan ke Supabase.':'Data berhasil diedit di Supabase.','success');
+  await loadTable(currentPage);
+  await loadDashboard();
+
+ }catch(error){
+  console.error(error);
+  showModalError('Gagal menyimpan data:\n'+error.message+
+   '\n\nPeriksa nama kolom, kolom wajib, relasi foreign key, dan policy RLS Supabase.');
+ }finally{
+  button.disabled=false;
+  button.textContent='Simpan ke Supabase';
+ }
+}
+
+/* HAPUS PERMANEN */
+async function deleteRow(record){
+ const pk=detectPrimaryKey(record);
+ if(!pk){
+  notify('Primary key tidak ditemukan. Data tidak dihapus untuk mencegah salah hapus.','error');
+  return;
+ }
+ const id=record[pk];
+ if(!confirm('Hapus data ini secara permanen dari Supabase?\n\n'+pk+': '+id+'\n\nTindakan ini tidak bisa dibatalkan.'))return;
+
+ try{
+  const actual=await resolveTable(currentPage);
+  const {data,error}=await db.from(actual).delete().eq(pk,id).select(pk);
+  if(error)throw error;
+  if(!data||data.length===0){
+   throw new Error('Tidak ada baris yang terhapus. Periksa policy DELETE RLS atau izin akses.');
+  }
+  notify('Data berhasil dihapus dari Supabase.','success');
+  await loadTable(currentPage);
+  await loadDashboard();
+ }catch(error){
+  console.error(error);
+  notify('Gagal menghapus: '+error.message,'error');
+ }
+}
+
+/* DETAIL DATA */
+function viewRow(record){
+ const back=document.getElementById('modalBack');
+ document.getElementById('modalTitle').textContent='Detail '+TABLES[currentPage].label;
+ document.getElementById('modalSubtitle').textContent='Informasi data dari Supabase.';
+ document.getElementById('modalNotice').classList.add('hidden');
+ document.getElementById('formFields').innerHTML=
+  '<div class="row-details wide">'+Object.entries(record).map(([k,v])=>
+   '<div class="detail"><small>'+escapeHTML(human(k))+'</small><strong>'+escapeHTML(formatCell(k,v))+'</strong></div>'
+  ).join('')+'</div>';
+ document.getElementById('saveBtn').classList.add('hidden');
+ document.getElementById('dataForm').onsubmit=e=>e.preventDefault();
+ back.classList.remove('hidden');
+ const oldClose=closeModal;
+ closeModal=function(){
+  back.classList.add('hidden');
+  document.getElementById('saveBtn').classList.remove('hidden');
+  document.getElementById('dataForm').onsubmit=null;
+  document.getElementById('dataForm').addEventListener('submit',saveForm);
+  closeModal=oldClose;
+ };
+}
+
+/* DOWNLOAD PDF */
+function downloadPDF(){
+ if(!rows.length){
+  notify('Belum ada data untuk diunduh.','error');
+  return;
+ }
+ try{
+  if(!window.jspdf||!window.jspdf.jsPDF)throw new Error('Library PDF belum berhasil dimuat. Periksa koneksi internet.');
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:columns.length>5?'landscape':'portrait'});
+  doc.setFontSize(16);
+  doc.text('KYRA PICTURE — '+TABLES[currentPage].label,14,16);
+  doc.setFontSize(9);
+  doc.text('Dicetak: '+new Date().toLocaleString('id-ID'),14,23);
+  const visible=columns.slice(0,12);
+  doc.autoTable({
+   startY:29,
+   head:[visible.map(human)],
+   body:rows.map(r=>visible.map(k=>formatCell(k,r[k]))),
+   styles:{fontSize:8,cellPadding:2.5,overflow:'linebreak'},
+   headStyles:{fillColor:[105,89,232]}
+  });
+  doc.save('kyra-picture-'+currentPage+'-'+new Date().toISOString().slice(0,10)+'.pdf');
+ }catch(error){
+  notify('PDF gagal dibuat: '+error.message,'error');
+ }
+}
+
+document.getElementById('modalBack').addEventListener('click',event=>{
+ if(event.target.id==='modalBack')closeModal();
+});
+
+testConnection();
+loadDashboard();
+</script>
+</body>
+</html>
