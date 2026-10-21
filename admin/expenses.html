@@ -1,1 +1,1066 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengeluaran | Kyra Picture Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+
+  <style>
+    .expense-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .expense-filters {
+      display: flex;
+      gap: 10px;
+      flex: 1;
+      flex-wrap: wrap;
+    }
+
+    .expense-filters input,
+    .expense-filters select,
+    .expense-form input,
+    .expense-form select,
+    .expense-form textarea {
+      width: 100%;
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid var(--line, #e5e5e5);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text, #222);
+      font: inherit;
+      box-sizing: border-box;
+    }
+
+    .expense-filters input {
+      flex: 1;
+      min-width: 190px;
+    }
+
+    .expense-filters select {
+      width: auto;
+      min-width: 145px;
+    }
+
+    .expense-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .expense-table th,
+    .expense-table td {
+      padding: 13px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line, #eee);
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .expense-table th {
+      color: var(--muted, #777);
+      font-size: 11px;
+      font-weight: 600;
+      background: #faf9f7;
+    }
+
+    .expense-table td {
+      font-size: 13px;
+    }
+
+    .expense-table tbody tr:hover {
+      background: #fcfaf6;
+    }
+
+    .expense-amount {
+      font-weight: 700;
+      color: var(--red, #b42318);
+    }
+
+    .subtext {
+      display: block;
+      color: var(--muted, #777);
+      font-size: 11px;
+      margin-top: 4px;
+      white-space: normal;
+      max-width: 250px;
+      line-height: 1.5;
+    }
+
+    .expense-pill {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: #f1eee7;
+      color: #665b43;
+    }
+
+    .expense-pill.paid {
+      color: #217346;
+      background: var(--green-light, #e5f5eb);
+    }
+
+    .expense-pill.pending {
+      color: #936200;
+      background: #fff2d8;
+    }
+
+    .expense-pill.cancelled {
+      color: #b42318;
+      background: var(--red-light, #fde9e7);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .action-btn {
+      border: 1px solid var(--line, #ddd);
+      border-radius: 6px;
+      padding: 6px 9px;
+      background: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-size: 12px;
+    }
+
+    .action-btn:hover {
+      background: #f7f5f0;
+    }
+
+    .action-btn.delete {
+      color: #b42318;
+    }
+
+    .notice-demo {
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      border: 1px solid #eadfbd;
+      border-radius: 8px;
+      background: #fffaf0;
+      color: #73551a;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(20, 20, 20, .5);
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .expense-modal {
+      width: 100%;
+      max-width: 700px;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 14px;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      margin: 0 0 5px;
+      font-size: 21px;
+    }
+
+    .modal-header p {
+      margin: 0;
+      color: var(--muted, #777);
+      font-size: 13px;
+    }
+
+    .modal-close {
+      border: 0;
+      background: transparent;
+      font-size: 26px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .expense-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .expense-form-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    .expense-form label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .expense-form textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn-secondary {
+      padding: 10px 16px;
+      border: 1px solid var(--line, #ddd);
+      background: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .expense-preview {
+      padding: 15px;
+      border-radius: 9px;
+      background: #fcf5f3;
+      border: 1px solid #f0dfda;
+    }
+
+    .expense-preview span {
+      display: block;
+      color: var(--muted, #777);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .expense-preview strong {
+      font-size: 22px;
+      color: var(--red, #b42318);
+    }
+
+    .empty-row {
+      padding: 30px !important;
+      text-align: center !important;
+      color: var(--muted, #777);
+    }
+
+    .filter-date {
+      max-width: 165px;
+    }
+
+    @media (max-width: 760px) {
+      .expense-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .expense-form-grid .full {
+        grid-column: auto;
+      }
+
+      .expense-modal {
+        padding: 18px;
+      }
+
+      .expense-table {
+        min-width: 1000px;
+      }
+
+      .expense-filters select,
+      .filter-date {
+        flex: 1;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-name">KYRA PICTURE</div>
+      <div class="brand-subtitle">ADMIN FINANCE SYSTEM</div>
+    </div>
+
+    <div class="nav-heading">MENU UTAMA</div>
+
+    <nav class="nav-list">
+      <a href="index.html" class="nav-link">
+        <span class="nav-icon">◫</span> Dashboard
+      </a>
+
+      <a href="bookings.html" class="nav-link">
+        <span class="nav-icon">▤</span> Klien & Transaksi
+      </a>
+
+      <a href="invoices.html" class="nav-link">
+        <span class="nav-icon">▧</span> Invoice
+      </a>
+
+      <a href="payments.html" class="nav-link">
+        <span class="nav-icon">⇄</span> Pembayaran
+      </a>
+
+      <a href="crew.html" class="nav-link">
+        <span class="nav-icon">♙</span> Crew
+      </a>
+
+      <a href="expenses.html" class="nav-link active">
+        <span class="nav-icon">↗</span> Pengeluaran
+      </a>
+
+      <a href="finance.html" class="nav-link">
+        <span class="nav-icon">▥</span> Rekap Keuangan
+      </a>
+    </nav>
+
+    <div class="nav-heading">PREFERENSI</div>
+
+    <nav class="nav-list">
+      <a href="settings.html" class="nav-link">
+        <span class="nav-icon">⚙</span> Pengaturan
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="brand-subtitle">KYRA PICTURE © 2026</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">ADMINISTRASI KEUANGAN</div>
+        <h1 class="welcome">Pengeluaran</h1>
+        <div class="date-label">
+          Catat dan pantau pengeluaran operasional Kyra Picture.
+        </div>
+      </div>
+
+      <button class="btn btn-gold" onclick="openExpenseModal()">
+        + Tambah Pengeluaran
+      </button>
+    </header>
+
+    <div class="notice-demo">
+      <strong>Mode prototipe:</strong> halaman ini masih memakai data contoh
+      di browser dan belum terhubung ke Supabase. Data belum menjadi catatan
+      keuangan permanen.
+    </div>
+
+    <section class="stats">
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-label">Total Pengeluaran Dibayar</span>
+          <span class="stat-icon">↗</span>
+        </div>
+        <div class="stat-value" id="statPaid">Rp0</div>
+        <div class="stat-note">Pengeluaran berstatus sudah dibayar</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-label">Menunggu Pembayaran</span>
+          <span class="stat-icon">◷</span>
+        </div>
+        <div class="stat-value" id="statPending">Rp0</div>
+        <div class="stat-note">Pengeluaran yang belum dibayar</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-label">Jumlah Pengeluaran</span>
+          <span class="stat-icon">▤</span>
+        </div>
+        <div class="stat-value" id="statCount">0</div>
+        <div class="stat-note">Catatan pengeluaran aktif</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-label">Pengeluaran Bulan Ini</span>
+          <span class="stat-icon">▦</span>
+        </div>
+        <div class="stat-value" id="statMonth">Rp0</div>
+        <div class="stat-note">Berdasarkan tanggal pengeluaran dibayar</div>
+      </div>
+
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Riwayat Pengeluaran</h2>
+          <p class="section-description">
+            Semua biaya operasional dan biaya yang terkait dengan event.
+          </p>
+        </div>
+        <span class="table-count" id="tableCount">0 pengeluaran</span>
+      </div>
+
+      <div class="expense-toolbar">
+        <div class="expense-filters">
+
+          <input
+            type="search"
+            id="searchExpense"
+            placeholder="Cari deskripsi, penerima, invoice..."
+            oninput="renderExpenses()"
+          >
+
+          <select id="filterCategory" onchange="renderExpenses()">
+            <option value="">Semua kategori</option>
+            <option value="Fee Crew">Fee Crew</option>
+            <option value="Transportasi">Transportasi</option>
+            <option value="Konsumsi">Konsumsi</option>
+            <option value="Akomodasi">Akomodasi</option>
+            <option value="Sewa Alat">Sewa Alat</option>
+            <option value="Cetak Foto">Cetak Foto</option>
+            <option value="Peralatan">Peralatan</option>
+            <option value="Operasional">Operasional</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+
+          <select id="filterStatus" onchange="renderExpenses()">
+            <option value="">Semua status</option>
+            <option value="Dibayar">Dibayar</option>
+            <option value="Belum Dibayar">Belum Dibayar</option>
+            <option value="Dibatalkan">Dibatalkan</option>
+          </select>
+
+          <input
+            class="filter-date"
+            type="date"
+            id="filterFrom"
+            title="Dari tanggal"
+            onchange="renderExpenses()"
+          >
+
+          <input
+            class="filter-date"
+            type="date"
+            id="filterTo"
+            title="Sampai tanggal"
+            onchange="renderExpenses()"
+          >
+
+        </div>
+
+        <button class="btn btn-light" onclick="resetFilters()">
+          Reset Filter
+        </button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="expense-table">
+          <thead>
+            <tr>
+              <th>TANGGAL</th>
+              <th>KATEGORI / DESKRIPSI</th>
+              <th>EVENT / INVOICE</th>
+              <th>PENERIMA</th>
+              <th>METODE</th>
+              <th>NOMINAL</th>
+              <th>STATUS</th>
+              <th>AKSI</th>
+            </tr>
+          </thead>
+
+          <tbody id="expenseTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Kyra Picture Admin Finance System</span>
+      <span>
+        <a href="https://kyrapicture.com" target="_blank" rel="noopener">kyrapicture.com</a>
+        &nbsp;·&nbsp;
+        <a href="https://instagram.com/kyra.picture" target="_blank" rel="noopener">@kyra.picture</a>
+      </span>
+    </footer>
+
+  </main>
+</div>
+
+<!-- MODAL PENGELUARAN -->
+<div class="modal-overlay" id="expenseModal" onclick="overlayClose(event)">
+  <div class="expense-modal">
+
+    <div class="modal-header">
+      <div>
+        <h2 id="modalTitle">Tambah Pengeluaran</h2>
+        <p>Masukkan detail pengeluaran bisnis atau event.</p>
+      </div>
+
+      <button
+        class="modal-close"
+        type="button"
+        onclick="closeExpenseModal()"
+        aria-label="Tutup"
+      >&times;</button>
+    </div>
+
+    <form id="expenseForm" class="expense-form" onsubmit="saveExpense(event)">
+      <input type="hidden" id="expenseId">
+
+      <div class="expense-form-grid">
+
+        <div class="field">
+          <label for="expenseDate">Tanggal Pengeluaran *</label>
+          <input type="date" id="expenseDate" required>
+        </div>
+
+        <div class="field">
+          <label for="expenseCategory">Kategori *</label>
+          <select id="expenseCategory" required>
+            <option value="Fee Crew">Fee Crew</option>
+            <option value="Transportasi">Transportasi</option>
+            <option value="Konsumsi">Konsumsi</option>
+            <option value="Akomodasi">Akomodasi</option>
+            <option value="Sewa Alat">Sewa Alat</option>
+            <option value="Cetak Foto">Cetak Foto</option>
+            <option value="Peralatan">Peralatan</option>
+            <option value="Operasional">Operasional</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="expenseDescription">Deskripsi Pengeluaran *</label>
+          <input
+            type="text"
+            id="expenseDescription"
+            placeholder="Contoh: Fee fotografer wedding"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="expenseAmount">Nominal (Rp) *</label>
+          <input
+            type="number"
+            id="expenseAmount"
+            min="1"
+            step="1"
+            placeholder="Contoh: 500000"
+            required
+            oninput="updateExpensePreview()"
+          >
+        </div>
+
+        <div class="field">
+          <label for="expenseStatus">Status Pembayaran *</label>
+          <select id="expenseStatus" required>
+            <option value="Dibayar">Sudah Dibayar</option>
+            <option value="Belum Dibayar">Belum Dibayar</option>
+            <option value="Dibatalkan">Dibatalkan</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="expenseRecipient">Penerima / Vendor</label>
+          <input
+            type="text"
+            id="expenseRecipient"
+            placeholder="Contoh: Andi Pratama"
+          >
+        </div>
+
+        <div class="field">
+          <label for="expenseMethod">Metode Pembayaran</label>
+          <select id="expenseMethod">
+            <option value="Transfer Bank">Transfer Bank</option>
+            <option value="Tunai">Tunai</option>
+            <option value="QRIS">QRIS</option>
+            <option value="E-Wallet">E-Wallet</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="expenseBooking">Event / Invoice Terkait</label>
+          <select id="expenseBooking">
+            <option value="">Pengeluaran umum / tidak terkait event</option>
+          </select>
+          <small class="subtext">
+            Kosongkan jika pengeluaran tidak berkaitan dengan satu event tertentu.
+          </small>
+        </div>
+
+        <div class="field full">
+          <label for="expenseNotes">Catatan Tambahan</label>
+          <textarea
+            id="expenseNotes"
+            placeholder="Nomor kuitansi, rincian biaya, atau catatan lainnya..."
+          ></textarea>
+        </div>
+
+        <div class="field full expense-preview">
+          <span>Nominal pengeluaran</span>
+          <strong id="previewAmount">Rp0</strong>
+        </div>
+
+      </div>
+
+      <div class="modal-actions">
+        <button
+          type="button"
+          class="btn-secondary"
+          onclick="closeExpenseModal()"
+        >Batal</button>
+
+        <button type="submit" class="btn btn-gold" id="saveExpenseBtn">
+          Simpan Pengeluaran
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script>
+  const rupiah = value => new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0
+  }).format(Number(value) || 0);
+
+  const today = () => {
+    const d = new Date();
+    const offset = d.getTimezoneOffset();
+    return new Date(d.getTime() - offset * 60000).toISOString().slice(0, 10);
+  };
+
+  // DATA CONTOH UNTUK PROTOTIPE.
+  // Belum terhubung dengan Supabase.
+  let bookings = [
+    {
+      id: "b1",
+      invoice: "KP-DEMO-001",
+      client: "Nadia & Rizky",
+      event: "Wedding Nadia & Rizky"
+    },
+    {
+      id: "b2",
+      invoice: "KP-DEMO-002",
+      client: "Putri & Aditya",
+      event: "Prewedding Putri & Aditya"
+    },
+    {
+      id: "b3",
+      invoice: "KP-DEMO-003",
+      client: "Sarah & Fajar",
+      event: "Engagement Sarah & Fajar"
+    }
+  ];
+
+  let expenses = [
+    {
+      id: "e1",
+      date: "2026-10-10",
+      category: "Transportasi",
+      description: "Transportasi survei lokasi",
+      amount: 150000,
+      status: "Dibayar",
+      recipient: "Operasional",
+      method: "Tunai",
+      bookingId: "b1",
+      notes: "Data contoh"
+    },
+    {
+      id: "e2",
+      date: "2026-10-12",
+      category: "Fee Crew",
+      description: "Fee fotografer",
+      amount: 400000,
+      status: "Dibayar",
+      recipient: "Andi Pratama",
+      method: "Transfer Bank",
+      bookingId: "b1",
+      notes: "Data contoh — jangan dihitung lagi jika fee crew sudah masuk dari modul lain"
+    },
+    {
+      id: "e3",
+      date: "2026-10-15",
+      category: "Sewa Alat",
+      description: "Sewa lighting tambahan",
+      amount: 250000,
+      status: "Belum Dibayar",
+      recipient: "Vendor lighting",
+      method: "Transfer Bank",
+      bookingId: "b2",
+      notes: "Data contoh"
+    }
+  ];
+
+  let editingId = null;
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    })[char]);
+  }
+
+  function getBooking(id) {
+    return bookings.find(booking => booking.id === id);
+  }
+
+  function formatDate(date) {
+    if (!date) return "-";
+
+    return new Date(date + "T00:00:00").toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  }
+
+  function statusClass(status) {
+    if (status === "Dibayar") return "paid";
+    if (status === "Belum Dibayar") return "pending";
+    return "cancelled";
+  }
+
+  function refreshBookingOptions(selectedId = "") {
+    const select = document.getElementById("expenseBooking");
+    select.innerHTML =
+      '<option value="">Pengeluaran umum / tidak terkait event</option>';
+
+    bookings.forEach(booking => {
+      const option = document.createElement("option");
+      option.value = booking.id;
+      option.textContent =
+        `${booking.invoice} — ${booking.client} (${booking.event})`;
+
+      select.appendChild(option);
+    });
+
+    select.value = selectedId;
+  }
+
+  function renderStats() {
+    const activeExpenses = expenses.filter(
+      expense => expense.status !== "Dibatalkan"
+    );
+
+    const paid = activeExpenses
+      .filter(expense => expense.status === "Dibayar")
+      .reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
+
+    const pending = activeExpenses
+      .filter(expense => expense.status === "Belum Dibayar")
+      .reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
+
+    const currentMonth = today().slice(0, 7);
+
+    const monthlyPaid = activeExpenses
+      .filter(expense =>
+        expense.status === "Dibayar" &&
+        (expense.date || "").slice(0, 7) === currentMonth
+      )
+      .reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
+
+    document.getElementById("statPaid").textContent = rupiah(paid);
+    document.getElementById("statPending").textContent = rupiah(pending);
+    document.getElementById("statCount").textContent = activeExpenses.length;
+    document.getElementById("statMonth").textContent = rupiah(monthlyPaid);
+  }
+
+  function renderExpenses() {
+    const query = document.getElementById("searchExpense").value
+      .toLowerCase().trim();
+
+    const category = document.getElementById("filterCategory").value;
+    const status = document.getElementById("filterStatus").value;
+    const from = document.getElementById("filterFrom").value;
+    const to = document.getElementById("filterTo").value;
+
+    const filtered = expenses
+      .filter(expense => {
+        const booking = getBooking(expense.bookingId);
+
+        const searchable = [
+          expense.description,
+          expense.category,
+          expense.recipient,
+          expense.notes,
+          expense.method,
+          booking?.invoice,
+          booking?.client,
+          booking?.event
+        ].join(" ").toLowerCase();
+
+        return searchable.includes(query) &&
+          (!category || expense.category === category) &&
+          (!status || expense.status === status) &&
+          (!from || expense.date >= from) &&
+          (!to || expense.date <= to);
+      })
+      .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+
+    document.getElementById("tableCount").textContent =
+      `${filtered.length} pengeluaran`;
+
+    const tbody = document.getElementById("expenseTableBody");
+
+    if (!filtered.length) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" class="empty-row">
+            Belum ada pengeluaran yang cocok dengan filter.
+          </td>
+        </tr>
+      `;
+    } else {
+      tbody.innerHTML = filtered.map(expense => {
+        const booking = getBooking(expense.bookingId);
+
+        const eventText = booking
+          ? `${booking.event}<span class="subtext">${booking.invoice}</span>`
+          : '<span class="subtext">Pengeluaran umum</span>';
+
+        return `
+          <tr>
+            <td>${formatDate(expense.date)}</td>
+
+            <td>
+              <span class="expense-pill">${escapeHTML(expense.category)}</span>
+              <span class="subtext">${escapeHTML(expense.description)}</span>
+              ${expense.notes
+                ? `<span class="subtext">${escapeHTML(expense.notes)}</span>`
+                : ""}
+            </td>
+
+            <td>${eventText}</td>
+
+            <td>${escapeHTML(expense.recipient || "-")}</td>
+
+            <td>${escapeHTML(expense.method || "-")}</td>
+
+            <td class="expense-amount">${rupiah(expense.amount)}</td>
+
+            <td>
+              <span class="expense-pill ${statusClass(expense.status)}">
+                ${escapeHTML(expense.status)}
+              </span>
+            </td>
+
+            <td>
+              <div class="action-buttons">
+                <button
+                  class="action-btn"
+                  onclick="editExpense('${expense.id}')"
+                >Edit</button>
+
+                <button
+                  class="action-btn delete"
+                  onclick="deleteExpense('${expense.id}')"
+                >Hapus</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    renderStats();
+  }
+
+  function openExpenseModal() {
+    editingId = null;
+
+    document.getElementById("expenseForm").reset();
+    document.getElementById("expenseId").value = "";
+    document.getElementById("modalTitle").textContent =
+      "Tambah Pengeluaran";
+
+    document.getElementById("saveExpenseBtn").textContent =
+      "Simpan Pengeluaran";
+
+    document.getElementById("expenseDate").value = today();
+    document.getElementById("expenseStatus").value = "Dibayar";
+
+    refreshBookingOptions();
+    updateExpensePreview();
+
+    document.getElementById("expenseModal").classList.add("open");
+  }
+
+  function closeExpenseModal() {
+    document.getElementById("expenseModal").classList.remove("open");
+    editingId = null;
+  }
+
+  function overlayClose(event) {
+    if (event.target.id === "expenseModal") {
+      closeExpenseModal();
+    }
+  }
+
+  function editExpense(id) {
+    const expense = expenses.find(item => item.id === id);
+    if (!expense) return;
+
+    editingId = id;
+
+    document.getElementById("expenseId").value = expense.id;
+    document.getElementById("modalTitle").textContent =
+      "Edit Pengeluaran";
+
+    document.getElementById("saveExpenseBtn").textContent =
+      "Simpan Perubahan";
+
+    document.getElementById("expenseDate").value = expense.date;
+    document.getElementById("expenseCategory").value = expense.category;
+    document.getElementById("expenseDescription").value =
+      expense.description;
+
+    document.getElementById("expenseAmount").value = expense.amount;
+    document.getElementById("expenseStatus").value = expense.status;
+    document.getElementById("expenseRecipient").value =
+      expense.recipient || "";
+
+    document.getElementById("expenseMethod").value =
+      expense.method || "Transfer Bank";
+
+    document.getElementById("expenseNotes").value = expense.notes || "";
+
+    refreshBookingOptions(expense.bookingId || "");
+    updateExpensePreview();
+
+    document.getElementById("expenseModal").classList.add("open");
+  }
+
+  function updateExpensePreview() {
+    const amount = Number(
+      document.getElementById("expenseAmount").value
+    ) || 0;
+
+    document.getElementById("previewAmount").textContent = rupiah(amount);
+  }
+
+  function saveExpense(event) {
+    event.preventDefault();
+
+    const amount = Number(
+      document.getElementById("expenseAmount").value
+    );
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      alert("Nominal pengeluaran harus lebih dari Rp0.");
+      return;
+    }
+
+    const expense = {
+      id: editingId || "e" + Date.now(),
+      date: document.getElementById("expenseDate").value,
+      category: document.getElementById("expenseCategory").value,
+      description: document.getElementById("expenseDescription").value.trim(),
+      amount,
+      status: document.getElementById("expenseStatus").value,
+      recipient: document.getElementById("expenseRecipient").value.trim(),
+      method: document.getElementById("expenseMethod").value,
+      bookingId: document.getElementById("expenseBooking").value,
+      notes: document.getElementById("expenseNotes").value.trim()
+    };
+
+    if (!expense.date) {
+      alert("Tanggal pengeluaran wajib diisi.");
+      return;
+    }
+
+    if (!expense.description) {
+      alert("Deskripsi pengeluaran wajib diisi.");
+      return;
+    }
+
+    if (editingId) {
+      const index = expenses.findIndex(item => item.id === editingId);
+      if (index !== -1) expenses[index] = expense;
+    } else {
+      expenses.push(expense);
+    }
+
+    closeExpenseModal();
+    renderExpenses();
+
+    alert(
+      editingId
+        ? "Pengeluaran berhasil diperbarui di prototipe."
+        : "Pengeluaran berhasil dicatat di prototipe."
+    );
+  }
+
+  function deleteExpense(id) {
+    const expense = expenses.find(item => item.id === id);
+    if (!expense) return;
+
+    const confirmed = confirm(
+      `Hapus pengeluaran "${expense.description}" sebesar ${rupiah(expense.amount)}?`
+    );
+
+    if (!confirmed) return;
+
+    expenses = expenses.filter(item => item.id !== id);
+    renderExpenses();
+  }
+
+  function resetFilters() {
+    document.getElementById("searchExpense").value = "";
+    document.getElementById("filterCategory").value = "";
+    document.getElementById("filterStatus").value = "";
+    document.getElementById("filterFrom").value = "";
+    document.getElementById("filterTo").value = "";
+
+    renderExpenses();
+  }
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeExpenseModal();
+    }
+  });
+
+  refreshBookingOptions();
+  renderExpenses();
+</script>
+
+</body>
+</html>
+
