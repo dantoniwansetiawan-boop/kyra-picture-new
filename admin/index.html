@@ -401,7 +401,7 @@ const CF={
   payments:{
   o:1,t:'Pembayaran',d:()=>({method:'Transfer',paid_at:today()}),
   f:q=>[
-   ...((q||!oid)?[{k:'order_id',l:'Invoice',t:'select',r:1,w:1,o:ORD(D.orders.filter(o=>calc(o).st=='OPEN'))}]:[]),
+   ...((q||!oid)?[{k:'order_id',l:'Invoice',t:'select',r:1,w:1,o:ORD(D.orders.filter(o=>calc(o).st=='OPEN')),h:fm=>{setTimeout(()=>{const el=fm.elements.namedItem('order_id'); if(el && oid) el.value=oid;},10);}}]:[]),
    {k:'label',l:'Keterangan (DP / Pelunasan)',r:1},
    {k:'method',l:'Metode',t:'select',o:METODE.map(m=>`<option>${m}</option>`).join('')},
    {k:'amount',l:'Jumlah',t:'number',h:fm=>{
@@ -442,7 +442,7 @@ const CF={
      if(!f)return;
      if(f.size>5*1024*1024){alert('Max 5 MB');fileIn.value='';return}
      prev.innerHTML='<small class="m">Uploading…</small>';
-     const fname=Date.now()+'_'+f.name.replace(/[^a-zA-Z0-9.]/g,'_');
+          const fname=Date.now()+'_'+Math.random().toString(36).substring(2,6)+'_'+f.name.replace(/[^a-zA-Z0-9.]/g,'_');
      const r=await sb.storage.from('payment-proofs').upload(fname,f);
      if(r.error){prev.innerHTML='<small style="color:var(--r)">Gagal: '+esc(r.error.message)+'</small>';return}
      const {data}=sb.storage.from('payment-proofs').getPublicUrl(r.data.path);
@@ -477,8 +477,8 @@ function E(t,id,pre){
  form((id?'Ubah ':'Tambah ')+c.t,c.f(q),id?D[t].find(r=>r.id==id):{...(c.d?c.d():{}),...pre},async v=>{
   Object.keys(v).forEach(k=>k[0]=='_'&&delete v[k]);
   if('paid'in v)v.paid=v.paid=='true';
-    if(t=='payments'){
-   if(!id&&!v.order_id)v.order_id=oid;
+      if(t=='payments'){
+   if(!v.order_id)v.order_id=oid; // Paksa isi dengan oid kalau kosong
    // TAMBAHAN BARU: Kalau lagi edit & invoice kosong, ambil dari data lama
    if(id&&!v.order_id){
     const old=D.payments.find(p=>p.id==id);
