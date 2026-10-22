@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,110 +6,405 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Graduation Photography | Kyra Picture</title>
-  <meta name="description" content="Graduation photography packages by Kyra Picture for individual portraits, friend groups, and campus celebrations.">
+  <meta name="description" content="Celebrate your graduation with Kyra Picture. Explore our Family, Couple, and Group Graduation Photography packages.">
 
   <link rel="stylesheet" href="style.css">
 
   <style>
-    main.graduation-grid {
-      width: min(1100px, calc(100% - 40px));
+    /* PAGE HEADER */
+    .wedding-header {
+      padding: 75px 24px 55px;
+      text-align: center;
+    }
+
+    .wedding-header h1 {
+      margin: 10px 0 16px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 400;
+    }
+
+    .wedding-header .muted {
+      max-width: 500px;
       margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* PACKAGE GRID */
+    .wedding-packages {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 10px 0 75px;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 24px;
+      gap: 22px;
       align-items: stretch;
     }
 
-    .graduation-grid .price-card {
+    /* PACKAGE CARD */
+    .wedding-package {
       min-width: 0;
       display: flex;
       flex-direction: column;
-      padding: 30px;
-      box-sizing: border-box;
+      padding: 30px 24px;
+      background: #fffdf9;
+      border: 1px solid #e5dbce;
+      border-radius: 2px;
     }
 
-    .graduation-grid .price-card h2 {
+    .wedding-package.luxury {
+      border-color: #a87855;
+    }
+
+    .package-label {
+      margin: 0 0 18px;
+      color: #a87855;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .package-name {
+      margin: 0 0 8px;
+      color: #302821;
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-weight: 400;
       overflow-wrap: anywhere;
     }
 
-    .graduation-grid .price-card > p:not(.eyebrow) {
+    .package-description {
+      min-height: 42px;
+      margin: 0 0 14px;
+      color: #81776c;
+      font-size: 11px;
       line-height: 1.8;
     }
 
-    .graduation-grid .price-card ul {
+    .package-price {
+      margin: 0 0 22px;
+      color: #a87855;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .package-divider {
+      width: 100%;
+      height: 1px;
+      margin-bottom: 22px;
+      background: #e5dbce;
+      border: 0;
+    }
+
+    .package-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 0 0 30px;
+      padding: 0;
+      list-style: none;
       flex: 1;
-      padding-left: 20px;
-      line-height: 1.8;
     }
 
-    .graduation-grid .price-card li {
-      margin-bottom: 8px;
+    .package-benefits li {
+      position: relative;
+      padding-left: 20px;
+      color: #655b50;
+      font-size: 12px;
+      line-height: 1.7;
       overflow-wrap: anywhere;
     }
 
-    .package-note {
-      width: min(1000px, calc(100% - 40px));
-      margin: 36px auto 0;
-      padding: 22px 26px;
-      border: 1px solid rgba(95, 70, 52, 0.15);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.45);
+    .package-benefits li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #a87855;
+      font-weight: 600;
+    }
+
+    /* BOOK BUTTON */
+    .package-book {
+      display: flex;
+      width: 100%;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 10px;
+      background: #302821;
+      border: 1px solid #302821;
+      color: #f5f0e7;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
       box-sizing: border-box;
-      line-height: 1.8;
     }
 
-    .package-note strong {
-      color: #79563e;
+    .package-book:hover {
+      background: #a87855;
+      border-color: #a87855;
+      color: #fffdf9;
     }
 
-    @media (max-width: 800px) {
-      main.graduation-grid {
-        width: calc(100% - 32px);
+    /* PACKAGE NOTE */
+    .package-note {
+      max-width: 700px;
+      margin: -25px auto 65px;
+      padding: 0 20px;
+      color: #81776c;
+      font-size: 12px;
+      line-height: 1.9;
+      text-align: center;
+    }
+
+    /* TERMS & CONDITIONS */
+    .graduation-terms {
+      padding: 65px 24px 70px;
+      background: #fffdf9;
+      border-top: 1px solid #e5dbce;
+    }
+
+    .terms-inner {
+      width: min(800px, 100%);
+      margin: 0 auto;
+    }
+
+    .graduation-terms h2 {
+      margin: 10px 0 15px;
+      color: #302821;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(27px, 4vw, 38px);
+      font-weight: 400;
+      text-align: center;
+    }
+
+    .terms-intro {
+      max-width: 550px;
+      margin: 0 auto 35px;
+      color: #81776c;
+      font-size: 12px;
+      line-height: 1.9;
+      text-align: center;
+    }
+
+    .terms-list {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: terms;
+    }
+
+    .terms-list li {
+      position: relative;
+      padding-left: 42px;
+      counter-increment: terms;
+    }
+
+    .terms-list li::before {
+      content: counter(terms, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #a87855;
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+    }
+
+    .terms-list h3 {
+      margin: 0 0 6px;
+      color: #302821;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .terms-list p {
+      margin: 0;
+      color: #655b50;
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    /* CONTACT SECTION */
+    .wedding-contact {
+      padding: 55px 24px 60px;
+      background: #eee5d9;
+      text-align: center;
+    }
+
+    .wedding-contact h2 {
+      margin: 10px 0 14px;
+      color: #302821;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(27px, 4vw, 38px);
+      font-weight: 400;
+    }
+
+    .wedding-contact .muted {
+      max-width: 500px;
+      margin: 0 auto 25px;
+      line-height: 1.9;
+    }
+
+    /* TABLET */
+    @media (max-width: 900px) {
+      .wedding-packages {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 16px;
       }
 
-      .graduation-grid .price-card {
-        padding: 22px;
+      .wedding-package {
+        padding: 24px 18px;
+      }
+
+      /* Center the third card on tablet */
+      .wedding-package:last-child {
+        grid-column: 1 / -1;
+        width: calc(50% - 8px);
+        justify-self: center;
       }
     }
 
+    /* MOBILE */
     @media (max-width: 560px) {
-      main.graduation-grid {
-        width: calc(100% - 20px);
-        grid-template-columns: 1fr;
-        gap: 14px;
+      .wedding-header {
+        padding: 48px 18px 32px;
       }
 
-      .graduation-grid .price-card {
-        padding: 22px 18px;
+      .wedding-header h1 {
+        font-size: clamp(29px, 7vw, 38px);
       }
 
-      .graduation-grid .price-card h2 {
-        font-size: 22px;
+      .wedding-packages {
+        width: calc(100% - 24px);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 8px 0 45px;
       }
 
-      .graduation-grid .price-card > p:not(.eyebrow) {
-        font-size: 13px;
-        line-height: 1.75;
+      .wedding-package {
+        padding: 18px 12px;
       }
 
-      .graduation-grid .price-card ul {
-        font-size: 13px;
-        line-height: 1.7;
+      .wedding-package:last-child {
+        grid-column: 1 / -1;
+        width: 100%;
+      }
+
+      .package-label {
+        margin-bottom: 12px;
+        font-size: 8px;
+        letter-spacing: 1px;
+      }
+
+      .package-name {
+        margin-bottom: 7px;
+        font-size: clamp(21px, 5.5vw, 28px);
+      }
+
+      .package-description {
+        min-height: 0;
+        margin-bottom: 10px;
+        font-size: 10px;
+      }
+
+      .package-price {
+        margin-bottom: 15px;
+        font-size: clamp(14px, 3.7vw, 19px);
+        line-height: 1.5;
+      }
+
+      .package-divider {
+        margin-bottom: 15px;
+      }
+
+      .package-benefits {
+        gap: 11px;
+        margin-bottom: 20px;
+      }
+
+      .package-benefits li {
+        padding-left: 14px;
+        font-size: 10px;
+        line-height: 1.6;
+      }
+
+      .package-book {
+        min-height: 40px;
+        padding: 10px 4px;
+        font-size: 8px;
+        letter-spacing: 0.5px;
       }
 
       .package-note {
-        width: calc(100% - 24px);
-        margin-top: 24px;
-        padding: 17px;
+        margin-top: -12px;
+        margin-bottom: 42px;
+        font-size: 11px;
+      }
+
+      .graduation-terms {
+        padding: 45px 20px 50px;
+      }
+
+      .terms-intro {
+        margin-bottom: 28px;
+      }
+
+      .terms-list {
+        gap: 20px;
+      }
+
+      .terms-list li {
+        padding-left: 35px;
+      }
+
+      .wedding-contact {
+        padding: 42px 18px 45px;
+      }
+    }
+
+    /* VERY SMALL PHONES */
+    @media (max-width: 360px) {
+      .wedding-packages {
+        width: calc(100% - 16px);
+        gap: 8px;
+      }
+
+      .wedding-package {
+        padding: 15px 9px;
+      }
+
+      .package-name {
+        font-size: 20px;
+      }
+
+      .package-price {
         font-size: 13px;
+      }
+
+      .package-benefits li {
+        font-size: 9px;
+      }
+
+      .package-book {
+        font-size: 7px;
       }
     }
   </style>
 </head>
 
 <body>
+
   <!-- NAVIGATION -->
   <nav class="navbar">
     <a class="logo" href="index.html">KYRA <span>PICTURE</span></a>
@@ -124,107 +420,259 @@
   </nav>
 
   <!-- PAGE HEADER -->
-  <header class="page-header">
-    <p class="eyebrow">GRADUATION COLLECTION</p>
+  <header class="wedding-header">
+    <p class="eyebrow">INVESTMENT</p>
+
     <h1>Graduation Photography</h1>
+
     <p class="muted">
-      One milestone, countless memories. Celebrate your achievement with
-      portraits that capture your personality, your friendships, and the
-      people who helped you get here.
+      A milestone worth remembering.
+      Celebrate your achievement with photographs
+      you can cherish for years to come.
     </p>
   </header>
 
-  <!-- PACKAGE INTRO -->
-  <section class="price-notice" aria-label="Graduation photography information">
-    <div class="price-notice-icon" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-        fill="none" stroke="currentColor" stroke-width="1.7"
-        stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 10 12 5 2 10l10 5 10-5Z"/>
-        <path d="M6 12v5c3.5 3 8.5 3 12 0v-5"/>
-        <path d="M22 10v6"/>
-      </svg>
-    </div>
-    <div class="price-notice-content">
-      <p class="price-notice-label">YOUR MOMENT, YOUR STORY</p>
-      <h2>Made for your graduation day</h2>
-      <p>
-        Choose a session for yourself, your closest friends, or a larger
-        campus celebration. We can tailor the coverage to your plans.
-      </p>
-    </div>
-  </section>
-
   <!-- GRADUATION PACKAGES -->
-  <main class="graduation-grid">
-    <article class="price-card">
-      <p class="eyebrow">01 / SOLO SESSION</p>
-      <h2>Individual</h2>
-      <p>
-        A personal graduation session focused on you, your achievement,
-        and the little details that make this milestone yours.
+  <main class="wedding-packages">
+
+    <!-- FAMILY PACKAGE -->
+    <article class="wedding-package">
+      <p class="package-label">PACKAGE 01</p>
+
+      <h2 class="package-name">Family</h2>
+
+      <p class="package-description">
+        A special graduation moment with your loved ones.
       </p>
-      <ul>
-        <li>Individual graduation portraits</li>
-        <li>Portraits with graduation attire and accessories</li>
-        <li>Guided posing throughout the session</li>
-        <li>Edited high-resolution digital photos</li>
-        <li>Session location and duration agreed in advance</li>
+
+      <p class="package-price">Rp 500.000</p>
+
+      <hr class="package-divider">
+
+      <ul class="package-benefits">
+        <li>1 Graduate + Family</li>
+        <li>1 Photographer</li>
+        <li>1-Hour Photography Session</li>
+        <li>Unlimited Shots During the Session</li>
+        <li>20 Edited Photos</li>
+        <li>All Original Files Included</li>
+        <li>Digital Delivery via Google Drive</li>
       </ul>
-      <a class="button" href="https://wa.me/6289519847571?text=Hi%20Kyra%20Picture%2C%20I%27m%20interested%20in%20the%20Individual%20Graduation%20Photography%20package." target="_blank" rel="noopener noreferrer">ASK FOR PRICING</a>
+
+      <a
+        class="package-book"
+        href="https://wa.me/6289519847571?text=Hello%20Kyra%20Picture%2C%20I%27m%20interested%20in%20booking%20the%20Family%20Graduation%20Photography%20Package%20for%20Rp%20500%2C000.%20Could%20you%20please%20share%20the%20available%20dates%20and%20booking%20details%3F"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        BOOK FAMILY
+      </a>
     </article>
 
-    <article class="price-card">
-      <p class="eyebrow">02 / FRIENDS &amp; FAMILY</p>
-      <h2>Group Session</h2>
-      <p>
-        Keep the memories together with photos of your best friends,
-        classmates, and family who made the journey special.
+    <!-- COUPLE PACKAGE -->
+    <article class="wedding-package luxury">
+      <p class="package-label">PACKAGE 02</p>
+
+      <h2 class="package-name">Couple</h2>
+
+      <p class="package-description">
+        Celebrate graduation together with family and friends.
       </p>
-      <ul>
-        <li>Group portraits with friends or family</li>
-        <li>Individual portraits within the group session</li>
-        <li>Natural and candid moments</li>
-        <li>Edited high-resolution digital photos</li>
-        <li>Group size and session plan agreed in advance</li>
+
+      <p class="package-price">Rp 600.000</p>
+
+      <hr class="package-divider">
+
+      <ul class="package-benefits">
+        <li>2 Graduates + Family</li>
+        <li>1 Photographer</li>
+        <li>1-Hour Photography Session</li>
+        <li>Unlimited Shots During the Session</li>
+        <li>25 Edited Photos</li>
+        <li>All Original Files Included</li>
+        <li>Digital Delivery via Google Drive</li>
       </ul>
-      <a class="button" href="https://wa.me/6289519847571?text=Hi%20Kyra%20Picture%2C%20I%27m%20interested%20in%20the%20Group%20Graduation%20Photography%20package." target="_blank" rel="noopener noreferrer">ASK FOR PRICING</a>
+
+      <a
+        class="package-book"
+        href="https://wa.me/6289519847571?text=Hello%20Kyra%20Picture%2C%20I%27m%20interested%20in%20booking%20the%20Couple%20Graduation%20Photography%20Package%20for%20Rp%20600%2C000.%20Could%20you%20please%20share%20the%20available%20dates%20and%20booking%20details%3F"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        BOOK COUPLE
+      </a>
     </article>
 
-    <article class="price-card">
-      <p class="eyebrow">03 / CAMPUS &amp; EVENTS</p>
-      <h2>Graduation Event</h2>
-      <p>
-        Photography coverage for larger groups, student communities,
-        campus activities, or graduation celebrations.
+    <!-- GROUP PACKAGE -->
+    <article class="wedding-package">
+      <p class="package-label">PACKAGE 03</p>
+
+      <h2 class="package-name">Group</h2>
+
+      <p class="package-description">
+        Capture the achievement you share with your circle.
       </p>
-      <ul>
-        <li>Event or group documentation</li>
-        <li>Portraits and candid coverage</li>
-        <li>Coverage plan based on event needs</li>
-        <li>Edited digital photo delivery</li>
-        <li>Custom arrangements for duration and group size</li>
+
+      <p class="package-price">Rp 725.000</p>
+
+      <hr class="package-divider">
+
+      <ul class="package-benefits">
+        <li>3–5 Graduates</li>
+        <li>1 Photographer</li>
+        <li>1-Hour Photography Session</li>
+        <li>Unlimited Shots During the Session</li>
+        <li>30 Edited Photos in Total</li>
+        <li>All Original Files Included</li>
+        <li>Digital Delivery via Google Drive</li>
       </ul>
-      <a class="button" href="https://wa.me/6289519847571?text=Hi%20Kyra%20Picture%2C%20I%27d%20like%20to%20ask%20about%20Graduation%20Event%20Photography." target="_blank" rel="noopener noreferrer">ASK FOR PRICING</a>
+
+      <a
+        class="package-book"
+        href="https://wa.me/6289519847571?text=Hello%20Kyra%20Picture%2C%20I%27m%20interested%20in%20booking%20the%20Group%20Graduation%20Photography%20Package%20for%20Rp%20725%2C000.%20Could%20you%20please%20share%20the%20available%20dates%20and%20booking%20details%3F"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        BOOK GROUP
+      </a>
     </article>
+
   </main>
 
-  <section class="package-note">
-    <strong>Need a custom package?</strong>
-    Pricing depends on the session location, duration, number of people,
-    and requested deliverables. Contact Kyra Picture to discuss your plans
-    and receive a package tailored to your graduation day.
+  <!-- PACKAGE NOTE -->
+  <p class="package-note">
+    Package prices apply to the session and participant limits stated above.
+    Additional services or location changes may incur extra charges.
+    Please contact us to confirm availability before booking.
+  </p>
+
+  <!-- TERMS & CONDITIONS -->
+  <section class="graduation-terms">
+    <div class="terms-inner">
+
+      <p class="eyebrow" style="text-align: center;">PLEASE READ</p>
+
+      <h2>Terms &amp; Conditions</h2>
+
+      <p class="terms-intro">
+        To ensure a smooth and enjoyable photography session,
+        please review the following terms before making a booking.
+      </p>
+
+      <ol class="terms-list">
+
+        <li>
+          <h3>Session Duration</h3>
+          <p>
+            Each package includes a photography session of up to
+            1 hour. The session begins at the agreed booking time.
+            Late arrival may reduce the available shooting time.
+          </p>
+        </li>
+
+        <li>
+          <h3>Participant Limits</h3>
+          <p>
+            The Family package covers 1 graduate and their family.
+            The Couple package covers 2 graduates and their family.
+            The Group package is available for 3–5 graduates.
+            Please inform us in advance if your group size changes.
+          </p>
+        </li>
+
+        <li>
+          <h3>Unlimited Shots</h3>
+          <p>
+            Unlimited shots means there is no fixed shutter-count
+            limit during the booked session. It does not mean
+            unlimited session time or unlimited edited photos.
+          </p>
+        </li>
+
+        <li>
+          <h3>Edited Photos</h3>
+          <p>
+            The number of edited photos follows
+            the selected package. For the Group package,
+            30 edited photos are provided in total, not per graduate.
+            Additional editing requests may incur extra charges.
+          </p>
+        </li>
+
+        <li>
+          <h3>Original Files</h3>
+          <p>
+            Original files are included and will be delivered
+            digitally. Original files are unedited and may differ
+            in appearance from the final edited photographs.
+          </p>
+        </li>
+
+        <li>
+          <h3>Photo Delivery</h3>
+          <p>
+            Photos will be delivered through Google Drive.
+            The estimated delivery time will be communicated
+            during booking. Please download and back up your files
+            after delivery.
+          </p>
+        </li>
+
+        <li>
+          <h3>Location &amp; Additional Charges</h3>
+          <p>
+            The package price does not automatically include
+            additional locations, transportation, parking,
+            entrance tickets, or other venue-related expenses.
+            Any additional costs will be discussed before the session.
+          </p>
+        </li>
+
+        <li>
+          <h3>Booking &amp; Payment</h3>
+          <p>
+            All bookings are subject to date and time availability.
+            Please contact Kyra Picture to confirm your schedule,
+            payment details, and booking confirmation.
+          </p>
+        </li>
+
+        <li>
+          <h3>Rescheduling &amp; Cancellation</h3>
+          <p>
+            If you need to reschedule or cancel, please contact us
+            as early as possible. Rescheduling arrangements and
+            any applicable fees will be confirmed directly with
+            Kyra Picture before your booking is finalized.
+          </p>
+        </li>
+
+        <li>
+          <h3>Additional Requests</h3>
+          <p>
+            Requests beyond the selected package, including extra
+            shooting time, additional locations, or additional
+            edited photos, may incur extra charges. Please confirm
+            any additional requirements before the session.
+          </p>
+        </li>
+
+      </ol>
+    </div>
   </section>
 
-  <!-- CONTACT CTA -->
-  <section class="home-contact">
-    <p class="eyebrow">LET'S CELEBRATE</p>
-    <h2>Ready to capture your milestone?</h2>
+  <!-- CONTACT SECTION -->
+  <section class="wedding-contact">
+    <p class="eyebrow">LET'S TALK</p>
+
+    <h2>Ready to celebrate your achievement?</h2>
+
     <p class="muted">
-      Tell us your graduation date, preferred location, and whether you
-      need an individual or group session. We'll help you plan the details.
+      Have questions or need help choosing a package?
+      Get in touch with us and let's plan your graduation session.
     </p>
-    <a class="button" href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">
+
+    <a class="button" href="contact.html">
       CONTACT US
     </a>
   </section>
@@ -233,5 +681,6 @@
   <footer>
     © 2026 Kyra Picture. Your Story, Beautifully Captured.
   </footer>
+
 </body>
 </html>
