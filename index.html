@@ -1,3 +1,539 @@
+
+Continued from
+Galeri GitHub Langsung (10)
+ya udah coba
+ganti full html aja bre
+kirim di chat
+Continued from
+Galeri GitHub Langsung (10)
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KYRA PICTURE Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+:root{--bg:#f6f5f3;--c:#fff;--b:#e7e4df;--t:#18181b;--m:#6b6b73;--a:#8b6b4a;--ok:#2f7d57;--r:#c0453b}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--t);font:14px/1.45 Inter,system-ui,sans-serif}
+a{cursor:pointer}
+small,.m{color:var(--m)}
+h1{font-size:22px;margin:0;font-weight:700}
+h2{font-size:18px;margin:0}
+h3{font-size:14px;margin:0;font-weight:600}
+#shell{display:flex;min-height:100vh}
+aside{width:224px;background:var(--c);border-right:1px solid var(--b);padding:22px 14px;position:sticky;top:0;height:100vh;flex-shrink:0}
+.logo{font-weight:700;letter-spacing:.18em;font-size:15px;padding:0 10px 22px}
+.logo i{display:block;font-style:normal;color:var(--a);font-size:10px;letter-spacing:.3em;font-weight:500}
+#nav a{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;color:var(--m);font-weight:500;margin-bottom:2px}
+#nav a b{width:18px;text-align:center;font-weight:400}
+#nav a:hover{background:var(--bg)}
+#nav a.on{background:var(--t);color:#fff}
+#nav a.on b{color:#d9bf9c}
+main{flex:1;min-width:0;padding:28px;max-width:1100px}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.act{display:flex;gap:8px;flex-wrap:wrap}
+input,select,textarea{width:100%;background:#fff;border:1px solid var(--b);color:var(--t);padding:9px 11px;border-radius:9px;font:inherit}
+input:focus,select:focus,textarea:focus{outline:2px solid #d9c8b2;border-color:var(--a)}
+button{background:var(--t);color:#fff;border:1px solid var(--t);padding:9px 15px;border-radius:9px;font:inherit;font-weight:600;cursor:pointer}
+button:hover{opacity:.88}
+button.ghost{background:#fff;color:var(--t);border-color:var(--b)}
+button.red{background:#fff;color:var(--r);border-color:#ecc5c1}
+.card{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 1px 2px #0000000a}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.cards .card{margin:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:16px}
+.stat{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:16px}
+.stat small{display:block}
+.stat b{display:block;font-size:22px;margin-top:6px;font-weight:700}
+.stat.k{background:var(--t);color:#fff;border-color:var(--t)}
+.stat.k small{color:#bbb}
+.stat.k b{color:#e6cfae}
+.li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--b);cursor:pointer;align-items:center}
+.li:last-child{border:0}
+.nc{cursor:default}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--m);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--b);white-space:nowrap}
+td{padding:12px;border-bottom:1px solid #f0eeea}
+tr.c{cursor:pointer}
+tr.c:hover td{background:#faf9f7}
+.r{text-align:right;white-space:nowrap}
+tbody tr:last-child td{border:0}
+.pad{padding:14px}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:#f3ebe0;color:#8b6b4a;white-space:nowrap}
+.pill.closed,.pill.ok{background:#e3f2ea;color:var(--ok)}
+.pill.batal{background:#f8e4e2;color:var(--r)}
+.pill.no{background:#f1f0ee;color:var(--m)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:12px 0}
+.row>input,.row>select{width:auto;flex:1;min-width:130px}
+.modal{position:fixed;inset:0;background:#18181b88;display:grid;place-items:center;padding:14px;z-index:9;overflow:auto}
+.box{background:var(--c);border-radius:16px;padding:22px;width:100%;max-width:460px;display:grid;gap:10px;max-height:94vh;overflow:auto;box-shadow:0 20px 50px #0003}
+.box label{display:grid;gap:4px;color:var(--m);font-size:12px;font-weight:500}
+.modalhead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.modalhead button{flex-shrink:0}
+.fg{max-width:640px;grid-template-columns:1fr 1fr}
+.fg h2,.w{grid-column:1/-1}
+.box .row{margin:0}
+.ar{grid-column:1/-1;display:grid;grid-template-columns:1.2fr 1.2fr .8fr auto;gap:6px;align-items:center;margin-top:6px}
+.ar a{color:var(--r);padding:8px 6px;text-align:center;font-weight:700}
+.ar a:hover{background:#f8e4e2;border-radius:6px}
+.pv{max-width:820px;height:94vh;grid-template-rows:auto 1fr}
+.pg{overflow:auto;background:#e9e7e4;border-radius:10px;padding:10px}
+.pg canvas{display:block;margin:0 auto 10px;box-shadow:0 2px 10px #0002;background:#fff}
+@media(max-width:760px){
+ #shell{display:block}
+ aside{position:fixed;bottom:0;left:0;right:0;top:auto;width:auto;height:auto;padding:6px;z-index:5;border-right:0;border-top:1px solid var(--b)}
+ .logo{display:none}
+ #nav{display:flex;overflow-x:auto;gap:2px}
+ #nav a{flex-direction:column;gap:0;padding:6px 10px;font-size:10.5px;margin:0;white-space:nowrap}
+ main{padding:16px 14px 84px}
+ .hm{display:none}
+ .fg{grid-template-columns:1fr}
+ .ar{grid-template-columns:1fr 1fr}
+ .modalhead{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div id="shell">
+ <aside>
+  <div class="logo">KYRA PICTURE<i>ADMIN</i></div>
+  <div id="nav"></div>
+ </aside>
+ <main id="main"></main>
+</div>
+
+<script>
+const SB_URL='https://uhwbafngzkicergeqqzm.supabase.co',SB_KEY='sb_publishable_DC_aE9FvhZO71tv7kFIwGw_Iuzx_Wn_';
+const sb=supabase.createClient(SB_URL,SB_KEY);
+const $=s=>document.querySelector(s),rp=n=>'Rp '+Math.round(+n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.'),num=s=>+String(s??'').replace(/\D/g,'')||0;
+const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10),mk=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=d=>d?new Date(d+'T00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'-';
+const T=['packages','addon_catalog','crew','clients','orders','order_items','payments','expenses','order_crew','settings'];
+let D={},view='dash',oid=null,cid=null,qo='',qc='',per=today().slice(0,7),ef={a:'',b:'',i:'',c:''},ctab='ev',EDIT=null,PQ=0;
+
+document.addEventListener('click',e=>{
+ if(e.target.matches('input[type=date],input[type=time]'))try{e.target.showPicker()}catch(_){}
+});
+
+async function load(){
+ for(const t of T){
+  const r=await sb.from(t).select('*').order('id');
+  if(r.error){
+   alert('Gagal memuat '+t+': '+r.error.message+(t=='order_crew'?'\n(Jalankan update.sql di Supabase)':''));
+   D[t]=[];
+   continue;
+  }
+  D[t]=r.data;
+ }
+}
+const by=(t,o)=>D[t].filter(x=>x.order_id==o),sum=a=>a.reduce((s,x)=>s+(+x.amount||0),0);
+function calc(o){
+ const items=sum(by('order_items',o.id)),tot=+o.package_price+items-(+o.discount||0),paid=sum(by('payments',o.id)),cost=sum(by('expenses',o.id)),closed=tot>0&&paid>=tot,st=o.cancelled?'BATAL':closed?'CLOSED':'OPEN';
+ return{items,tot,paid,cost,st,rest:st=='OPEN'?tot-paid:0,profit:(o.cancelled?paid:tot)-cost};
+}
+const invNo=o=>KP-${(o.inv_date||'').slice(0,4)}-${String(o.inv_no).padStart(4,'0')},cl=id=>D.clients.find(c=>c.id==id)||{},ordOf=id=>D.orders.find(o=>o.id==id),crw=id=>D.crew.find(c=>c.id==id)||{};
+const op=(a,f)=>'<option value="">—</option>'+a.map(f).join(''),pill=s=><span class="pill ${s.toLowerCase()}">${s}</span>,head=(t,a)=><div class="ph"><h1>${t}</h1><div class="act">${a||''}</div></div>;
+const METODE=['Transfer','Cash','PayPal'],CAT=['Crew','Transport','Cetak','Sewa Alat','Sewa Studio','Langganan','Iklan','Lainnya'];
+const ORD=a=>op(a,o=><option value="${o.id}">${invNo(o)} · ${esc(cl(o.client_id).name)}</option>);
+
+function form(title,fields,vals,save){
+ const m=document.createElement('div');
+ m.className='modal';
+
+ const inp=f=>f.t=='select'
+  ?<select name="${f.k}" ${f.r?'required':''}>${f.o}</select>
+  :f.t=='area'
+  ?<textarea name="${f.k}" rows="2"></textarea>
+  :f.t=='number'
+  ?<input name="${f.k}" class="rp" inputmode="numeric" autocomplete="off">
+  :<input name="${f.k}" type="${f.t||'text'}" ${f.r?'required':''} ${f.dl?'list="cn" autocomplete="off"':''}>;
+
+ m.innerHTML=`
+  <form class="box fg">
+   <div class="modalhead w">
+    <h2>${title}</h2>
+    <button type="button" class="ghost" id="closeForm" aria-label="Close form">Close ×</button>
+   </div>
+   ${fields.map(f=>
+    f.t=='addons'
+    ?'<div class="w"><div class="row"><b>Add-on (opsional)</b><button type="button" class="ghost" id="adb">＋ Add-on</button></div><div id="adl"></div></div>'
+    :f.t=='info'
+    ?'<small class="w" id="pv"></small>'
+    :<label class="${f.w?'w':''}">${f.l}${inp(f)}</label>
+   ).join('')}
+   <div class="row w">
+    <button type="button" class="ghost" id="cancelForm">Batal</button>
+    <button type="submit">Simpan</button>
+   </div>
+   <datalist id="cn">${D.clients.map(c=><option value="${esc(c.name)}">).join('')}</datalist>
+  </form>`;
+
+ document.body.append(m);
+ const fm=m.querySelector('form');
+ const close=()=>m.remove();
+
+ // Tombol Close dan Batal tidak lagi mengambil tombol .ghost pertama,
+ // sehingga tombol Add-on tidak akan menutup form.
+ fm.querySelector('#closeForm').onclick=close;
+ fm.querySelector('#cancelForm').onclick=close;
+
+ // Klik area gelap di luar form untuk menutup modal.
+ m.addEventListener('click',e=>{if(e.target===m)close()});
+
+ fm.querySelectorAll('.rp').forEach(e=>e.oninput=()=>{
+  const d=e.value.replace(/\D/g,'');
+  e.value=d?rp(d):'';
+ });
+
+ fields.forEach(f=>{
+  const e=fm.elements.namedItem(f.k);
+  if(e&&vals&&vals[f.k]!=null)e.value=f.t=='number'?rp(vals[f.k]):vals[f.k];
+  if(f.h)f.h(fm);
+ });
+
+ fm.onsubmit=async e=>{
+  e.
+…
+Gas bre wkwkwk 🔥 Gua ubah bagian invoice supaya nama paket tampil bertumpuk, nggak pakai tanda +, dan harga paket gabungan tetap jelas.
+
+Contoh tampilannya nanti:
+
+Description                         Amount
+Wedding Basic
+Wedding Premium
+Total Paket                         Rp 5.000.000
+Additional Album                      Rp 500.000
+Discount                             - Rp 200.000
+-----------------------------------------------
+Total                               Rp 5.300.000
+Jadi harga Wedding Premium nggak dikosongkan seolah-olah lupa diisi. Harga gabungan ditampilkan di baris Total Paket, sehingga nggak terjadi penghitungan ganda. Data pembayaran, add-on, dashboard, dan fitur lainnya tetap dipertahankan.
+
+Bre, HTML yang lu kirim panjang banget. Biar nggak berisiko ada bagian lain yang kepotong atau berubah, cukup ganti fungsi mkpdf(o) yang lama dengan fungsi di bawah ini. Bagian HTML lainnya nggak perlu diubah.
+
+
+function mkpdf(o){
+ const c=calc(o),k=cl(o.client_id),d=new jspdf.jsPDF();
+ let y;
+ const need=h=>{if(y+h>250){d.addPage();y=20}};
+
+ d.setFont('helvetica','bold');
+ d.setFontSize(24);
+ d.setTextColor(24,24,27);
+ d.text('KYRA PICTURE',15,22);
+ d.setFontSize(18);
+ d.text('INVOICE',195,20,{align:'right'});
+
+ d.setFont('helvetica','normal');
+ d.setFontSize(10);
+ d.setTextColor(90);
+ d.text(invNo(o),195,27,{align:'right'});
+ d.text('Date: '+fmt(o.inv_date),195,32,{align:'right'});
+
+ d.setDrawColor(139,107,74);
+ d.setLineWidth(.6);
+ d.line(15,38,195,38);
+
+ d.setTextColor(40);
+ d.setFont('helvetica','bold');
+ d.text('Bill To',15,48);
+ d.setFont('helvetica','normal');
+ d.text([k.name||'',k.phone||'',k.ig||''].filter(Boolean),15,54);
+
+ d.setFont('helvetica','bold');
+ d.text('Event Details',110,48);
+ d.setFont('helvetica','normal');
+ d.text(d.splitTextToSize(
+  `${fmt(o.event_date)} ${(o.event_time||'').slice(0,5)}\n${o.location||''}`,
+  85
+ ),110,54);
+
+ y=80;
+ d.setFillColor(24,24,27);
+ d.rect(15,y-6,180,9,'F');
+ d.setTextColor(255);
+ d.setFont('helvetica','bold');
+ d.text('Description',18,y);
+ d.text('Amount',192,y,{align:'right'});
+
+ d.setTextColor(40);
+ d.setFont('helvetica','normal');
+ y+=10;
+
+ // Pecah nama paket berdasarkan tanda +.
+ // Contoh: Wedding Basic + Wedding Premium.
+ const packageNames=String(o.package_name||'')
+  .split(/\s*\+\s*/)
+  .map(n=>n.trim())
+  .filter(Boolean);
+
+ const L=[
+  ...packageNames.map(name=>[name,null]),
+  ['Total Paket',+o.package_price||0],
+  ...by('order_items',o.id).map(i=>[i.name,+i.amount||0])
+ ];
+
+ if(+o.discount){
+  L.push(['Discount',-o.discount]);
+ }
+
+ L.forEach(([n,a])=>{
+  const s=d.splitTextToSize(String(n),120);
+  need(s.length*5+3);
+
+  d.text(s,18,y);
+
+  if(a!==null&&a!==undefined){
+   d.text(
+    (a<0?'- ':'')+rp(Math.abs(a)),
+    192,y,{align:'right'}
+   );
+  }
+
+  y+=s.length*5+3;
+ });
+
+ need(30);
+ d.setLineWidth(.3);
+ d.setDrawColor(200);
+ d.line(110,y,195,y);
+ y+=7;
+
+ const y0=y;
+ d.setFont('helvetica','bold');
+
+ [['Total',c.tot],['Paid',c.paid],
+  ['Balance Due',Math.max(c.tot-c.paid,0)]
+ ].forEach(([n,a])=>{
+  d.text(n,112,y);
+  d.text(rp(a),192,y,{align:'right'});
+  y+=7;
+ });
+
+ if(c.st!='OPEN'){
+  d.setTextColor(...(c.st=='BATAL'?[200,70,60]:[40,150,90]));
+  d.setFontSize(38);
+  d.text(c.st=='BATAL'?'CANCELLED':'PAID',25,y0+10,{angle:12});
+  d.setFontSize(10);
+  d.setTextColor(40);
+ }
+
+ const P=by('payments',o.id).sort(
+  (a,b)=>(a.paid_at||'').localeCompare(b.paid_at||'')||a.id-b.id
+ );
+
+ if(P.length){
+  y+=6;
+  need(20);
+  d.setFontSize(10);
+  d.text('Payment History',15,y);
+  y+=6;
+  d.setFontSize(9);
+  d.setTextColor(90);
+  d.text('Date',18,y);
+  d.text('Description',55,y);
+  d.text('Method',115,y);
+  d.text('Amount',192,y,{align:'right'});
+
+  d.setFont('helvetica','normal');
+  d.setTextColor(40);
+  y+=2;
+  d.line(15,y,195,y);
+  y+=5;
+
+  P.forEach(p=>{
+   need(7);
+   d.text(fmt(p.paid_at),18,y);
+   d.text(String(p.label||''),55,y);
+   d.text(String(p.method||''),115,y);
+   d.text(rp(p.amount),192,y,{align:'right'});
+   y+=6;
+  });
+ }
+
+ y+=6;
+ need(50);
+ d.setFontSize(10);
+ d.setFont('helvetica','bold');
+ d.text('Terms & Conditions',15,y);
+ d.setFont('helvetica','normal');
+ const ts=d.splitTextToSize(o.terms||'',180);
+ d.text(ts,15,y+6);
+ y+=ts.length*5+14;
+
+ need(28);
+ d.setFont('helvetica','bold');
+ d.text('Payment Information',15,y);
+ d.setFont('helvetica','normal');
+ d.text([
+  'BCA (Bank Central Asia) - Indonesia',
+  'Account No.: 736-033-6519',
+  'PayPal: paypal.me/deniwan'
+ ],15,y+6);
+
+ // Footer pada setiap halaman.
+ const totalPages=d.getNumberOfPages();
+
+ for(let page=1;page<=totalPages;page++){
+  d.setPage(page);
+  d.setDrawColor(139,107,74);
+  d.setLineWidth(.4);
+  d.line(15,266,195,266);
+  d.setFont('helvetica','normal');
+  d.setFontSize(8.5);
+  d.setTextColor(90);
+
+  d.text(
+   'kyrapicture.com  |  @kyra.picture  |  +62 895-1984-7571',
+   105,272,{align:'center'}
+  );
+
+  d.text(
+   'Perumahan Griya Mulya Indah, Jalan Sampora Blok M4 No. 28, Jayamulya, Serang Baru',
+   105,278,{align:'center'}
+  );
+
+  d.text(
+   'Serang Baru, Kab. Bekasi, Jawa Barat, Indonesia 17330',
+   105,283,{align:'center'}
+  );
+ }
+
+ return d;
+}
+
+Cara pasangnya, bre:
+
+Buka index.html di GitHub.
+
+Cari function mkpdf(o){.
+
+Hapus fungsi mkpdf lama sampai tepat sebelum async function prev(id){.
+
+Tempel kode baru di atas.
+
+Commit perubahan dan tunggu Cloudflare Pages selesai deploy.
+
+Buka salah satu order, klik Lihat Invoice, lalu cek tampilannya.
+
+Catatan: cara ini menampilkan nama paket pada baris terpisah dan harga gabungannya pada baris Total Paket. Kalau lu ingin harga masing-masing paket ditampilkan secara terpisah, kita perlu mencocokkan setiap nama paket dengan harga di katalog database.
+
+
+Pasted text(5).txt
+Document
+Bre, file yang lu kirim udah gua terima. 👌
+
+Tapi gua cek isinya, ini ternyata HTML halaman Home website Kyra Picture, yang berisi hero carousel, portfolio, testimoni Google Sheets, dan footer.
+
+Kalau kita lanjut dari pembahasan sebelumnya soal nama paket yang dipisah di invoice PDF, fungsi mkpdf(o) yang perlu diedit nggak ada di file ini.
+
+Jadi, bre, kalau mau lanjut ubah invoice, kirim file HTML aplikasi admin yang ada fitur invoice-nya. Nanti gua bantu ubah langsung di kode lengkapnya, tanpa mengubah bagian lain yang nggak perlu.
+
+gua mau rubah gambar hero yg besar dengan file image yg ada di github gua 
+images/wedding
+nama filenya : wedding6 wedding24 wedding10 wedding29 wedding30
+Gas bre 😎 Kita ganti 5 foto hero besar di halaman Home Kyra Picture pakai foto dari GitHub lu, tanpa mengubah desain, tulisan, atau animasi carousel yang sudah ada.
+
+Di file index.html, cari bagian HERO CAROUSEL di dalam <div class="hero-slides">. Ganti 3 blok foto lama di bagian itu dengan kode ini:
+
+<div class="hero-slides">
+  <div
+    class="hero-slide active"
+    style="background-image:url('images/wedding/wedding6.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+
+  <div
+    class="hero-slide"
+    style="background-image:url('images/wedding/wedding24.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+
+  <div
+    class="hero-slide"
+    style="background-image:url('images/wedding/wedding10.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+
+  <div
+    class="hero-slide"
+    style="background-image:url('images/wedding/wedding29.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+
+  <div
+    class="hero-slide"
+    style="background-image:url('images/wedding/wedding30.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+</div>
+
+Terus, bre, ada satu perubahan kecil lagi supaya angka carousel ikut berubah dari / 03 menjadi / 05.
+
+Cari kode ini:
+
+<span id="hero-current">01</span> / 03
+
+Ganti menjadi:
+
+<span id="hero-current">01</span> / 05
+
+JavaScript carousel lu sudah otomatis membaca jumlah foto dari elemen .hero-slide, jadi nggak perlu mengubah JavaScript-nya.
+
+Catatan: Gua menggunakan ekstensi .jpg. Pastikan nama file di GitHub memang wedding6.jpg, wedding24.jpg, wedding10.jpg, wedding29.jpg, dan wedding30.jpg. Kalau ekstensi aslinya .webp atau .png, sesuaikan nama filenya.
+
+Setelah itu, commit perubahan ke GitHub dan tunggu Cloudflare Pages selesai deploy. Gass! 🔥
+
+
+<div class="hero-slides">
+  <div
+    class="hero-slide active"
+    style="background-image:url('images/wedding/wedding10.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+
+  <div
+    class="hero-slide"
+    style="background-image:url('images/wedding/wedding31.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+
+  <div
+    class="hero-slide"
+    style="background-image:url('images/wedding/wedding24.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+
+  <div
+    class="hero-slide"
+    style="background-image:url('images/wedding/wedding29.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+
+  <div
+    class="hero-slide"
+    style="background-image:url('images/wedding/wedding30.jpg')"
+    role="img"
+    aria-label="Wedding photography by Kyra Picture">
+  </div>
+</div>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -700,50 +1236,28 @@
 
 <main>
   <section class="hero hero-carousel" aria-label="Wedding and prewedding photography highlights">
-   <div class="hero-slides">
-  <div
-    class="hero-slide active"
-    style="background-image:url('images/wedding/wedding6.jpg')"
-    role="img"
-    aria-label="Wedding photography by Kyra Picture">
-  </div>
+    <div class="hero-slides">
+      <div
+        class="hero-slide active"
+        style="background-image:url('https://drive.google.com/thumbnail?id=1IpTXNqsMybPVXCOX_2v0v3xDvhUnXWS6&sz=w2000')"
+        role="img"
+        aria-label="Wedding photography by Kyra Picture">
+      </div>
 
-  <div class="hero-slides">
-  <div
-    class="hero-slide active"
-    style="background-image:url('images/wedding/wedding10.jpg')"
-    role="img"
-    aria-label="Wedding photography by Kyra Picture">
-  </div>
+      <div
+        class="hero-slide"
+        style="background-image:url('https://drive.google.com/thumbnail?id=1zLYM_qt_8ziKHEJg0JJ7Bj4TW2fFp--x&sz=w2000')"
+        role="img"
+        aria-label="Romantic prewedding photography by Kyra Picture">
+      </div>
 
-  <div
-    class="hero-slide"
-    style="background-image:url('images/wedding/wedding31.jpg')"
-    role="img"
-    aria-label="Wedding photography by Kyra Picture">
-  </div>
-
-  <div
-    class="hero-slide"
-    style="background-image:url('images/wedding/wedding24.jpg')"
-    role="img"
-    aria-label="Wedding photography by Kyra Picture">
-  </div>
-
-  <div
-    class="hero-slide"
-    style="background-image:url('images/wedding/wedding29.jpg')"
-    role="img"
-    aria-label="Wedding photography by Kyra Picture">
-  </div>
-
-  <div
-    class="hero-slide"
-    style="background-image:url('images/wedding/wedding30.jpg')"
-    role="img"
-    aria-label="Wedding photography by Kyra Picture">
-  </div>
-</div>
+      <div
+        class="hero-slide"
+        style="background-image:url('https://drive.google.com/thumbnail?id=1qKN01Z7Xd9qgJqyzjS7ywPFNfSnHq7Zf&sz=w2000')"
+        role="img"
+        aria-label="Wedding moments captured by Kyra Picture">
+      </div>
+    </div>
 
     <div class="hero-overlay"></div>
 
@@ -759,7 +1273,7 @@
     <div class="hero-controls">
       <button class="hero-arrow hero-prev" type="button" aria-label="Previous photo">←</button>
       <span class="hero-counter" aria-live="polite">
-        <span id="hero-current">01</span> / 05
+        <span id="hero-current">01</span> / 03
       </span>
       <button class="hero-arrow hero-next" type="button" aria-label="Next photo">→</button>
     </div>
