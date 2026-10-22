@@ -477,8 +477,13 @@ function E(t,id,pre){
  form((id?'Ubah ':'Tambah ')+c.t,c.f(q),id?D[t].find(r=>r.id==id):{...(c.d?c.d():{}),...pre},async v=>{
   Object.keys(v).forEach(k=>k[0]=='_'&&delete v[k]);
   if('paid'in v)v.paid=v.paid=='true';
-  if(t=='payments'){
+    if(t=='payments'){
    if(!id&&!v.order_id)v.order_id=oid;
+   // TAMBAHAN BARU: Kalau lagi edit & invoice kosong, ambil dari data lama
+   if(id&&!v.order_id){
+    const old=D.payments.find(p=>p.id==id);
+    if(old&&old.order_id)v.order_id=old.order_id;
+   }
    if(!v.order_id)return alert('Pilih invoice dulu.'),false;
    const o=ordOf(id?D.payments.find(p=>p.id==id).order_id:v.order_id);
    const old=id?+D.payments.find(p=>p.id==id).amount:0;
