@@ -1811,15 +1811,17 @@ function crewSection(o){
  }
  header += '<button class="ghost" onclick="E(\'order_crew\')">＋ Tambah</button></div></div>';
 
+  var locs = parseLocs(o);
+ var locHtml = locs.length ? locs.map(function(l){
+   return '<div style="margin-bottom:4px"><b>📍 ' + (l.title ? esc(l.title) + ' - ' : '') + esc(l.name) + '</b>' +
+          (l.maps ? ' <a href="' + esc(l.maps) + '" target="_blank" style="color:var(--a);text-decoration:underline;font-size:12px">(Buka Maps)</a>' : '') + '</div>';
+ }).join('') : '<div><b>📍 Lokasi belum diisi</b></div>';
+
  var locBlock = '<div style="background:#faf9f7;border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:13px">' +
   '<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center">' +
-  '<div style="min-width:0;flex:1">' +
-  '<div><b>📍 ' + esc(o.location || 'Lokasi belum diisi') + '</b></div>' +
-  '<div class="m" style="font-size:12px;margin-top:2px">' +
-  (hasMaps ? '🗺️ <a href="' + esc(o.location_maps) + '" target="_blank" style="color:var(--a);text-decoration:underline">Buka Maps</a>' : '⚠ Maps belum diisi') +
-  '</div></div>' +
+  '<div style="min-width:0;flex:1">' + locHtml + '</div>' +
   '<button class="ghost" onclick="quickMaps(' + o.id + ')" style="font-size:12px;padding:6px 10px;flex-shrink:0">' +
-  (hasMaps ? '✎ Edit' : '＋ Isi') +
+  (locs.length ? '✎ Edit' : '＋ Isi') +
   '</button></div></div>';
 
  if (!list.length) {
