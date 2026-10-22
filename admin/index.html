@@ -398,7 +398,7 @@ const CF={
   ],
   s:x=>`${esc(x.name)} <b>${rp(x.amount)}</b>`
  },
- payments:{
+  payments:{
   o:1,t:'Pembayaran',d:()=>({method:'Transfer',paid_at:today()}),
   f:q=>[
    ...((q||!oid)?[{k:'order_id',l:'Invoice',t:'select',r:1,w:1,o:ORD(D.orders.filter(o=>calc(o).st=='OPEN'))}]:[]),
@@ -418,9 +418,42 @@ const CF={
     u();
    }},
    {k:'paid_at',l:'Tanggal',t:'date'},
+   {k:'proof_url',l:'Bukti Transfer',h:fm=>{
+    const inp=fm.elements.namedItem('proof_url');
+    if(!inp)return;
+    inp.type='hidden';
+    const wrap=document.createElement('div');
+    wrap.style.cssText='display:grid;gap:6px';
+    wrap.innerHTML='<input type="file" accept="image/*,application/pdf" style="width:100%"><div class="proof-prev"></div>';
+    inp.parentElement.insertBefore(wrap,inp.nextSibling);
+    const fileIn=wrap.querySelector('input[type=file]');
+    const prev=wrap.querySelector('.proof-prev');
+    const showPreview=(url)=>{
+     if(!url){prev.innerHTML='';return}
+     const isPdf=/\.pdf(\?|$)/i.test(url);
+     prev.innerHTML=isPdf
+      ?'<div style="display:flex;gap:6px;align-items:center"><a href="'+esc(url)+'" target="_blank" style="padding:6px 12px;background:#f3ebe0;border-radius:8px;font-size:12px;font-weight:600;color:var(--a)">📄 Lihat PDF</a><button type="button" class="ghost" style="padding:4px 8px;font-size:11px" data-rm>Hapus</button></div>'
+      :'<div style="display:flex;gap:8px;align-items:center"><img src="'+esc(url)+'" style="max-width:100px;max-height:100px;border-radius:8px;border:1px solid var(--b);cursor:pointer" onclick="window.open(this.src,\'_blank\')"><button type="button" class="ghost" style="padding:4px 8px;font-size:11px" data-rm>Hapus</button></div>';
+     prev.querySelector('[data-rm]').onclick=()=>{inp.value='';fileIn.value='';showPreview('')};
+    };
+    if(inp.value)showPreview(inp.value);
+    fileIn.onchange=async()=>{
+     const f=fileIn.files[0];
+     if(!f)return;
+     if(f.size>5*1024*1024){alert('Max 5 MB');fileIn.value='';return}
+     prev.innerHTML='<small class="m">Uploading…</small>';
+     const fname=Date.now()+'_'+f.name.replace(/[^a-zA-Z0-9.]/g,'_');
+     const r=await sb.storage.from('payment-proofs').upload(fname,f);
+     if(r.error){prev.innerHTML='<small style="color:var(--r)">Gagal: '+esc(r.error.message)+'</small>';return}
+     const {data}=sb.storage.from('payment-proofs').getPublicUrl(r.data.path);
+     inp.value=data.publicUrl;
+     showPreview(data.publicUrl);
+    };
+   }},
+   {k:'proof_note',l:'Catatan bukti (opsional)',w:1},
    {k:'_i',t:'info'}
   ],
-  s:x=>`${fmt(x.paid_at)} · ${esc(x.label)} <small>${esc(x.method||'')}</small> <b>${rp(x.amount)}</b>`
+  s:x=>`${fmt(x.paid_at)} · ${esc(x.label)} <small>${esc(x.method||'')}</small> <b>${rp(x.amount)}</b>${x.proof_url?' <span class="pill ok" style="font-size:10px">📎 Bukti</span>':''}`
  },
  expenses:{
   t:'Pengeluaran',d:()=>({exp_date:today(),paid:false,category:'Lainnya'}),
@@ -481,7 +514,8 @@ function show(t,id){
   return esc(v);
  };
   const briefedRow=(t=='order_crew'&&x.briefed_at)?`<div class="li nc"><span class="m">Briefing terkirim</span><b>✅ ${fmt(x.briefed_at.slice(0,10))}</b></div>`:'';
- m.innerHTML=`<div class="box"><h2>${c.t}</h2>${c.f(1).filter(f=>!['info','addons'].includes(f.t)).map(f=>`<div class="li nc"><span class="m">${f.l.replace(/\s*\(.*\)/,'')}</span><b>${val(f)}</b></div>`).join('')}${briefedRow}${c.x?c.x(x):''}<div class="row"><button class="ghost" data-act="close">Tutup</button><span><button class="ghost" data-act="edit">Ubah</button> <button class="red" data-act="del">Hapus</button></span></div></div>`;
+   const proofRow=(t==='payments'&&x.proof_url)?'<div class="li nc" style="align-items:flex-start"><span class="m">Bukti transfer</span><div style="text-align:right">'+(/\.pdf(\?|$)/i.test(x.proof_url)?'<a href="'+esc(x.proof_url)+'" target="_blank" style="color:var(--a);text-decoration:underline;font-weight:600">📄 Buka PDF</a>':'<img src="'+esc(x.proof_url)+'" onclick="window.open(this.src,\'_blank\')" style="max-width:160px;max-height:160px;border-radius:8px;border:1px solid var(--b);cursor:pointer">')+'</div></div>':'';
+  m.innerHTML=`<div class="box"><h2>${c.t}</h2>${c.f(1).filter(f=>!['info','addons'].includes(f.t)&&!(t==='payments'&&f.k==='proof_url')).map(f=>`<div class="li nc"><span class="m">${f.l.replace(/\s*\(.*\)/,'')}</span><b>${val(f)}</b></div>`).join('')}${briefedRow}${proofRow}${c.x?c.x(x):''}<div class="row"><button class="ghost" data-act="close">Tutup</button><span><button class="ghost" data-act="edit">Ubah</button> <button class="red" data-act="del">Hapus</button></span></div></div>`;
  document.body.append(m);
  const onKey=e=>{if(e.key==='Escape')close()};
  const close=()=>{m.remove();document.removeEventListener('keydown',onKey)};
