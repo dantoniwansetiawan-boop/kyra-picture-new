@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Graduation Photography | Kyra Picture</title>
+  <meta name="description" content="Graduation photography packages by Kyra Picture for individual portraits, friend groups, and campus celebrations.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    main.graduation-grid {
+      width: min(1100px, calc(100% - 40px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .graduation-grid .price-card {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    .graduation-grid .price-card h2 {
+      overflow-wrap: anywhere;
+    }
+
+    .graduation-grid .price-card > p:not(.eyebrow) {
+      line-height: 1.8;
+    }
+
+    .graduation-grid .price-card ul {
+      flex: 1;
+      padding-left: 20px;
+      line-height: 1.8;
+    }
+
+    .graduation-grid .price-card li {
+      margin-bottom: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .package-note {
+      width: min(1000px, calc(100% - 40px));
+      margin: 36px auto 0;
+      padding: 22px 26px;
+      border: 1px solid rgba(95, 70, 52, 0.15);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.45);
+      box-sizing: border-box;
+      line-height: 1.8;
+    }
+
+    .package-note strong {
+      color: #79563e;
+    }
+
+    @media (max-width: 800px) {
+      main.graduation-grid {
+        width: calc(100% - 32px);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .graduation-grid .price-card {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      main.graduation-grid {
+        width: calc(100% - 20px);
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .graduation-grid .price-card {
+        padding: 22px 18px;
+      }
+
+      .graduation-grid .price-card h2 {
+        font-size: 22px;
+      }
+
+      .graduation-grid .price-card > p:not(.eyebrow) {
+        font-size: 13px;
+        line-height: 1.75;
+      }
+
+      .graduation-grid .price-card ul {
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .package-note {
+        width: calc(100% - 24px);
+        margin-top: 24px;
+        padding: 17px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <a class="logo" href="index.html">KYRA <span>PICTURE</span></a>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="pricelist.html" class="active">Pricelist</a>
+      <a href="testimonials.html">Testimonials</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <p class="eyebrow">GRADUATION COLLECTION</p>
+    <h1>Graduation Photography</h1>
+    <p class="muted">
+      One milestone, countless memories. Celebrate your achievement with
+      portraits that capture your personality, your friendships, and the
+      people who helped you get here.
+    </p>
+  </header>
+
+  <!-- PACKAGE INTRO -->
+  <section class="price-notice" aria-label="Graduation photography information">
+    <div class="price-notice-icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.7"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 10 12 5 2 10l10 5 10-5Z"/>
+        <path d="M6 12v5c3.5 3 8.5 3 12 0v-5"/>
+        <path d="M22 10v6"/>
+      </svg>
+    </div>
+    <div class="price-notice-content">
+      <p class="price-notice-label">YOUR MOMENT, YOUR STORY</p>
+      <h2>Made for your graduation day</h2>
+      <p>
+        Choose a session for yourself, your closest friends, or a larger
+        campus celebration. We can tailor the coverage to your plans.
+      </p>
+    </div>
+  </section>
+
+  <!-- GRADUATION PACKAGES -->
+  <main class="graduation-grid">
+    <article class="price-card">
+      <p class="eyebrow">01 / SOLO SESSION</p>
+      <h2>Individual</h2>
+      <p>
+        A personal graduation session focused on you, your achievement,
+        and the little details that make this milestone yours.
+      </p>
+      <ul>
+        <li>Individual graduation portraits</li>
+        <li>Portraits with graduation attire and accessories</li>
+        <li>Guided posing throughout the session</li>
+        <li>Edited high-resolution digital photos</li>
+        <li>Session location and duration agreed in advance</li>
+      </ul>
+      <a class="button" href="https://wa.me/6289519847571?text=Hi%20Kyra%20Picture%2C%20I%27m%20interested%20in%20the%20Individual%20Graduation%20Photography%20package." target="_blank" rel="noopener noreferrer">ASK FOR PRICING</a>
+    </article>
+
+    <article class="price-card">
+      <p class="eyebrow">02 / FRIENDS &amp; FAMILY</p>
+      <h2>Group Session</h2>
+      <p>
+        Keep the memories together with photos of your best friends,
+        classmates, and family who made the journey special.
+      </p>
+      <ul>
+        <li>Group portraits with friends or family</li>
+        <li>Individual portraits within the group session</li>
+        <li>Natural and candid moments</li>
+        <li>Edited high-resolution digital photos</li>
+        <li>Group size and session plan agreed in advance</li>
+      </ul>
+      <a class="button" href="https://wa.me/6289519847571?text=Hi%20Kyra%20Picture%2C%20I%27m%20interested%20in%20the%20Group%20Graduation%20Photography%20package." target="_blank" rel="noopener noreferrer">ASK FOR PRICING</a>
+    </article>
+
+    <article class="price-card">
+      <p class="eyebrow">03 / CAMPUS &amp; EVENTS</p>
+      <h2>Graduation Event</h2>
+      <p>
+        Photography coverage for larger groups, student communities,
+        campus activities, or graduation celebrations.
+      </p>
+      <ul>
+        <li>Event or group documentation</li>
+        <li>Portraits and candid coverage</li>
+        <li>Coverage plan based on event needs</li>
+        <li>Edited digital photo delivery</li>
+        <li>Custom arrangements for duration and group size</li>
+      </ul>
+      <a class="button" href="https://wa.me/6289519847571?text=Hi%20Kyra%20Picture%2C%20I%27d%20like%20to%20ask%20about%20Graduation%20Event%20Photography." target="_blank" rel="noopener noreferrer">ASK FOR PRICING</a>
+    </article>
+  </main>
+
+  <section class="package-note">
+    <strong>Need a custom package?</strong>
+    Pricing depends on the session location, duration, number of people,
+    and requested deliverables. Contact Kyra Picture to discuss your plans
+    and receive a package tailored to your graduation day.
+  </section>
+
+  <!-- CONTACT CTA -->
+  <section class="home-contact">
+    <p class="eyebrow">LET'S CELEBRATE</p>
+    <h2>Ready to capture your milestone?</h2>
+    <p class="muted">
+      Tell us your graduation date, preferred location, and whether you
+      need an individual or group session. We'll help you plan the details.
+    </p>
+    <a class="button" href="https://wa.me/6289519847571" target="_blank" rel="noopener noreferrer">
+      CONTACT US
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Kyra Picture. Your Story, Beautifully Captured.
+  </footer>
+</body>
+</html>
