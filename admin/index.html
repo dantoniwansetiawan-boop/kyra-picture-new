@@ -215,17 +215,21 @@ tbody tr:last-child td{border:0}
  #nav a{flex-direction:column;gap:2px;padding:8px 10px;font-size:11px;margin:0;white-space:nowrap;border-radius:8px}
  main{padding:16px 12px 90px}
  
- /* Paksa semua jadi 1 kolom di HP */
- .dash-grid, .stats, .qa, .cards { grid-template-columns:1fr !important; gap:10px !important }
+ /* Paksa jadi 1 kolom, KECUALI tombol pintasan (.qa) dan cards */
+ .dash-grid, .stats { grid-template-columns:1fr !important; gap:10px !important }
+ .cards { grid-template-columns:1fr 1fr !important; gap:10px !important }
+ 
+ /* Tombol Pintasan: Dibikin kotak-kotak 3 kolom (UX lebih enak di HP) */
+ .qa { grid-template-columns:repeat(3, 1fr) !important; gap:8px !important }
+ .qa a{padding:12px 6px; flex-direction:column; justify-content:center; text-align:center; gap:6px}
+ .qa a i{font-size:20px}
+ .qa a small{font-size:11px; line-height:1.2}
  
  /* Font sedikit lebih besar biar ga zoom */
  body{font-size:15px !important}
  h1{font-size:24px !important}
  h2{font-size:20px !important}
  .stat b{font-size:26px !important}
- .qa a{padding:16px; flex-direction:row; justify-content:flex-start; gap:12px}
- .qa a i{font-size:24px}
- .qa a small{font-size:14px}
  
  /* Tombol/form jadi full width */
  .row{flex-direction:column; align-items:stretch}
