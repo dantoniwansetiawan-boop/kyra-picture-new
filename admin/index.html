@@ -571,7 +571,7 @@ const RK={OPEN:0,CLOSED:1,BATAL:2};
 const oTable=(os=D.orders,q=qo)=>{
  q=q.toLowerCase();
  const r=os.map(o=>({o,...calc(o)})).filter(x=>!q||(cl(x.o.client_id).name+invNo(x.o)+x.o.package_name).toLowerCase().includes(q)).sort((a,b)=>(RK[a.st]??9)-(RK[b.st]??9)||b.o.inv_no-a.o.inv_no);
- return r.length?`<div class="tw"><table><thead><tr><th>Invoice</th><th>Client</th><th class="hm">Paket</th><th class="hm">Acara</th><th class="r">Total</th><th>Status</th></tr></thead><tbody>${r.map(x=>`<tr class="c" onclick="oid=${x.o.id};go('order')"><td><b>${invNo(x.o)}</b></td><td>${esc(cl(x.o.client_id).name)}</td><td class="hm">${esc(x.o.package_name)}</td><td class="hm">${fmt(x.o.event_date)}</td><td class="r">${rp(x.tot)}</td><td>${pill(x.st)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="m pad">Tidak ada order</p>';
+ return r.length?`<div class="tw"><table><thead><tr><th>Invoice</th><th>Client</th><th class="hm">Paket</th><th class="hm">Acara</th><th class="r">Total</th><th>Status</th></tr></thead><tbody>${r.map(x=>`<tr class="c" onclick="oid=${x.o.id};go('order')"><td><b>${invNo(x.o)}</b></td><td>${esc(cl(x.o.client_id).name)}</td><td class="hm">${esc(x.o.package_name)}</td><td class="hm">${fmt(x.o.event_date)}<br><small class="m">📍 ${parseLocs(x.o).map(l=>esc(l.name)).join(', ')||'-'}</small></td><td class="r">${rp(x.tot)}</td><td>${pill(x.st)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="m pad">Tidak ada order</p>';
 };
 const cTable=()=>{
  const q=qc.toLowerCase(),r=D.clients.filter(c=>!q||(c.name+(c.phone||'')+(c.ig||'')).toLowerCase().includes(q)).reverse();
@@ -865,7 +865,7 @@ function waInv(id){
  const txt=`Halo ${k.name}, berikut invoice ${invNo(o)} dari KYRA PICTURE.\n\n`+
   `Paket: ${o.package_name}\n`+
   `Acara: ${fmt(o.event_date)} ${(o.event_time||'').slice(0,5)}\n`+
-  `Lokasi: ${o.location||'-'}\n\n`+
+    `Lokasi: ${parseLocs(o).map(l=>l.name).join(', ')||'-'}\n\n`+
   `Total: ${rp(c.tot)}\n`+
   `Terbayar: ${rp(c.paid)}\n`+
   `Sisa: ${rp(Math.max(c.tot-c.paid,0))}\n\n`+
@@ -1120,6 +1120,7 @@ const V={
        <b style="font-size:14px">${invNo(x.o)}</b>${pill(x.st)}<span class="pay-badge ${payClass}">${pct}%</span>
       </div>
       <div class="m" style="font-size:12px">${esc(x.o.package_name)} · ${fmt(x.o.event_date)}${x.o.event_time?' '+(x.o.event_time||'').slice(0,5):''}</div>
+${parseLocs(x.o).map(l => `<div style="margin-top:4px;font-size:11px;color:var(--m)"><b>📍</b> ${l.title?`<span class="pill no" style="font-size:9px;padding:1px 4px">${esc(l.title)}</span>`:''} ${esc(l.name)}</div>`).join('')}
      </div>
      <button class="ghost" onclick="oid=${x.o.id};go('order')" style="flex-shrink:0">Buka →</button>
     </div>
@@ -1690,7 +1691,7 @@ function reminderPanel(){
   const briefed = crew.filter(function(x){return x.briefed_at}).length;
   const rest = Math.max(c.tot - c.paid, 0);
 
-  const hasMaps = !!o.location_maps;
+  const hasMaps = parseLocs(o).length > 0;
   const hasCrew = crew.length > 0;
   const allBriefed = crew.length > 0 && briefed === crew.length;
   const hasCrewWithoutPhone = crew.some(function(x){return !(crw(x.crew_id).phone || '').replace(/\D/g,'')});
@@ -1890,12 +1891,12 @@ function waCrewText(o, x){
  var c = crw(x.crew_id);
  var getS = function(k){var s = D.settings.find(function(z){return z.key===k}); return s?s.value:''};
  
- // Template baru: Bersih, tanpa paket/harga, format rapi
+ // Template baru: Bersih, tanpa paket/harga
  var tpl = getS('wa_crew_template') || 
    'Halo *{nama}*, briefing acara:\n\n' +
    '📅 *Tanggal:* {tanggal}\n' +
    '🕐 *Waktu:* {jam}\n' +
-   '🎭 *Peran:* {peran}\n\n' +
+   '📸 *Jobdesk:* {peran}\n\n' +
    '{maps}\n\n' +
    '👤 *Client:* {client}\n\n' +
    'Mohon konfirmasi kehadiran. Terima kasih 🙏\n- {company}';
@@ -1919,13 +1920,10 @@ function waCrewText(o, x){
   .replace(/\{nama\}/g, c.name || '')
   .replace(/\{tanggal\}/g, tanggal)
   .replace(/\{jam\}/g, jam)
-  .replace(/\{lokasi\}/g, locs.length ? locs[0].name : '-')
   .replace(/\{maps\}/g, mapsText.trim())
   .replace(/\{client\}/g, cl(o.client_id).name || '-')
-  .replace(/\{paket\}/g, o.package_name || '-') // (Tetap ada placeholder, tapi ga dipake di template default)
   .replace(/\{peran\}/g, x.role || '-')
-  .replace(/\{company\}/g, getS('company_name') || 'KYRA PICTURE')
-  .replace(/\{invoice\}/g, invNo(o));
+  .replace(/\{company\}/g, getS('company_name') || 'KYRA PICTURE');
 }
 
 async function waCrew(orderId, assignmentId){
@@ -2263,7 +2261,9 @@ function mkpdf(o){
  d.setFont('helvetica','bold');
  d.text('Event Details',110,48);
  d.setFont('helvetica','normal');
- d.text(d.splitTextToSize(`${fmt(o.event_date)} ${(o.event_time||'').slice(0,5)}\n${o.location||''}`,85),110,54);
+ const locs = parseLocs(o);
+const locText = locs.length > 0 ? locs.map(l => `- ${l.title ? l.title+' : ' : ''}${l.name}`).join('\n') : (o.location||'');
+d.text(d.splitTextToSize(`${fmt(o.event_date)} ${(o.event_time||'').slice(0,5)}\n${locText}`,85),110,54);
 
  y=80;
  d.setFillColor(24,24,27);
