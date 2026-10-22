@@ -409,11 +409,11 @@ const CF={
    (hist(c).map(h=>`<div class="li nc"><span><b>${invNo(h.o)}</b> · ${esc(cl(h.o.client_id).name)}<br><small>${fmt(h.o.event_date)}</small></span><span class="pill no">${esc(h.x.role||'-')}</span></div>`).join('')||'<p class="m">Belum ada acara</p>')+
    '</div>'
  },
-  order_crew:{
+   order_crew:{
   o:1,t:'Crew Turun',
   f:()=>[
    {k:'crew_id',l:'Crew',t:'select',r:1,o:op(D.crew,c=>`<option value="${c.id}">${esc(c.name)}</option>`)},
-   {k:'role',l:'Peran (bebas: FG, VG, FG/VG, Drone...)'}
+   {k:'role',l:'Jobdesk (bebas: FG, VG, FG/VG, Drone...)'}
   ],
   s:x=>`<b>${esc(crw(x.crew_id).name)}</b> <span class="pill no">${esc(x.role||'-')}</span> ${x.briefed_at?'<span class="pill ok" style="font-size:10px">✅</span>':''}`
  },
@@ -737,49 +737,55 @@ function orderForm(id){
     {k:'event_date',l:'Tanggal acara',t:'date'},
   {k:'event_time',l:'Jam acara',t:'time'},
   
-  // --- MULTI LOKASI START ---
-  {k:'_locs',t:'custom',h:fm=>{
-    const cont = document.createElement('div');
-    cont.className = 'w';
-    cont.innerHTML = '<div class="row" style="margin-bottom:8px"><b>📍 Lokasi Acara</b> <button type="button" class="ghost" id="addLoc" style="padding:4px 10px;font-size:12px">＋ Tambah Lokasi</button></div><div id="locList" style="display:grid;gap:8px"></div>';
-    fm.appendChild(cont);
+   {k:'event_date',l:'Tanggal acara',t:'date'},
+  {k:'event_time',l:'Jam acara',t:'time'},
+  {k:'location',l:'Lokasi Utama (Lama)',w:1,h:fm=>{
+     const inp = fm.elements.namedItem('location');
+     if(!inp) return;
+     const wrap = document.createElement('div');
+     wrap.className = 'w';
+     wrap.style.marginTop = '10px';
+     wrap.innerHTML = '<div class="row" style="margin-bottom:8px"><b>📍 Detail Lokasi & Maps</b> <button type="button" class="ghost" id="addLoc" style="padding:4px 10px;font-size:12px">＋ Tambah Lokasi</button></div><div id="locList" style="display:grid;gap:8px"></div>';
+     inp.parentElement.parentElement.appendChild(wrap);
 
-    const list = cont.querySelector('#locList');
-    const addLoc = (title='', name='', maps='') => {
-      const div = document.createElement('div');
-      div.className = 'ar'; // Pakai style grid form
-      div.style = 'background:#faf9f7;padding:10px;border-radius:8px;border:1px solid var(--b);display:grid;gap:6px;grid-template-columns: 120px 1fr 1fr auto;';
-      div.innerHTML = `
-        <input data-title placeholder="Keterangan" value="${esc(title)}" style="font-size:12px;padding:6px" title="Misal: Preparation, Pemberkatan">
-        <input data-name placeholder="Nama Tempat" value="${esc(name)}" style="font-size:12px;padding:6px">
-        <input data-maps placeholder="Link Google Maps" value="${esc(maps)}" style="font-size:12px;padding:6px">
-        <a role="button" tabindex="0" style="cursor:pointer;color:var(--r);padding:6px;font-weight:bold" title="Hapus">✕</a>
-      `;
-      div.querySelector('a').onclick = () => div.remove();
-      list.appendChild(div);
-    };
+     const list = wrap.querySelector('#locList');
+     const addLoc = (title='', name='', maps='') => {
+       const div = document.createElement('div');
+       div.style = 'background:#faf9f7;padding:10px;border-radius:8px;border:1px solid var(--b);display:grid;gap:6px;grid-template-columns: 1fr 1fr 1fr auto;';
+       div.innerHTML = `
+         <input data-title placeholder="Ket (misal: Preparation)" value="${esc(title)}" style="font-size:12px;padding:6px">
+         <input data-name placeholder="Nama Tempat" value="${esc(name)}" style="font-size:12px;padding:6px">
+         <input data-maps placeholder="Link Google Maps" value="${esc(maps)}" style="font-size:12px;padding:6px">
+         <a role="button" tabindex="0" style="cursor:pointer;color:var(--r);padding:6px;font-weight:bold" title="Hapus">✕</a>
+       `;
+       div.querySelector('a').onclick = () => div.remove();
+       list.appendChild(div);
+     };
 
-    // Load data kalau lagi edit
-    const existing = id ? parseLocs(o) : [{title:'', name:'', maps:''}];
-    if(existing.length === 0) existing.push({title:'', name:'', maps:''}); // Minimal 1 baris
-    existing.forEach(loc => addLoc(loc.title, loc.name, loc.maps));
+     // Load data
+     const existing = id ? parseLocs(o) : [{title:'', name:'', maps:''}];
+     if(existing.length === 0) existing.push({title:'', name:'', maps:''});
+     existing.forEach(loc => addLoc(loc.title, loc.name, loc.maps));
 
-    cont.querySelector('#addLoc').onclick = () => addLoc();
+     wrap.querySelector('#addLoc').onclick = () => addLoc();
 
-    // Simpan ke form object biar kebaca pas disubmit
-    fm._getLocations = () => {
-      const arr = [];
-      list.querySelectorAll('.ar').forEach(row => {
-        const t = row.querySelector('[data-title]').value.trim();
-        const n = row.querySelector('[data-name]').value.trim();
-        const m = row.querySelector('[data-maps]').value.trim();
-        if (n) arr.push({ title: t, name: n, maps: m });
-      });
-      return arr;
-    };
+     // Simpan fungsi ke elemen form biar kebaca pas disubmit
+     fm._getLocations = () => {
+       const arr = [];
+       list.querySelectorAll('div[style*="grid"]').forEach(row => {
+         const t = row.querySelector('[data-title]').value.trim();
+         const n = row.querySelector('[data-name]').value.trim();
+         const m = row.querySelector('[data-maps]').value.trim();
+         if (n) arr.push({ title: t, name: n, maps: m });
+       });
+       return arr;
+     };
   }},
-  {k:'_t',t:'info'}, // Info sisa total
-  // --- MULTI LOKASI END ---
+  {k:'location_maps',l:'Maps Utama (Lama)',w:1, h:fm=>{
+     // Sembunyikan 2 input lama karena udah diganti Multi-Lokasi
+     fm.elements.namedItem('location').parentElement.style.display = 'none';
+     fm.elements.namedItem('location_maps').parentElement.style.display = 'none';
+  }},
 
   ...(!id?[
    {k:'_dp',l:'DP awal (opsional)',t:'number'},
@@ -794,8 +800,9 @@ function orderForm(id){
   v.location_multi = locs.length ? JSON.stringify(locs) : null;
   v.location = locs.length ? locs[0].name : null; // Fallback ke kolom lama
   v.location_maps = locs.length ? locs[0].maps : null;
-  
-
+  // TAMBAHKAN 2 BARIS INI
+  const cn=v.cname, cp=v.cphone, dp=v._dp, dm=v._dm;
+  ['cname','cphone','_pk','_dp','_dm'].forEach(x=>delete v[x]);
   const cidn=await clientId(cn,cp,id?o.client_id:null);
   if(!cidn)return false;
   v.client_id=cidn;
@@ -1885,18 +1892,27 @@ function quickMaps(orderId){
 function waCrewText(o, x){
  var c = crw(x.crew_id);
  var getS = function(k){var s = D.settings.find(function(z){return z.key===k}); return s?s.value:''};
- var tpl = getS('wa_crew_template') || 'Halo {nama}, briefing acara:\n\n📅 {tanggal}\n🕐 {jam}\n\n{maps}\n\nClient: {client}\nPaket: {paket}\nPeran: {peran}\n\n- {company}';
+ 
+ // Template baru: Bersih, tanpa paket/harga, format rapi
+ var tpl = getS('wa_crew_template') || 
+   'Halo *{nama}*, briefing acara:\n\n' +
+   '📅 *Tanggal:* {tanggal}\n' +
+   '🕐 *Waktu:* {jam}\n' +
+   '🎭 *Peran:* {peran}\n\n' +
+   '{maps}\n\n' +
+   '👤 *Client:* {client}\n\n' +
+   'Mohon konfirmasi kehadiran. Terima kasih 🙏\n- {company}';
  
  var locs = parseLocs(o);
  var mapsText = '';
  if (locs.length > 0) {
-    mapsText = '📍 *Lokasi & Maps:*\n';
+    mapsText = '📍 *LOKASI:*\n';
     locs.forEach((l, i) => {
       mapsText += `${i+1}. ${l.title ? l.title.toUpperCase() : 'Lokasi'} - ${l.name || '-'}\n`;
-      if (l.maps) mapsText += `   Link: ${l.maps}\n`;
+      if (l.maps) mapsText += `   🗺️ ${l.maps}\n`;
     });
  } else {
-    mapsText = '🗺️ Maps: (menyusul)';
+    mapsText = '📍 *Lokasi:* (menyusul)';
  }
 
  var tanggal = o.event_date ? new Date(o.event_date + 'T00:00').toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'long', year:'numeric'}) : '-';
@@ -1909,7 +1925,7 @@ function waCrewText(o, x){
   .replace(/\{lokasi\}/g, locs.length ? locs[0].name : '-')
   .replace(/\{maps\}/g, mapsText.trim())
   .replace(/\{client\}/g, cl(o.client_id).name || '-')
-  .replace(/\{paket\}/g, o.package_name || '-')
+  .replace(/\{paket\}/g, o.package_name || '-') // (Tetap ada placeholder, tapi ga dipake di template default)
   .replace(/\{peran\}/g, x.role || '-')
   .replace(/\{company\}/g, getS('company_name') || 'KYRA PICTURE')
   .replace(/\{invoice\}/g, invNo(o));
