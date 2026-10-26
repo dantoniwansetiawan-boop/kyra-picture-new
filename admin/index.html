@@ -474,7 +474,34 @@ function feeBadge(st){
   const icons = { lunas:'✅', dp:'◐', unpaid:'⚠', waiting:'⏳', none:'—' };
   return `<span class="fee-badge ${st.code}">${icons[st.code]||''} ${st.label}</span>`;
 }
-
+// ===== PREVIEW BUKTI TF =====
+function showProof(url) {
+  if (!url) return;
+  const m = document.createElement('div');
+  m.className = 'modal';
+  m.style.zIndex = '9999'; // Biar paling depan
+  m.style.background = 'rgba(0,0,0,0.85)'; // Gelap pekat
+  
+  const isPdf = /\.pdf(\?|$)/i.test(url);
+  
+  m.innerHTML = `
+    <div style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:15px; padding:20px;">
+      <div style="position:absolute; top:20px; right:20px; display:flex; gap:10px;">
+        <a href="${esc(url)}" target="_blank" style="background:#fff; color:#000; padding:8px 16px; border-radius:8px; text-decoration:none; font-weight:bold; font-size:14px;">⬇️ Buka Asli</a>
+        <button id="closeProof" style="background:#c0453b; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; font-size:14px; cursor:pointer;">✕ Tutup</button>
+      </div>
+      
+      ${isPdf 
+        ? `<iframe src="${esc(url)}" style="width:100%; max-width:800px; height:85vh; border:none; background:#fff; border-radius:8px;"></iframe>`
+        : `<img src="${esc(url)}" style="max-width:100%; max-height:85vh; object-fit:contain; border-radius:8px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">`
+      }
+    </div>
+  `;
+  
+  document.body.append(m);
+  m.querySelector('#closeProof').onclick = () => m.remove();
+  m.addEventListener('click', e => { if (e.target === m) m.remove(); });
+}
 function feePaidOf(assignmentId){
   return sum(D.expenses.filter(e => e.order_crew_id == assignmentId));
 }
@@ -513,7 +540,14 @@ const CF={
   x:x=>{
    const st=crewFeeStatus(x);
    const pays=D.expenses.filter(e=>e.order_crew_id==x.id).sort((a,b)=>(a.exp_date||'').localeCompare(b.exp_date||'')||a.id-b.id);
-   const hist=pays.length?`<table class="fee-hist"><thead><tr><th>Tanggal</th><th>Jumlah</th><th>Metode</th><th>Bukti</th><th></th></tr></thead><tbody>${pays.map(p=>`<tr><td>${fmt(p.exp_date)}</td><td><b>${rp(p.amount)}</b></td><td>${esc(p.note||'-')}</td><td>${p.proof_url?(/\.pdf(\?|$)/i.test(p.proof_url)?`<a href="${esc(p.proof_url)}" target="_blank" class="fee-proof-pdf">📄 PDF</a>`:`<img src="${esc(p.proof_url)}" class="fee-proof-thumb" onclick="window.open(this.src,'_blank')">`):'<small class="m">-</small>'}</td><td class="r"><a class="fee-del" title="Hapus pembayaran" onclick="delCrewPayment(${p.id},${x.id})">✕</a></td></tr>`).join('')}</tbody></table>`:'<p class="m" style="font-size:12px;margin:6px 0">Belum ada pembayaran.</p>';
+   const hist=pays.length?`<table class="fee-hist"><thead><tr><th>Tanggal</th><th>Jumlah</th><th>Metode</th><th>Bukti</th><th></th></tr></thead><tbody>${pays.map(p=>`<tr><td>${fmt(p.exp_date)}</td><td><b>${rp(p.amount)}</b></td><td>${esc(p.note||'-')}</td><td>
+  ${p.proof_url 
+    ? (/\.pdf(\?|$)/i.test(p.proof_url) 
+       ? `<a class="fee-proof-pdf" style="cursor:pointer" onclick="showProof('${esc(p.proof_url)}')">📄 Lihat PDF</a>` 
+       : `<img src="${esc(p.proof_url)}" class="fee-proof-thumb" style="cursor:zoom-in" onclick="showProof('${esc(p.proof_url)}')">`)
+    : '<small class="m">-</small>'
+  }
+</td><td class="r"><a class="fee-del" title="Hapus pembayaran" onclick="delCrewPayment(${p.id},${x.id})">✕</a></td></tr>`).join('')}</tbody></table>`:'<p class="m" style="font-size:12px;margin:6px 0">Belum ada pembayaran.</p>';
 
    return `<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--b)">
     <div class="row" style="margin:0 0 6px"><h3 style="font-size:13px">💰 Fee Crew</h3>${feeBadge(st)}</div>
@@ -1438,9 +1472,9 @@ ${parseLocs(x.o).map(l => `<div style="margin-top:4px;font-size:11px;color:var(-
      <th class="r">Fee</th><th class="r">Dibayar</th><th class="r">Sisa</th>
      <th>Status</th><th class="hm">Bukti</th><th></th>
     </tr></thead>
-    <tbody>${rows.map(r=>{
+       <tbody>${rows.map(r=>{
      const proofCount = D.expenses.filter(e=>e.order_crew_id==r.x.id&&e.proof_url).length;
-     return `<tr class="c" onclick="oid=${r.o.id};go('order')">
+     return `<tr class="c" onclick="show('order_crew', ${r.x.id})">
       <td><b>${fmt(r.o.event_date)}</b><br><small class="m">${(r.o.event_time||'').slice(0,5)||'-'}</small></td>
       <td>${invNo(r.o)}<br><small class="m">${esc(cl(r.o.client_id).name)}</small></td>
       <td><b>${esc(r.c.name)}</b><br><small class="m">${esc(r.x.role||'-')}</small></td>
@@ -1449,7 +1483,12 @@ ${parseLocs(x.o).map(l => `<div style="margin-top:4px;font-size:11px;color:var(-
       <td class="r" style="color:var(--ok)">${rp(r.st.paid)}</td>
       <td class="r" style="color:${r.st.rest>0?'var(--r)':'var(--m)'}">${r.st.rest>0?rp(r.st.rest):'—'}</td>
       <td>${feeBadge(r.st)}</td>
-      <td class="hm">${proofCount?`<span class="pill" style="background:#e7eefc;color:#3b5f9e;font-size:10px">📎 ${proofCount}</span>`:'<small class="m">-</small>'}</td>
+           <td class="hm" onclick="event.stopPropagation();showProof('${esc(D.expenses.find(e=>e.order_crew_id==r.x.id&&e.proof_url)?.proof_url || '')}')">
+        ${proofCount 
+          ? `<span class="pill" style="background:#e7eefc;color:#3b5f9e;font-size:10px;cursor:pointer;text-decoration:underline" title="Lihat Bukti">🔍 ${proofCount} Bukti</span>`
+          : '<small class="m">-</small>'
+        }
+      </td>
       <td class="r" onclick="event.stopPropagation()">
        ${r.st.code==='lunas'||r.st.code==='none'?'':`<button class="ghost btn-pay-fee" onclick="payCrewFee(${r.o.id},${r.x.id})" style="padding:4px 8px;font-size:11px">💰 Bayar</button>`}
       </td>
