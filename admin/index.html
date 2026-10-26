@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
-   <!-- PWA Setup -->
+   
+<head>
+<!-- PWA Setup -->
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Kyra Admin">
   <link rel="apple-touch-icon" href="https://kyra-picture-new.pages.dev/favicon.png">
-<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KYRA PICTURE Admin</title>
@@ -267,10 +268,64 @@ tbody tr:last-child td{border:0}
   padding: 2px 6px !important;
 }
 /* Sembunyiin kolom Tipe kalau layar agak kecil biar muat */
+/* Sembunyiin kolom Tipe kalau layar agak kecil biar muat */
 @media(max-width: 900px) {
   .fee-compact-table th:nth-child(4), 
   .fee-compact-table td:nth-child(4) { display: none !important; }
 }
+
+/* ===== TRIK TABEL JADI CARD DI HP ===== */
+/* Sembunyiin kolom Tipe kalau layar agak kecil biar muat */
+@media(max-width: 900px) {
+  .fee-compact-table th:nth-child(4), 
+  .fee-compact-table td:nth-child(4) { display: none !important; }
+}
+
+/* ===== TRIK TABEL JADI CARD DI HP ===== */
+@media(max-width: 760px) {
+  .fee-compact-table thead { display: none; }
+  
+  .fee-compact-table tr {
+    display: block;
+    background: #fff;
+    border: 1px solid var(--b);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  
+  .fee-compact-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    padding: 6px 0;
+    font-size: 12px;
+    white-space: normal !important;
+  }
+
+  /* Sembunyiin kolom Tipe (4) & Fee Target (5) di HP */
+  .fee-compact-table td:nth-child(4),
+  .fee-compact-table td:nth-child(5) { display: none !important; }
+  
+  /* Atur Baris Atas (Acara & Invoice) */
+  .fee-compact-table td:nth-child(1) { font-size: 14px; font-weight: bold; padding-bottom: 0; }
+  .fee-compact-table td:nth-child(2) { padding-top: 2px; color: var(--m); }
+  
+  /* Atur Baris Bawah (Status, Bukti, Tombol) */
+  .fee-compact-table td:nth-child(8),
+  .fee-compact-table td:nth-child(9),
+  .fee-compact-table td:nth-child(10) {
+    justify-content: flex-start;
+    gap: 8px;
+    padding-top: 10px;
+    margin-top: 8px;
+    border-top: 1px dashed var(--b);
+  }
+  
+}
+ 
 .fee-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;white-space:nowrap}
 .fee-badge.lunas{background:#e3f2ea;color:var(--ok)}
 .fee-badge.dp{background:#fdf3e2;color:#a0702a}
@@ -3135,12 +3190,13 @@ window.toggleProg = (el) => {
   el.querySelector('.icon').textContent = isDone ? '✅' : '⏳';
   el.querySelector('input').checked = isDone;
 };
-   // Register Service Worker
+  // Register Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
-    });
+    }); 
   }
+
 </script>
 </body>
 </html>
