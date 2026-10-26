@@ -249,6 +249,22 @@ tbody tr:last-child td{border:0}
  .chart{height:90px}
 }
  /* ===== FEE CREW (patch) ===== */
+ /* ===== BIAR TABEL FEE CREW RAPAT & GA GESER ===== */
+.fee-compact-table { width: 100%; }
+.fee-compact-table th, .fee-compact-table td { 
+  padding: 6px 4px !important; 
+  font-size: 11px !important; 
+  vertical-align: middle;
+}
+.fee-compact-table .pill {
+  font-size: 9px !important;
+  padding: 2px 6px !important;
+}
+/* Sembunyiin kolom Tipe kalau layar agak kecil biar muat */
+@media(max-width: 900px) {
+  .fee-compact-table th:nth-child(4), 
+  .fee-compact-table td:nth-child(4) { display: none !important; }
+}
 .fee-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;white-space:nowrap}
 .fee-badge.lunas{background:#e3f2ea;color:var(--ok)}
 .fee-badge.dp{background:#fdf3e2;color:#a0702a}
@@ -448,7 +464,15 @@ const fill=(fm,k,v)=>{
  el.dispatchEvent(new Event('input',{bubbles:true}));
 };
 const hist=c=>D.order_crew.filter(x=>x.crew_id==c.id).map(x=>({x,o:ordOf(x.order_id)})).filter(h=>h.o).sort((a,b)=>(b.o.event_date||'').localeCompare(a.o.event_date||''));
+
 // ===== FEE CREW HELPERS (patch) =====
+function getProofLabel(e) {
+  const label = (e.label && e.label.trim() !== '') ? e.label : 'DP'; 
+  const metode = e.note || 'Transfer'; 
+  const tgl = e.exp_date ? new Date(e.exp_date + 'T00:00').toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) : '';
+  // Pakai <br> biar turun ke bawah, dan font-size dikecilin biar rapi
+  return `<span style="display:block; line-height:1.1; font-weight:bold;">${label}</span><span style="font-size:9px; color:var(--m);">${metode} - ${tgl}</span>`;
+}
 function crewFeeStatus(assignment){
   const target = +assignment.fee_target || 0;
   const type = assignment.fee_type || 'full';
@@ -490,7 +514,7 @@ function showProof(dataBukti) {
   const content = items.map((item, i) => {
     // Handle kalau datanya cuma string URL
     const url = typeof item === 'string' ? item : item.url;
-        const label = typeof item === 'string' ? `Bukti ${i+1}` : (item.label || `Bukti ${i+1}`);
+            const label = typeof item === 'string' ? `Bukti ${i+1}` : (item.label || `Bukti ${i+1}`);
     const isPdf = /\.pdf(\?|$)/i.test(url);
     
     let media = '';
@@ -1509,22 +1533,10 @@ ${parseLocs(x.o).map(l => `<div style="margin-top:4px;font-size:11px;color:var(-
       <td class="r" style="color:var(--ok)">${rp(r.st.paid)}</td>
       <td class="r" style="color:${r.st.rest>0?'var(--r)':'var(--m)'}">${r.st.rest>0?rp(r.st.rest):'—'}</td>
       <td>${feeBadge(r.st)}</td>
-                       <td class="hm" onclick="event.stopPropagation(); showProof([
-        ${D.expenses.filter(e=>e.order_crew_id==r.x.id && e.proof_url).map(e => {
-          const ket = e.note || 'Transfer';
-          const tgl = e.exp_date ? new Date(e.exp_date + 'T00:00').toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) : '';
-          const label = `${ket} - ${tgl}`;
-          return `{ url: '${esc(e.proof_url)}', label: '${esc(label)}' }`;
-        }).join(',')}
+                             <td class="hm" onclick="event.stopPropagation(); showProof([
+        ${D.expenses.filter(e=>e.order_crew_id==r.x.id && e.proof_url).map(e => `{ url: '${esc(e.proof_url)}', label: '${esc(getProofLabel(e))}' }`).join(',')}
       ])">
-        ${proofCount 
-          ? `<span class="pill" style="background:#e7eefc;color:#3b5f9e;font-size:10px;cursor:pointer;white-space:nowrap" title="Lihat Bukti">📎 ${D.expenses.filter(e=>e.order_crew_id==r.x.id && e.proof_url).map(e => {
-              const ket = e.note || 'Transfer';
-              const tgl = e.exp_date ? new Date(e.exp_date + 'T00:00').toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) : '';
-              return `${ket} - ${tgl}`;
-            }).join(' | ')}</span>`
-          : '<small class="m">-</small>'
-        }
+        ${proofCount ? `<span class="pill" style="background:#e7eefc;color:#3b5f9e;font-size:10px;cursor:pointer;white-space:nowrap" title="Lihat Bukti">📎 ${D.expenses.filter(e=>e.order_crew_id==r.x.id && e.proof_url).map(e => getProofLabel(e)).join(' | ')}</span>` : '<small class="m">-</small>'}
       </td>
       <td class="r" onclick="event.stopPropagation()">
        ${r.st.code==='lunas'||r.st.code==='none'?'':`<button class="ghost btn-pay-fee" onclick="payCrewFee(${r.o.id},${r.x.id})" style="padding:4px 8px;font-size:11px">💰 Bayar</button>`}
