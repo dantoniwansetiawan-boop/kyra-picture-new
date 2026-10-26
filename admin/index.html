@@ -248,6 +248,63 @@ tbody tr:last-child td{border:0}
  .hm { display:none !important }
  .chart{height:90px}
 }
+ /* ===== FEE CREW (patch) ===== */
+.fee-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;white-space:nowrap}
+.fee-badge.lunas{background:#e3f2ea;color:var(--ok)}
+.fee-badge.dp{background:#fdf3e2;color:#a0702a}
+.fee-badge.unpaid{background:#f8e4e2;color:var(--r)}
+.fee-badge.waiting{background:#fdf3e2;color:#a0702a}
+.fee-badge.none{background:#f1f0ee;color:var(--m)}
+
+.fee-line{font-size:12px;color:var(--m);margin-top:3px;line-height:1.5}
+.fee-line b{color:var(--t);font-weight:600}
+.fee-line .fee-paid{color:var(--ok)}
+.fee-line .fee-rest{color:var(--r);font-weight:600}
+
+.fee-mini{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px;font-size:11.5px}
+.fee-mini .fee-chip{background:#faf9f7;border:1px solid var(--b);padding:2px 8px;border-radius:6px;white-space:nowrap}
+.fee-mini .fee-chip b{color:var(--t)}
+.fee-mini .fee-chip.ok{background:#e3f2ea;border-color:#bce3cd;color:var(--ok)}
+.fee-mini .fee-chip.warn{background:#fdf3e2;border-color:#f0d9a8;color:#a0702a}
+.fee-mini .fee-chip.bad{background:#f8e4e2;border-color:#ecc5c1;color:var(--r)}
+
+.src-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.src-badge.crew{background:#e7eefc;color:#3b5f9e}
+.src-badge.manual{background:#f1f0ee;color:var(--m)}
+
+.tr-readonly{opacity:.92;background:#faf9fb}
+.tr-readonly:hover td{background:#f5f3f8!important}
+
+/* Riwayat pembayaran fee di detail crew */
+.fee-hist{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+.fee-hist th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--m);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--b);white-space:nowrap}
+.fee-hist td{padding:8px;border-bottom:1px solid #f0eeea;vertical-align:middle}
+.fee-hist tr:last-child td{border:0}
+.fee-hist .fee-proof-thumb{max-width:44px;max-height:44px;border-radius:6px;border:1px solid var(--b);cursor:pointer;display:block}
+.fee-hist .fee-proof-pdf{display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--a);font-weight:600;text-decoration:underline;white-space:nowrap}
+.fee-hist .fee-del{color:var(--r);font-weight:700;cursor:pointer;padding:2px 6px;font-size:13px;border-radius:4px;display:inline-block}
+.fee-hist .fee-del:hover{background:#f8e4e2}
+
+/* Statistik fee crew (tab Fee Crew) */
+.fee-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.fee-stats .fs{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:14px}
+.fee-stats .fs small{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--m);font-weight:600}
+.fee-stats .fs b{display:block;font-size:17px;margin-top:5px;font-weight:700}
+.fee-stats .fs.k{background:var(--t);color:#fff;border-color:var(--t)}
+.fee-stats .fs.k small{color:#bbb}
+.fee-stats .fs.k b{color:#e6cfae}
+
+/* Tombol bayar fee cepat */
+.btn-pay-fee{background:var(--ok)!important;border-color:var(--ok)!important;color:#fff!important;padding:4px 10px;font-size:11px;font-weight:600}
+
+@media(max-width:560px){
+  .fee-hist th,.fee-hist td{padding:6px 4px;font-size:11px}
+  .fee-stats{grid-template-columns:repeat(2,1fr)!important}
+  .fee-stats .fs{padding:10px}
+  .fee-stats .fs b{font-size:15px}
+  .fee-mini{font-size:11px}
+
+}
 </style>
 </head>
 <body>
@@ -391,7 +448,38 @@ const fill=(fm,k,v)=>{
  el.dispatchEvent(new Event('input',{bubbles:true}));
 };
 const hist=c=>D.order_crew.filter(x=>x.crew_id==c.id).map(x=>({x,o:ordOf(x.order_id)})).filter(h=>h.o).sort((a,b)=>(b.o.event_date||'').localeCompare(a.o.event_date||''));
+// ===== FEE CREW HELPERS (patch) =====
+function crewFeeStatus(assignment){
+  const target = +assignment.fee_target || 0;
+  const type = assignment.fee_type || 'full';
+  const paid = sum(D.expenses.filter(e => e.order_crew_id == assignment.id));
+  const rest = Math.max(target - paid, 0);
 
+  if (type === 'none' || target === 0) {
+    return { code:'none', label:'Tanpa Fee', paid, rest, target, pct:0 };
+  }
+  if (paid >= target) {
+    return { code:'lunas', label:'Lunas', paid, rest:0, target, pct:100 };
+  }
+  if (paid > 0) {
+    return { code:'dp', label:'DP', paid, rest, target, pct:Math.round(paid/target*100) };
+  }
+  if (type === 'full') {
+    return { code:'waiting', label:'Nunggu Hari H', paid, rest, target, pct:0 };
+  }
+  return { code:'unpaid', label:'Belum Dibayar', paid, rest, target, pct:0 };
+}
+
+function feeBadge(st){
+  const icons = { lunas:'✅', dp:'◐', unpaid:'⚠', waiting:'⏳', none:'—' };
+  return `<span class="fee-badge ${st.code}">${icons[st.code]||''} ${st.label}</span>`;
+}
+
+function feePaidOf(assignmentId){
+  return sum(D.expenses.filter(e => e.order_crew_id == assignmentId));
+}
+
+const FEE_TYPE_LABEL = { dp:'DP (boleh bertahap)', full:'Full (bayar sekali)', none:'Tanpa Fee' };
 const CF={
  clients:{t:'Client',f:()=>[
   {k:'name',l:'Nama',r:1},{k:'phone',l:'Kontak (WA)'},{k:'ig',l:'Instagram'},{k:'notes',l:'Catatan',t:'area',w:1}
@@ -409,13 +497,38 @@ const CF={
    (hist(c).map(h=>`<div class="li nc"><span><b>${invNo(h.o)}</b> · ${esc(cl(h.o.client_id).name)}<br><small>${fmt(h.o.event_date)}</small></span><span class="pill no">${esc(h.x.role||'-')}</span></div>`).join('')||'<p class="m">Belum ada acara</p>')+
    '</div>'
  },
-   order_crew:{
+    order_crew:{
   o:1,t:'Crew Turun',
   f:()=>[
    {k:'crew_id',l:'Crew',t:'select',r:1,o:op(D.crew,c=>`<option value="${c.id}">${esc(c.name)}</option>`)},
-   {k:'role',l:'Jobdesk (bebas: FG, VG, FG/VG, Drone...)'}
+   {k:'role',l:'Jobdesk (bebas: FG, VG, FG/VG, Drone...)'},
+   {k:'fee_target',l:'Fee Target',t:'number'},
+   {k:'fee_type',l:'Tipe Fee',t:'select',o:'<option value="full">Full (bayar sekali)</option><option value="dp">DP (boleh bertahap)</option><option value="none">Tanpa Fee</option>'},
+   {k:'fee_note',l:'Catatan Fee (opsional)',w:1}
   ],
-  s:x=>`<b>${esc(crw(x.crew_id).name)}</b> <span class="pill no">${esc(x.role||'-')}</span> ${x.briefed_at?'<span class="pill ok" style="font-size:10px">✅</span>':''}`
+  s:x=>{
+   const st=crewFeeStatus(x);
+   return `<b>${esc(crw(x.crew_id).name)}</b> <span class="pill no">${esc(x.role||'-')}</span> ${x.briefed_at?'<span class="pill ok" style="font-size:10px">✅</span>':''}<div class="fee-mini">${st.target>0?`<span class="fee-chip"><b>${rp(st.target)}</b></span>`:''}<span class="fee-chip ${st.code==='lunas'?'ok':st.code==='unpaid'?'bad':st.code==='dp'||st.code==='waiting'?'warn':''}">${feeBadge(st)}</span></div>`;
+  },
+  x:x=>{
+   const st=crewFeeStatus(x);
+   const pays=D.expenses.filter(e=>e.order_crew_id==x.id).sort((a,b)=>(a.exp_date||'').localeCompare(b.exp_date||'')||a.id-b.id);
+   const hist=pays.length?`<table class="fee-hist"><thead><tr><th>Tanggal</th><th>Jumlah</th><th>Metode</th><th>Bukti</th><th></th></tr></thead><tbody>${pays.map(p=>`<tr><td>${fmt(p.exp_date)}</td><td><b>${rp(p.amount)}</b></td><td>${esc(p.note||'-')}</td><td>${p.proof_url?(/\.pdf(\?|$)/i.test(p.proof_url)?`<a href="${esc(p.proof_url)}" target="_blank" class="fee-proof-pdf">📄 PDF</a>`:`<img src="${esc(p.proof_url)}" class="fee-proof-thumb" onclick="window.open(this.src,'_blank')">`):'<small class="m">-</small>'}</td><td class="r"><a class="fee-del" title="Hapus pembayaran" onclick="delCrewPayment(${p.id},${x.id})">✕</a></td></tr>`).join('')}</tbody></table>`:'<p class="m" style="font-size:12px;margin:6px 0">Belum ada pembayaran.</p>';
+
+   return `<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--b)">
+    <div class="row" style="margin:0 0 6px"><h3 style="font-size:13px">💰 Fee Crew</h3>${feeBadge(st)}</div>
+    <div class="li nc"><span class="m">Fee Target</span><b>${rp(st.target)}</b></div>
+    <div class="li nc"><span class="m">Sudah Dibayar</span><b style="color:var(--ok)">${rp(st.paid)}</b></div>
+    <div class="li nc"><span class="m">Sisa</span><b style="color:${st.rest>0?'var(--r)':'var(--ok)'}">${st.rest>0?rp(st.rest):'✓ Lunas'}</b></div>
+    <div class="li nc"><span class="m">Tipe</span><b>${FEE_TYPE_LABEL[st.code==='none'?'none':x.fee_type||'full']}</b></div>
+    ${x.fee_note?`<div class="li nc"><span class="m">Catatan</span><b>${esc(x.fee_note)}</b></div>`:''}
+    <div class="row" style="margin:10px 0 6px">
+     <small class="m">Riwayat pembayaran (${pays.length})</small>
+     <button type="button" class="btn-pay-fee" onclick="document.querySelector('.modal')?.remove();payCrewFee(${x.order_id},${x.id})">＋ Bayar Fee</button>
+    </div>
+    ${hist}
+   </div>`;
+  }
  },
  order_items:{
   o:1,t:'Add-on',
@@ -489,15 +602,50 @@ const CF={
   ],
   s:x=>`${fmt(x.paid_at)} · ${esc(x.label)} <small>${esc(x.method||'')}</small> <b>${rp(x.amount)}</b>${x.proof_url?' <span class="pill ok" style="font-size:10px">📎 Bukti</span>':''}`
  },
- expenses:{
+  expenses:{
   t:'Pengeluaran',d:()=>({exp_date:today(),paid:false,category:'Lainnya'}),
   f:()=>[
    {k:'order_id',l:'No. Invoice (kosong = Operasional)',t:'select',w:1,o:ORD(D.orders.filter(o=>!o.cancelled))},
    {k:'category',l:'Kategori',t:'select',o:CAT.map(c=>`<option>${c}</option>`).join('')},
    {k:'name',l:'Keterangan',r:1},{k:'amount',l:'Jumlah',t:'number'},{k:'exp_date',l:'Tanggal',t:'date'},
-   {k:'paid',l:'Status bayar',t:'select',o:'<option value="false">Belum dibayar</option><option value="true">Sudah dibayar</option>'}
+   {k:'paid',l:'Status bayar',t:'select',o:'<option value="false">Belum dibayar</option><option value="true">Sudah dibayar</option>'},
+   {k:'proof_url',l:'Bukti TF (opsional)',w:1,h:fm=>{
+    const inp=fm.elements.namedItem('proof_url');
+    if(!inp)return;
+    inp.type='hidden';
+    const wrap=document.createElement('div');
+    wrap.style.cssText='display:grid;gap:6px;grid-column:1/-1';
+    wrap.innerHTML='<input type="file" accept="image/*,application/pdf" style="width:100%"><div class="proof-prev"></div>';
+    inp.parentElement.insertBefore(wrap,inp.nextSibling);
+    const fileIn=wrap.querySelector('input[type=file]');
+    const prev=wrap.querySelector('.proof-prev');
+    const showPreview=(url)=>{
+     if(!url){prev.innerHTML='';return}
+     const isPdf=/\.pdf(\?|$)/i.test(url);
+     prev.innerHTML=isPdf
+      ?'<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a href="'+esc(url)+'" target="_blank" style="padding:8px 12px;background:#f3ebe0;border-radius:8px;font-size:12px;font-weight:600;color:var(--a)">📄 Lihat PDF</a><button type="button" class="ghost" style="padding:6px 10px;font-size:12px" data-rm>Hapus</button></div>'
+      :'<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><img src="'+esc(url)+'" style="max-width:120px;max-height:120px;border-radius:8px;border:1px solid var(--b);cursor:pointer" onclick="window.open(this.src,\'_blank\')"><div style="display:flex;flex-direction:column;gap:6px"><a href="'+esc(url)+'" target="_blank" style="font-size:12px;font-weight:600;color:var(--a);text-decoration:underline;padding:4px">🔍 Lihat Penuh</a><button type="button" class="ghost" style="padding:6px 10px;font-size:12px" data-rm>Hapus</button></div></div>';
+     prev.querySelector('[data-rm]').onclick=()=>{inp.value='';fileIn.value='';showPreview('')};
+    };
+    if(inp.value)showPreview(inp.value);
+    fileIn.onchange=async()=>{
+     const f=fileIn.files[0];
+     if(!f)return;
+     if(f.size>5*1024*1024){alert('Max 5 MB');fileIn.value='';return}
+     prev.innerHTML='<small class="m">Uploading…</small>';
+     const fname=Date.now()+'_'+Math.random().toString(36).substring(2,6)+'_'+f.name.replace(/[^a-zA-Z0-9.]/g,'_');
+     const r=await sb.storage.from('crew-fee-proofs').upload(fname,f);
+     if(r.error){prev.innerHTML='<small style="color:var(--r)">Gagal: '+esc(r.error.message)+'</small>';return}
+     const {data}=sb.storage.from('crew-fee-proofs').getPublicUrl(r.data.path);
+     inp.value=data.publicUrl;
+     showPreview(data.publicUrl);
+    };
+   }}
   ],
-  s:x=>`${fmt(x.exp_date)} · ${esc(x.name)} <small>${x.order_id?invNo(ordOf(x.order_id)):'Operasional'} · ${esc(x.category)}</small> <b>${rp(x.amount)}</b> <span class="pill ${x.paid?'ok':''}" onclick="event.stopPropagation();tg(${x.id})">${x.paid?'Dibayar':'Belum dibayar'}</span>`
+  s:x=>{
+   const srcBadge = x.order_crew_id ? '<span class="src-badge crew">🔗 dari Crew</span>' : '';
+   return `${fmt(x.exp_date)} · ${esc(x.name)} <small>${x.order_id?invNo(ordOf(x.order_id)):'Operasional'} · ${esc(x.category)}</small> ${srcBadge} <b>${rp(x.amount)}</b> <span class="pill ${x.paid?'ok':''}" onclick="event.stopPropagation();tg(${x.id})">${x.paid?'Dibayar':'Belum dibayar'}</span>`;
+  }
  }
 };
 
@@ -1208,9 +1356,114 @@ ${parseLocs(x.o).map(l => `<div style="margin-top:4px;font-size:11px;color:var(-
     ${crewSection(o)}
   ${secV2('expenses','Pengeluaran',by('expenses',o.id),'{order_id:oid}')}`;
  },
-  crew(){
-  const tb=(a,b)=>`<button class="${ctab==a?'':'ghost'}" onclick="ctab='${a}';render()">${b}</button>`;
-  let h=head('Crew','<button onclick="E(\'crew\')">＋ Crew</button>')+`<div class="row" style="margin-top:0"><span>${tb('ev','Per acara')} ${tb('cr','Daftar crew')}</span></div>`;
+    feeCrew(){
+  const q=(window._qfee||'').toLowerCase();
+  const fCrew=window._fCrew||'';
+  const fMonth=window._fMonth||'';
+  const fStatus=window._fStatus||'';
+  const fType=window._fType||'';
+
+  // Ambil semua assignment yang punya fee_target > 0
+  let rows = D.order_crew
+    .map(x=>({x, o:ordOf(x.order_id), c:crw(x.crew_id), st:crewFeeStatus(x)}))
+    .filter(r=>r.o);
+
+  // Stats (sebelum filter, biar total selalu kelihatan)
+  const totalFee = rows.reduce((s,r)=>s+r.st.target,0);
+  const totalPaid = rows.reduce((s,r)=>s+r.st.paid,0);
+  const totalRest = Math.max(totalFee-totalPaid,0);
+  const unpaidCount = rows.filter(r=>r.st.code==='unpaid'||r.st.code==='dp'||r.st.code==='waiting').length;
+  const lunasCount = rows.filter(r=>r.st.code==='lunas').length;
+
+  // Filter
+  if(fCrew) rows = rows.filter(r=>r.x.crew_id==fCrew);
+  if(fMonth) rows = rows.filter(r=>(r.o.event_date||'').startsWith(fMonth));
+  if(fStatus) rows = rows.filter(r=>r.st.code===fStatus);
+  if(fType) rows = rows.filter(r=>(r.x.fee_type||'full')===fType);
+  if(q) rows = rows.filter(r=>(r.c.name+(r.o.package_name||'')+invNo(r.o)+r.x.role).toLowerCase().includes(q));
+
+  // Sort: tanggal event terbaru dulu
+  rows.sort((a,b)=>(b.o.event_date||'').localeCompare(a.o.event_date||'')||b.x.id-a.x.id);
+
+  // Opsi bulan (6 bulan terakhir + yang ada event)
+  const monthsSet = new Set();
+  D.orders.forEach(o=>{ if(o.event_date) monthsSet.add(o.event_date.slice(0,7)) });
+  const months = [...monthsSet].sort().reverse().slice(0,18);
+
+  const monthLabel = ym => new Date(ym+'-01T00:00').toLocaleDateString('id-ID',{month:'long',year:'numeric'});
+
+  return head('Fee Crew','<button class="ghost" onclick="feeCrewExport()">⬇ Export CSV</button>')+
+
+  // Filter bar
+  `<div class="row" style="margin-top:0">
+   <input placeholder="Cari crew / invoice / paket..." value="${esc(window._qfee||'')}" oninput="clearTimeout(window._dfee);window._dfee=setTimeout(()=>{window._qfee=this.value;render()},200)" style="max-width:260px;flex:1">
+   <select onchange="window._fCrew=this.value;render()" style="max-width:180px">
+    <option value="">Semua crew</option>
+    ${D.crew.map(c=>`<option value="${c.id}" ${fCrew==c.id?'selected':''}>${esc(c.name)}</option>`).join('')}
+   </select>
+   <select onchange="window._fMonth=this.value;render()" style="max-width:180px">
+    <option value="">Semua bulan</option>
+    ${months.map(m=>`<option value="${m}" ${fMonth===m?'selected':''}>${monthLabel(m)}</option>`).join('')}
+   </select>
+   <select onchange="window._fStatus=this.value;render()" style="max-width:160px">
+    <option value="">Semua status</option>
+    <option value="unpaid" ${fStatus==='unpaid'?'selected':''}>⚠ Belum Dibayar</option>
+    <option value="dp" ${fStatus==='dp'?'selected':''}>◐ DP</option>
+    <option value="waiting" ${fStatus==='waiting'?'selected':''}>⏳ Nunggu Hari H</option>
+    <option value="lunas" ${fStatus==='lunas'?'selected':''}>✅ Lunas</option>
+    <option value="none" ${fStatus==='none'?'selected':''}>— Tanpa Fee</option>
+   </select>
+   <select onchange="window._fType=this.value;render()" style="max-width:160px">
+    <option value="">Semua tipe</option>
+    <option value="full" ${fType==='full'?'selected':''}>Full</option>
+    <option value="dp" ${fType==='dp'?'selected':''}>DP</option>
+    <option value="none" ${fType==='none'?'selected':''}>Tanpa Fee</option>
+   </select>
+   ${(fCrew||fMonth||fStatus||fType||q)?`<button class="ghost" onclick="window._qfee='';window._fCrew='';window._fMonth='';window._fStatus='';window._fType='';render()">Reset</button>`:''}
+  </div>
+
+  <!-- Stats -->
+  <div class="fee-stats">
+   <div class="fs k"><small>Total Fee</small><b>${rp(totalFee)}</b></div>
+   <div class="fs"><small>Sudah Dibayar</small><b style="color:var(--ok)">${rp(totalPaid)}</b></div>
+   <div class="fs"><small>Sisa (Piutang Crew)</small><b style="color:${totalRest>0?'var(--r)':'var(--ok)'}">${totalRest>0?rp(totalRest):'✓ Lunas'}</b></div>
+   <div class="fs"><small>Belum Lunas</small><b>${unpaidCount}</b></div>
+   <div class="fs"><small>Lunas</small><b style="color:var(--ok)">${lunasCount}</b></div>
+  </div>
+
+  <div class="card" style="padding:6px">
+   <div class="tw"><table>
+    <thead><tr>
+     <th>Acara</th><th>Invoice / Client</th><th>Crew</th><th class="hm">Tipe</th>
+     <th class="r">Fee</th><th class="r">Dibayar</th><th class="r">Sisa</th>
+     <th>Status</th><th class="hm">Bukti</th><th></th>
+    </tr></thead>
+    <tbody>${rows.map(r=>{
+     const proofCount = D.expenses.filter(e=>e.order_crew_id==r.x.id&&e.proof_url).length;
+     return `<tr class="c" onclick="oid=${r.o.id};go('order')">
+      <td><b>${fmt(r.o.event_date)}</b><br><small class="m">${(r.o.event_time||'').slice(0,5)||'-'}</small></td>
+      <td>${invNo(r.o)}<br><small class="m">${esc(cl(r.o.client_id).name)}</small></td>
+      <td><b>${esc(r.c.name)}</b><br><small class="m">${esc(r.x.role||'-')}</small></td>
+      <td class="hm"><small>${FEE_TYPE_LABEL[r.x.fee_type||'full']||'-'}</small></td>
+      <td class="r"><b>${rp(r.st.target)}</b></td>
+      <td class="r" style="color:var(--ok)">${rp(r.st.paid)}</td>
+      <td class="r" style="color:${r.st.rest>0?'var(--r)':'var(--m)'}">${r.st.rest>0?rp(r.st.rest):'—'}</td>
+      <td>${feeBadge(r.st)}</td>
+      <td class="hm">${proofCount?`<span class="pill" style="background:#e7eefc;color:#3b5f9e;font-size:10px">📎 ${proofCount}</span>`:'<small class="m">-</small>'}</td>
+      <td class="r" onclick="event.stopPropagation()">
+       ${r.st.code==='lunas'||r.st.code==='none'?'':`<button class="ghost btn-pay-fee" onclick="payCrewFee(${r.o.id},${r.x.id})" style="padding:4px 8px;font-size:11px">💰 Bayar</button>`}
+      </td>
+     </tr>`;
+    }).join('')||'<tr><td colspan="10" class="m" style="text-align:center;padding:30px">Tidak ada data fee crew</td></tr>'}</tbody>
+   </table></div>
+  </div>`;
+ },crew(){
+    const tb=(a,b)=>`<button class="${ctab==a?'':'ghost'}" onclick="ctab='${a}';render()">${b}</button>`;
+  let h=head('Crew','<button onclick="E(\'crew\')">＋ Crew</button>')+`<div class="row" style="margin-top:0"><span>${tb('ev','Per acara')} ${tb('cr','Daftar crew')} ${tb('fee','💰 Fee Crew')}</span></div>`;
+  // ===== TAB: FEE CREW =====
+  if(ctab=='fee'){
+   return h + V.feeCrew();
+  }
 
   // ===== TAB: DAFTAR CREW =====
   if(ctab=='cr'){
@@ -1386,17 +1639,20 @@ ${parseLocs(x.o).map(l => `<div style="margin-top:4px;font-size:11px;color:var(-
      <th style="width:30px"><input type="checkbox" onchange="expToggleAll(this.checked)" ${a.length&&a.every(e=>sel.has(e.id))?'checked':''} style="width:auto"></th>
      <th>Tanggal</th><th>Keterangan</th><th class="hm">Invoice</th><th class="hm">Kategori</th><th class="r">Jumlah</th><th>Status</th>
     </tr></thead>
-    <tbody>${a.map(e=>{
+        <tbody>${a.map(e=>{
      const isSel=sel.has(e.id);
      const catColor=colors[e.category]||'#8b6b4a';
-     return`<tr class="c" onclick="show('expenses',${e.id})" ${isSel?'style="background:#faf9f7"':''}>
-      <td onclick="event.stopPropagation()"><input type="checkbox" ${isSel?'checked':''} onchange="expToggle(${e.id},this.checked)" style="width:auto"></td>
+     const isCrew = !!e.order_crew_id;
+     const rowClass = 'c' + (isCrew ? ' tr-readonly' : '');
+     const srcBadge = isCrew ? '<span class="src-badge crew">🔗 Crew</span>' : '<span class="src-badge manual">✎</span>';
+     return`<tr class="${rowClass}" onclick="show('expenses',${e.id})" ${isSel?'style="background:#faf9f7"':''}>
+      <td onclick="event.stopPropagation()">${isCrew?'':`<input type="checkbox" ${isSel?'checked':''} onchange="expToggle(${e.id},this.checked)" style="width:auto">`}</td>
       <td>${fmt(e.exp_date)}</td>
-      <td>${esc(e.name)}</td>
+      <td>${esc(e.name)} ${srcBadge}</td>
       <td class="hm">${e.order_id?invNo(ordOf(e.order_id)):'<span class="pill no">Operasional</span>'}</td>
       <td class="hm"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${catColor};margin-right:5px;vertical-align:middle"></span>${esc(e.category)}</td>
       <td class="r"><b>${rp(e.amount)}</b></td>
-      <td><span class="pill ${e.paid?'ok':''}" onclick="event.stopPropagation();tg(${e.id})" style="cursor:pointer">${e.paid?'Dibayar':'Belum'}</span></td>
+      <td>${isCrew?'<span class="pill ok" style="cursor:default" title="Dibayar via modul Crew">✓ Lunas</span>':`<span class="pill ${e.paid?'ok':''}" onclick="event.stopPropagation();tg(${e.id})" style="cursor:pointer">${e.paid?'Dibayar':'Belum'}</span>`}</td>
      </tr>`;
     }).join('')||'<tr><td colspan="7" class="m" style="text-align:center;padding:30px">Tidak ada pengeluaran</td></tr>'}</tbody>
    </table></div>
@@ -1794,6 +2050,11 @@ function crewSection(o){
  const hasMaps = !!o.location_maps;
  const briefed = list.filter(function(x){return x.briefed_at}).length;
 
+ // Total fee crew di order ini
+ const totalFee = list.reduce((s,x)=>s+(+x.fee_target||0),0);
+ const totalPaid = list.reduce((s,x)=>s+feePaidOf(x.id),0);
+ const totalRest = Math.max(totalFee-totalPaid,0);
+
  var banner = '';
  if (hasMaps && briefed < list.length) {
   banner = '<div class="alert" style="margin:0 0 10px"><i>📍</i><div><b>Maps tersedia</b><small>' +
@@ -1824,6 +2085,16 @@ function crewSection(o){
   (locs.length ? '✎ Edit' : '＋ Isi') +
   '</button></div></div>';
 
+ // Ringkasan fee
+ var feeSummary = '';
+ if (list.length && totalFee > 0) {
+  feeSummary = '<div class="row" style="margin:0 0 10px;gap:6px;font-size:12px;padding:8px 10px;background:#faf9f7;border:1px solid var(--b);border-radius:8px">' +
+   '<span class="m">Total fee: <b style="color:var(--t)">' + rp(totalFee) + '</b></span>' +
+   '<span class="m">Dibayar: <b style="color:var(--ok)">' + rp(totalPaid) + '</b></span>' +
+   '<span class="m">Sisa: <b style="color:' + (totalRest>0?'var(--r)':'var(--ok)') + '">' + (totalRest>0?rp(totalRest):'✓ Lunas') + '</b></span>' +
+   '</div>';
+ }
+
  if (!list.length) {
   return '<div class="card">' + header + locBlock + '<p class="m">Belum ada crew. Tambahkan crew dulu untuk bisa kirim briefing.</p></div>';
  }
@@ -1833,6 +2104,7 @@ function crewSection(o){
   var phone = (c.phone || '').replace(/\D/g, '');
   var initials = (c.name || '?').trim().split(/\s+/).slice(0,2).map(function(w){return w[0] || ''}).join('').toUpperCase();
   var isBriefed = !!x.briefed_at;
+  var st = crewFeeStatus(x);
 
   var badge = isBriefed
    ? '<span class="pill ok" style="font-size:10px">✅ Briefed</span>'
@@ -1842,26 +2114,146 @@ function crewSection(o){
    ? '<button class="ghost" onclick="event.stopPropagation();waCrew(' + o.id + ',' + x.id + ')" title="Kirim WA" style="padding:6px 10px;font-size:12px">💬</button>'
    : '';
 
-  return '<div class="li nc" style="align-items:center;gap:10px">' +
-   '<div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">' +
+  // Fee line
+  var feeLine = '';
+  if (st.code === 'none') {
+   feeLine = '<div class="fee-line">Fee: <b>—</b> <span class="m">(Tanpa Fee)</span></div>';
+  } else if (st.code === 'lunas') {
+   feeLine = '<div class="fee-line">Fee: <b>' + rp(st.target) + '</b> · <span class="fee-paid">✓ Lunas</span></div>';
+  } else {
+   feeLine = '<div class="fee-line">Fee: <b>' + rp(st.target) + '</b> · Dibayar <span class="fee-paid">' + rp(st.paid) + '</span> · Sisa <span class="fee-rest">' + rp(st.rest) + '</span></div>';
+  }
+
+  // Tombol bayar cepat
+  var payBtn = (st.code !== 'lunas' && st.code !== 'none')
+   ? '<button class="ghost btn-pay-fee" onclick="event.stopPropagation();payCrewFee(' + o.id + ',' + x.id + ')" title="Bayar fee">💰</button>'
+   : '';
+
+  return '<div class="li nc" style="align-items:flex-start;gap:10px;padding:12px 0">' +
+   '<div style="display:flex;align-items:flex-start;gap:10px;flex:1;min-width:0">' +
    '<div style="width:32px;height:32px;border-radius:50%;background:' + catColorFor(c.name) + ';color:#fff;display:grid;place-items:center;font-weight:700;font-size:12px;flex-shrink:0">' + initials + '</div>' +
-   '<div style="min-width:0">' +
+   '<div style="min-width:0;flex:1">' +
    '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">' +
    '<b style="font-weight:600">' + esc(c.name) + '</b>' +
    (x.role ? '<span class="pill no">' + esc(x.role) + '</span>' : '') +
-   badge +
+   badge + ' ' + feeBadge(st) +
    '</div>' +
    '<small class="m">' + esc(c.phone || 'Belum ada no. HP') + '</small>' +
+   feeLine +
    '</div></div>' +
-   '<div style="display:flex;gap:4px;flex-shrink:0">' +
-   waBtn +
+   '<div style="display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end">' +
+   waBtn + payBtn +
    '<button class="ghost" onclick="event.stopPropagation();show(\'order_crew\',' + x.id + ')" title="Detail" style="padding:6px 10px;font-size:12px">⋯</button>' +
    '</div></div>';
  }).join('');
 
- return '<div class="card">' + header + banner + locBlock + rows + '</div>';
+ return '<div class="card">' + header + banner + locBlock + feeSummary + rows + '</div>';
+}
+// ===== PAY CREW FEE (patch) =====
+function payCrewFee(orderId, assignmentId){
+  const o = ordOf(orderId);
+  const x = D.order_crew.find(a => a.id == assignmentId);
+  if (!o || !x) return alert('Data crew tidak ditemukan.');
+  const st = crewFeeStatus(x);
+  const crew = crw(x.crew_id);
+
+  if (st.code === 'none') return alert('Crew ini tipenya "Tanpa Fee". Ubah tipe fee dulu di form crew kalau mau dibayar.');
+  if (st.code === 'lunas') return alert('Fee crew ini sudah lunas.');
+
+  const m = document.createElement('div');
+  m.className = 'modal';
+  m.innerHTML = `<form class="box" style="max-width:480px;gap:10px">
+    <div class="modalhead"><h2>💰 Bayar Fee — ${esc(crew.name)}</h2><button type="button" class="ghost" id="pfClose">Close ×</button></div>
+    <div class="li nc"><span class="m">Fee Target</span><b>${rp(st.target)}</b></div>
+    <div class="li nc"><span class="m">Sudah Dibayar</span><b style="color:var(--ok)">${rp(st.paid)}</b></div>
+    <div class="li nc"><span class="m">Sisa</span><b style="color:var(--r)">${rp(st.rest)}</b></div>
+    <label style="display:grid;gap:4px;font-size:12px;color:var(--m)">Jumlah bayar<input name="amount" class="rp" inputmode="numeric" autocomplete="off" placeholder="Rp 0" required></label>
+    <label style="display:grid;gap:4px;font-size:12px;color:var(--m)">Metode<select name="note">${METODE.map(x=>`<option>${x}</option>`).join('')}</select></label>
+    <label style="display:grid;gap:4px;font-size:12px;color:var(--m)">Tanggal<input name="exp_date" type="date" value="${today()}" required></label>
+    <label style="display:grid;gap:4px;font-size:12px;color:var(--m)">Bukti TF (opsional)<input name="proof_file" type="file" accept="image/*,application/pdf"></label>
+    <small class="m" style="font-size:11px">💡 Bisa DP dulu, sisanya nanti. Bukti TF gambar/PDF max 5 MB.</small>
+    <div class="row" style="margin:4px 0 0"><button type="button" class="ghost" id="pfCancel">Batal</button><button type="submit">Simpan Pembayaran</button></div>
+  </form>`;
+  document.body.append(m);
+
+  const fm = m.querySelector('form');
+  const close = () => m.remove();
+  fm.querySelector('#pfClose').onclick = close;
+  fm.querySelector('#pfCancel').onclick = close;
+  m.addEventListener('click', e => { if (e.target === m) close(); });
+
+  const amtEl = fm.elements.namedItem('amount');
+  amtEl.oninput = () => {
+    const d = amtEl.value.replace(/\D/g,'');
+    amtEl.value = d ? rp(d) : '';
+  };
+  setTimeout(() => amtEl.focus(), 50);
+
+  fm.onsubmit = async e => {
+    e.preventDefault();
+    const amount = num(amtEl.value);
+    if (amount <= 0) return alert('Jumlah harus lebih dari 0.');
+    if (amount > st.rest && !confirm(`Jumlah melebihi sisa (${rp(st.rest)}). Tetap simpan?`)) return;
+
+    const submitBtn = fm.querySelector('button[type=submit]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Menyimpan…';
+
+    let proof_url = null;
+    const file = fm.elements.namedItem('proof_file').files[0];
+    if (file) {
+      if (file.size > 5*1024*1024) {
+        alert('Ukuran file max 5 MB.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Simpan Pembayaran';
+        return;
+      }
+      const fname = Date.now()+'_'+Math.random().toString(36).substring(2,6)+'_'+file.name.replace(/[^a-zA-Z0-9.]/g,'_');
+      const r = await sb.storage.from('crew-fee-proofs').upload(fname, file);
+      if (r.error) {
+        alert('Upload gagal: '+r.error.message);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Simpan Pembayaran';
+        return;
+      }
+      const { data } = sb.storage.from('crew-fee-proofs').getPublicUrl(r.data.path);
+      proof_url = data.publicUrl;
+    }
+
+    const payload = {
+      order_id: orderId,
+      order_crew_id: assignmentId,
+      category: 'Crew',
+      name: 'Fee '+crew.name+(x.role?' ('+x.role+')':''),
+      amount,
+      exp_date: fm.elements.namedItem('exp_date').value || today(),
+      paid: true,
+      note: fm.elements.namedItem('note').value,
+      proof_url
+    };
+
+    const ins = await sb.from('expenses').insert(payload);
+    if (ins.error) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Simpan Pembayaran';
+      return alert(ins.error.message);
+    }
+
+        close();
+    await load();
+    render();
+    if (view === 'order') show('order_crew', assignmentId);
+  };
 }
 
+async function delCrewPayment(expenseId, assignmentId){
+  if (!confirm('Hapus pembayaran fee ini? Status crew akan dihitung ulang.')) return;
+  const r = await sb.from('expenses').delete().eq('id', expenseId);
+  if (r.error) return alert(r.error.message);
+  await load();
+  render();
+  if (view === 'order') show('order_crew', assignmentId);
+}
 function quickMaps(orderId){
  var o = ordOf(orderId);
  if (!o) return;
@@ -2048,6 +2440,52 @@ function waClient(id){
   }).join('\n\n')+
   `\n\nTerima kasih 🙏`;
  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(txt)}`,'_blank');
+}
+function feeCrewExport(){
+ const fCrew=window._fCrew||'';
+ const fMonth=window._fMonth||'';
+ const fStatus=window._fStatus||'';
+ const fType=window._fType||'';
+ const q=(window._qfee||'').toLowerCase();
+
+ let rows = D.order_crew
+  .map(x=>({x, o:ordOf(x.order_id), c:crw(x.crew_id), st:crewFeeStatus(x)}))
+  .filter(r=>r.o);
+
+ if(fCrew) rows = rows.filter(r=>r.x.crew_id==fCrew);
+ if(fMonth) rows = rows.filter(r=>(r.o.event_date||'').startsWith(fMonth));
+ if(fStatus) rows = rows.filter(r=>r.st.code===fStatus);
+ if(fType) rows = rows.filter(r=>(r.x.fee_type||'full')===fType);
+ if(q) rows = rows.filter(r=>(r.c.name+(r.o.package_name||'')+invNo(r.o)+r.x.role).toLowerCase().includes(q));
+
+ rows.sort((a,b)=>(b.o.event_date||'').localeCompare(a.o.event_date||'')||b.x.id-a.x.id);
+
+ if(!rows.length) return alert('Tidak ada data.');
+
+ const csvRows=[['Tanggal Event','Invoice','Client','Paket','Crew','Role','Tipe','Fee','Dibayar','Sisa','Status','Bukti']];
+ rows.forEach(r=>{
+  const proofs = D.expenses.filter(e=>e.order_crew_id==r.x.id&&e.proof_url).map(e=>e.proof_url).join(' | ');
+  csvRows.push([
+   r.o.event_date||'',
+   invNo(r.o),
+   cl(r.o.client_id).name||'',
+   r.o.package_name||'',
+   r.c.name||'',
+   r.x.role||'',
+   FEE_TYPE_LABEL[r.x.fee_type||'full']||'',
+   r.st.target,
+   r.st.paid,
+   r.st.rest,
+   r.st.label,
+   proofs
+  ]);
+ });
+ const csv=csvRows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+ const el=document.createElement('a');
+ el.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));
+ el.download=`kyra_fee_crew_${today()}.csv`;
+ el.click();
+ setTimeout(()=>el.remove(),1000);
 }
 function clientExport(){
  const rows=[['Nama','Kontak','Instagram','Catatan','Jumlah Order','Total Nilai','Total Dibayar','Piutang','Order Pertama','Order Terakhir']];
