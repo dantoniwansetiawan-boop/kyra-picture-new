@@ -1,0 +1,20 @@
+{
+  "name": "Kyra Picture Admin",
+  "short_name": "Kyra Admin",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f5f3",
+  "theme_color": "#18181b",
+  "icons": [
+    {
+      "src": "https://kyra-picture-new.pages.dev/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://kyra-picture-new.pages.dev/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
