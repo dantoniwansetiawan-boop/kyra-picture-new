@@ -2,34 +2,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-LXF0E0VD5S"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-LXF0E0VD5S');
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXF0E0VD5S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LXF0E0VD5S');
 
-  // Tracking klik WhatsApp
-  document.addEventListener('click', function(event) {
-    const link = event.target.closest('a[href]');
-    if (!link) return;
+    // Tracking klik WhatsApp
+    document.addEventListener('click', function(event) {
+      const link = event.target.closest('a[href]');
+      if (!link) return;
 
-    const url = link.href;
-    if (
-      url.includes('wa.me/') ||
-      url.includes('api.whatsapp.com/') ||
-      url.includes('whatsapp.com/')
-    ) {
-      gtag('event', 'whatsapp_click', {
-        link_url: url,
-        page_location: window.location.href,
-        transport_type: 'beacon'
-      });
-    }
-  });
-</script>
+      const url = link.href;
+      if (
+        url.includes('wa.me/') ||
+        url.includes('api.whatsapp.com/') ||
+        url.includes('whatsapp.com/')
+      ) {
+        gtag('event', 'whatsapp_click', {
+          link_url: url,
+          page_location: window.location.href,
+          transport_type: 'beacon'
+        });
+      }
+    });
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -49,6 +49,7 @@
       --terracotta: #b8755b;
       --muted: #82766e;
       --line: #e8dfd5;
+      --gold: #d5b77b;
     }
 
     * {
@@ -132,9 +133,7 @@
       margin-bottom: 12px;
     }
 
-    h1,
-    h2,
-    h3 {
+    h1, h2, h3 {
       font-family: 'Playfair Display', serif;
       font-weight: 500;
       line-height: 1.25;
@@ -171,7 +170,6 @@
       margin: auto;
     }
 
-    /* DESKTOP: 2 PACKAGES = 2 COLUMNS */
     .package-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -260,6 +258,67 @@
       background: var(--terracotta);
     }
 
+    /* LUXURY FULL DAY - SAME SIZE, CENTERED */
+
+    .luxury-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .luxury-full-day {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: calc((100% - 24px) / 2);
+      background: var(--white);
+      border: 1px solid #d8c6a4;
+      border-top: 3px solid var(--gold);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .luxury-full-day .package-label {
+      color: #9b7945;
+    }
+
+    .luxury-full-day h3 {
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .luxury-full-day .package-price {
+      color: #9b7945;
+    }
+
+    .luxury-note {
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+      margin-top: 12px;
+      margin-bottom: 15px;
+    }
+
+    .luxury-button {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 12px 10px;
+      background: #806746;
+      color: #fffdf9;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      transition: background 0.2s ease;
+    }
+
+    .luxury-button:hover {
+      background: var(--espresso);
+    }
+
     .section-separator {
       width: min(1100px, 88%);
       margin: 0 auto 65px;
@@ -311,7 +370,8 @@
       font-size: 11px;
     }
 
-    /* TABLET: KEEP TWO PACKAGE COLUMNS */
+    /* TABLET */
+
     @media (max-width: 900px) {
       .navbar {
         flex-direction: column;
@@ -329,17 +389,23 @@
         width: 92%;
       }
 
-      .package-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .package-grid,
+      .luxury-row {
         gap: 16px;
       }
 
-      .package-card {
+      .package-card,
+      .luxury-full-day {
         padding: 22px 18px;
+      }
+
+      .luxury-full-day {
+        width: calc((100% - 16px) / 2);
       }
     }
 
-    /* MOBILE: STILL TWO COLUMNS */
+    /* MOBILE */
+
     @media (max-width: 600px) {
       .navbar {
         padding: 16px 4%;
@@ -394,12 +460,14 @@
         line-height: 1.7;
       }
 
-      .package-grid {
+      .package-grid,
+      .luxury-row {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 10px;
       }
 
-      .package-card {
+      .package-card,
+      .luxury-full-day {
         padding: 15px 11px;
       }
 
@@ -410,7 +478,8 @@
         overflow-wrap: anywhere;
       }
 
-      .package-card h3 {
+      .package-card h3,
+      .luxury-full-day h3 {
         font-size: 22px;
       }
 
@@ -441,11 +510,30 @@
         font-size: 10px;
       }
 
-      .button {
+      .button,
+      .luxury-button {
         font-size: 8px;
         letter-spacing: 0.4px;
         padding: 11px 4px;
         overflow-wrap: anywhere;
+      }
+
+      /* LUXURY FULL DAY MOBILE */
+
+      .luxury-row {
+        margin-top: 18px;
+      }
+
+      .luxury-full-day {
+        width: calc((100% - 10px) / 2);
+        border-top-width: 3px;
+      }
+
+      .luxury-note {
+        font-size: 8px;
+        line-height: 1.6;
+        margin-top: 10px;
+        margin-bottom: 12px;
       }
 
       .coverage-note {
@@ -467,17 +555,21 @@
       }
     }
 
-    /* VERY NARROW PHONES: KEEP TWO COLUMNS, COMPACT CONTENT */
+    /* VERY NARROW PHONES */
+
     @media (max-width: 360px) {
-      .package-grid {
+      .package-grid,
+      .luxury-row {
         gap: 7px;
       }
 
-      .package-card {
+      .package-card,
+      .luxury-full-day {
         padding: 12px 8px;
       }
 
-      .package-card h3 {
+      .package-card h3,
+      .luxury-full-day h3 {
         font-size: 19px;
       }
 
@@ -490,8 +582,13 @@
         padding-left: 12px;
       }
 
-      .button {
+      .button,
+      .luxury-button {
         font-size: 7px;
+      }
+
+      .luxury-full-day {
+        width: calc((100% - 7px) / 2);
       }
 
       .nav-links {
@@ -541,8 +638,10 @@
         </p>
       </div>
 
+      <!-- TWO TOP CARDS -->
       <div class="package-grid">
 
+        <!-- SIGNATURE -->
         <article class="package-card">
           <p class="package-label">Wedding Collection</p>
           <h3>Signature</h3>
@@ -565,10 +664,11 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            BOOK SIGNATURE 
+            BOOK SIGNATURE
           </a>
         </article>
 
+        <!-- LUXURY -->
         <article class="package-card">
           <p class="package-label">Premium Wedding Collection</p>
           <h3>Luxury</h3>
@@ -593,11 +693,52 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            BOOK LUXURY 
+            BOOK LUXURY
           </a>
         </article>
 
       </div>
+
+      <!-- LUXURY FULL DAY - CENTERED BELOW TWO CARDS -->
+      <div class="luxury-row">
+
+        <article class="luxury-full-day">
+
+          <p class="package-label">Exclusive Wedding Collection</p>
+          <h3>Luxury (Full Day) </h3>
+          <p class="package-price">Rp 9.800.000</p>
+
+          <hr class="package-divider">
+
+          <ul class="package-features">
+            <li>2 Photographers (Main &amp; Candid)</li>
+            <li>1 Videographer</li>
+            <li>750 Edited Photos</li>
+            <li>1-Minute Video Teaser</li>
+            <li>3-Minute Cinematic Video</li>
+            <li>1 Premium Album + Suitcase (20 Pages)</li>
+            <li>2 Photo Frames (16R)</li>
+            <li>Maximum 16 Hours Coverage</li>
+            <li>All Files in Flashdisk</li>
+          </ul>
+
+          <p class="luxury-note">
+            EXCLUSIVE COVERAGE · UP TO 16 HOURS
+          </p>
+
+          <a
+            class="luxury-button"
+            href="https://wa.me/6289664314030?text=Hi%20Kyra%20Picture%2C%20I%27m%20interested%20in%20the%20Luxury%20Full%20Day%20package%20(Rp%209.800.000).%20Could%20you%20share%20more%20details%3F"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            INQUIRE LUXURY FULL DAY
+          </a>
+
+        </article>
+
+      </div>
+
     </section>
 
     <hr class="section-separator">
@@ -618,6 +759,7 @@
 
       <div class="package-grid">
 
+        <!-- SIMPLE -->
         <article class="package-card">
           <p class="package-label">Intimate Wedding Collection</p>
           <h3>Simple</h3>
@@ -638,10 +780,11 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            BOOK SIMPLE 
+            BOOK SIMPLE
           </a>
         </article>
 
+        <!-- PRIME -->
         <article class="package-card">
           <p class="package-label">Intimate Wedding Collection</p>
           <h3>Prime</h3>
@@ -664,7 +807,7 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            BOOK PRIME 
+            BOOK PRIME
           </a>
         </article>
 
@@ -685,7 +828,7 @@
     </p>
 
     <a class="button" href="contact.html">
-      CONTACT US 
+      CONTACT US
     </a>
   </section>
 
