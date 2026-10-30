@@ -170,10 +170,12 @@
       margin: auto;
     }
 
+    /* PACKAGE GRID */
+
     .package-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
       align-items: stretch;
     }
 
@@ -183,26 +185,27 @@
       min-width: 0;
       background: var(--white);
       border: 1px solid var(--line);
-      padding: 30px;
+      padding: 25px 22px;
     }
 
     .package-label {
       color: var(--terracotta);
       font-size: 9px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       margin-bottom: 8px;
+      line-height: 1.5;
     }
 
     .package-card h3 {
-      font-size: 27px;
+      font-size: 25px;
       margin-bottom: 8px;
     }
 
     .package-price {
       color: var(--terracotta);
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 700;
       margin-bottom: 17px;
     }
@@ -221,8 +224,8 @@
 
     .package-features li {
       position: relative;
-      padding: 7px 0 7px 20px;
-      font-size: 12px;
+      padding: 7px 0 7px 19px;
+      font-size: 11px;
       color: var(--brown);
       border-bottom: 1px solid #f0eae3;
       line-height: 1.55;
@@ -245,74 +248,50 @@
       display: inline-block;
       width: 100%;
       text-align: center;
-      padding: 12px 10px;
+      padding: 12px 8px;
       background: var(--espresso);
       color: var(--white);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 0.7px;
       transition: background 0.2s ease;
+      margin-top: auto;
     }
 
     .button:hover {
       background: var(--terracotta);
     }
 
-    /* LUXURY FULL DAY - SAME SIZE, CENTERED */
+    /* LUXURY FULL DAY - PREMIUM ACCENT */
 
-    .luxury-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-      margin-top: 24px;
-    }
-
-    .luxury-full-day {
-      grid-column: 1 / -1;
-      justify-self: center;
-      width: calc((100% - 24px) / 2);
-      background: var(--white);
+    .luxury-card {
       border: 1px solid #d8c6a4;
       border-top: 3px solid var(--gold);
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
+      background: #fffdf8;
     }
 
-    .luxury-full-day .package-label {
+    .luxury-card .package-label {
       color: #9b7945;
     }
 
-    .luxury-full-day h3 {
-      font-size: 27px;
-      margin-bottom: 8px;
+    .luxury-card .package-price {
+      color: #9b7945;
     }
 
-    .luxury-full-day .package-price {
+    .luxury-card .package-features li::before {
       color: #9b7945;
     }
 
     .luxury-note {
       color: var(--muted);
       font-size: 9px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       line-height: 1.6;
-      margin-top: 12px;
-      margin-bottom: 15px;
+      margin-bottom: 14px;
     }
 
     .luxury-button {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      padding: 12px 10px;
       background: #806746;
-      color: #fffdf9;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.7px;
-      transition: background 0.2s ease;
     }
 
     .luxury-button:hover {
@@ -389,18 +368,24 @@
         width: 92%;
       }
 
-      .package-grid,
-      .luxury-row {
-        gap: 16px;
+      .package-grid {
+        gap: 12px;
       }
 
-      .package-card,
-      .luxury-full-day {
-        padding: 22px 18px;
+      .package-card {
+        padding: 20px 15px;
       }
 
-      .luxury-full-day {
-        width: calc((100% - 16px) / 2);
+      .package-card h3 {
+        font-size: 23px;
+      }
+
+      .package-price {
+        font-size: 18px;
+      }
+
+      .package-features li {
+        font-size: 10px;
       }
     }
 
@@ -460,31 +445,30 @@
         line-height: 1.7;
       }
 
-      .package-grid,
-      .luxury-row {
+      /* MOBILE: TWO COLUMNS */
+
+      .package-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 10px;
       }
 
-      .package-card,
-      .luxury-full-day {
+      .package-card {
         padding: 15px 11px;
       }
 
       .package-label {
         font-size: 8px;
-        letter-spacing: 0.7px;
+        letter-spacing: 0.6px;
         line-height: 1.5;
         overflow-wrap: anywhere;
       }
 
-      .package-card h3,
-      .luxury-full-day h3 {
-        font-size: 22px;
+      .package-card h3 {
+        font-size: 21px;
       }
 
       .package-price {
-        font-size: 16px;
+        font-size: 15px;
         line-height: 1.4;
         margin-bottom: 12px;
         overflow-wrap: anywhere;
@@ -510,29 +494,24 @@
         font-size: 10px;
       }
 
-      .button,
-      .luxury-button {
+      .button {
         font-size: 8px;
-        letter-spacing: 0.4px;
+        letter-spacing: 0.3px;
         padding: 11px 4px;
         overflow-wrap: anywhere;
       }
 
-      /* LUXURY FULL DAY MOBILE */
+      /* THIRD CARD CENTERED ON MOBILE */
 
-      .luxury-row {
-        margin-top: 18px;
-      }
-
-      .luxury-full-day {
+      .luxury-card {
+        grid-column: 1 / -1;
+        justify-self: center;
         width: calc((100% - 10px) / 2);
-        border-top-width: 3px;
       }
 
       .luxury-note {
         font-size: 8px;
         line-height: 1.6;
-        margin-top: 10px;
         margin-bottom: 12px;
       }
 
@@ -558,18 +537,15 @@
     /* VERY NARROW PHONES */
 
     @media (max-width: 360px) {
-      .package-grid,
-      .luxury-row {
+      .package-grid {
         gap: 7px;
       }
 
-      .package-card,
-      .luxury-full-day {
+      .package-card {
         padding: 12px 8px;
       }
 
-      .package-card h3,
-      .luxury-full-day h3 {
+      .package-card h3 {
         font-size: 19px;
       }
 
@@ -582,12 +558,11 @@
         padding-left: 12px;
       }
 
-      .button,
-      .luxury-button {
+      .button {
         font-size: 7px;
       }
 
-      .luxury-full-day {
+      .luxury-card {
         width: calc((100% - 7px) / 2);
       }
 
@@ -638,7 +613,7 @@
         </p>
       </div>
 
-      <!-- TWO TOP CARDS -->
+      <!-- THREE WEDDING PACKAGES IN ONE ROW -->
       <div class="package-grid">
 
         <!-- SIGNATURE -->
@@ -697,15 +672,10 @@
           </a>
         </article>
 
-      </div>
-
-      <!-- LUXURY FULL DAY - CENTERED BELOW TWO CARDS -->
-      <div class="luxury-row">
-
-        <article class="luxury-full-day">
-
+        <!-- LUXURY FULL DAY -->
+        <article class="package-card luxury-card">
           <p class="package-label">Exclusive Wedding Collection</p>
-          <h3>Luxury (Full Day) </h3>
+          <h3>Luxury (Full Day)</h3>
           <p class="package-price">Rp 9.800.000</p>
 
           <hr class="package-divider">
@@ -727,14 +697,13 @@
           </p>
 
           <a
-            class="luxury-button"
+            class="button luxury-button"
             href="https://wa.me/6289664314030?text=Hi%20Kyra%20Picture%2C%20I%27m%20interested%20in%20the%20Luxury%20Full%20Day%20package%20(Rp%209.800.000).%20Could%20you%20share%20more%20details%3F"
             target="_blank"
             rel="noopener noreferrer"
           >
             INQUIRE LUXURY FULL DAY
           </a>
-
         </article>
 
       </div>
@@ -757,7 +726,7 @@
         <span class="coverage-note">MAXIMUM 4 HOURS COVERAGE</span>
       </div>
 
-      <div class="package-grid">
+      <div class="package-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
 
         <!-- SIMPLE -->
         <article class="package-card">
