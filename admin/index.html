@@ -1223,26 +1223,40 @@ async function waInv(id){
 
  if(!mode) return; // user batal
 
+// === TITIP TAB KOSONG DULU ===
+const waTab = window.open('about:blank', '_blank');
+
  // === Selalu regenerate + upload PDF ===
  let pdfUrl = null;
- const d = mkpdf(o);
- const blob = d.output('blob');
- const fname = `${invNo(o)}.pdf`;
+try {
+  const d = mkpdf(o);
+  const blob = d.output('blob');
+  const fname = `${invNo(o)}.pdf`;
 
- const up = await sb.storage.from('invoices').upload(fname, blob, {
-   contentType: 'application/pdf',
-   upsert: true
- });
+  const up = await sb.storage.from('invoices').upload(fname, blob, {
+    contentType: 'application/pdf',
+    upsert: true
+  });
 
- if(up.error){
-   const lanjut = confirm('Upload PDF gagal: '+up.error.message+'\n\nTetap kirim WA tanpa link PDF?');
-   if(!lanjut) return;
- } else {
-   const { data } = sb.storage.from('invoices').getPublicUrl(fname);
-   pdfUrl = data.publicUrl;
-   await sb.from('orders').update({invoice_url: pdfUrl}).eq('id', id);
-   await load();
- }
+  if(up.error){
+    const lanjut = confirm('Upload PDF gagal: '+up.error.message+'\n\nTetap kirim WA tanpa link PDF?');
+    if(!lanjut){
+      if(waTab) waTab.close(); // ← tutup tab kosong kalau batal
+      return;
+    }
+  } else {
+    const { data } = sb.storage.from('invoices').getPublicUrl(fname);
+    pdfUrl = data.publicUrl;
+    await sb.from('orders').update({invoice_url: pdfUrl}).eq('id', id);
+    await load();
+  }
+} catch(err) {
+  const lanjut = confirm('Error: '+(err.message||err)+'\n\nTetap kirim WA tanpa link PDF?');
+  if(!lanjut){
+    if(waTab) waTab.close();
+    return;
+  }
+}
 
  // === Ambil template ===
  const getS = k => ((D.settings.find(s=>s.key==k)||{}).value) || '';
@@ -1275,7 +1289,13 @@ async function waInv(id){
  }
 
  // === Buka WA ===
- window.open(`https://wa.me/${phone}?text=${encodeURIComponent(txt)}`,'_blank');
+ // === Isi tab kosong dengan WA ===
+const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(txt)}`;
+if(waTab){
+  waTab.location.href = waUrl; // ← isi tab kosong
+} else {
+  location.href = waUrl; // ← fallback kalau tab kosong diblok
+}
 }
 const V={
   dash(){
