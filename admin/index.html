@@ -356,6 +356,23 @@ const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOStr
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt=d=>d?new Date(d+'T00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'-';
 const T=['packages','addon_catalog','crew','clients','orders','order_items','payments','expenses','order_crew','settings'];
+const DEFAULT_WA_INVOICE = `Halo {nama}, berikut invoice {invoice} dari KYRA PICTURE.
+
+Paket: {paket}
+Acara: {tanggal} {jam}
+Lokasi: {lokasi}
+
+Total: {total}
+Terbayar: {terbayar}
+Sisa: {sisa}
+
+📄 *Lihat Invoice Online:*
+{link_pdf}
+
+(Klik link di atas untuk melihat invoice langsung di browser — bisa disimpan atau di-print kalau diperlukan)
+
+Terima kasih 🙏
+- {company}`;
 let D={},view='dash',oid=null,cid=null,qo='',qc='',per=today().slice(0,7),ef={a:'',b:'',i:'',c:''},ctab='ev',EDIT=null,PQ=0,_debTimer=null;
 
 document.addEventListener('click',e=>{
@@ -1166,18 +1183,58 @@ async function toggleCancel(id){
 }
 
 const crewTxt=o=>by('order_crew',o.id).map(x=>`${esc(crw(x.crew_id).name)} <small>(${esc(x.role||'-')})</small>`).join(', ')||'<small>-</small>';
-function waInv(id){
+async function waInv(id){
  const o=ordOf(id),k=cl(o.client_id),c=calc(o);
  const phone=(k.phone||'').replace(/\D/g,'').replace(/^0/,'62');
  if(!phone)return alert('Client belum punya nomor WA.');
- const txt=`Halo ${k.name}, berikut invoice ${invNo(o)} dari KYRA PICTURE.\n\n`+
-  `Paket: ${o.package_name}\n`+
-  `Acara: ${fmt(o.event_date)} ${(o.event_time||'').slice(0,5)}\n`+
-  `Lokasi: ${parseLocs(o).map(l=>l.name).join(', ')||'-'}\n\n`+
-  `Total: ${rp(c.tot)}\n`+
-  `Terbayar: ${rp(c.paid)}\n`+
-  `Sisa: ${rp(Math.max(c.tot-c.paid,0))}\n\n`+
-  `Terima kasih 🙏`;
+
+ // --- 1. Generate PDF & upload ke Supabase Storage ---
+ let pdfUrl = o.invoice_url;
+
+ if(!pdfUrl){
+  const d = mkpdf(o);
+  const blob = d.output('blob');
+  const fname = `${invNo(o)}.pdf`;
+
+  const up = await sb.storage.from('invoices').upload(fname, blob, {
+    contentType: 'application/pdf',
+    upsert: true
+  });
+
+  if(up.error){
+    const lanjut = confirm('Upload PDF gagal: '+up.error.message+'\n\nTetap kirim WA tanpa link PDF?');
+    if(!lanjut) return;
+  } else {
+    const { data } = sb.storage.from('invoices').getPublicUrl(fname);
+    pdfUrl = data.publicUrl;
+    await sb.from('orders').update({invoice_url: pdfUrl}).eq('id', id);
+    await load();
+  }
+ }
+
+ // --- 2. Ambil template dari settings ---
+ const getS = k => ((D.settings.find(s=>s.key==k)||{}).value) || '';
+ const tpl = getS('wa_invoice_template') || DEFAULT_WA_INVOICE;
+
+ // --- 3. Replace placeholder ---
+ const tanggal = o.event_date ? new Date(o.event_date+'T00:00').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '-';
+ const jam = (o.event_time||'').slice(0,5) || '-';
+ const lokasi = parseLocs(o).map(l=>l.name).join(', ') || '-';
+
+ const txt = tpl
+  .replace(/\{nama\}/g, k.name || '-')
+  .replace(/\{invoice\}/g, invNo(o))
+  .replace(/\{paket\}/g, o.package_name || '-')
+  .replace(/\{tanggal\}/g, tanggal)
+  .replace(/\{jam\}/g, jam)
+  .replace(/\{lokasi\}/g, lokasi)
+  .replace(/\{total\}/g, rp(c.tot))
+  .replace(/\{terbayar\}/g, rp(c.paid))
+  .replace(/\{sisa\}/g, rp(Math.max(c.tot-c.paid,0)))
+  .replace(/\{link_pdf\}/g, pdfUrl || '(PDF belum tersedia)')
+  .replace(/\{company\}/g, getS('company_name') || 'KYRA PICTURE');
+
+ // --- 4. Buka WA ---
  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(txt)}`,'_blank');
 }
 const V={
@@ -1935,7 +1992,10 @@ ${parseLocs(x.o).map(l => `<div style="margin-top:4px;font-size:11px;color:var(-
    <textarea id="tt" rows="4">${esc(terms)}</textarea>
    <div class="row"><button onclick="saveT()">💾 Simpan S&K</button></div>
   </div>
-
+  <div class="card"><h3>Template WA Invoice</h3><p class="m">Dipakai saat klik "Kirim WA" di order. Placeholder: <code>{nama}</code>, <code>{invoice}</code>, <code>{paket}</code>, <code>{tanggal}</code>, <code>{jam}</code>, <code>{lokasi}</code>, <code>{total}</code>, <code>{terbayar}</code>, <code>{sisa}</code>, <code>{link_pdf}</code>, <code>{company}</code></p>
+   <textarea id="tt_wa" rows="10" style="font-family:monospace;font-size:12px">${esc(get('wa_invoice_template') || DEFAULT_WA_INVOICE)}</textarea>
+   <div class="row"><button onclick="saveWAInvoiceTemplate()">💾 Simpan Template WA</button> <button class="ghost" onclick="resetWAInvoiceTemplate()">↺ Reset ke Default</button></div>
+  </div>
   <div class="card"><h3>Backup & Data</h3>
    <p class="m">Export semua tabel ke CSV, atau reset data.</p>
    <div class="row" style="margin-top:10px">
@@ -1955,7 +2015,19 @@ const saveT=async()=>{
  }
  await load();render();
 };
+const saveWAInvoiceTemplate = async () => {
+ const val = $('#tt_wa').value;
+ const r = await sb.from('settings').upsert({key:'wa_invoice_template',value:val},{onConflict:'key'});
+ if(r.error) return alert('Gagal simpan: '+r.error.message);
+ await load(); render();
+ alert('Template WA Invoice tersimpan ✅');
+};
 
+const resetWAInvoiceTemplate = async () => {
+ if(!confirm('Reset template ke default?')) return;
+ $('#tt_wa').value = DEFAULT_WA_INVOICE;
+ await saveWAInvoiceTemplate();
+};
 function csv(){
  T.forEach((t,i)=>setTimeout(()=>{
   const r=D[t];
