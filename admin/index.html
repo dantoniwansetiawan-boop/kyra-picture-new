@@ -373,6 +373,11 @@ Sisa: {sisa}
 
 Terima kasih 🙏
 - {company}`;
+const WA_REVISI_PREFIX = `⚠️ *REVISI INVOICE*
+
+Halo {nama}, berikut *invoice revisi* {invoice} dari KYRA PICTURE. Invoice ini *menggantikan versi sebelumnya*. Mohon dicek ulang ya 🙏
+
+`;
 let D={},view='dash',oid=null,cid=null,qo='',qc='',per=today().slice(0,7),ef={a:'',b:'',i:'',c:''},ctab='ev',EDIT=null,PQ=0,_debTimer=null;
 
 document.addEventListener('click',e=>{
@@ -1188,40 +1193,67 @@ async function waInv(id){
  const phone=(k.phone||'').replace(/\D/g,'').replace(/^0/,'62');
  if(!phone)return alert('Client belum punya nomor WA.');
 
- // --- 1. Generate PDF & upload ke Supabase Storage ---
- let pdfUrl = o.invoice_url;
+ // === POPUP: Invoice Baru vs Revisi ===
+ const mode = await new Promise(resolve => {
+  const m = document.createElement('div');
+  m.className = 'modal';
+  m.innerHTML = `<div class="box" style="max-width:420px">
+   <div class="modalhead"><h2>📤 Kirim Invoice</h2><button class="ghost" id="cmClose">Close ×</button></div>
+   <p class="m" style="margin:0 0 4px;font-size:13px">Pilih tipe invoice yang mau dikirim:</p>
+   <div style="display:grid;gap:8px;margin:8px 0">
+    <button type="button" id="cmBaru" style="width:100%;text-align:left;padding:14px;line-height:1.4">
+     <b style="display:block;font-size:14px">📄 Invoice Baru</b>
+     <small style="opacity:.8;font-size:12px">Kirim invoice tanpa label revisi</small>
+    </button>
+    <button type="button" id="cmRevisi" style="width:100%;text-align:left;padding:14px;line-height:1.4;background:#fff;color:#c0453b;border-color:#ecc5c1">
+     <b style="display:block;font-size:14px">⚠️ Revisi Invoice</b>
+     <small style="opacity:.8;font-size:12px">Tambah label "REVISI" di pesan WA</small>
+    </button>
+   </div>
+   <div class="row" style="margin:4px 0 0"><button type="button" class="ghost" id="cmCancel" style="width:100%">Batal</button></div>
+  </div>`;
+  document.body.append(m);
+  const close = (val) => { m.remove(); resolve(val); };
+  m.querySelector('#cmClose').onclick = () => close(null);
+  m.querySelector('#cmCancel').onclick = () => close(null);
+  m.addEventListener('click', e => { if(e.target === m) close(null); });
+  m.querySelector('#cmBaru').onclick = () => close('baru');
+  m.querySelector('#cmRevisi').onclick = () => close('revisi');
+ });
 
- if(!pdfUrl){
-  const d = mkpdf(o);
-  const blob = d.output('blob');
-  const fname = `${invNo(o)}.pdf`;
+ if(!mode) return; // user batal
 
-  const up = await sb.storage.from('invoices').upload(fname, blob, {
-    contentType: 'application/pdf',
-    upsert: true
-  });
+ // === Selalu regenerate + upload PDF ===
+ let pdfUrl = null;
+ const d = mkpdf(o);
+ const blob = d.output('blob');
+ const fname = `${invNo(o)}.pdf`;
 
-  if(up.error){
-    const lanjut = confirm('Upload PDF gagal: '+up.error.message+'\n\nTetap kirim WA tanpa link PDF?');
-    if(!lanjut) return;
-  } else {
-    const { data } = sb.storage.from('invoices').getPublicUrl(fname);
-    pdfUrl = data.publicUrl;
-    await sb.from('orders').update({invoice_url: pdfUrl}).eq('id', id);
-    await load();
-  }
+ const up = await sb.storage.from('invoices').upload(fname, blob, {
+   contentType: 'application/pdf',
+   upsert: true
+ });
+
+ if(up.error){
+   const lanjut = confirm('Upload PDF gagal: '+up.error.message+'\n\nTetap kirim WA tanpa link PDF?');
+   if(!lanjut) return;
+ } else {
+   const { data } = sb.storage.from('invoices').getPublicUrl(fname);
+   pdfUrl = data.publicUrl;
+   await sb.from('orders').update({invoice_url: pdfUrl}).eq('id', id);
+   await load();
  }
 
- // --- 2. Ambil template dari settings ---
+ // === Ambil template ===
  const getS = k => ((D.settings.find(s=>s.key==k)||{}).value) || '';
  const tpl = getS('wa_invoice_template') || DEFAULT_WA_INVOICE;
 
- // --- 3. Replace placeholder ---
+ // === Replace placeholder ===
  const tanggal = o.event_date ? new Date(o.event_date+'T00:00').toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '-';
  const jam = (o.event_time||'').slice(0,5) || '-';
  const lokasi = parseLocs(o).map(l=>l.name).join(', ') || '-';
 
- const txt = tpl
+ let txt = tpl
   .replace(/\{nama\}/g, k.name || '-')
   .replace(/\{invoice\}/g, invNo(o))
   .replace(/\{paket\}/g, o.package_name || '-')
@@ -1234,7 +1266,15 @@ async function waInv(id){
   .replace(/\{link_pdf\}/g, pdfUrl || '(PDF belum tersedia)')
   .replace(/\{company\}/g, getS('company_name') || 'KYRA PICTURE');
 
- // --- 4. Buka WA ---
+ // === Kalau mode revisi, tambah prefix ===
+ if(mode === 'revisi'){
+   const prefix = WA_REVISI_PREFIX
+     .replace(/\{nama\}/g, k.name || '-')
+     .replace(/\{invoice\}/g, invNo(o));
+   txt = prefix + txt;
+ }
+
+ // === Buka WA ===
  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(txt)}`,'_blank');
 }
 const V={
